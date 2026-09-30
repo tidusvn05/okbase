@@ -16,3 +16,14 @@ readme = "../../README.md"
 workspace = true
 
 [dependencies]
+unicode-normalization.workspace = true
+lindera = { workspace = true, optional = true, features = ["embed-ipadic"] }
+lingua = { workspace = true, optional = true }
+rust-stemmers.workspace = true
+
+[features]
+default = ["ja", "detect"]
+## Japanese tokenization with lindera and the embedded IPADIC dictionary.
+ja = ["dep:lindera"]
+## Language detection hints (vi/en/ja) with lingua.
+detect = ["dep:lingua"]

@@ -8,10 +8,7 @@ Rust crate dependencies (whose licenses are checked by `cargo deny check`, see `
 
 | Component | Used by | License | Notes |
 |---|---|---|---|
-| _none yet_ | | | |
-
-To do before the first release that embeds it: verify and record the license of the
-lindera IPADIC dictionary (`embed-ipadic`), used for Japanese tokenization.
+| mecab-ipadic 2.7.0 dictionary (via `lindera-ipadic`, feature `ja` of `okfkit-analyze`) | Japanese tokenization | NAIST / ICOT Free Software notice (permissive; the notice and its NO WARRANTY section must accompany redistributions) | Downloaded at build time by the `lindera-ipadic` build script (checksum verified) and embedded in the binary. The full notice ships in the `lindera-ipadic` crate as `NOTICE.txt`; release archives must include it. |
 
 ## Repository data
 

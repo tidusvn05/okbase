@@ -23,6 +23,11 @@ allow = [
     "MPL-2.0",
 ]
 
+# Mozilla's CA bundle, used only at build time by lindera to download the IPADIC dictionary.
+[[licenses.exceptions]]
+crate = "webpki-roots"
+allow = ["CDLA-Permissive-2.0"]
+
 [licenses.private]
 ignore = false
 
