@@ -19,3 +19,11 @@ workspace = true
 okfkit-core.workspace = true
 okfkit-standard.workspace = true
 okfkit-analyze.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+rusqlite.workspace = true
+blake3.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

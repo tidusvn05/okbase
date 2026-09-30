@@ -42,6 +42,9 @@ unicode-normalization = "0.1"
 lindera = { version = "6", default-features = false }
 lingua = { version = "1.8", default-features = false, features = ["english", "japanese", "vietnamese"] }
 rust-stemmers = "1.2"
+rusqlite = { version = "0.40", features = ["bundled"] }
+blake3 = { version = "1.8", default-features = false, features = ["std"] }
+tempfile = "3"
 
 [profile.release]
 lto = "thin"
