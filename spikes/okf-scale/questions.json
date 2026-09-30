@@ -1,0 +1,380 @@
+[
+ {
+  "lang": "vi",
+  "q": "Trong OpenClaw Teams, minh muon bot doc anh/file trong channel thi can cap quyen Graph nao, va Files.Read.All co bat buoc khong neu chi can doc lich su tin nhan?",
+  "answer": "Cap ChannelMessage.Read.All cho attachment và history của channel (Chat.Read.All cho group chat), rồi grant admin consent. Files.Read.All chỉ cần khi phải tải bytes của file từ SharePoint/OneDrive; setup chỉ đọc history thì không cần.",
+  "key_facts": [
+   "ChannelMessage.Read.All cho channel attachments và history",
+   "Files.Read.All chỉ cần khi tải file từ SharePoint/OneDrive",
+   "Cần grant admin consent"
+  ],
+  "section": "Graph-enabled media + history",
+  "gold": "channels/msteams/manifest-and-permissions",
+  "qid": 0
+ },
+ {
+  "lang": "en",
+  "q": "What is the default value of `graphMediaFallback` for the msteams channel in OpenClaw, and why is it default off?",
+  "answer": "It defaults to `false`. Enabling it adds one Graph message lookup whenever an HTML activity yields no directly downloadable media, so the default avoids extra Graph traffic or permission errors for existing installations.",
+  "key_facts": [
+   "Default is false",
+   "Adds one Graph message lookup per HTML activity with no downloadable media",
+   "Avoids extra Graph traffic/permission errors for existing installs"
+  ],
+  "section": "Channel/group file recovery (`graphMediaFallback`)",
+  "gold": "channels/msteams/manifest-and-permissions",
+  "qid": 1
+ },
+ {
+  "lang": "ja",
+  "q": "OpenClawのRaftチャンネルで、リトライされたwake配信の重複排除はどのくらいの期間有効ですか?Gatewayを再起動しても保持されますか?",
+  "answer": "Retried wake deliveries are deduplicated by bridge event id for 24 hours, including across Gateway restarts.",
+  "key_facts": [
+   "Deduplication is by bridge event id",
+   "Window is 24 hours",
+   "Persists across Gateway restarts"
+  ],
+  "section": "How it works",
+  "gold": "channels/raft",
+  "qid": 2
+ },
+ {
+  "lang": "vi",
+  "q": "Trong kenh Raft cua OpenClaw, wake payload bat buoc phai co truong dinh danh nao, va agent gui cau tra loi lai cho Raft bang cach nao?",
+  "answer": "Every wake payload must include one of eventId, attemptId, messageId, delivery_id, wake_id, or id. OpenClaw does not auto-send the model's final text; the agent must use the Raft CLI (`raft --profile <profile> message check` / `message send`) to read and reply.",
+  "key_facts": [
+   "Requires one of eventId, attemptId, messageId, delivery_id, wake_id, or id",
+   "Final text is not automatically sent back through the bridge",
+   "Agent uses raft message check and message send"
+  ],
+  "section": "How it works",
+  "gold": "channels/raft",
+  "qid": 3
+ },
+ {
+  "lang": "en",
+  "q": "In OpenClaw's agent harness selection, when a plugin harness fails in a way that's local to that harness, how do I make AgentHarnessPreflightError skip other models on the same harness instead of ending the whole fallback chain?",
+  "answer": "Pass `{ scope: \"harness\" }` when throwing `AgentHarnessPreflightError` (from `openclaw/plugin-sdk/agent-harness-runtime`). Without it, the default error is terminal for the whole model-fallback chain; with it, only later candidates proven to use the same harness are skipped.",
+  "key_facts": [
+   "Pass `{ scope: \"harness\" }` to AgentHarnessPreflightError",
+   "Default error is terminal for the whole model-fallback chain",
+   "Don't use harness scope after a request or tool action may have produced side effects"
+  ],
+  "section": "Selection policy",
+  "gold": "plugins/sdk-agent-harness/selection-policy",
+  "qid": 4
+ },
+ {
+  "lang": "ja",
+  "q": "OpenClawで想定外のharnessが選ばれてしまったとき、どのデバッグログを有効にして、どのレコードを見れば選択理由がわかりますか?",
+  "answer": "`agents/harness` のデバッグログを有効にし、gatewayの構造化ログ `agent harness selected` を確認します。選択されたharness id、選択理由、runtime/fallbackポリシー、`auto`モードでは各プラグイン候補のサポート結果が含まれます。",
+  "key_facts": [
+   "enable `agents/harness` debug logging",
+   "inspect the gateway's structured `agent harness selected` record",
+   "includes selected harness id, selection reason, runtime/fallback policy and each candidate's support result in auto mode"
+  ],
+  "section": "Selection policy",
+  "gold": "plugins/sdk-agent-harness/selection-policy",
+  "qid": 5
+ },
+ {
+  "lang": "vi",
+  "q": "Bot OpenClaw cua minh hay bi loi \"Cross-context messaging denied\" khi gui tin tu Telegram sang Discord, can sua key config nao va thay doi co can restart Gateway khong?",
+  "answer": "Kiem tra `tools.message.crossContext.allowAcrossProviders: false` (global hoac trong config cua agent) va xoa hoac dat thanh true. Thay doi nay co hieu luc ma khong can restart Gateway.",
+  "key_facts": [
+   "Key la tools.message.crossContext.allowAcrossProviders",
+   "Dat thanh true hoac bo gia tri false",
+   "Khong can restart Gateway"
+  ],
+  "section": "How do I send a Discord message from Telegram? (\"Cross-context messaging denied\")",
+  "gold": "help/faq/chat-commands-and-stopping",
+  "qid": 6
+ },
+ {
+  "lang": "en",
+  "q": "In OpenClaw, what is the default `/queue` mode for messages sent while a run is active, and which mode aborts the current run and starts fresh?",
+  "answer": "The default is `steer`, which guides the active run at the next model boundary. The `interrupt` mode aborts the current run and starts fresh.",
+  "key_facts": [
+   "Default mode is steer",
+   "interrupt aborts the current run and starts fresh"
+  ],
+  "section": "Why does it feel like the bot \"ignores\" rapid-fire messages?",
+  "gold": "help/faq/chat-commands-and-stopping",
+  "qid": 7
+ },
+ {
+  "lang": "ja",
+  "q": "OpenClawのCodexハーネスで、Gatewayが強制停止した後に、孤立したapp-serverプロセスを起動前にチェックして掃除する仕組みがありますが、Linuxではプロセス情報をどこから読み取るんですか？Alpineでprocpsは必要でしょうか？",
+  "answer": "On Linux, OpenClaw reads process identities directly from `/proc` (including the boot ID and process start ticks), so Alpine/BusyBox installations do not need `procps`.",
+  "key_facts": [
+   "Linux reads process identities directly from /proc",
+   "Uses boot ID and process start ticks",
+   "Alpine/BusyBox does not need procps"
+  ],
+  "section": "Recovery after a hard Gateway stop",
+  "gold": "plugins/codex-harness-runtime/recovery",
+  "qid": 8
+ },
+ {
+  "lang": "vi",
+  "q": "Khi Codex app-server bi bo lai sau khi Gateway dung dot ngot, neu cleanup bao loi do het deadline (timeout) thi toi nen lam gi? Co nen mo rong quyen de sua khong?",
+  "answer": "For a deadline failure, check host load and Gateway logs. Do not broaden permissions to address a timeout; if the cleanup budget expires, just retry to finish the remaining registrations.",
+  "key_facts": [
+   "Deadline failure: check host load and Gateway logs",
+   "Do not broaden permissions to address a timeout",
+   "If cleanup budget expires, retry to finish remaining registrations"
+  ],
+  "section": "Recovery after a hard Gateway stop",
+  "gold": "plugins/codex-harness-runtime/recovery",
+  "qid": 9
+ },
+ {
+  "lang": "en",
+  "q": "In OpenClaw's LM Studio provider, how do I stop OpenClaw from preloading models so LM Studio's own JIT and auto-evict handle the model lifecycle?",
+  "answer": "Set `params: { preload: false }` on the `models.providers.lmstudio` entry in the config. OpenClaw preloads via LM Studio's native load endpoint by default.",
+  "key_facts": [
+   "Set params.preload to false under models.providers.lmstudio",
+   "Preload is enabled by default"
+  ],
+  "section": "Disabling preload",
+  "gold": "providers/lmstudio",
+  "qid": 10
+ },
+ {
+  "lang": "ja",
+  "q": "OpenClawでLM Studioを非対話でオンボーディングするとき、`--custom-model-id` にはどんな形式のモデルIDを渡せばいいですか？ `lmstudio/` のプレフィックスは付けるべき？",
+  "answer": "`--custom-model-id` にはLM Studioが返すモデルキー(例: `qwen/qwen3.5-9b`)をそのまま渡し、`lmstudio/` プロバイダープレフィックスは付けません。デフォルトモデルは `lmstudio/<custom-model-id>` として設定されます。",
+  "key_facts": [
+   "Use the model key as returned by LM Studio, e.g. qwen/qwen3.5-9b",
+   "Do not include the lmstudio/ provider prefix"
+  ],
+  "section": "Non-interactive onboarding",
+  "gold": "providers/lmstudio",
+  "qid": 11
+ },
+ {
+  "lang": "vi",
+  "q": "Khi mo Gateway OpenClaw cho nhieu nguoi nhan tin DM, toi nen dat session.dmScope thanh gia tri nao de cac phien DM khong dung chung ngu canh, va neu kenh co nhieu account thi dung gia tri nao?",
+  "answer": "Set session.dmScope to \"per-channel-peer\", or \"per-account-channel-peer\" for multi-account channels, so DM sessions don't share context.",
+  "key_facts": [
+   "session.dmScope: \"per-channel-peer\"",
+   "\"per-account-channel-peer\" cho kênh nhiều account"
+  ],
+  "section": "DM and group exposure",
+  "gold": "gateway/security/exposure-runbook",
+  "qid": 12
+ },
+ {
+  "lang": "en",
+  "q": "In the OpenClaw Gateway exposure runbook, what does the rollback config set for the messaging channels' dmPolicy, and what tool settings does it apply for exec and elevated?",
+  "answer": "The rollback config sets gateway.bind to loopback and dmPolicy to \"disabled\" for WhatsApp, Telegram, Discord and Slack. It also sets tools.exec to security \"deny\" with ask \"always\", and disables elevated tools (enabled: false).",
+  "key_facts": [
+   "dmPolicy: \"disabled\" on whatsapp, telegram, discord, slack",
+   "tools.exec: security \"deny\", ask \"always\"",
+   "tools.elevated.enabled: false"
+  ],
+  "section": "Rollback plan",
+  "gold": "gateway/security/exposure-runbook",
+  "qid": 13
+ },
+ {
+  "lang": "ja",
+  "q": "OpenClawのHonchoプラグインで、セルフホストのHonchoを使う場合、設定のbaseUrlとAPIキーはどうすればいいですか?",
+  "answer": "Point `baseUrl` to your local server (for example `http://localhost:8000`) and omit the API key, since a self-hosted Honcho deployment has no key.",
+  "key_facts": [
+   "Set baseUrl to the local server, e.g. http://localhost:8000",
+   "Omit apiKey for self-hosted"
+  ],
+  "section": "Configuration",
+  "gold": "concepts/memory-honcho",
+  "qid": 14
+ },
+ {
+  "lang": "vi",
+  "q": "Trong Honcho memory cua OpenClaw, tool honcho_ask co tham so depth nhu the nao, va 'quick' khac 'thorough' ra sao?",
+  "answer": "`honcho_ask` is the LLM-powered Q&A tool about the user: `depth='quick'` is for retrieving facts, while `'thorough'` is for synthesis.",
+  "key_facts": [
+   "honcho_ask is LLM-powered Q&A about the user",
+   "depth='quick' for facts",
+   "depth='thorough' for synthesis"
+  ],
+  "section": "Available tools",
+  "gold": "concepts/memory-honcho",
+  "qid": 15
+ },
+ {
+  "lang": "en",
+  "q": "In OpenClaw standing intents, what are the default cooldown, maximum fires, and expiry if I don't customize them?",
+  "answer": "The defaults are a 24-hour cooldown, a maximum of 3 fires, and a 90-day expiry.",
+  "key_facts": [
+   "cooldown: 24 hours",
+   "maximum fires: 3",
+   "expiry: 90 days"
+  ],
+  "section": "Create an event-based intent",
+  "gold": "concepts/standing-intents",
+  "qid": 16
+ },
+ {
+  "lang": "ja",
+  "q": "OpenClawのstanding intentで、1ターンのマッチングではFTS候補を最大いくつまでスキャンしますか?また、マッチング時にモデル呼び出しは発生しますか?",
+  "answer": "Matching scans at most 256 scoped FTS candidates per turn, and no model call occurs in the matching path (it is deterministic keyword matching).",
+  "key_facts": [
+   "at most 256 scoped FTS candidates per turn",
+   "no model call in the matching path"
+  ],
+  "section": "How matching works",
+  "gold": "concepts/standing-intents",
+  "qid": 17
+ },
+ {
+  "lang": "vi",
+  "q": "Khi chạy nhiều Gateway OpenClaw trên một máy, các base port nên cách nhau tối thiểu bao nhiêu để cổng browser/CDP suy ra không bị đụng nhau?",
+  "answer": "Leave at least 120 ports between base ports. Each instance reaches up to base + 110 (browser control port is base + 2, with its CDP range running to base + 110).",
+  "key_facts": [
+   "At least 120 ports between base ports",
+   "Each instance's derived ports reach base + 110"
+  ],
+  "section": "Rescue-bot quickstart",
+  "gold": "gateway/multiple-gateways",
+  "qid": 18
+ },
+ {
+  "lang": "en",
+  "q": "In OpenClaw multiple gateways, which config key should I set to pin an explicit CDP port for a browser profile on a specific instance, and what should I avoid doing with browser.cdpUrl?",
+  "answer": "Set `browser.profiles.<name>.cdpPort` per instance for explicit CDP ports. Do not pin `browser.cdpUrl` to the same value on multiple instances.",
+  "key_facts": [
+   "Use browser.profiles.<name>.cdpPort per instance",
+   "Do not pin browser.cdpUrl to the same value on multiple instances"
+  ],
+  "section": "Browser/CDP notes (common footgun)",
+  "gold": "gateway/multiple-gateways",
+  "qid": 19
+ },
+ {
+  "lang": "ja",
+  "q": "OpenClawのExa検索で、web_searchの呼び出し時に contents を指定しなかった場合、結果にはどんな内容が含まれるようになりますか?",
+  "answer": "contents を省略すると、Exa は既定で { highlights: true } を使うため、結果にはキーセンテンスの抜粋(ハイライト)が含まれます。",
+  "key_facts": [
+   "contents 省略時のデフォルトは { highlights: true }",
+   "結果にキーセンテンスの抜粋が含まれる"
+  ],
+  "section": "Content extraction",
+  "gold": "tools/exa-search",
+  "qid": 20
+ },
+ {
+  "lang": "vi",
+  "q": "Trong Exa search cua OpenClaw, neu toi dat baseUrl la mot host tran (khong co https:// va khong co /search) thi OpenClaw se xu ly the nao?",
+  "answer": "OpenClaw chuan hoa host tran bang cach them https:// o dau, va tu dong noi them /search vao cuoi tru khi duong dan da ket thuc bang /search. Endpoint sau khi resolve con la mot phan cua cache key nen ket qua tu cac endpoint khac nhau khong bi dung chung.",
+  "key_facts": [
+   "Tu dong them tien to https:// cho bare host",
+   "Tu dong them /search neu duong dan chua ket thuc bang /search",
+   "Endpoint da resolve la mot phan cua search cache key"
+  ],
+  "section": "Base URL override",
+  "gold": "tools/exa-search",
+  "qid": 21
+ },
+ {
+  "lang": "en",
+  "q": "How do I stop OpenClaw from sending the daily update check to the Foundation entirely, and what info does that check include by default?",
+  "answer": "Set `update.checkOnStart: false` to send nothing at all. By default the daily update check carries only the OpenClaw version, OS, Node version, and CPU architecture.",
+  "key_facts": [
+   "Set update.checkOnStart: false",
+   "Default check sends OpenClaw version, OS, Node version, CPU architecture",
+   "No prompts, messages, keys, or paths are sent"
+  ],
+  "section": "What does OpenClaw send to the Foundation?",
+  "gold": "help/faq/what-is-openclaw",
+  "qid": 22
+ },
+ {
+  "lang": "ja",
+  "q": "OpenClawをチームで共有したい場合、Gatewayの信頼境界についてどんな制約がありますか？お互いに敵対的なユーザーがいる場合はどうすればいいですか？",
+  "answer": "Gatewayは1つのトラストドメインなので、互いに信頼できる人同士でのみ共有します。相互に敵対的なユーザーがいる場合は、別々のGatewayを用意する必要があります。",
+  "key_facts": [
+   "A gateway is one trust domain",
+   "Share only with people who trust each other",
+   "Mutually adversarial users need separate gateways"
+  ],
+  "section": "Can my team share one OpenClaw?",
+  "gold": "help/faq/what-is-openclaw",
+  "qid": 23
+ },
+ {
+  "lang": "vi",
+  "q": "Plugin OpenClaw cho thanh bar Omarchy tim file CLI openclaw theo thu tu nao, va trong che do standalone ma status an mat URL endpoint thi sao?",
+  "answer": "Plugin tim CLI qua bien OPENCLAW_DESKTOP_CLI, roi ~/.openclaw/bin/openclaw, roi PATH cua graphical session. Neu `openclaw status --json` redact URL endpoint thi standalone mode khong xac dinh duoc dich den va vo hieu hoa cac request; can dung desktop app cho ket noi do.",
+  "key_facts": [
+   "Thu tu: OPENCLAW_DESKTOP_CLI, ~/.openclaw/bin/openclaw, PATH của graphical session",
+   "Nếu status redact endpoint URL thì standalone mode tắt request",
+   "Dùng desktop app cho kết nối đó"
+  ],
+  "section": "Requirements",
+  "gold": "platforms/omarchy",
+  "qid": 24
+ },
+ {
+  "lang": "en",
+  "q": "In the OpenClaw Omarchy quick prompt, what keys send the message versus insert a newline, and what is the maximum prompt length?",
+  "answer": "Ctrl+Enter sends the prompt, while Enter inserts a newline. The prompt limit is 8,000 characters.",
+  "key_facts": [
+   "Ctrl+Enter sends; Enter inserts a newline",
+   "Prompt limit is 8,000 characters"
+  ],
+  "section": "Use agents, sessions, and quick prompts",
+  "gold": "platforms/omarchy",
+  "qid": 25
+ },
+ {
+  "lang": "ja",
+  "q": "OpenClawのAlibaba Model StudioでWan動画生成を使うとき、durationSecondsを指定しなかった場合、動画の長さはデフォルトで何秒になりますか?",
+  "answer": "If a request omits durationSeconds, DashScope's accepted default of 5 seconds is used.",
+  "key_facts": [
+   "Default duration is 5 seconds when durationSeconds is omitted",
+   "This is DashScope's accepted default"
+  ],
+  "section": "Capabilities and limits",
+  "gold": "providers/alibaba",
+  "qid": 26
+ },
+ {
+  "lang": "vi",
+  "q": "Trong OpenClaw, neu toi muon dung endpoint DashScope cua khu vuc Trung Quoc cho plugin alibaba thi phai cau hinh baseUrl nhu the nao?",
+  "answer": "Set models.providers.alibaba.baseUrl to \"https://dashscope.aliyuncs.com\" (the default is the international endpoint https://dashscope-intl.aliyuncs.com).",
+  "key_facts": [
+   "Config key: models.providers.alibaba.baseUrl",
+   "Value: https://dashscope.aliyuncs.com for China region",
+   "Default is the international endpoint dashscope-intl.aliyuncs.com"
+  ],
+  "section": "Advanced configuration",
+  "gold": "providers/alibaba",
+  "qid": 27
+ },
+ {
+  "lang": "en",
+  "q": "In OpenClaw's message tool `react` action, what does the Signal channel's `channels.signal.reactionNotifications` setting default to, and what does that default do?",
+  "answer": "It defaults to \"own\", which emits events when users react to the bot's own messages. Other values are \"off\", \"all\", and \"allowlist\" (which uses channels.signal.reactionAllowlist).",
+  "key_facts": [
+   "Default is \"own\"",
+   "Emits events only when users react to bot messages",
+   "Other options: off, all, allowlist"
+  ],
+  "section": "Channel behavior (Signal)",
+  "gold": "tools/reactions",
+  "qid": 28
+ },
+ {
+  "lang": "ja",
+  "q": "OpenClawでNextcloud Talkのリアクションを削除したくて `remove: true` を指定したらエラーになりました。これはなぜですか？あと、リアクションを使うために必要な設定はありますか？",
+  "answer": "Nextcloud Talkではリアクションの追加のみ対応で、削除はまだdelete呼び出しに接続されていないため、`remove: true` は黙って無視されず明示的なエラーとして拒否されます。また、Talkのbotを `reaction` 機能付きで登録しておく必要があります。",
+  "key_facts": [
+   "Nextcloud Talkは追加のみ対応で、削除は未実装のため remove: true は明示的エラーで拒否される",
+   "Talk botを reaction 機能付きで登録する必要がある"
+  ],
+  "section": "Channel behavior (Nextcloud Talk)",
+  "gold": "tools/reactions",
+  "qid": 29
+ }
+]

@@ -1,0 +1,37 @@
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+exclude = ["spikes"]
+
+[workspace.package]
+version = "0.1.0-dev"
+edition = "2024"
+rust-version = "1.88"
+license = "MIT OR Apache-2.0"
+authors = ["The okfkit contributors"]
+repository = "https://github.com/okfkit/okfkit"
+homepage = "https://github.com/okfkit/okfkit"
+keywords = ["markdown", "knowledge-base", "mcp", "agents", "okf"]
+categories = ["command-line-utilities", "text-processing"]
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+
+[workspace.dependencies]
+okfkit-core = { path = "crates/okfkit-core", version = "0.1.0-dev" }
+okfkit-standard = { path = "crates/okfkit-standard", version = "0.1.0-dev" }
+okfkit-analyze = { path = "crates/okfkit-analyze", version = "0.1.0-dev" }
+okfkit-index = { path = "crates/okfkit-index", version = "0.1.0-dev" }
+okfkit-query = { path = "crates/okfkit-query", version = "0.1.0-dev" }
+okfkit-lint = { path = "crates/okfkit-lint", version = "0.1.0-dev" }
+okfkit-mcp = { path = "crates/okfkit-mcp", version = "0.1.0-dev" }
+okfkit-skills = { path = "crates/okfkit-skills", version = "0.1.0-dev" }
+okfkit = { path = "crates/okfkit", version = "0.1.0-dev" }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1

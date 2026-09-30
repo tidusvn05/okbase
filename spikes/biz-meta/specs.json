@@ -1,0 +1,3740 @@
+[
+ {
+  "id": "policies/vn/returns-v1",
+  "kind": "Policy",
+  "topic": "returns",
+  "topic_names": [
+   "chính sách đổi trả",
+   "return policy",
+   "返品ポリシー"
+  ],
+  "region": "VN",
+  "lang": "vi",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "returns",
+   "customer-support",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-03-06",
+  "facts": {
+   "return_window_days": 7,
+   "restocking_fee_pct": 5
+  },
+  "currency": "VND",
+  "effective_from": "2025-03-20"
+ },
+ {
+  "id": "policies/vn/returns-v2",
+  "kind": "Policy",
+  "topic": "returns",
+  "topic_names": [
+   "chính sách đổi trả",
+   "return policy",
+   "返品ポリシー"
+  ],
+  "region": "VN",
+  "lang": "vi",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "returns",
+   "customer-support",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-10-31",
+  "facts": {
+   "return_window_days": 45,
+   "restocking_fee_pct": 15
+  },
+  "currency": "VND",
+  "effective_from": "2025-11-14",
+  "supersedes": "policies/vn/returns-v1"
+ },
+ {
+  "id": "policies/jp/returns-v1",
+  "kind": "Policy",
+  "topic": "returns",
+  "topic_names": [
+   "chính sách đổi trả",
+   "return policy",
+   "返品ポリシー"
+  ],
+  "region": "JP",
+  "lang": "ja",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "returns",
+   "customer-support",
+   "policy",
+   "jp"
+  ],
+  "updated": "2025-05-17",
+  "facts": {
+   "return_window_days": 30,
+   "restocking_fee_pct": 0
+  },
+  "currency": "JPY",
+  "effective_from": "2025-05-31"
+ },
+ {
+  "id": "policies/jp/returns-v2",
+  "kind": "Policy",
+  "topic": "returns",
+  "topic_names": [
+   "chính sách đổi trả",
+   "return policy",
+   "返品ポリシー"
+  ],
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "returns",
+   "customer-support",
+   "policy",
+   "jp"
+  ],
+  "updated": "2025-12-26",
+  "facts": {
+   "return_window_days": 14,
+   "restocking_fee_pct": 15
+  },
+  "currency": "JPY",
+  "effective_from": "2026-01-09",
+  "supersedes": "policies/jp/returns-v1"
+ },
+ {
+  "id": "policies/vn/shipping-v2",
+  "kind": "Policy",
+  "topic": "shipping",
+  "topic_names": [
+   "chính sách giao hàng",
+   "shipping policy",
+   "配送ポリシー"
+  ],
+  "region": "VN",
+  "lang": "en",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "shipping",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-04-12",
+  "facts": {
+   "free_shipping_threshold": 300000,
+   "standard_delivery_days": 4
+  },
+  "currency": "VND",
+  "effective_from": "2026-04-26"
+ },
+ {
+  "id": "policies/jp/shipping-v1",
+  "kind": "Policy",
+  "topic": "shipping",
+  "topic_names": [
+   "chính sách giao hàng",
+   "shipping policy",
+   "配送ポリシー"
+  ],
+  "region": "JP",
+  "lang": "ja",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "shipping",
+   "policy",
+   "jp"
+  ],
+  "updated": "2025-01-12",
+  "facts": {
+   "free_shipping_threshold": 4000,
+   "standard_delivery_days": 2
+  },
+  "currency": "JPY",
+  "effective_from": "2025-01-26"
+ },
+ {
+  "id": "policies/jp/shipping-v2",
+  "kind": "Policy",
+  "topic": "shipping",
+  "topic_names": [
+   "chính sách giao hàng",
+   "shipping policy",
+   "配送ポリシー"
+  ],
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "shipping",
+   "policy",
+   "jp"
+  ],
+  "updated": "2026-04-26",
+  "facts": {
+   "free_shipping_threshold": 5000,
+   "standard_delivery_days": 2
+  },
+  "currency": "JPY",
+  "effective_from": "2026-05-10",
+  "supersedes": "policies/jp/shipping-v1"
+ },
+ {
+  "id": "policies/vn/warranty-air-purifier-v1",
+  "kind": "Policy",
+  "topic": "warranty-air-purifier",
+  "topic_names": [
+   "chính sách bảo hành máy lọc không khí",
+   "air purifier warranty policy",
+   "空気清浄機の保証ポリシー"
+  ],
+  "region": "VN",
+  "lang": "vi",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "warranty",
+   "air-purifier",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-02-11",
+  "facts": {
+   "warranty_months": 36
+  },
+  "currency": "VND",
+  "effective_from": "2025-02-25"
+ },
+ {
+  "id": "policies/vn/warranty-air-purifier-v2",
+  "kind": "Policy",
+  "topic": "warranty-air-purifier",
+  "topic_names": [
+   "chính sách bảo hành máy lọc không khí",
+   "air purifier warranty policy",
+   "空気清浄機の保証ポリシー"
+  ],
+  "region": "VN",
+  "lang": "vi",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "warranty",
+   "air-purifier",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-07-28",
+  "facts": {
+   "warranty_months": 12
+  },
+  "currency": "VND",
+  "effective_from": "2026-08-11",
+  "supersedes": "policies/vn/warranty-air-purifier-v1"
+ },
+ {
+  "id": "policies/jp/warranty-air-purifier-v2",
+  "kind": "Policy",
+  "topic": "warranty-air-purifier",
+  "topic_names": [
+   "chính sách bảo hành máy lọc không khí",
+   "air purifier warranty policy",
+   "空気清浄機の保証ポリシー"
+  ],
+  "region": "JP",
+  "lang": "en",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "warranty",
+   "air-purifier",
+   "policy",
+   "jp"
+  ],
+  "updated": "2026-02-26",
+  "facts": {
+   "warranty_months": 12
+  },
+  "currency": "JPY",
+  "effective_from": "2026-03-12"
+ },
+ {
+  "id": "policies/vn/warranty-rice-cooker-v1",
+  "kind": "Policy",
+  "topic": "warranty-rice-cooker",
+  "topic_names": [
+   "chính sách bảo hành nồi cơm điện",
+   "rice cooker warranty policy",
+   "炊飯器の保証ポリシー"
+  ],
+  "region": "VN",
+  "lang": "vi",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "warranty",
+   "rice-cooker",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-04-12",
+  "facts": {
+   "warranty_months": 24
+  },
+  "currency": "VND",
+  "effective_from": "2025-04-26"
+ },
+ {
+  "id": "policies/vn/warranty-rice-cooker-v2",
+  "kind": "Policy",
+  "topic": "warranty-rice-cooker",
+  "topic_names": [
+   "chính sách bảo hành nồi cơm điện",
+   "rice cooker warranty policy",
+   "炊飯器の保証ポリシー"
+  ],
+  "region": "VN",
+  "lang": "vi",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "warranty",
+   "rice-cooker",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-06-08",
+  "facts": {
+   "warranty_months": 12
+  },
+  "currency": "VND",
+  "effective_from": "2026-06-22",
+  "supersedes": "policies/vn/warranty-rice-cooker-v1"
+ },
+ {
+  "id": "policies/jp/warranty-rice-cooker-v2",
+  "kind": "Policy",
+  "topic": "warranty-rice-cooker",
+  "topic_names": [
+   "chính sách bảo hành nồi cơm điện",
+   "rice cooker warranty policy",
+   "炊飯器の保証ポリシー"
+  ],
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "warranty",
+   "rice-cooker",
+   "policy",
+   "jp"
+  ],
+  "updated": "2025-10-12",
+  "facts": {
+   "warranty_months": 12
+  },
+  "currency": "JPY",
+  "effective_from": "2025-10-26"
+ },
+ {
+  "id": "policies/vn/installment-v1",
+  "kind": "Policy",
+  "topic": "installment",
+  "topic_names": [
+   "chính sách trả góp",
+   "installment payment policy",
+   "分割払いポリシー"
+  ],
+  "region": "VN",
+  "lang": "en",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "Finance",
+  "tags": [
+   "billing",
+   "finance",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-06-19",
+  "facts": {
+   "min_order_amount": 5000000,
+   "max_installment_months": 24
+  },
+  "currency": "VND",
+  "effective_from": "2025-07-03"
+ },
+ {
+  "id": "policies/vn/installment-v2",
+  "kind": "Policy",
+  "topic": "installment",
+  "topic_names": [
+   "chính sách trả góp",
+   "installment payment policy",
+   "分割払いポリシー"
+  ],
+  "region": "VN",
+  "lang": "en",
+  "status": "stable",
+  "version": "v2",
+  "department": "Finance",
+  "tags": [
+   "billing",
+   "finance",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-02-24",
+  "facts": {
+   "min_order_amount": 2000000,
+   "max_installment_months": 12
+  },
+  "currency": "VND",
+  "effective_from": "2026-03-10",
+  "supersedes": "policies/vn/installment-v1"
+ },
+ {
+  "id": "policies/vn/installment-v3",
+  "kind": "Policy",
+  "topic": "installment",
+  "topic_names": [
+   "chính sách trả góp",
+   "installment payment policy",
+   "分割払いポリシー"
+  ],
+  "region": "VN",
+  "lang": "en",
+  "status": "draft",
+  "version": "v3",
+  "department": "Finance",
+  "tags": [
+   "billing",
+   "finance",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-09-10",
+  "facts": {
+   "min_order_amount": 3000000,
+   "max_installment_months": 24
+  },
+  "currency": "VND",
+  "effective_from": "2026-11-01",
+  "supersedes": "policies/vn/installment-v2"
+ },
+ {
+  "id": "policies/jp/installment-v2",
+  "kind": "Policy",
+  "topic": "installment",
+  "topic_names": [
+   "chính sách trả góp",
+   "installment payment policy",
+   "分割払いポリシー"
+  ],
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "Finance",
+  "tags": [
+   "billing",
+   "finance",
+   "policy",
+   "jp"
+  ],
+  "updated": "2025-10-02",
+  "facts": {
+   "min_order_amount": 25000,
+   "max_installment_months": 12
+  },
+  "currency": "JPY",
+  "effective_from": "2025-10-16"
+ },
+ {
+  "id": "policies/jp/installment-v3",
+  "kind": "Policy",
+  "topic": "installment",
+  "topic_names": [
+   "chính sách trả góp",
+   "installment payment policy",
+   "分割払いポリシー"
+  ],
+  "region": "JP",
+  "lang": "ja",
+  "status": "draft",
+  "version": "v3",
+  "department": "Finance",
+  "tags": [
+   "billing",
+   "finance",
+   "policy",
+   "jp"
+  ],
+  "updated": "2026-09-09",
+  "facts": {
+   "min_order_amount": 25000,
+   "max_installment_months": 24
+  },
+  "currency": "JPY",
+  "effective_from": "2026-11-01",
+  "supersedes": "policies/jp/installment-v2"
+ },
+ {
+  "id": "policies/vn/loyalty-v1",
+  "kind": "Policy",
+  "topic": "loyalty",
+  "topic_names": [
+   "chính sách điểm thành viên",
+   "loyalty points policy",
+   "ポイントポリシー"
+  ],
+  "region": "VN",
+  "lang": "en",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "loyalty",
+   "marketing",
+   "policy",
+   "vn"
+  ],
+  "updated": "2024-05-29",
+  "facts": {
+   "points_expiry_months": 24
+  },
+  "currency": "VND",
+  "effective_from": "2024-06-12"
+ },
+ {
+  "id": "policies/vn/loyalty-v2",
+  "kind": "Policy",
+  "topic": "loyalty",
+  "topic_names": [
+   "chính sách điểm thành viên",
+   "loyalty points policy",
+   "ポイントポリシー"
+  ],
+  "region": "VN",
+  "lang": "en",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "loyalty",
+   "marketing",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-02-17",
+  "facts": {
+   "points_expiry_months": 6
+  },
+  "currency": "VND",
+  "effective_from": "2026-03-03",
+  "supersedes": "policies/vn/loyalty-v1"
+ },
+ {
+  "id": "policies/vn/loyalty-v3",
+  "kind": "Policy",
+  "topic": "loyalty",
+  "topic_names": [
+   "chính sách điểm thành viên",
+   "loyalty points policy",
+   "ポイントポリシー"
+  ],
+  "region": "VN",
+  "lang": "en",
+  "status": "draft",
+  "version": "v3",
+  "department": "CS",
+  "tags": [
+   "loyalty",
+   "marketing",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-09-20",
+  "facts": {
+   "points_expiry_months": 12
+  },
+  "currency": "VND",
+  "effective_from": "2026-11-01",
+  "supersedes": "policies/vn/loyalty-v2"
+ },
+ {
+  "id": "policies/jp/loyalty-v1",
+  "kind": "Policy",
+  "topic": "loyalty",
+  "topic_names": [
+   "chính sách điểm thành viên",
+   "loyalty points policy",
+   "ポイントポリシー"
+  ],
+  "region": "JP",
+  "lang": "ja",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "loyalty",
+   "marketing",
+   "policy",
+   "jp"
+  ],
+  "updated": "2024-06-07",
+  "facts": {
+   "points_expiry_months": 18
+  },
+  "currency": "JPY",
+  "effective_from": "2024-06-21"
+ },
+ {
+  "id": "policies/jp/loyalty-v2",
+  "kind": "Policy",
+  "topic": "loyalty",
+  "topic_names": [
+   "chính sách điểm thành viên",
+   "loyalty points policy",
+   "ポイントポリシー"
+  ],
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "loyalty",
+   "marketing",
+   "policy",
+   "jp"
+  ],
+  "updated": "2026-04-06",
+  "facts": {
+   "points_expiry_months": 24
+  },
+  "currency": "JPY",
+  "effective_from": "2026-04-20",
+  "supersedes": "policies/jp/loyalty-v1"
+ },
+ {
+  "id": "policies/vn/privacy-v1",
+  "kind": "Policy",
+  "topic": "privacy",
+  "topic_names": [
+   "chính sách bảo vệ dữ liệu cá nhân",
+   "personal data protection policy",
+   "個人情報保護ポリシー"
+  ],
+  "region": "VN",
+  "lang": "vi",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "Legal",
+  "tags": [
+   "privacy",
+   "legal",
+   "security",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-05-31",
+  "facts": {
+   "deletion_request_days": 30
+  },
+  "currency": "VND",
+  "effective_from": "2025-06-14"
+ },
+ {
+  "id": "policies/vn/privacy-v2",
+  "kind": "Policy",
+  "topic": "privacy",
+  "topic_names": [
+   "chính sách bảo vệ dữ liệu cá nhân",
+   "personal data protection policy",
+   "個人情報保護ポリシー"
+  ],
+  "region": "VN",
+  "lang": "vi",
+  "status": "stable",
+  "version": "v2",
+  "department": "Legal",
+  "tags": [
+   "privacy",
+   "legal",
+   "security",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-09-08",
+  "facts": {
+   "deletion_request_days": 14
+  },
+  "currency": "VND",
+  "effective_from": "2025-09-22",
+  "supersedes": "policies/vn/privacy-v1"
+ },
+ {
+  "id": "policies/jp/privacy-v2",
+  "kind": "Policy",
+  "topic": "privacy",
+  "topic_names": [
+   "chính sách bảo vệ dữ liệu cá nhân",
+   "personal data protection policy",
+   "個人情報保護ポリシー"
+  ],
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "Legal",
+  "tags": [
+   "privacy",
+   "legal",
+   "security",
+   "policy",
+   "jp"
+  ],
+  "updated": "2026-03-24",
+  "facts": {
+   "deletion_request_days": 14
+  },
+  "currency": "JPY",
+  "effective_from": "2026-04-07"
+ },
+ {
+  "id": "policies/vn/gift-wrap-v1",
+  "kind": "Policy",
+  "topic": "gift-wrap",
+  "topic_names": [
+   "chính sách gói quà",
+   "gift wrapping policy",
+   "ギフト包装ポリシー"
+  ],
+  "region": "VN",
+  "lang": "vi",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "customer-support",
+   "marketing",
+   "policy",
+   "vn"
+  ],
+  "updated": "2024-02-22",
+  "facts": {
+   "gift_wrap_price": 20000
+  },
+  "currency": "VND",
+  "effective_from": "2024-03-07"
+ },
+ {
+  "id": "policies/vn/gift-wrap-v2",
+  "kind": "Policy",
+  "topic": "gift-wrap",
+  "topic_names": [
+   "chính sách gói quà",
+   "gift wrapping policy",
+   "ギフト包装ポリシー"
+  ],
+  "region": "VN",
+  "lang": "vi",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "customer-support",
+   "marketing",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-07-30",
+  "facts": {
+   "gift_wrap_price": 50000
+  },
+  "currency": "VND",
+  "effective_from": "2026-08-13",
+  "supersedes": "policies/vn/gift-wrap-v1"
+ },
+ {
+  "id": "policies/vn/gift-wrap-v3",
+  "kind": "Policy",
+  "topic": "gift-wrap",
+  "topic_names": [
+   "chính sách gói quà",
+   "gift wrapping policy",
+   "ギフト包装ポリシー"
+  ],
+  "region": "VN",
+  "lang": "vi",
+  "status": "draft",
+  "version": "v3",
+  "department": "CS",
+  "tags": [
+   "customer-support",
+   "marketing",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-09-11",
+  "facts": {
+   "gift_wrap_price": 20000
+  },
+  "currency": "VND",
+  "effective_from": "2026-11-01",
+  "supersedes": "policies/vn/gift-wrap-v2"
+ },
+ {
+  "id": "policies/jp/gift-wrap-v1",
+  "kind": "Policy",
+  "topic": "gift-wrap",
+  "topic_names": [
+   "chính sách gói quà",
+   "gift wrapping policy",
+   "ギフト包装ポリシー"
+  ],
+  "region": "JP",
+  "lang": "ja",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "customer-support",
+   "marketing",
+   "policy",
+   "jp"
+  ],
+  "updated": "2025-04-22",
+  "facts": {
+   "gift_wrap_price": 150
+  },
+  "currency": "JPY",
+  "effective_from": "2025-05-06"
+ },
+ {
+  "id": "policies/jp/gift-wrap-v2",
+  "kind": "Policy",
+  "topic": "gift-wrap",
+  "topic_names": [
+   "chính sách gói quà",
+   "gift wrapping policy",
+   "ギフト包装ポリシー"
+  ],
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "customer-support",
+   "marketing",
+   "policy",
+   "jp"
+  ],
+  "updated": "2026-04-29",
+  "facts": {
+   "gift_wrap_price": 100
+  },
+  "currency": "JPY",
+  "effective_from": "2026-05-13",
+  "supersedes": "policies/jp/gift-wrap-v1"
+ },
+ {
+  "id": "sop/warehouse/receiving",
+  "kind": "SOP",
+  "topic": "receiving",
+  "topic_names": [
+   "nhận hàng nhập kho",
+   "inbound receiving",
+   "入荷受付"
+  ],
+  "department": "Warehouse",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2026-01-24",
+  "facts": {
+   "inspection_deadline_hours": 24
+  }
+ },
+ {
+  "id": "sop/warehouse/stock-count",
+  "kind": "SOP",
+  "topic": "stock-count",
+  "topic_names": [
+   "kiểm kê tồn kho",
+   "stock count",
+   "棚卸し"
+  ],
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2024-04-16",
+  "facts": {
+   "count_frequency_days": 30
+  }
+ },
+ {
+  "id": "sop/warehouse/packing",
+  "kind": "SOP",
+  "topic": "packing",
+  "topic_names": [
+   "đóng gói đơn hàng",
+   "order packing",
+   "梱包"
+  ],
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2025-07-09",
+  "facts": {
+   "max_package_weight_kg": 30
+  }
+ },
+ {
+  "id": "sop/warehouse/forklift",
+  "kind": "SOP",
+  "topic": "forklift",
+  "topic_names": [
+   "an toàn xe nâng",
+   "forklift safety",
+   "フォークリフト安全"
+  ],
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2026-05-14",
+  "facts": {
+   "max_speed_kmh": 10
+  }
+ },
+ {
+  "id": "sop/warehouse/returns-processing",
+  "kind": "SOP",
+  "topic": "returns-processing",
+  "topic_names": [
+   "xử lý hàng hoàn",
+   "returns processing",
+   "返品処理"
+  ],
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "draft",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2025-04-04",
+  "facts": {
+   "processing_days": 3
+  }
+ },
+ {
+  "id": "sop/warehouse/cold-storage",
+  "kind": "SOP",
+  "topic": "cold-storage",
+  "topic_names": [
+   "kho lạnh",
+   "cold storage",
+   "冷蔵保管"
+  ],
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2024-09-08",
+  "facts": {
+   "temperature_c": 4
+  }
+ },
+ {
+  "id": "sop/warehouse/dispatch",
+  "kind": "SOP",
+  "topic": "dispatch",
+  "topic_names": [
+   "xuất kho",
+   "dispatch",
+   "出荷"
+  ],
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2025-06-22",
+  "facts": {
+   "cutoff_hour": 14
+  }
+ },
+ {
+  "id": "sop/warehouse/damaged-goods",
+  "kind": "SOP",
+  "topic": "damaged-goods",
+  "topic_names": [
+   "hàng hư hỏng",
+   "damaged goods",
+   "破損品"
+  ],
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2026-06-14",
+  "facts": {
+   "report_within_hours": 2
+  }
+ },
+ {
+  "id": "sop/warehouse/labeling",
+  "kind": "SOP",
+  "topic": "labeling",
+  "topic_names": [
+   "dán nhãn",
+   "labeling",
+   "ラベル貼付"
+  ],
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "draft",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2025-12-22",
+  "facts": {
+   "label_retention_days": 90
+  }
+ },
+ {
+  "id": "sop/warehouse/hazmat",
+  "kind": "SOP",
+  "topic": "hazmat",
+  "topic_names": [
+   "hàng nguy hiểm",
+   "hazardous materials",
+   "危険物"
+  ],
+  "department": "Warehouse",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2026-07-15",
+  "facts": {
+   "training_hours": 4
+  }
+ },
+ {
+  "id": "sop/cs/ticket-triage",
+  "kind": "SOP",
+  "topic": "ticket-triage",
+  "topic_names": [
+   "phân loại ticket",
+   "ticket triage",
+   "チケット振り分け"
+  ],
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "sop"
+  ],
+  "updated": "2024-06-21",
+  "facts": {
+   "first_response_hours": 4
+  }
+ },
+ {
+  "id": "sop/cs/refund-approval",
+  "kind": "SOP",
+  "topic": "refund-approval",
+  "topic_names": [
+   "duyệt hoàn tiền",
+   "refund approval",
+   "返金承認"
+  ],
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "sop"
+  ],
+  "updated": "2025-10-05",
+  "facts": {
+   "auto_approve_limit": 1000000
+  }
+ },
+ {
+  "id": "sop/cs/escalation",
+  "kind": "SOP",
+  "topic": "escalation",
+  "topic_names": [
+   "chuyển cấp xử lý",
+   "escalation",
+   "エスカレーション"
+  ],
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "sop"
+  ],
+  "updated": "2026-05-10",
+  "facts": {
+   "escalate_after_hours": 48
+  }
+ },
+ {
+  "id": "sop/cs/vip-customers",
+  "kind": "SOP",
+  "topic": "vip-customers",
+  "topic_names": [
+   "khách hàng VIP",
+   "VIP customers",
+   "VIP顧客対応"
+  ],
+  "department": "CS",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "privacy",
+   "sop"
+  ],
+  "updated": "2026-04-17",
+  "facts": {
+   "callback_minutes": 30
+  }
+ },
+ {
+  "id": "sop/cs/chat-handling",
+  "kind": "SOP",
+  "topic": "chat-handling",
+  "topic_names": [
+   "xử lý chat",
+   "chat handling",
+   "チャット対応"
+  ],
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "sop"
+  ],
+  "updated": "2025-08-01",
+  "facts": {
+   "max_concurrent_chats": 4
+  }
+ },
+ {
+  "id": "sop/cs/complaint",
+  "kind": "SOP",
+  "topic": "complaint",
+  "topic_names": [
+   "khiếu nại",
+   "complaint handling",
+   "苦情対応"
+  ],
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "sop"
+  ],
+  "updated": "2024-11-23",
+  "facts": {
+   "resolution_days": 5
+  }
+ },
+ {
+  "id": "sop/cs/warranty-claims",
+  "kind": "SOP",
+  "topic": "warranty-claims",
+  "topic_names": [
+   "tiếp nhận bảo hành",
+   "warranty claims",
+   "保証請求受付"
+  ],
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "sop"
+  ],
+  "updated": "2024-04-28",
+  "facts": {
+   "required_photos": 2
+  }
+ },
+ {
+  "id": "sop/cs/call-recording",
+  "kind": "SOP",
+  "topic": "call-recording",
+  "topic_names": [
+   "ghi âm cuộc gọi",
+   "call recording",
+   "通話録音"
+  ],
+  "department": "CS",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "privacy",
+   "security",
+   "sop"
+  ],
+  "updated": "2025-01-17",
+  "facts": {
+   "retention_days": 180
+  }
+ },
+ {
+  "id": "sop/it/password",
+  "kind": "SOP",
+  "topic": "password",
+  "topic_names": [
+   "mật khẩu",
+   "password management",
+   "パスワード管理"
+  ],
+  "department": "IT",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "it",
+   "security",
+   "sop"
+  ],
+  "updated": "2025-04-18",
+  "facts": {
+   "rotation_days": 90
+  }
+ },
+ {
+  "id": "sop/it/access-request",
+  "kind": "SOP",
+  "topic": "access-request",
+  "topic_names": [
+   "cấp quyền truy cập",
+   "access requests",
+   "アクセス申請"
+  ],
+  "department": "IT",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "it",
+   "security",
+   "sop"
+  ],
+  "updated": "2026-02-01",
+  "facts": {
+   "approval_sla_hours": 24
+  }
+ },
+ {
+  "id": "sop/it/backup",
+  "kind": "SOP",
+  "topic": "backup",
+  "topic_names": [
+   "sao lưu dữ liệu",
+   "data backup",
+   "バックアップ"
+  ],
+  "department": "IT",
+  "lang": "en",
+  "status": "draft",
+  "tags": [
+   "it",
+   "security",
+   "sop"
+  ],
+  "updated": "2026-06-15",
+  "facts": {
+   "backup_retention_days": 90
+  }
+ },
+ {
+  "id": "sop/it/incident",
+  "kind": "SOP",
+  "topic": "incident",
+  "topic_names": [
+   "sự cố bảo mật",
+   "security incident",
+   "セキュリティインシデント"
+  ],
+  "department": "IT",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "it",
+   "security",
+   "sop"
+  ],
+  "updated": "2026-02-10",
+  "facts": {
+   "report_within_minutes": 30
+  }
+ },
+ {
+  "id": "sop/it/laptop",
+  "kind": "SOP",
+  "topic": "laptop",
+  "topic_names": [
+   "cấp phát laptop",
+   "laptop provisioning",
+   "PC支給"
+  ],
+  "department": "IT",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "it",
+   "security",
+   "sop"
+  ],
+  "updated": "2025-10-21",
+  "facts": {
+   "replacement_years": 3
+  }
+ },
+ {
+  "id": "sop/it/vpn",
+  "kind": "SOP",
+  "topic": "vpn",
+  "topic_names": [
+   "sử dụng VPN",
+   "VPN usage",
+   "VPN利用"
+  ],
+  "department": "IT",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "it",
+   "security",
+   "sop"
+  ],
+  "updated": "2026-03-09",
+  "facts": {
+   "session_timeout_hours": 8
+  }
+ },
+ {
+  "id": "sop/hr/leave",
+  "kind": "SOP",
+  "topic": "leave",
+  "topic_names": [
+   "nghỉ phép",
+   "leave requests",
+   "休暇申請"
+  ],
+  "department": "HR",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "sop"
+  ],
+  "updated": "2025-08-18",
+  "facts": {
+   "notice_days": 5
+  }
+ },
+ {
+  "id": "sop/hr/onboarding",
+  "kind": "SOP",
+  "topic": "onboarding",
+  "topic_names": [
+   "tiếp nhận nhân viên mới",
+   "onboarding",
+   "入社手続き"
+  ],
+  "department": "HR",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "sop"
+  ],
+  "updated": "2025-10-14",
+  "facts": {
+   "buddy_weeks": 2
+  }
+ },
+ {
+  "id": "sop/hr/overtime",
+  "kind": "SOP",
+  "topic": "overtime",
+  "topic_names": [
+   "làm thêm giờ",
+   "overtime",
+   "残業"
+  ],
+  "department": "HR",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "sop"
+  ],
+  "updated": "2026-01-08",
+  "facts": {
+   "monthly_cap_hours": 30
+  }
+ },
+ {
+  "id": "sop/hr/expense",
+  "kind": "SOP",
+  "topic": "expense",
+  "topic_names": [
+   "hoàn ứng chi phí",
+   "expense claims",
+   "経費精算"
+  ],
+  "department": "HR",
+  "lang": "ja",
+  "status": "draft",
+  "tags": [
+   "hr",
+   "sop"
+  ],
+  "updated": "2026-08-28",
+  "facts": {
+   "submit_within_days": 15
+  }
+ },
+ {
+  "id": "sop/hr/remote-work",
+  "kind": "SOP",
+  "topic": "remote-work",
+  "topic_names": [
+   "làm việc từ xa",
+   "remote work",
+   "リモートワーク"
+  ],
+  "department": "HR",
+  "lang": "ja",
+  "status": "draft",
+  "tags": [
+   "hr",
+   "sop"
+  ],
+  "updated": "2025-09-06",
+  "facts": {
+   "max_days_per_week": 3
+  }
+ },
+ {
+  "id": "sop/hr/offboarding",
+  "kind": "SOP",
+  "topic": "offboarding",
+  "topic_names": [
+   "nghỉ việc",
+   "offboarding",
+   "退職手続き"
+  ],
+  "department": "HR",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "sop"
+  ],
+  "updated": "2026-07-08",
+  "facts": {
+   "notice_days": 30
+  }
+ },
+ {
+  "id": "contracts/acme-corp/distribution-202604",
+  "kind": "Contract",
+  "topic": "distribution",
+  "topic_names": [
+   "hợp đồng phân phối",
+   "distribution agreement",
+   "販売代理店契約"
+  ],
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2026-04-05",
+  "effective_from": "2026-04-18",
+  "effective_to": "2028-04-17",
+  "contract_value": 2991000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 30,
+   "renewal_notice_days": 90
+  }
+ },
+ {
+  "id": "contracts/sakura-trading/distribution-202410",
+  "kind": "Contract",
+  "topic": "distribution",
+  "topic_names": [
+   "hợp đồng phân phối",
+   "distribution agreement",
+   "販売代理店契約"
+  ],
+  "customer": "Sakura Trading",
+  "region": "JP",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2024-09-21",
+  "effective_from": "2024-10-10",
+  "effective_to": "2027-10-09",
+  "contract_value": 6770000,
+  "currency": "JPY",
+  "facts": {
+   "payment_terms_days": 30,
+   "renewal_notice_days": 90
+  }
+ },
+ {
+  "id": "contracts/minh-phat-jsc/installation-202506",
+  "kind": "Contract",
+  "topic": "installation",
+  "topic_names": [
+   "hợp đồng lắp đặt",
+   "installation agreement",
+   "設置契約"
+  ],
+  "customer": "Minh Phat JSC",
+  "region": "VN",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-05-25",
+  "effective_from": "2025-06-07",
+  "effective_to": "2026-06-06",
+  "contract_value": 4800000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 30,
+   "renewal_notice_days": 60
+  }
+ },
+ {
+  "id": "contracts/tokyo-denki-retail/maintenance-202512",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "topic_names": [
+   "hợp đồng bảo trì",
+   "maintenance agreement",
+   "保守契約"
+  ],
+  "customer": "Tokyo Denki Retail",
+  "region": "JP",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2025-12-15",
+  "effective_from": "2025-12-27",
+  "effective_to": "2028-12-26",
+  "contract_value": 46950000,
+  "currency": "JPY",
+  "facts": {
+   "payment_terms_days": 30,
+   "renewal_notice_days": 30
+  }
+ },
+ {
+  "id": "contracts/saigon-hotels-group/installation-202404",
+  "kind": "Contract",
+  "topic": "installation",
+  "topic_names": [
+   "hợp đồng lắp đặt",
+   "installation agreement",
+   "設置契約"
+  ],
+  "customer": "Saigon Hotels Group",
+  "region": "VN",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2024-03-22",
+  "effective_from": "2024-04-10",
+  "effective_to": "2027-04-09",
+  "contract_value": 243000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 60,
+   "renewal_notice_days": 60
+  }
+ },
+ {
+  "id": "contracts/osaka-office-supply/distribution-202405",
+  "kind": "Contract",
+  "topic": "distribution",
+  "topic_names": [
+   "hợp đồng phân phối",
+   "distribution agreement",
+   "販売代理店契約"
+  ],
+  "customer": "Osaka Office Supply",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2024-05-08",
+  "effective_from": "2024-05-19",
+  "effective_to": "2025-05-18",
+  "contract_value": 26490000,
+  "currency": "JPY",
+  "facts": {
+   "payment_terms_days": 30,
+   "renewal_notice_days": 90
+  }
+ },
+ {
+  "id": "contracts/acme-corp/distribution-202307",
+  "kind": "Contract",
+  "topic": "distribution",
+  "topic_names": [
+   "hợp đồng phân phối",
+   "distribution agreement",
+   "販売代理店契約"
+  ],
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2023-07-04",
+  "effective_from": "2023-07-08",
+  "effective_to": "2024-07-07",
+  "contract_value": 4970000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 45,
+   "renewal_notice_days": 60
+  }
+ },
+ {
+  "id": "contracts/sakura-trading/supply-202604",
+  "kind": "Contract",
+  "topic": "supply",
+  "topic_names": [
+   "hợp đồng cung cấp",
+   "supply agreement",
+   "供給契約"
+  ],
+  "customer": "Sakura Trading",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2026-03-23",
+  "effective_from": "2026-04-07",
+  "effective_to": "2027-04-06",
+  "contract_value": 9000000,
+  "currency": "JPY",
+  "facts": {
+   "payment_terms_days": 45,
+   "renewal_notice_days": 90
+  }
+ },
+ {
+  "id": "contracts/minh-phat-jsc/maintenance-202502",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "topic_names": [
+   "hợp đồng bảo trì",
+   "maintenance agreement",
+   "保守契約"
+  ],
+  "customer": "Minh Phat JSC",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-02-13",
+  "effective_from": "2025-02-25",
+  "effective_to": "2026-02-24",
+  "contract_value": 1754000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 45,
+   "renewal_notice_days": 90
+  }
+ },
+ {
+  "id": "contracts/tokyo-denki-retail/maintenance-202506",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "topic_names": [
+   "hợp đồng bảo trì",
+   "maintenance agreement",
+   "保守契約"
+  ],
+  "customer": "Tokyo Denki Retail",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2025-05-29",
+  "effective_from": "2025-06-01",
+  "effective_to": "2026-05-31",
+  "contract_value": 33830000,
+  "currency": "JPY",
+  "facts": {
+   "payment_terms_days": 60,
+   "renewal_notice_days": 90
+  }
+ },
+ {
+  "id": "contracts/saigon-hotels-group/installation-202510",
+  "kind": "Contract",
+  "topic": "installation",
+  "topic_names": [
+   "hợp đồng lắp đặt",
+   "installation agreement",
+   "設置契約"
+  ],
+  "customer": "Saigon Hotels Group",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-09-24",
+  "effective_from": "2025-10-13",
+  "effective_to": "2027-10-12",
+  "contract_value": 4602000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 30,
+   "renewal_notice_days": 30
+  }
+ },
+ {
+  "id": "contracts/osaka-office-supply/maintenance-202606",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "topic_names": [
+   "hợp đồng bảo trì",
+   "maintenance agreement",
+   "保守契約"
+  ],
+  "customer": "Osaka Office Supply",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2026-06-03",
+  "effective_from": "2026-06-09",
+  "effective_to": "2027-06-08",
+  "contract_value": 15420000,
+  "currency": "JPY",
+  "facts": {
+   "payment_terms_days": 60,
+   "renewal_notice_days": 90
+  }
+ },
+ {
+  "id": "contracts/acme-corp/distribution-202507",
+  "kind": "Contract",
+  "topic": "distribution",
+  "topic_names": [
+   "hợp đồng phân phối",
+   "distribution agreement",
+   "販売代理店契約"
+  ],
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-06-17",
+  "effective_from": "2025-07-07",
+  "effective_to": "2026-07-06",
+  "contract_value": 3214000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 30,
+   "renewal_notice_days": 90
+  }
+ },
+ {
+  "id": "contracts/sakura-trading/supply-202402",
+  "kind": "Contract",
+  "topic": "supply",
+  "topic_names": [
+   "hợp đồng cung cấp",
+   "supply agreement",
+   "供給契約"
+  ],
+  "customer": "Sakura Trading",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2024-02-10",
+  "effective_from": "2024-02-15",
+  "effective_to": "2025-02-14",
+  "contract_value": 28720000,
+  "currency": "JPY",
+  "facts": {
+   "payment_terms_days": 45,
+   "renewal_notice_days": 60
+  }
+ },
+ {
+  "id": "contracts/minh-phat-jsc/maintenance-202401",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "topic_names": [
+   "hợp đồng bảo trì",
+   "maintenance agreement",
+   "保守契約"
+  ],
+  "customer": "Minh Phat JSC",
+  "region": "VN",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2024-01-21",
+  "effective_from": "2024-01-27",
+  "effective_to": "2026-01-26",
+  "contract_value": 4086000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 60,
+   "renewal_notice_days": 90
+  }
+ },
+ {
+  "id": "contracts/tokyo-denki-retail/supply-202506",
+  "kind": "Contract",
+  "topic": "supply",
+  "topic_names": [
+   "hợp đồng cung cấp",
+   "supply agreement",
+   "供給契約"
+  ],
+  "customer": "Tokyo Denki Retail",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2025-05-30",
+  "effective_from": "2025-06-04",
+  "effective_to": "2028-06-03",
+  "contract_value": 49940000,
+  "currency": "JPY",
+  "facts": {
+   "payment_terms_days": 30,
+   "renewal_notice_days": 60
+  }
+ },
+ {
+  "id": "contracts/saigon-hotels-group/maintenance-202411",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "topic_names": [
+   "hợp đồng bảo trì",
+   "maintenance agreement",
+   "保守契約"
+  ],
+  "customer": "Saigon Hotels Group",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2024-11-06",
+  "effective_from": "2024-11-25",
+  "effective_to": "2025-11-24",
+  "contract_value": 1579000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 60,
+   "renewal_notice_days": 60
+  }
+ },
+ {
+  "id": "contracts/osaka-office-supply/maintenance-202603",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "topic_names": [
+   "hợp đồng bảo trì",
+   "maintenance agreement",
+   "保守契約"
+  ],
+  "customer": "Osaka Office Supply",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2026-02-18",
+  "effective_from": "2026-03-07",
+  "effective_to": "2029-03-06",
+  "contract_value": 27690000,
+  "currency": "JPY",
+  "facts": {
+   "payment_terms_days": 30,
+   "renewal_notice_days": 90
+  }
+ },
+ {
+  "id": "contracts/acme-corp/maintenance-202505",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "topic_names": [
+   "hợp đồng bảo trì",
+   "maintenance agreement",
+   "保守契約"
+  ],
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-05-01",
+  "effective_from": "2025-05-18",
+  "effective_to": "2028-05-17",
+  "contract_value": 3326000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 60,
+   "renewal_notice_days": 90
+  }
+ },
+ {
+  "id": "contracts/sakura-trading/supply-202510",
+  "kind": "Contract",
+  "topic": "supply",
+  "topic_names": [
+   "hợp đồng cung cấp",
+   "supply agreement",
+   "供給契約"
+  ],
+  "customer": "Sakura Trading",
+  "region": "JP",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2025-10-18",
+  "effective_from": "2025-10-31",
+  "effective_to": "2027-10-27",
+  "contract_value": 28940000,
+  "currency": "JPY",
+  "facts": {
+   "payment_terms_days": 45,
+   "renewal_notice_days": 60
+  }
+ },
+ {
+  "id": "contracts/minh-phat-jsc/maintenance-202403",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "topic_names": [
+   "hợp đồng bảo trì",
+   "maintenance agreement",
+   "保守契約"
+  ],
+  "customer": "Minh Phat JSC",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2024-03-17",
+  "effective_from": "2024-03-24",
+  "effective_to": "2026-03-23",
+  "contract_value": 2119000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 60,
+   "renewal_notice_days": 30
+  }
+ },
+ {
+  "id": "contracts/tokyo-denki-retail/maintenance-202501",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "topic_names": [
+   "hợp đồng bảo trì",
+   "maintenance agreement",
+   "保守契約"
+  ],
+  "customer": "Tokyo Denki Retail",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2025-01-02",
+  "effective_from": "2025-01-22",
+  "effective_to": "2028-01-21",
+  "contract_value": 34860000,
+  "currency": "JPY",
+  "facts": {
+   "payment_terms_days": 60,
+   "renewal_notice_days": 60
+  }
+ },
+ {
+  "id": "contracts/saigon-hotels-group/installation-202504",
+  "kind": "Contract",
+  "topic": "installation",
+  "topic_names": [
+   "hợp đồng lắp đặt",
+   "installation agreement",
+   "設置契約"
+  ],
+  "customer": "Saigon Hotels Group",
+  "region": "VN",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-03-31",
+  "effective_from": "2025-04-20",
+  "effective_to": "2026-04-19",
+  "contract_value": 4252000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 60,
+   "renewal_notice_days": 30
+  }
+ },
+ {
+  "id": "contracts/osaka-office-supply/installation-202505",
+  "kind": "Contract",
+  "topic": "installation",
+  "topic_names": [
+   "hợp đồng lắp đặt",
+   "installation agreement",
+   "設置契約"
+  ],
+  "customer": "Osaka Office Supply",
+  "region": "JP",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2025-05-14",
+  "effective_from": "2025-05-22",
+  "effective_to": "2027-05-21",
+  "contract_value": 6910000,
+  "currency": "JPY",
+  "facts": {
+   "payment_terms_days": 30,
+   "renewal_notice_days": 60
+  }
+ },
+ {
+  "id": "contracts/minh-phat-jsc/maintenance-202402",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "topic_names": [
+   "hợp đồng bảo trì",
+   "maintenance agreement",
+   "保守契約"
+  ],
+  "customer": "Minh Phat JSC",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2024-02-07",
+  "effective_from": "2024-02-23",
+  "effective_to": "2026-02-22",
+  "contract_value": 4942000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 45,
+   "renewal_notice_days": 60
+  }
+ },
+ {
+  "id": "contracts/sakura-trading/distribution-202308",
+  "kind": "Contract",
+  "topic": "distribution",
+  "topic_names": [
+   "hợp đồng phân phối",
+   "distribution agreement",
+   "販売代理店契約"
+  ],
+  "customer": "Sakura Trading",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2023-08-05",
+  "effective_from": "2023-08-16",
+  "effective_to": "2024-08-15",
+  "contract_value": 11890000,
+  "currency": "JPY",
+  "facts": {
+   "payment_terms_days": 45,
+   "renewal_notice_days": 30
+  }
+ },
+ {
+  "id": "contracts/acme-corp/installation-202604",
+  "kind": "Contract",
+  "topic": "installation",
+  "topic_names": [
+   "hợp đồng lắp đặt",
+   "installation agreement",
+   "設置契約"
+  ],
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2026-04-11",
+  "effective_from": "2026-04-20",
+  "effective_to": "2028-04-19",
+  "contract_value": 3226000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 60,
+   "renewal_notice_days": 30
+  }
+ },
+ {
+  "id": "contracts/acme-corp/supply-202504",
+  "kind": "Contract",
+  "topic": "supply",
+  "topic_names": [
+   "hợp đồng cung cấp",
+   "supply agreement",
+   "供給契約"
+  ],
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-03-29",
+  "effective_from": "2025-04-06",
+  "effective_to": "2026-04-05",
+  "contract_value": 3996000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 60,
+   "renewal_notice_days": 60
+  }
+ },
+ {
+  "id": "contracts/acme-corp/installation-202605",
+  "kind": "Contract",
+  "topic": "installation",
+  "topic_names": [
+   "hợp đồng lắp đặt",
+   "installation agreement",
+   "設置契約"
+  ],
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2026-04-18",
+  "effective_from": "2026-05-04",
+  "effective_to": "2027-05-03",
+  "contract_value": 1085000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 30,
+   "renewal_notice_days": 30
+  }
+ },
+ {
+  "id": "contracts/minh-phat-jsc/supply-202601",
+  "kind": "Contract",
+  "topic": "supply",
+  "topic_names": [
+   "hợp đồng cung cấp",
+   "supply agreement",
+   "供給契約"
+  ],
+  "customer": "Minh Phat JSC",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2026-01-02",
+  "effective_from": "2026-01-20",
+  "effective_to": "2028-01-19",
+  "contract_value": 3014000000,
+  "currency": "VND",
+  "facts": {
+   "payment_terms_days": 45,
+   "renewal_notice_days": 60
+  }
+ },
+ {
+  "id": "meetings/finance/2026-03-17-budget",
+  "kind": "Meeting Note",
+  "topic": "budget",
+  "topic_names": [
+   "ngân sách",
+   "budget review",
+   "予算レビュー"
+  ],
+  "department": "Finance",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "finance",
+   "meeting"
+  ],
+  "updated": "2026-03-17",
+  "meeting_date": "2026-03-17",
+  "facts": {
+   "decided_budget_million_vnd": 90,
+   "next_meeting_in_weeks": 4
+  }
+ },
+ {
+  "id": "meetings/hr/2026-06-08-hiring",
+  "kind": "Meeting Note",
+  "topic": "hiring",
+  "topic_names": [
+   "tuyển dụng",
+   "hiring plan",
+   "採用計画"
+  ],
+  "department": "HR",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "meeting"
+  ],
+  "updated": "2026-06-08",
+  "meeting_date": "2026-06-08",
+  "facts": {
+   "decided_budget_million_vnd": 70,
+   "next_meeting_in_weeks": 2
+  }
+ },
+ {
+  "id": "meetings/sales/2026-04-06-launch",
+  "kind": "Meeting Note",
+  "topic": "launch",
+  "topic_names": [
+   "ra mắt sản phẩm",
+   "product launch",
+   "製品発売"
+  ],
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "marketing",
+   "meeting",
+   "product"
+  ],
+  "updated": "2026-04-06",
+  "meeting_date": "2026-04-06",
+  "facts": {
+   "decided_budget_million_vnd": 640,
+   "next_meeting_in_weeks": 1
+  }
+ },
+ {
+  "id": "meetings/sales/2026-04-07-kpi",
+  "kind": "Meeting Note",
+  "topic": "kpi",
+  "topic_names": [
+   "KPI",
+   "KPI review",
+   "KPIレビュー"
+  ],
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "meeting",
+   "sales"
+  ],
+  "updated": "2026-04-07",
+  "meeting_date": "2026-04-07",
+  "facts": {
+   "decided_budget_million_vnd": 700,
+   "next_meeting_in_weeks": 4
+  }
+ },
+ {
+  "id": "meetings/it/2026-04-23-security-review",
+  "kind": "Meeting Note",
+  "topic": "security-review",
+  "topic_names": [
+   "rà soát bảo mật",
+   "security review",
+   "セキュリティレビュー"
+  ],
+  "department": "IT",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "it",
+   "meeting",
+   "security"
+  ],
+  "updated": "2026-04-23",
+  "meeting_date": "2026-04-23",
+  "facts": {
+   "decided_budget_million_vnd": 320,
+   "next_meeting_in_weeks": 4
+  }
+ },
+ {
+  "id": "meetings/warehouse/2025-10-28-inventory-planning",
+  "kind": "Meeting Note",
+  "topic": "inventory-planning",
+  "topic_names": [
+   "kế hoạch tồn kho",
+   "inventory planning",
+   "在庫計画"
+  ],
+  "department": "Warehouse",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "meeting",
+   "warehouse"
+  ],
+  "updated": "2025-10-28",
+  "meeting_date": "2025-10-28",
+  "facts": {
+   "decided_budget_million_vnd": 130,
+   "next_meeting_in_weeks": 4
+  }
+ },
+ {
+  "id": "meetings/finance/2026-08-27-budget",
+  "kind": "Meeting Note",
+  "topic": "budget",
+  "topic_names": [
+   "ngân sách",
+   "budget review",
+   "予算レビュー"
+  ],
+  "department": "Finance",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "finance",
+   "meeting"
+  ],
+  "updated": "2026-08-27",
+  "meeting_date": "2026-08-27",
+  "facts": {
+   "decided_budget_million_vnd": 700,
+   "next_meeting_in_weeks": 4
+  }
+ },
+ {
+  "id": "meetings/hr/2026-06-30-hiring",
+  "kind": "Meeting Note",
+  "topic": "hiring",
+  "topic_names": [
+   "tuyển dụng",
+   "hiring plan",
+   "採用計画"
+  ],
+  "department": "HR",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "meeting"
+  ],
+  "updated": "2026-06-30",
+  "meeting_date": "2026-06-30",
+  "facts": {
+   "decided_budget_million_vnd": 660,
+   "next_meeting_in_weeks": 4
+  }
+ },
+ {
+  "id": "meetings/sales/2025-11-16-launch",
+  "kind": "Meeting Note",
+  "topic": "launch",
+  "topic_names": [
+   "ra mắt sản phẩm",
+   "product launch",
+   "製品発売"
+  ],
+  "department": "Sales",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "marketing",
+   "meeting",
+   "product"
+  ],
+  "updated": "2025-11-16",
+  "meeting_date": "2025-11-16",
+  "facts": {
+   "decided_budget_million_vnd": 710,
+   "next_meeting_in_weeks": 4
+  }
+ },
+ {
+  "id": "meetings/sales/2026-03-16-kpi",
+  "kind": "Meeting Note",
+  "topic": "kpi",
+  "topic_names": [
+   "KPI",
+   "KPI review",
+   "KPIレビュー"
+  ],
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "meeting",
+   "sales"
+  ],
+  "updated": "2026-03-16",
+  "meeting_date": "2026-03-16",
+  "facts": {
+   "decided_budget_million_vnd": 450,
+   "next_meeting_in_weeks": 4
+  }
+ },
+ {
+  "id": "meetings/it/2026-03-23-security-review",
+  "kind": "Meeting Note",
+  "topic": "security-review",
+  "topic_names": [
+   "rà soát bảo mật",
+   "security review",
+   "セキュリティレビュー"
+  ],
+  "department": "IT",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "it",
+   "meeting",
+   "security"
+  ],
+  "updated": "2026-03-23",
+  "meeting_date": "2026-03-23",
+  "facts": {
+   "decided_budget_million_vnd": 280,
+   "next_meeting_in_weeks": 1
+  }
+ },
+ {
+  "id": "meetings/warehouse/2026-07-15-inventory-planning",
+  "kind": "Meeting Note",
+  "topic": "inventory-planning",
+  "topic_names": [
+   "kế hoạch tồn kho",
+   "inventory planning",
+   "在庫計画"
+  ],
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "meeting",
+   "warehouse"
+  ],
+  "updated": "2026-07-15",
+  "meeting_date": "2026-07-15",
+  "facts": {
+   "decided_budget_million_vnd": 370,
+   "next_meeting_in_weeks": 4
+  }
+ },
+ {
+  "id": "meetings/finance/2026-06-24-budget",
+  "kind": "Meeting Note",
+  "topic": "budget",
+  "topic_names": [
+   "ngân sách",
+   "budget review",
+   "予算レビュー"
+  ],
+  "department": "Finance",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "finance",
+   "meeting"
+  ],
+  "updated": "2026-06-24",
+  "meeting_date": "2026-06-24",
+  "facts": {
+   "decided_budget_million_vnd": 850,
+   "next_meeting_in_weeks": 1
+  }
+ },
+ {
+  "id": "meetings/hr/2026-08-08-hiring",
+  "kind": "Meeting Note",
+  "topic": "hiring",
+  "topic_names": [
+   "tuyển dụng",
+   "hiring plan",
+   "採用計画"
+  ],
+  "department": "HR",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "meeting"
+  ],
+  "updated": "2026-08-08",
+  "meeting_date": "2026-08-08",
+  "facts": {
+   "decided_budget_million_vnd": 80,
+   "next_meeting_in_weeks": 2
+  }
+ },
+ {
+  "id": "meetings/sales/2026-02-01-launch",
+  "kind": "Meeting Note",
+  "topic": "launch",
+  "topic_names": [
+   "ra mắt sản phẩm",
+   "product launch",
+   "製品発売"
+  ],
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "marketing",
+   "meeting",
+   "product"
+  ],
+  "updated": "2026-02-01",
+  "meeting_date": "2026-02-01",
+  "facts": {
+   "decided_budget_million_vnd": 590,
+   "next_meeting_in_weeks": 4
+  }
+ },
+ {
+  "id": "meetings/sales/2026-06-27-kpi",
+  "kind": "Meeting Note",
+  "topic": "kpi",
+  "topic_names": [
+   "KPI",
+   "KPI review",
+   "KPIレビュー"
+  ],
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "meeting",
+   "sales"
+  ],
+  "updated": "2026-06-27",
+  "meeting_date": "2026-06-27",
+  "facts": {
+   "decided_budget_million_vnd": 700,
+   "next_meeting_in_weeks": 1
+  }
+ },
+ {
+  "id": "meetings/it/2026-02-16-security-review",
+  "kind": "Meeting Note",
+  "topic": "security-review",
+  "topic_names": [
+   "rà soát bảo mật",
+   "security review",
+   "セキュリティレビュー"
+  ],
+  "department": "IT",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "it",
+   "meeting",
+   "security"
+  ],
+  "updated": "2026-02-16",
+  "meeting_date": "2026-02-16",
+  "facts": {
+   "decided_budget_million_vnd": 670,
+   "next_meeting_in_weeks": 1
+  }
+ },
+ {
+  "id": "meetings/warehouse/2026-07-14-inventory-planning",
+  "kind": "Meeting Note",
+  "topic": "inventory-planning",
+  "topic_names": [
+   "kế hoạch tồn kho",
+   "inventory planning",
+   "在庫計画"
+  ],
+  "department": "Warehouse",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "meeting",
+   "warehouse"
+  ],
+  "updated": "2026-07-14",
+  "meeting_date": "2026-07-14",
+  "facts": {
+   "decided_budget_million_vnd": 460,
+   "next_meeting_in_weeks": 2
+  }
+ },
+ {
+  "id": "meetings/hr/2026-06-30-budget",
+  "kind": "Meeting Note",
+  "topic": "budget",
+  "topic_names": [
+   "ngân sách",
+   "budget review",
+   "予算レビュー"
+  ],
+  "department": "HR",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "finance",
+   "meeting"
+  ],
+  "updated": "2026-06-30",
+  "meeting_date": "2026-06-30",
+  "facts": {
+   "decided_budget_million_vnd": 740,
+   "next_meeting_in_weeks": 1
+  }
+ },
+ {
+  "id": "meetings/sales/2026-08-07-hiring",
+  "kind": "Meeting Note",
+  "topic": "hiring",
+  "topic_names": [
+   "tuyển dụng",
+   "hiring plan",
+   "採用計画"
+  ],
+  "department": "Sales",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "meeting"
+  ],
+  "updated": "2026-08-07",
+  "meeting_date": "2026-08-07",
+  "facts": {
+   "decided_budget_million_vnd": 240,
+   "next_meeting_in_weeks": 4
+  }
+ },
+ {
+  "id": "meetings/sales/2025-12-07-launch",
+  "kind": "Meeting Note",
+  "topic": "launch",
+  "topic_names": [
+   "ra mắt sản phẩm",
+   "product launch",
+   "製品発売"
+  ],
+  "department": "Sales",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "marketing",
+   "meeting",
+   "product"
+  ],
+  "updated": "2025-12-07",
+  "meeting_date": "2025-12-07",
+  "facts": {
+   "decided_budget_million_vnd": 780,
+   "next_meeting_in_weeks": 1
+  }
+ },
+ {
+  "id": "meetings/sales/2026-02-21-kpi",
+  "kind": "Meeting Note",
+  "topic": "kpi",
+  "topic_names": [
+   "KPI",
+   "KPI review",
+   "KPIレビュー"
+  ],
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "meeting",
+   "sales"
+  ],
+  "updated": "2026-02-21",
+  "meeting_date": "2026-02-21",
+  "facts": {
+   "decided_budget_million_vnd": 270,
+   "next_meeting_in_weeks": 1
+  }
+ },
+ {
+  "id": "meetings/hr/2026-07-04-security-review",
+  "kind": "Meeting Note",
+  "topic": "security-review",
+  "topic_names": [
+   "rà soát bảo mật",
+   "security review",
+   "セキュリティレビュー"
+  ],
+  "department": "HR",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "it",
+   "meeting",
+   "security"
+  ],
+  "updated": "2026-07-04",
+  "meeting_date": "2026-07-04",
+  "facts": {
+   "decided_budget_million_vnd": 500,
+   "next_meeting_in_weeks": 1
+  }
+ },
+ {
+  "id": "meetings/hr/2025-12-26-inventory-planning",
+  "kind": "Meeting Note",
+  "topic": "inventory-planning",
+  "topic_names": [
+   "kế hoạch tồn kho",
+   "inventory planning",
+   "在庫計画"
+  ],
+  "department": "HR",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "meeting",
+   "warehouse"
+  ],
+  "updated": "2025-12-26",
+  "meeting_date": "2025-12-26",
+  "facts": {
+   "decided_budget_million_vnd": 110,
+   "next_meeting_in_weeks": 1
+  }
+ },
+ {
+  "id": "meetings/sales/2026-04-30-budget",
+  "kind": "Meeting Note",
+  "topic": "budget",
+  "topic_names": [
+   "ngân sách",
+   "budget review",
+   "予算レビュー"
+  ],
+  "department": "Sales",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "finance",
+   "meeting"
+  ],
+  "updated": "2026-04-30",
+  "meeting_date": "2026-04-30",
+  "facts": {
+   "decided_budget_million_vnd": 840,
+   "next_meeting_in_weeks": 2
+  }
+ },
+ {
+  "id": "products/air-purifier/hk-ai659",
+  "kind": "Product Spec",
+  "topic": "air-purifier",
+  "topic_names": [
+   "máy lọc không khí",
+   "air purifier",
+   "空気清浄機"
+  ],
+  "model": "HK-AI659",
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "product",
+   "air-purifier"
+  ],
+  "updated": "2024-08-14",
+  "facts": {
+   "power_watts": 1350,
+   "launch_year": 2023
+  }
+ },
+ {
+  "id": "products/rice-cooker/hk-ri655",
+  "kind": "Product Spec",
+  "topic": "rice-cooker",
+  "topic_names": [
+   "nồi cơm điện",
+   "rice cooker",
+   "炊飯器"
+  ],
+  "model": "HK-RI655",
+  "department": "Sales",
+  "lang": "ja",
+  "status": "deprecated",
+  "tags": [
+   "product",
+   "rice-cooker"
+  ],
+  "updated": "2026-02-04",
+  "facts": {
+   "power_watts": 1080,
+   "launch_year": 2022
+  }
+ },
+ {
+  "id": "products/aircon/hk-ai432",
+  "kind": "Product Spec",
+  "topic": "aircon",
+  "topic_names": [
+   "điều hòa",
+   "air conditioner",
+   "エアコン"
+  ],
+  "model": "HK-AI432",
+  "department": "Sales",
+  "lang": "ja",
+  "status": "deprecated",
+  "tags": [
+   "product",
+   "aircon"
+  ],
+  "updated": "2024-02-11",
+  "facts": {
+   "power_watts": 1240,
+   "launch_year": 2021
+  }
+ },
+ {
+  "id": "products/fridge/hk-fr159",
+  "kind": "Product Spec",
+  "topic": "fridge",
+  "topic_names": [
+   "tủ lạnh",
+   "refrigerator",
+   "冷蔵庫"
+  ],
+  "model": "HK-FR159",
+  "department": "Sales",
+  "lang": "ja",
+  "status": "deprecated",
+  "tags": [
+   "product",
+   "fridge"
+  ],
+  "updated": "2026-05-14",
+  "facts": {
+   "power_watts": 1840,
+   "launch_year": 2023
+  }
+ },
+ {
+  "id": "products/washer/hk-wa436",
+  "kind": "Product Spec",
+  "topic": "washer",
+  "topic_names": [
+   "máy giặt",
+   "washing machine",
+   "洗濯機"
+  ],
+  "model": "HK-WA436",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "product",
+   "washer"
+  ],
+  "updated": "2025-05-30",
+  "facts": {
+   "power_watts": 520,
+   "launch_year": 2021
+  }
+ },
+ {
+  "id": "products/air-purifier/hk-ai532",
+  "kind": "Product Spec",
+  "topic": "air-purifier",
+  "topic_names": [
+   "máy lọc không khí",
+   "air purifier",
+   "空気清浄機"
+  ],
+  "model": "HK-AI532",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "product",
+   "air-purifier"
+  ],
+  "updated": "2026-05-03",
+  "facts": {
+   "power_watts": 2190,
+   "launch_year": 2022
+  }
+ },
+ {
+  "id": "products/rice-cooker/hk-ri346",
+  "kind": "Product Spec",
+  "topic": "rice-cooker",
+  "topic_names": [
+   "nồi cơm điện",
+   "rice cooker",
+   "炊飯器"
+  ],
+  "model": "HK-RI346",
+  "department": "Sales",
+  "lang": "en",
+  "status": "deprecated",
+  "tags": [
+   "product",
+   "rice-cooker"
+  ],
+  "updated": "2024-08-05",
+  "facts": {
+   "power_watts": 990,
+   "launch_year": 2022
+  }
+ },
+ {
+  "id": "products/aircon/hk-ai648",
+  "kind": "Product Spec",
+  "topic": "aircon",
+  "topic_names": [
+   "điều hòa",
+   "air conditioner",
+   "エアコン"
+  ],
+  "model": "HK-AI648",
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "product",
+   "aircon"
+  ],
+  "updated": "2026-01-08",
+  "facts": {
+   "power_watts": 1120,
+   "launch_year": 2024
+  }
+ },
+ {
+  "id": "products/fridge/hk-fr976",
+  "kind": "Product Spec",
+  "topic": "fridge",
+  "topic_names": [
+   "tủ lạnh",
+   "refrigerator",
+   "冷蔵庫"
+  ],
+  "model": "HK-FR976",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "product",
+   "fridge"
+  ],
+  "updated": "2024-11-12",
+  "facts": {
+   "power_watts": 1650,
+   "launch_year": 2024
+  }
+ },
+ {
+  "id": "products/washer/hk-wa672",
+  "kind": "Product Spec",
+  "topic": "washer",
+  "topic_names": [
+   "máy giặt",
+   "washing machine",
+   "洗濯機"
+  ],
+  "model": "HK-WA672",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "product",
+   "washer"
+  ],
+  "updated": "2026-06-18",
+  "facts": {
+   "power_watts": 2330,
+   "launch_year": 2022
+  }
+ },
+ {
+  "id": "products/air-purifier/hk-ai856",
+  "kind": "Product Spec",
+  "topic": "air-purifier",
+  "topic_names": [
+   "máy lọc không khí",
+   "air purifier",
+   "空気清浄機"
+  ],
+  "model": "HK-AI856",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "deprecated",
+  "tags": [
+   "product",
+   "air-purifier"
+  ],
+  "updated": "2024-12-28",
+  "facts": {
+   "power_watts": 1860,
+   "launch_year": 2025
+  }
+ },
+ {
+  "id": "products/rice-cooker/hk-ri804",
+  "kind": "Product Spec",
+  "topic": "rice-cooker",
+  "topic_names": [
+   "nồi cơm điện",
+   "rice cooker",
+   "炊飯器"
+  ],
+  "model": "HK-RI804",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "deprecated",
+  "tags": [
+   "product",
+   "rice-cooker"
+  ],
+  "updated": "2024-07-27",
+  "facts": {
+   "power_watts": 1680,
+   "launch_year": 2024
+  }
+ },
+ {
+  "id": "products/aircon/hk-ai293",
+  "kind": "Product Spec",
+  "topic": "aircon",
+  "topic_names": [
+   "điều hòa",
+   "air conditioner",
+   "エアコン"
+  ],
+  "model": "HK-AI293",
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "product",
+   "aircon"
+  ],
+  "updated": "2024-02-01",
+  "facts": {
+   "power_watts": 1440,
+   "launch_year": 2022
+  }
+ },
+ {
+  "id": "products/fridge/hk-fr763",
+  "kind": "Product Spec",
+  "topic": "fridge",
+  "topic_names": [
+   "tủ lạnh",
+   "refrigerator",
+   "冷蔵庫"
+  ],
+  "model": "HK-FR763",
+  "department": "Sales",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "product",
+   "fridge"
+  ],
+  "updated": "2026-03-19",
+  "facts": {
+   "power_watts": 720,
+   "launch_year": 2023
+  }
+ },
+ {
+  "id": "products/washer/hk-wa856",
+  "kind": "Product Spec",
+  "topic": "washer",
+  "topic_names": [
+   "máy giặt",
+   "washing machine",
+   "洗濯機"
+  ],
+  "model": "HK-WA856",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "product",
+   "washer"
+  ],
+  "updated": "2025-05-03",
+  "facts": {
+   "power_watts": 1370,
+   "launch_year": 2024
+  }
+ },
+ {
+  "id": "faq/warranty-0",
+  "kind": "FAQ",
+  "topic": "warranty",
+  "topic_names": [
+   "warranty",
+   "warranty",
+   "warranty"
+  ],
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "warranty"
+  ],
+  "updated": "2026-05-15",
+  "facts": {}
+ },
+ {
+  "id": "faq/shipping-1",
+  "kind": "FAQ",
+  "topic": "shipping",
+  "topic_names": [
+   "shipping",
+   "shipping",
+   "shipping"
+  ],
+  "department": "CS",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "shipping"
+  ],
+  "updated": "2025-05-28",
+  "facts": {}
+ },
+ {
+  "id": "faq/billing-2",
+  "kind": "FAQ",
+  "topic": "billing",
+  "topic_names": [
+   "billing",
+   "billing",
+   "billing"
+  ],
+  "department": "CS",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "billing"
+  ],
+  "updated": "2026-01-03",
+  "facts": {}
+ },
+ {
+  "id": "faq/loyalty-3",
+  "kind": "FAQ",
+  "topic": "loyalty",
+  "topic_names": [
+   "loyalty",
+   "loyalty",
+   "loyalty"
+  ],
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "loyalty"
+  ],
+  "updated": "2026-09-16",
+  "facts": {}
+ },
+ {
+  "id": "faq/privacy-4",
+  "kind": "FAQ",
+  "topic": "privacy",
+  "topic_names": [
+   "privacy",
+   "privacy",
+   "privacy"
+  ],
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "privacy"
+  ],
+  "updated": "2025-02-19",
+  "facts": {}
+ },
+ {
+  "id": "faq/privacy-5",
+  "kind": "FAQ",
+  "topic": "privacy",
+  "topic_names": [
+   "privacy",
+   "privacy",
+   "privacy"
+  ],
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "privacy"
+  ],
+  "updated": "2026-07-28",
+  "facts": {}
+ },
+ {
+  "id": "faq/warranty-6",
+  "kind": "FAQ",
+  "topic": "warranty",
+  "topic_names": [
+   "warranty",
+   "warranty",
+   "warranty"
+  ],
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "warranty"
+  ],
+  "updated": "2025-03-22",
+  "facts": {}
+ },
+ {
+  "id": "faq/loyalty-7",
+  "kind": "FAQ",
+  "topic": "loyalty",
+  "topic_names": [
+   "loyalty",
+   "loyalty",
+   "loyalty"
+  ],
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "loyalty"
+  ],
+  "updated": "2025-12-21",
+  "facts": {}
+ },
+ {
+  "id": "faq/billing-8",
+  "kind": "FAQ",
+  "topic": "billing",
+  "topic_names": [
+   "billing",
+   "billing",
+   "billing"
+  ],
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "billing"
+  ],
+  "updated": "2026-06-28",
+  "facts": {}
+ },
+ {
+  "id": "faq/returns-9",
+  "kind": "FAQ",
+  "topic": "returns",
+  "topic_names": [
+   "returns",
+   "returns",
+   "returns"
+  ],
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "returns"
+  ],
+  "updated": "2025-10-31",
+  "facts": {}
+ },
+ {
+  "id": "announcements/office-move-0",
+  "kind": "Announcement",
+  "topic": "office-move",
+  "topic_names": [
+   "office-move",
+   "office-move",
+   "office-move"
+  ],
+  "department": "Sales",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "hr"
+  ],
+  "updated": "2025-06-22",
+  "facts": {}
+ },
+ {
+  "id": "announcements/office-move-1",
+  "kind": "Announcement",
+  "topic": "office-move",
+  "topic_names": [
+   "office-move",
+   "office-move",
+   "office-move"
+  ],
+  "department": "IT",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "hr"
+  ],
+  "updated": "2026-03-16",
+  "facts": {}
+ },
+ {
+  "id": "announcements/office-move-2",
+  "kind": "Announcement",
+  "topic": "office-move",
+  "topic_names": [
+   "office-move",
+   "office-move",
+   "office-move"
+  ],
+  "department": "HR",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "hr"
+  ],
+  "updated": "2026-07-15",
+  "facts": {}
+ },
+ {
+  "id": "announcements/security-training-3",
+  "kind": "Announcement",
+  "topic": "security-training",
+  "topic_names": [
+   "security-training",
+   "security-training",
+   "security-training"
+  ],
+  "department": "HR",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "security",
+   "it"
+  ],
+  "updated": "2026-02-01",
+  "facts": {}
+ },
+ {
+  "id": "announcements/security-training-4",
+  "kind": "Announcement",
+  "topic": "security-training",
+  "topic_names": [
+   "security-training",
+   "security-training",
+   "security-training"
+  ],
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "security",
+   "it"
+  ],
+  "updated": "2026-09-03",
+  "facts": {}
+ },
+ {
+  "id": "announcements/new-system-5",
+  "kind": "Announcement",
+  "topic": "new-system",
+  "topic_names": [
+   "new-system",
+   "new-system",
+   "new-system"
+  ],
+  "department": "CS",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "it"
+  ],
+  "updated": "2025-07-24",
+  "facts": {}
+ },
+ {
+  "id": "announcements/price-change-6",
+  "kind": "Announcement",
+  "topic": "price-change",
+  "topic_names": [
+   "price-change",
+   "price-change",
+   "price-change"
+  ],
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "pricing",
+   "sales"
+  ],
+  "updated": "2026-03-01",
+  "facts": {}
+ },
+ {
+  "id": "announcements/new-system-7",
+  "kind": "Announcement",
+  "topic": "new-system",
+  "topic_names": [
+   "new-system",
+   "new-system",
+   "new-system"
+  ],
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "it"
+  ],
+  "updated": "2026-06-19",
+  "facts": {}
+ },
+ {
+  "id": "announcements/office-move-8",
+  "kind": "Announcement",
+  "topic": "office-move",
+  "topic_names": [
+   "office-move",
+   "office-move",
+   "office-move"
+  ],
+  "department": "Finance",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "hr"
+  ],
+  "updated": "2026-02-22",
+  "facts": {}
+ },
+ {
+  "id": "announcements/office-move-9",
+  "kind": "Announcement",
+  "topic": "office-move",
+  "topic_names": [
+   "office-move",
+   "office-move",
+   "office-move"
+  ],
+  "department": "Legal",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "hr"
+  ],
+  "updated": "2026-06-03",
+  "facts": {}
+ }
+]

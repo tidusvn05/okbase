@@ -1,0 +1,69 @@
+=== bm25
+bm25               R@1=0.333 R@3=0.377 MRR=0.363 | same R@1=0.930 cross R@1=0.035
+=== ./target/release/embed-bench e5-small
+e5-small           R@1=0.390 R@3=0.563 MRR=0.506 | same R@1=0.910 cross R@1=0.130
+load=2267ms thr=Some(40.6)/s q_p50=8.9ms q_p95=12.2ms rss_load=Some(1018.0)MB rss_peak=1084MB disk=Some(465.0)MB
+=== ./target/release/embed-bench e5-base
+e5-base            R@1=0.460 R@3=0.697 MRR=0.601 | same R@1=0.880 cross R@1=0.250
+load=4488ms thr=Some(13.4)/s q_p50=23.2ms q_p95=28.4ms rss_load=Some(1629.0)MB rss_peak=1860MB disk=Some(1075.0)MB
+=== ./target/release/embed-bench e5-large
+e5-large           R@1=0.483 R@3=0.730 MRR=0.635 | same R@1=0.900 cross R@1=0.275
+load=4484ms thr=Some(3.8)/s q_p50=75.4ms q_p95=93.2ms rss_load=Some(1725.0)MB rss_peak=1967MB disk=Some(2149.0)MB
+=== ./target/release/embed-bench bge-m3
+bge-m3             R@1=0.780 R@3=0.940 MRR=0.861 | same R@1=0.890 cross R@1=0.725
+load=3943ms thr=Some(3.8)/s q_p50=76.8ms q_p95=101.6ms rss_load=Some(1726.0)MB rss_peak=1946MB disk=Some(2179.0)MB
+=== ./target/release/embed-bench bge-m3-int8
+bge-m3-int8        R@1=0.780 R@3=0.933 MRR=0.856 | same R@1=0.890 cross R@1=0.725
+load=3525ms thr=Some(6.2)/s q_p50=36.6ms q_p95=54.6ms rss_load=Some(1118.0)MB rss_peak=1676MB disk=Some(558.0)MB
+=== ./target/release/embed-bench gemma
+gemma              R@1=0.863 R@3=0.957 MRR=0.913 | same R@1=0.940 cross R@1=0.825
+load=2803ms thr=Some(10.1)/s q_p50=39.0ms q_p95=47.5ms rss_load=Some(774.0)MB rss_peak=981MB disk=Some(1682.0)MB
+=== ./target/release/embed-bench gemma-q
+gemma-q            R@1=0.860 R@3=0.957 MRR=0.911 | same R@1=0.930 cross R@1=0.825
+load=1941ms thr=Some(7.7)/s q_p50=106.4ms q_p95=131.2ms rss_load=Some(371.0)MB rss_peak=1666MB disk=Some(1682.0)MB
+=== ./target/release/embed-bench gemma-q4
+gemma-q4           R@1=0.847 R@3=0.960 MRR=0.905 | same R@1=0.930 cross R@1=0.805
+load=2697ms thr=Some(7.5)/s q_p50=38.0ms q_p95=53.8ms rss_load=Some(461.0)MB rss_peak=601MB disk=Some(1682.0)MB
+=== ./target/release/embed-bench gte-mb
+gte-mb             R@1=0.807 R@3=0.920 MRR=0.865 | same R@1=0.870 cross R@1=0.775
+load=7105ms thr=Some(8.7)/s q_p50=31.4ms q_p95=41.7ms rss_load=Some(1785.0)MB rss_peak=3213MB disk=Some(1214.0)MB
+=== ./target/release/embed-bench gte-mb-int8
+gte-mb-int8        R@1=0.767 R@3=0.917 MRR=0.847 | same R@1=0.820 cross R@1=0.740
+load=2761ms thr=Some(13.6)/s q_p50=16.2ms q_p95=22.6ms rss_load=Some(897.0)MB rss_peak=1257MB disk=Some(341.0)MB
+=== ./target/release/embed-bench nomic-v2
+nomic-v2           R@1=0.703 R@3=0.933 MRR=0.823 | same R@1=0.880 cross R@1=0.615
+load=4523ms thr=Some(2.6)/s q_p50=190.5ms q_p95=228.7ms rss_load=Some(2143.0)MB rss_peak=3674MB disk=Some(1829.0)MB
+=== ./target/release/embed-bench qwen3-0.6b
+qwen3-0.6b         R@1=0.753 R@3=0.923 MRR=0.846 | same R@1=0.900 cross R@1=0.680
+load=2683ms thr=Some(0.7)/s q_p50=439.3ms q_p95=582.5ms rss_load=Some(2424.0)MB rss_peak=3468MB disk=Some(1147.0)MB
+=== RERANK=1 ./target/release/embed-bench e5-small
+e5-small           R@1=0.390 R@3=0.563 MRR=0.506 | same R@1=0.910 cross R@1=0.130
+rerank top-20 latency p50=5706ms p95=7053ms
+e5-small+rerank    R@1=0.833 R@3=0.900 MRR=0.865 | same R@1=0.950 cross R@1=0.775
+load=2626ms thr=Some(38.0)/s q_p50=9.5ms q_p95=13.1ms rss_load=Some(1017.0)MB rss_peak=3027MB disk=Some(465.0)MB
+=== RERANK=1 ./target/release/embed-bench gemma-q4
+gemma-q4           R@1=0.847 R@3=0.960 MRR=0.905 | same R@1=0.930 cross R@1=0.805
+rerank top-20 latency p50=6066ms p95=11628ms
+gemma-q4+rerank    R@1=0.887 R@3=0.973 MRR=0.927 | same R@1=0.950 cross R@1=0.855
+load=2505ms thr=Some(7.0)/s q_p50=40.2ms q_p95=62.0ms rss_load=Some(457.0)MB rss_peak=2618MB disk=Some(1682.0)MB
+=== RERANK=1 ./target/release/embed-bench gte-mb-int8
+gte-mb-int8        R@1=0.767 R@3=0.917 MRR=0.847 | same R@1=0.820 cross R@1=0.740
+rerank top-20 latency p50=5203ms p95=8581ms
+gte-mb-int8+rerank R@1=0.883 R@3=0.967 MRR=0.923 | same R@1=0.940 cross R@1=0.855
+load=3328ms thr=Some(8.7)/s q_p50=25.2ms q_p95=50.1ms rss_load=Some(894.0)MB rss_peak=3083MB disk=Some(341.0)MB
+=== THREADS=2 ./target/release/embed-bench bge-m3
+bge-m3             R@1=0.780 R@3=0.940 MRR=0.861 | same R@1=0.890 cross R@1=0.725
+load=3975ms thr=Some(1.9)/s q_p50=93.3ms q_p95=122.5ms rss_load=Some(1723.0)MB rss_peak=2078MB disk=Some(2179.0)MB
+=== THREADS=2 ./target/release/embed-bench bge-m3-int8
+bge-m3-int8        R@1=0.780 R@3=0.933 MRR=0.856 | same R@1=0.890 cross R@1=0.725
+load=3501ms thr=Some(3.2)/s q_p50=45.8ms q_p95=69.7ms rss_load=Some(1114.0)MB rss_peak=1673MB disk=Some(558.0)MB
+=== THREADS=2 ./target/release/embed-bench gemma-q4
+gemma-q4           R@1=0.847 R@3=0.960 MRR=0.905 | same R@1=0.930 cross R@1=0.805
+load=2462ms thr=Some(4.2)/s q_p50=48.5ms q_p95=65.7ms rss_load=Some(458.0)MB rss_peak=598MB disk=Some(1682.0)MB
+=== THREADS=2 ./target/release/embed-bench gte-mb-int8
+gte-mb-int8        R@1=0.767 R@3=0.917 MRR=0.847 | same R@1=0.820 cross R@1=0.740
+load=1899ms thr=Some(8.8)/s q_p50=19.5ms q_p95=28.7ms rss_load=Some(894.0)MB rss_peak=1258MB disk=Some(341.0)MB
+=== THREADS=2 ./target/release/embed-bench e5-small
+e5-small           R@1=0.390 R@3=0.563 MRR=0.506 | same R@1=0.910 cross R@1=0.130
+load=2589ms thr=Some(21.7)/s q_p50=11.9ms q_p95=16.5ms rss_load=Some(1015.0)MB rss_peak=1081MB disk=Some(465.0)MB
+DONE

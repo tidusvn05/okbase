@@ -1,0 +1,1738 @@
+{
+ "E-1": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-3": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-5": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-7": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-0": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-4": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-6": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-2": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-1": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-3": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-5": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-7": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-0": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-4": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-6": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-2": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-1": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-3": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-5": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-7": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-0": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-4": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-6": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-2": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "Q-1": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "Q-3": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "Q-5": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "Q-7": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "Q-0": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "Q-4": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "Q-6": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "Q-2": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-45": {
+  "key": "g07311",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "E-46": {
+  "key": "g13201",
+  "correct": true,
+  "reason": "1350 W matches"
+ },
+ "V-38": {
+  "key": "g21926",
+  "correct": true,
+  "reason": "Total 9388 matches"
+ },
+ "QD-13": {
+  "key": "g34898",
+  "correct": true,
+  "reason": "Current v2 value 2,000,000 correct"
+ },
+ "Q-45": {
+  "key": "g44867",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "Q-21": {
+  "key": "g55185",
+  "correct": true,
+  "reason": "Total 10,628,000,000 VND matches"
+ },
+ "QD-34": {
+  "key": "g62320",
+  "correct": true,
+  "reason": "9,631,306,267 matches"
+ },
+ "QD-10": {
+  "key": "g76305",
+  "correct": true,
+  "reason": "5000 JPY from v2 correct"
+ },
+ "QD-26": {
+  "key": "g84714",
+  "correct": true,
+  "reason": "Same four categories"
+ },
+ "Q-38": {
+  "key": "g98585",
+  "correct": true,
+  "reason": "Total 9388 matches; breakdown minor inconsistency irrelevant"
+ },
+ "V-10": {
+  "key": "g101533",
+  "correct": true,
+  "reason": "5000 JPY current v2"
+ },
+ "V-47": {
+  "key": "g118411",
+  "correct": true,
+  "reason": "520 W matches"
+ },
+ "E-42": {
+  "key": "g08775",
+  "correct": true,
+  "reason": "30kg matches, correct doc"
+ },
+ "E-25": {
+  "key": "g15243",
+  "correct": true,
+  "reason": "ACME Corp, 4 matches"
+ },
+ "Q-19": {
+  "key": "g22750",
+  "correct": true,
+  "reason": "8 matches"
+ },
+ "E-34": {
+  "key": "g34423",
+  "correct": true,
+  "reason": "Revenue matches exactly"
+ },
+ "Q-31": {
+  "key": "g46923",
+  "correct": true,
+  "reason": "3 matches"
+ },
+ "E-30": {
+  "key": "g59552",
+  "correct": true,
+  "reason": "2647 matches"
+ },
+ "QD-17": {
+  "key": "g63969",
+  "correct": true,
+  "reason": "4 matches"
+ },
+ "V-42": {
+  "key": "g71708",
+  "correct": true,
+  "reason": "30kg matches, correct doc"
+ },
+ "V-23": {
+  "key": "g83477",
+  "correct": true,
+  "reason": "9 matches"
+ },
+ "QD-41": {
+  "key": "g93702",
+  "correct": true,
+  "reason": "30 days, correct doc"
+ },
+ "V-30": {
+  "key": "g103299",
+  "correct": true,
+  "reason": "2647 matches"
+ },
+ "E-17": {
+  "key": "g115749",
+  "correct": true,
+  "reason": "4 matches"
+ },
+ "QD-31": {
+  "key": "g07272",
+  "correct": true,
+  "reason": "3 matches"
+ },
+ "V-19": {
+  "key": "g17176",
+  "correct": true,
+  "reason": "8 matches"
+ },
+ "V-25": {
+  "key": "g24321",
+  "correct": true,
+  "reason": "ACME Corp, 4 matches"
+ },
+ "V-29": {
+  "key": "g38862",
+  "correct": true,
+  "reason": "Same four draft policies"
+ },
+ "QD-37": {
+  "key": "g42850",
+  "correct": true,
+  "reason": "Gives 77,600 for aircon; also lists duplicate, mentions both"
+ },
+ "QD-33": {
+  "key": "g59980",
+  "correct": true,
+  "reason": "June 2026, 197006952 matches"
+ },
+ "V-8": {
+  "key": "g69832",
+  "correct": true,
+  "reason": "45 days, v2 current"
+ },
+ "Q-30": {
+  "key": "g71201",
+  "correct": true,
+  "reason": "2647 matches"
+ },
+ "QD-28": {
+  "key": "g82268",
+  "correct": true,
+  "reason": "Same four customers"
+ },
+ "QD-40": {
+  "key": "g93740",
+  "correct": true,
+  "reason": "24 hours, correct doc"
+ },
+ "E-43": {
+  "key": "g109666",
+  "correct": true,
+  "reason": "10 km/h matches"
+ },
+ "V-9": {
+  "key": "g119989",
+  "correct": true,
+  "reason": "14 days, v2 current"
+ },
+ "E-40": {
+  "key": "g06385",
+  "correct": true,
+  "reason": "24 hours matches"
+ },
+ "E-22": {
+  "key": "g12500",
+  "correct": true,
+  "reason": "5 drafts matches"
+ },
+ "V-36": {
+  "key": "g27899",
+  "correct": true,
+  "reason": "12 matches"
+ },
+ "E-26": {
+  "key": "g34438",
+  "correct": true,
+  "reason": "Same four categories"
+ },
+ "E-44": {
+  "key": "g48513",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "V-26": {
+  "key": "g57242",
+  "correct": true,
+  "reason": "Same four categories"
+ },
+ "E-24": {
+  "key": "g62824",
+  "correct": true,
+  "reason": "CS and Legal"
+ },
+ "V-17": {
+  "key": "g71631",
+  "correct": true,
+  "reason": "4 matches"
+ },
+ "QD-24": {
+  "key": "g87693",
+  "correct": true,
+  "reason": "CS and Legal"
+ },
+ "QD-47": {
+  "key": "g95454",
+  "correct": true,
+  "reason": "520 W matches"
+ },
+ "QD-35": {
+  "key": "g102251",
+  "correct": true,
+  "reason": "SKU-AI006, 337 matches"
+ },
+ "Q-29": {
+  "key": "g116764",
+  "correct": true,
+  "reason": "Same four policies"
+ },
+ "QD-9": {
+  "key": "g09981",
+  "correct": true,
+  "reason": "14 days, current v2"
+ },
+ "E-8": {
+  "key": "g12095",
+  "correct": true,
+  "reason": "45 days, current v2"
+ },
+ "Q-44": {
+  "key": "g29151",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "Q-40": {
+  "key": "g34989",
+  "correct": true,
+  "reason": "24 hours matches"
+ },
+ "QD-18": {
+  "key": "g45396",
+  "correct": true,
+  "reason": "4 matches"
+ },
+ "V-18": {
+  "key": "g54539",
+  "correct": true,
+  "reason": "4 matches"
+ },
+ "Q-18": {
+  "key": "g63252",
+  "correct": true,
+  "reason": "4 matches"
+ },
+ "V-31": {
+  "key": "g72480",
+  "correct": true,
+  "reason": "3 matches"
+ },
+ "Q-47": {
+  "key": "g81188",
+  "correct": true,
+  "reason": "520 W matches"
+ },
+ "E-12": {
+  "key": "g91697",
+  "correct": true,
+  "reason": "12 months, current v2"
+ },
+ "E-39": {
+  "key": "g104230",
+  "correct": true,
+  "reason": "12374 matches"
+ },
+ "QD-45": {
+  "key": "g114673",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "E-9": {
+  "key": "g06043",
+  "correct": true,
+  "reason": "14 days, current v2 identified"
+ },
+ "QD-21": {
+  "key": "g19101",
+  "correct": true,
+  "reason": "Total 10,628,000,000 VND matches"
+ },
+ "Q-35": {
+  "key": "g23834",
+  "correct": true,
+  "reason": "SKU-AI006, 337 units match"
+ },
+ "V-14": {
+  "key": "g38293",
+  "correct": true,
+  "reason": "25,000 JPY matches, v2 current"
+ },
+ "V-34": {
+  "key": "g48801",
+  "correct": true,
+  "reason": "9,631,306,267 matches"
+ },
+ "V-22": {
+  "key": "g57795",
+  "correct": true,
+  "reason": "5 matches"
+ },
+ "E-16": {
+  "key": "g62160",
+  "correct": true,
+  "reason": "9 matches"
+ },
+ "E-32": {
+  "key": "g72225",
+  "correct": true,
+  "reason": "2249 matches"
+ },
+ "Q-13": {
+  "key": "g88640",
+  "correct": true,
+  "reason": "2,000,000 VND from v2 matches"
+ },
+ "Q-39": {
+  "key": "g91611",
+  "correct": true,
+  "reason": "12,374 matches"
+ },
+ "E-33": {
+  "key": "g102940",
+  "correct": true,
+  "reason": "June 2026, 197,006,952 JPY matches"
+ },
+ "V-44": {
+  "key": "g116304",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "Q-24": {
+  "key": "g02203",
+  "correct": true,
+  "reason": "CS and Legal match"
+ },
+ "V-15": {
+  "key": "g15584",
+  "correct": true,
+  "reason": "6 months, v2 current"
+ },
+ "QD-8": {
+  "key": "g29442",
+  "correct": true,
+  "reason": "45 days matches"
+ },
+ "QD-19": {
+  "key": "g38386",
+  "correct": true,
+  "reason": "8 matches"
+ },
+ "V-45": {
+  "key": "g47071",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "QD-20": {
+  "key": "g55140",
+  "correct": true,
+  "reason": "7 matches"
+ },
+ "V-43": {
+  "key": "g64074",
+  "correct": true,
+  "reason": "10 km/h matches"
+ },
+ "QD-30": {
+  "key": "g73381",
+  "correct": true,
+  "reason": "2647 matches"
+ },
+ "QD-23": {
+  "key": "g85448",
+  "correct": true,
+  "reason": "9 matches"
+ },
+ "Q-17": {
+  "key": "g99289",
+  "correct": true,
+  "reason": "4 matches"
+ },
+ "Q-20": {
+  "key": "g103371",
+  "correct": true,
+  "reason": "7 matches"
+ },
+ "E-38": {
+  "key": "g119129",
+  "correct": true,
+  "reason": "9388 matches"
+ },
+ "V-40": {
+  "key": "g05646",
+  "correct": true,
+  "reason": "24 hours matches"
+ },
+ "QD-27": {
+  "key": "g14270",
+  "correct": true,
+  "reason": "HR, IT, Warehouse match"
+ },
+ "Q-37": {
+  "key": "g21508",
+  "correct": true,
+  "reason": "Includes 77,600 JPY for SKU-AI008 aircon, notes duplicate"
+ },
+ "Q-23": {
+  "key": "g33391",
+  "correct": true,
+  "reason": "9 matches"
+ },
+ "V-28": {
+  "key": "g47512",
+  "correct": true,
+  "reason": "Same four customers"
+ },
+ "Q-27": {
+  "key": "g52328",
+  "correct": true,
+  "reason": "HR, IT, Warehouse match"
+ },
+ "V-33": {
+  "key": "g64336",
+  "correct": true,
+  "reason": "2026-06 and 197,006,952 match"
+ },
+ "E-14": {
+  "key": "g72368",
+  "correct": true,
+  "reason": "25,000 JPY from current v2"
+ },
+ "QD-38": {
+  "key": "g87898",
+  "correct": true,
+  "reason": "9,388 matches"
+ },
+ "V-13": {
+  "key": "g99099",
+  "correct": true,
+  "reason": "2,000,000 VND from v2 matches"
+ },
+ "QD-25": {
+  "key": "g109958",
+  "correct": true,
+  "reason": "ACME Corp with 4"
+ },
+ "QD-46": {
+  "key": "g119713",
+  "correct": true,
+  "reason": "1350 W matches"
+ },
+ "V-46": {
+  "key": "g07071",
+  "correct": true,
+  "reason": "1350 W matches"
+ },
+ "Q-25": {
+  "key": "g14187",
+  "correct": true,
+  "reason": "ACME Corp, 4 matches"
+ },
+ "V-20": {
+  "key": "g26839",
+  "correct": true,
+  "reason": "7 matches"
+ },
+ "V-27": {
+  "key": "g37618",
+  "correct": true,
+  "reason": "HR, IT, Warehouse match"
+ },
+ "QD-39": {
+  "key": "g43386",
+  "correct": true,
+  "reason": "12374 matches"
+ },
+ "V-41": {
+  "key": "g54190",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "E-15": {
+  "key": "g63427",
+  "correct": true,
+  "reason": "6 months, current v2"
+ },
+ "Q-43": {
+  "key": "g78475",
+  "correct": true,
+  "reason": "10 km/h matches"
+ },
+ "Q-46": {
+  "key": "g81320",
+  "correct": true,
+  "reason": "1350 W matches"
+ },
+ "Q-12": {
+  "key": "g96719",
+  "correct": true,
+  "reason": "12 months, v2 current"
+ },
+ "Q-15": {
+  "key": "g108851",
+  "correct": true,
+  "reason": "6 months, v2 current"
+ },
+ "Q-10": {
+  "key": "g115038",
+  "correct": true,
+  "reason": "5000 JPY, v2 current"
+ },
+ "E-41": {
+  "key": "g03138",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "E-18": {
+  "key": "g15580",
+  "correct": true,
+  "reason": "4 matches"
+ },
+ "V-24": {
+  "key": "g27357",
+  "correct": true,
+  "reason": "CS and Legal match"
+ },
+ "Q-26": {
+  "key": "g34485",
+  "correct": true,
+  "reason": "Four categories match"
+ },
+ "QD-15": {
+  "key": "g48884",
+  "correct": true,
+  "reason": "6 months, current v2"
+ },
+ "E-21": {
+  "key": "g51500",
+  "correct": true,
+  "reason": "Total 10,628,000,000 VND matches"
+ },
+ "Q-42": {
+  "key": "g64947",
+  "correct": true,
+  "reason": "30 kg matches"
+ },
+ "QD-11": {
+  "key": "g75640",
+  "correct": true,
+  "reason": "12 months, v2 current"
+ },
+ "QD-12": {
+  "key": "g89949",
+  "correct": true,
+  "reason": "12 months, v2 current"
+ },
+ "QD-29": {
+  "key": "g94933",
+  "correct": true,
+  "reason": "Same four draft policies"
+ },
+ "V-39": {
+  "key": "g103990",
+  "correct": true,
+  "reason": "12374 matches"
+ },
+ "E-35": {
+  "key": "g115685",
+  "correct": true,
+  "reason": "SKU-AI006, 337 units match"
+ },
+ "Q-9": {
+  "key": "g09436",
+  "correct": true,
+  "reason": "14 days, current v2 doc"
+ },
+ "E-27": {
+  "key": "g12430",
+  "correct": true,
+  "reason": "HR, IT, Warehouse match"
+ },
+ "Q-34": {
+  "key": "g29356",
+  "correct": true,
+  "reason": "Total matches exactly"
+ },
+ "QD-16": {
+  "key": "g31857",
+  "correct": true,
+  "reason": "9 contracts matches"
+ },
+ "E-28": {
+  "key": "g45551",
+  "correct": true,
+  "reason": "Four customers match set"
+ },
+ "Q-33": {
+  "key": "g54978",
+  "correct": true,
+  "reason": "June 2026, 197,006,952 JPY matches"
+ },
+ "Q-41": {
+  "key": "g61986",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "Q-28": {
+  "key": "g71730",
+  "correct": true,
+  "reason": "Four customers match set"
+ },
+ "V-37": {
+  "key": "g84877",
+  "correct": false,
+  "reason": "Gave two prices, hedged; didn't commit to 77,600"
+ },
+ "E-47": {
+  "key": "g99525",
+  "correct": true,
+  "reason": "520 W matches"
+ },
+ "E-11": {
+  "key": "g109516",
+  "correct": true,
+  "reason": "12 months, current v2"
+ },
+ "E-36": {
+  "key": "g116168",
+  "correct": true,
+  "reason": "12 matches"
+ },
+ "E-29": {
+  "key": "g07757",
+  "correct": true,
+  "reason": "Same four draft policies."
+ },
+ "QD-36": {
+  "key": "g19090",
+  "correct": true,
+  "reason": "12 matches."
+ },
+ "E-20": {
+  "key": "g28931",
+  "correct": true,
+  "reason": "7 matches."
+ },
+ "E-10": {
+  "key": "g37120",
+  "correct": true,
+  "reason": "5000 JPY from v2 current."
+ },
+ "Q-16": {
+  "key": "g48026",
+  "correct": true,
+  "reason": "9 matches."
+ },
+ "QD-22": {
+  "key": "g52185",
+  "correct": true,
+  "reason": "5 matches."
+ },
+ "V-12": {
+  "key": "g64169",
+  "correct": true,
+  "reason": "12 months from v2."
+ },
+ "V-16": {
+  "key": "g71024",
+  "correct": true,
+  "reason": "9 matches."
+ },
+ "QD-42": {
+  "key": "g82556",
+  "correct": true,
+  "reason": "30 kg matches."
+ },
+ "V-32": {
+  "key": "g99475",
+  "correct": true,
+  "reason": "2249 matches."
+ },
+ "E-13": {
+  "key": "g108979",
+  "correct": true,
+  "reason": "2,000,000 VND from v2."
+ },
+ "Q-8": {
+  "key": "g114013",
+  "correct": true,
+  "reason": "45 days from v2."
+ },
+ "E-19": {
+  "key": "g08344",
+  "correct": true,
+  "reason": "8 matches"
+ },
+ "Q-22": {
+  "key": "g17926",
+  "correct": true,
+  "reason": "5 matches"
+ },
+ "QD-44": {
+  "key": "g23184",
+  "correct": true,
+  "reason": "30 days, correct doc"
+ },
+ "Q-36": {
+  "key": "g33437",
+  "correct": true,
+  "reason": "12 matches"
+ },
+ "Q-11": {
+  "key": "g47610",
+  "correct": true,
+  "reason": "12 months from current v2"
+ },
+ "QD-32": {
+  "key": "g52165",
+  "correct": true,
+  "reason": "2249 matches"
+ },
+ "E-23": {
+  "key": "g66347",
+  "correct": true,
+  "reason": "9 matches"
+ },
+ "V-11": {
+  "key": "g77711",
+  "correct": true,
+  "reason": "12 months from v2"
+ },
+ "E-37": {
+  "key": "g87413",
+  "correct": true,
+  "reason": "Includes 77,600 JPY for AI008 air conditioner, noting duplicate"
+ },
+ "V-21": {
+  "key": "g99036",
+  "correct": true,
+  "reason": "Total 10,628,000,000 VND matches"
+ },
+ "QD-14": {
+  "key": "g104328",
+  "correct": true,
+  "reason": "25000 matches, v2 current"
+ },
+ "E-31": {
+  "key": "g119236",
+  "correct": true,
+  "reason": "3 matches"
+ },
+ "Q-32": {
+  "key": "g08991",
+  "correct": true,
+  "reason": "Total 2249 matches; breakdown sums to 2249."
+ },
+ "QD-43": {
+  "key": "g19042",
+  "correct": true,
+  "reason": "10 km/h matches expected."
+ },
+ "V-35": {
+  "key": "g24612",
+  "correct": true,
+  "reason": "SKU-AI006 with 337 units matches."
+ },
+ "Q-14": {
+  "key": "g37463",
+  "correct": true,
+  "reason": "25,000 matches; current doc v2 identified."
+ },
+ "V-x20-1": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-x20-3": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-x20-5": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-x20-7": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-x20-0": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-x20-4": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-x20-6": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "V-x20-2": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-x20-1": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-x20-3": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-x20-5": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-x20-7": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-x20-0": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-x20-4": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-x20-6": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-x20-2": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-x20-1": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-x20-3": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-x20-5": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-x20-7": {
+  "correct": false,
+  "precision": 1.0,
+  "recall": 0.08888888888888889,
+  "reason": "missing=['sop/cs/branch-02/escalation-2089', 'sop/cs/branch-04/complaint-165', 'sop/cs/branch-05/chat-handling-476', 'sop/cs/branch-08/complaint-2291', 'sop/cs/branch-09/complaint-1981', 'sop/cs/branch-09/warranty-claims-635', 'sop/cs/branch-17/call-recording-886', 'sop/cs/branch-17/ticket-triage-17', 'sop/cs/branch-18/vip-customers-2667', 'sop/cs/branch-19/call-recording-1328', 'sop/cs/branch-20/complaint-1256', 'sop/cs/branch-20/complaint-548', 'sop/cs/branch-20/warranty-claims-882', 'sop/cs/branch-21/refund-approval-1126', 'sop/cs/branch-21/warranty-claims-191', 'sop/cs/branch-22/chat-handling-551', 'sop/cs/branch-22/escalation-2157', 'sop/cs/branch-23/call-recording-1813', 'sop/cs/branch-25/chat-handling-2076', 'sop/cs/branch-25/complaint-1936', 'sop/cs/branch-25/escalation-2465', 'sop/cs/branch-26/vip-customers-1827', 'sop/cs/branch-27/call-recording-1400', 'sop/cs/branch-27/call-recording-759', 'sop/cs/branch-27/refund-approval-1716', 'sop/cs/branch-28/ticket-triage-1251', 'sop/cs/branch-29/call-recording-1111', 'sop/cs/branch-29/escalation-1541', 'sop/cs/branch-30/refund-approval-359', 'sop/cs/branch-31/ticket-triage-1705', 'sop/cs/branch-33/refund-approval-1393', 'sop/cs/branch-35/chat-handling-1360', 'sop/cs/branch-35/warranty-claims-458', 'sop/cs/branch-36/escalation-1050', 'sop/cs/branch-36/vip-customers-1095', 'sop/cs/branch-38/warranty-claims-987', 'sop/cs/branch-39/refund-approval-2728', 'sop/cs/branch-39/vip-customers-1630', 'sop/cs/branch-40/call-recording-352', 'sop/cs/branch-40/complaint-301', 'sop/cs/branch-40/warranty-claims-1202'] extra=[]"
+ },
+ "E-x20-0": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-x20-4": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-x20-6": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "E-x20-2": {
+  "correct": true,
+  "precision": 1.0,
+  "recall": 1.0,
+  "reason": "missing=[] extra=[]"
+ },
+ "QD-x20-28": {
+  "key": "g07311",
+  "correct": true,
+  "reason": "Set of 128 customers matches expected exactly."
+ },
+ "QD-x20-10": {
+  "key": "g13201",
+  "correct": true,
+  "reason": "5,000 JPY matches current v2."
+ },
+ "E-x20-19": {
+  "key": "g21926",
+  "correct": true,
+  "reason": "8 matches."
+ },
+ "V-x20-39": {
+  "key": "g34898",
+  "correct": true,
+  "reason": "230,935 matches."
+ },
+ "QD-x20-38": {
+  "key": "g44867",
+  "correct": true,
+  "reason": "191,731 matches."
+ },
+ "QD-x20-21": {
+  "key": "g55185",
+  "correct": true,
+  "reason": "10,628,000,000 VND matches."
+ },
+ "V-x20-42": {
+  "key": "g62320",
+  "correct": true,
+  "reason": "30 kg matches."
+ },
+ "V-x20-23": {
+  "key": "g76305",
+  "correct": true,
+  "reason": "230 matches."
+ },
+ "QD-x20-12": {
+  "key": "g84714",
+  "correct": true,
+  "reason": "12 months from current v2."
+ },
+ "V-x20-26": {
+  "key": "g98585",
+  "correct": true,
+  "reason": "All five categories match."
+ },
+ "E-x20-40": {
+  "key": "g101533",
+  "correct": true,
+  "reason": "24 hours matches."
+ },
+ "QD-x20-20": {
+  "key": "g118411",
+  "correct": true,
+  "reason": "Count 14 matches despite messy breakdown."
+ },
+ "V-x20-32": {
+  "key": "g08775",
+  "correct": true,
+  "reason": "47,887 matches"
+ },
+ "V-x20-15": {
+  "key": "g15243",
+  "correct": true,
+  "reason": "Current v2, 6 months; matches"
+ },
+ "QD-x20-16": {
+  "key": "g22750",
+  "correct": true,
+  "reason": "197 matches"
+ },
+ "E-x20-18": {
+  "key": "g34423",
+  "correct": true,
+  "reason": "32 matches"
+ },
+ "V-x20-31": {
+  "key": "g46923",
+  "correct": true,
+  "reason": "94 matches"
+ },
+ "E-x20-24": {
+  "key": "g59552",
+  "correct": true,
+  "reason": "CS and Legal match"
+ },
+ "E-x20-21": {
+  "key": "g63969",
+  "correct": true,
+  "reason": "10,628,000,000 VND matches"
+ },
+ "QD-x20-41": {
+  "key": "g71708",
+  "correct": false,
+  "reason": "Did not give 30; listed branch variants"
+ },
+ "V-x20-33": {
+  "key": "g83477",
+  "correct": false,
+  "reason": "No answer given"
+ },
+ "V-x20-36": {
+  "key": "g93702",
+  "correct": true,
+  "reason": "198 matches"
+ },
+ "E-x20-20": {
+  "key": "g103299",
+  "correct": true,
+  "reason": "14 matches"
+ },
+ "QD-x20-43": {
+  "key": "g115749",
+  "correct": true,
+  "reason": "10 km/h matches"
+ },
+ "V-x20-10": {
+  "key": "g07272",
+  "correct": true,
+  "reason": "5000 JPY, v2 current, matches"
+ },
+ "V-x20-17": {
+  "key": "g17176",
+  "correct": true,
+  "reason": "12 matches"
+ },
+ "V-x20-46": {
+  "key": "g24321",
+  "correct": true,
+  "reason": "1350 W matches"
+ },
+ "E-x20-32": {
+  "key": "g38862",
+  "correct": true,
+  "reason": "47887 matches"
+ },
+ "E-x20-37": {
+  "key": "g42850",
+  "correct": true,
+  "reason": "53,500 JPY matches"
+ },
+ "E-x20-34": {
+  "key": "g59980",
+  "correct": true,
+  "reason": "253703896956 matches"
+ },
+ "QD-x20-25": {
+  "key": "g69832",
+  "correct": true,
+  "reason": "Customer 139 with 7 matches"
+ },
+ "QD-x20-19": {
+  "key": "g71201",
+  "correct": true,
+  "reason": "8 matches"
+ },
+ "E-x20-44": {
+  "key": "g82268",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "E-x20-17": {
+  "key": "g93740",
+  "correct": true,
+  "reason": "12 matches"
+ },
+ "QD-x20-44": {
+  "key": "g109666",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "E-x20-39": {
+  "key": "g119989",
+  "correct": true,
+  "reason": "230935 matches"
+ },
+ "V-x20-14": {
+  "key": "g06385",
+  "correct": true,
+  "reason": "25,000 matches; v2 cited as current."
+ },
+ "QD-x20-35": {
+  "key": "g12500",
+  "correct": true,
+  "reason": "SKU-AI009, 406 units match."
+ },
+ "QD-x20-47": {
+  "key": "g27899",
+  "correct": true,
+  "reason": "520 W matches."
+ },
+ "V-x20-43": {
+  "key": "g34438",
+  "correct": true,
+  "reason": "10 km/h matches."
+ },
+ "E-x20-12": {
+  "key": "g48513",
+  "correct": true,
+  "reason": "12 months from v2 current."
+ },
+ "V-x20-45": {
+  "key": "g57242",
+  "correct": true,
+  "reason": "30 days matches."
+ },
+ "QD-x20-34": {
+  "key": "g62824",
+  "correct": true,
+  "reason": "Total matches exactly."
+ },
+ "V-x20-38": {
+  "key": "g71631",
+  "correct": true,
+  "reason": "191,731 matches."
+ },
+ "QD-x20-30": {
+  "key": "g87693",
+  "correct": true,
+  "reason": "47,825 matches."
+ },
+ "E-x20-47": {
+  "key": "g95454",
+  "correct": true,
+  "reason": "520 W matches."
+ },
+ "QD-x20-32": {
+  "key": "g102251",
+  "correct": true,
+  "reason": "47,887 matches."
+ },
+ "E-x20-46": {
+  "key": "g116764",
+  "correct": true,
+  "reason": "1350 W matches."
+ },
+ "QD-x20-13": {
+  "key": "g09981",
+  "correct": true,
+  "reason": "Current v2 min 2,000,000 matches"
+ },
+ "QD-x20-37": {
+  "key": "g12095",
+  "correct": true,
+  "reason": "53,500 JPY matches"
+ },
+ "QD-x20-27": {
+  "key": "g29151",
+  "correct": true,
+  "reason": "Set CS, HR, IT, Warehouse matches"
+ },
+ "QD-x20-29": {
+  "key": "g34989",
+  "correct": false,
+  "reason": "Only 4 listed; expected 18 policies"
+ },
+ "QD-x20-42": {
+  "key": "g45396",
+  "correct": true,
+  "reason": "30 kg from sop/warehouse/packing"
+ },
+ "E-x20-25": {
+  "key": "g54539",
+  "correct": true,
+  "reason": "Customer 139 with 7 matches"
+ },
+ "V-x20-22": {
+  "key": "g63252",
+  "correct": true,
+  "reason": "105 matches"
+ },
+ "E-x20-29": {
+  "key": "g72480",
+  "correct": false,
+  "reason": "Only 4 listed; excluded 14 expected drafts"
+ },
+ "V-x20-34": {
+  "key": "g81188",
+  "correct": true,
+  "reason": "253,703,896,956 matches exactly"
+ },
+ "E-x20-41": {
+  "key": "g91697",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "E-x20-33": {
+  "key": "g104230",
+  "correct": false,
+  "reason": "No answer given"
+ },
+ "E-x20-23": {
+  "key": "g114673",
+  "correct": true,
+  "reason": "230 matches"
+ },
+ "V-x20-25": {
+  "key": "g06043",
+  "correct": true,
+  "reason": "Customer 139 with 7 matches."
+ },
+ "QD-x20-23": {
+  "key": "g19101",
+  "correct": true,
+  "reason": "230 matches expected."
+ },
+ "E-x20-45": {
+  "key": "g23834",
+  "correct": true,
+  "reason": "30 days, correct doc."
+ },
+ "V-x20-41": {
+  "key": "g38293",
+  "correct": true,
+  "reason": "30 days matches."
+ },
+ "V-x20-18": {
+  "key": "g48801",
+  "correct": true,
+  "reason": "32 matches."
+ },
+ "E-x20-31": {
+  "key": "g57795",
+  "correct": true,
+  "reason": "94 matches."
+ },
+ "QD-x20-45": {
+  "key": "g62160",
+  "correct": true,
+  "reason": "30 days, correct doc."
+ },
+ "E-x20-26": {
+  "key": "g72225",
+  "correct": true,
+  "reason": "Same five categories."
+ },
+ "QD-x20-46": {
+  "key": "g88640",
+  "correct": true,
+  "reason": "1350 W matches."
+ },
+ "E-x20-9": {
+  "key": "g91611",
+  "correct": true,
+  "reason": "14 days, v2 current."
+ },
+ "V-x20-35": {
+  "key": "g102940",
+  "correct": false,
+  "reason": "Gave SKU-AI156 307; expected SKU-AI009 406 as final."
+ },
+ "QD-x20-11": {
+  "key": "g116304",
+  "correct": true,
+  "reason": "12 months from v2 current."
+ },
+ "V-x20-27": {
+  "key": "g02203",
+  "correct": true,
+  "reason": "Set matches exactly."
+ },
+ "QD-x20-26": {
+  "key": "g15584",
+  "correct": true,
+  "reason": "All five categories listed; set matches."
+ },
+ "V-x20-28": {
+  "key": "g29442",
+  "correct": true,
+  "reason": "Full list matches expected (4 named + 124 numbered)."
+ },
+ "E-x20-43": {
+  "key": "g38386",
+  "correct": true,
+  "reason": "10 km/h matches."
+ },
+ "V-x20-19": {
+  "key": "g47071",
+  "correct": true,
+  "reason": "8 matches."
+ },
+ "QD-x20-18": {
+  "key": "g55140",
+  "correct": true,
+  "reason": "32 matches."
+ },
+ "V-x20-11": {
+  "key": "g64074",
+  "correct": true,
+  "reason": "12 months from v2, correct current doc."
+ },
+ "E-x20-11": {
+  "key": "g73381",
+  "correct": true,
+  "reason": "12 months from v2."
+ },
+ "V-x20-9": {
+  "key": "g85448",
+  "correct": true,
+  "reason": "14 days from v2."
+ },
+ "QD-x20-9": {
+  "key": "g99289",
+  "correct": true,
+  "reason": "14 days from v2."
+ },
+ "E-x20-42": {
+  "key": "g103371",
+  "correct": true,
+  "reason": "30 kg matches."
+ },
+ "E-x20-14": {
+  "key": "g119129",
+  "correct": true,
+  "reason": "25,000 JPY matches, doc v2."
+ },
+ "V-x20-44": {
+  "key": "g05646",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "V-x20-24": {
+  "key": "g14270",
+  "correct": true,
+  "reason": "CS and Legal match"
+ },
+ "E-x20-38": {
+  "key": "g21508",
+  "correct": true,
+  "reason": "191731 matches"
+ },
+ "QD-x20-24": {
+  "key": "g33391",
+  "correct": true,
+  "reason": "CS and Legal match"
+ },
+ "V-x20-21": {
+  "key": "g47512",
+  "correct": true,
+  "reason": "10,628,000,000 VND matches"
+ },
+ "V-x20-20": {
+  "key": "g52328",
+  "correct": true,
+  "reason": "14 matches"
+ },
+ "QD-x20-17": {
+  "key": "g64336",
+  "correct": true,
+  "reason": "12 matches"
+ },
+ "V-x20-8": {
+  "key": "g72368",
+  "correct": true,
+  "reason": "45 days from current v2"
+ },
+ "V-x20-47": {
+  "key": "g87898",
+  "correct": true,
+  "reason": "520 W matches"
+ },
+ "E-x20-10": {
+  "key": "g99099",
+  "correct": true,
+  "reason": "5000 JPY from current v2"
+ },
+ "QD-x20-36": {
+  "key": "g109958",
+  "correct": true,
+  "reason": "198 matches"
+ },
+ "V-x20-37": {
+  "key": "g119713",
+  "correct": true,
+  "reason": "53500 JPY matches"
+ },
+ "QD-x20-39": {
+  "key": "g07071",
+  "correct": true,
+  "reason": "230935 matches"
+ },
+ "E-x20-35": {
+  "key": "g26839",
+  "correct": true,
+  "reason": "SKU-AI009, 406 matches"
+ },
+ "QD-x20-40": {
+  "key": "g37618",
+  "correct": true,
+  "reason": "24 hours, correct doc"
+ },
+ "QD-x20-31": {
+  "key": "g43386",
+  "correct": true,
+  "reason": "94 matches"
+ },
+ "V-x20-30": {
+  "key": "g54190",
+  "correct": true,
+  "reason": "47825 matches"
+ },
+ "V-x20-40": {
+  "key": "g63427",
+  "correct": true,
+  "reason": "24 hours, correct doc"
+ },
+ "V-x20-12": {
+  "key": "g78475",
+  "correct": true,
+  "reason": "12 months, v2 current"
+ },
+ "E-x20-16": {
+  "key": "g81320",
+  "correct": true,
+  "reason": "197 matches"
+ },
+ "V-x20-16": {
+  "key": "g96719",
+  "correct": true,
+  "reason": "197 matches"
+ },
+ "E-x20-22": {
+  "key": "g108851",
+  "correct": true,
+  "reason": "105 matches"
+ },
+ "QD-x20-22": {
+  "key": "g115038",
+  "correct": true,
+  "reason": "105 matches"
+ },
+ "E-x20-36": {
+  "key": "g03138",
+  "correct": true,
+  "reason": "198 matches"
+ },
+ "V-x20-13": {
+  "key": "g15580",
+  "correct": true,
+  "reason": "2,000,000 from v2, correct"
+ },
+ "QD-x20-8": {
+  "key": "g27357",
+  "correct": true,
+  "reason": "45 days, v2"
+ },
+ "E-x20-13": {
+  "key": "g34485",
+  "correct": true,
+  "reason": "2,000,000 from v2"
+ },
+ "E-x20-27": {
+  "key": "g48884",
+  "correct": true,
+  "reason": "CS, HR, IT, Warehouse match"
+ },
+ "E-x20-8": {
+  "key": "g51500",
+  "correct": true,
+  "reason": "45 days, v2"
+ },
+ "E-x20-15": {
+  "key": "g64947",
+  "correct": true,
+  "reason": "6 months, v2"
+ },
+ "E-x20-28": {
+  "key": "g75640",
+  "correct": false,
+  "reason": "Answer says 127 customers; expected list has 123 names"
+ },
+ "QD-x20-33": {
+  "key": "g89949",
+  "correct": true,
+  "reason": "2026-04 and revenue match"
+ },
+ "E-x20-30": {
+  "key": "g94933",
+  "correct": true,
+  "reason": "47825 matches"
+ },
+ "V-x20-29": {
+  "key": "g103990",
+  "correct": false,
+  "reason": "Lists only 4 of 18 expected draft policies"
+ },
+ "QD-x20-14": {
+  "key": "g115685",
+  "correct": true,
+  "reason": "25,000 JPY, v2 current"
+ },
+ "QD-x20-15": {
+  "key": "g07311",
+  "correct": true,
+  "reason": "Answer gives 6 months from v2, matching current doc."
+ }
+}

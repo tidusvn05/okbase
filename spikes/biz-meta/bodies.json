@@ -1,0 +1,908 @@
+{
+ "policies/vn/returns-v1": {
+  "id": "policies/vn/returns-v1",
+  "title": "Chính sách đổi trả Việt Nam v1",
+  "description": "Chính sách đổi trả v1 tại Việt Nam, áp dụng từ 20/03/2025 và đã bị thay thế bởi phiên bản v2.",
+  "body": "## Phạm vi và hiệu lực\n\nChính sách này áp dụng cho các đơn hàng đồ gia dụng của Hikari Home tại Việt Nam, có hiệu lực từ ngày 20/03/2025. Lưu ý: phiên bản v1 đã ngừng áp dụng và được thay thế bởi chính sách đổi trả v2 (policies/vn/returns-v2). Tài liệu này chỉ còn dùng để tra cứu các trường hợp phát sinh trong thời gian v1 còn hiệu lực.\n\n## Thời hạn đổi trả\n\nKhách hàng có thể yêu cầu đổi trả trong vòng 7 ngày kể từ ngày nhận hàng. Sản phẩm phải còn nguyên vẹn, đầy đủ phụ kiện, hộp và hóa đơn mua hàng. Sau 7 ngày, yêu cầu sẽ được chuyển sang quy trình bảo hành thông thường.\n\n## Phí xử lý\n\nĐối với các trường hợp đổi trả không do lỗi của nhà sản xuất, Hikari Home thu phí tái nhập kho bằng 5% giá trị đơn hàng. Đơn hàng lỗi do nhà sản xuất hoặc giao sai sản phẩm được miễn khoản phí này. Tiền hoàn lại được chuyển về phương thức thanh toán ban đầu sau khi bộ phận CS kiểm tra hàng.\n\n## Quy trình\n\nKhách hàng liên hệ tổng đài hoặc cửa hàng, cung cấp mã đơn hàng và hình ảnh sản phẩm để nhân viên CS xác nhận trước khi gửi trả."
+ },
+ "policies/vn/returns-v2": {
+  "id": "policies/vn/returns-v2",
+  "title": "Chính sách đổi trả Việt Nam v2",
+  "description": "Chính sách đổi trả v2 tại Việt Nam, có hiệu lực từ 14/11/2025 và thay thế phiên bản v1.",
+  "body": "## Phạm vi và hiệu lực\n\nChính sách đổi trả v2 áp dụng cho toàn bộ đơn hàng đồ gia dụng của Hikari Home tại Việt Nam, có hiệu lực từ ngày 14/11/2025. Phiên bản này thay thế chính sách v1 (policies/vn/returns-v1), vốn chỉ cho phép đổi trả trong thời gian ngắn hơn.\n\n## Thời hạn đổi trả\n\nKhách hàng được yêu cầu đổi trả trong vòng 45 ngày kể từ ngày nhận hàng. Sản phẩm cần còn đầy đủ phụ kiện, hộp đựng và hóa đơn. Với sản phẩm đã qua sử dụng, bộ phận CS sẽ kiểm tra tình trạng trước khi chấp nhận yêu cầu.\n\n## Phí tái nhập kho\n\nĐối với các trường hợp đổi trả không do lỗi của nhà sản xuất, phí tái nhập kho là 15% giá trị đơn hàng và được trừ vào số tiền hoàn lại. Sản phẩm lỗi kỹ thuật hoặc giao sai được miễn phí này hoàn toàn.\n\n## Quy trình xử lý\n\nKhách hàng gửi yêu cầu qua tổng đài hoặc cửa hàng kèm mã đơn hàng. Sau khi nhận và kiểm tra hàng, CS hoàn tiền về phương thức thanh toán ban đầu trong thời gian sớm nhất."
+ },
+ "policies/jp/returns-v1": {
+  "id": "policies/jp/returns-v1",
+  "title": "日本向け返品ポリシー v1",
+  "description": "日本市場における返品ポリシーv1で、2025年5月31日に施行され、現在はv2に置き換えられています。",
+  "body": "## 適用範囲と施行日\n\n本ポリシーは、日本国内で販売されるヒカリホームの家電製品の返品対応に適用されます。施行日は2025年5月31日です。なお、v1は現在廃止されており、返品ポリシーv2（policies/jp/returns-v2）に置き換えられました。本書は、v1適用期間中に発生した案件の確認用として保管しています。\n\n## 返品期間\n\nお客様は商品受領日から30日以内であれば返品を申請できます。返品には、本体、付属品、箱、購入証明書がそろっていることが必要です。期間を過ぎた場合は、通常の保証対応をご案内します。\n\n## 手数料\n\nお客様都合による返品であっても、再入荷手数料は0%で、返金額から差し引かれることはありません。初期不良や誤配送の場合も同様に、送料を含め当社が負担します。\n\n## 手続き\n\nカスタマーサポートへ注文番号を添えてご連絡ください。返送商品の到着後、状態確認を行い、元のお支払い方法へ返金します。"
+ },
+ "policies/jp/returns-v2": {
+  "id": "policies/jp/returns-v2",
+  "title": "日本向け返品ポリシー v2",
+  "description": "日本市場における返品ポリシーv2で、2026年1月9日に施行され、v1を置き換えるものです。",
+  "body": "## 適用範囲と施行日\n\n本ポリシーは、日本国内で販売されるヒカリホームの家電製品の返品に適用され、2026年1月9日から施行されます。返品ポリシーv1（policies/jp/returns-v1）に代わる最新版です。\n\n## 返品期間\n\n返品の申請は、商品受領日から14日以内にお願いします。本体、付属品、箱、購入証明書がそろっていることが条件です。使用済みの商品は、カスタマーサポートが状態を確認したうえで可否を判断します。\n\n## 再入荷手数料\n\nお客様都合による返品には、返金額の15%を再入荷手数料として差し引きます。初期不良や誤配送など当社側の原因による返品は、手数料の対象外です。\n\n## 手続き\n\nカスタマーサポートへ注文番号をご連絡ください。返送商品の到着と検品の完了後、元のお支払い方法で返金します。"
+ },
+ "policies/vn/shipping-v2": {
+  "id": "policies/vn/shipping-v2",
+  "title": "Vietnam Shipping Policy v2",
+  "description": "Shipping policy v2 for Vietnam, effective 26 April 2026, covering free shipping threshold and standard delivery time.",
+  "body": "## Scope and effective date\n\nThis policy governs shipping for Hikari Home online and phone orders delivered within Vietnam. It takes effect on 26 April 2026 and replaces the earlier shipping terms used by the Customer Support (CS) team.\n\n## Free shipping\n\nOrders with a merchandise total of 300,000 VND or more qualify for free standard shipping. Orders below this amount are charged the flat regional rate shown at checkout. The threshold is calculated after discounts and before any applicable taxes, and it excludes gift cards.\n\n## Delivery times\n\nStandard delivery takes 4 business days from the date the order is confirmed and packed. Remote areas may require additional time, and customers are notified when a delay is expected. Tracking numbers are sent by SMS and email once the parcel is handed to the carrier.\n\n## Support handling\n\nCS agents should check the order value against the free shipping threshold before quoting any shipping fee. If a parcel is not delivered within the standard window, agents open a carrier inquiry and update the customer within one business day."
+ },
+ "policies/jp/shipping-v1": {
+  "id": "policies/jp/shipping-v1",
+  "title": "日本向け配送ポリシー v1",
+  "description": "日本市場における配送ポリシーv1で、2025年1月26日に施行され、現在はv2に置き換えられています。",
+  "body": "## 適用範囲と施行日\n\n本ポリシーは、日本国内へ配送されるヒカリホームの注文に適用されます。施行日は2025年1月26日です。v1は廃止されており、配送ポリシーv2（policies/jp/shipping-v2）に置き換えられました。旧条件での問い合わせ確認用として保管しています。\n\n## 送料無料の条件\n\n商品代金の合計が4,000 JPY以上のご注文は、通常配送が送料無料となります。これを下回る場合は、地域別の送料を注文時に加算します。割引適用後の金額で判定します。\n\n## 配送日数\n\n通常配送は、注文確定から2日でお届けします。離島や一部の山間部では、追加の日数がかかる場合があります。出荷後は追跡番号をメールでお知らせします。\n\n## サポート対応\n\nカスタマーサポートは、送料の案内前に注文金額を確認してください。お届けが遅れている場合は運送会社へ照会し、お客様へ状況をご連絡します。"
+ },
+ "policies/jp/shipping-v2": {
+  "id": "policies/jp/shipping-v2",
+  "title": "日本向け配送ポリシー v2",
+  "description": "日本市場における配送ポリシーv2で、2026年5月10日に施行され、v1を置き換える最新版です。",
+  "body": "## 適用範囲と施行日\n\n本ポリシーは、日本国内へ配送されるヒカリホームのすべての注文に適用され、2026年5月10日から施行されます。配送ポリシーv1（policies/jp/shipping-v1）に代わる最新版です。\n\n## 送料無料の条件\n\n商品代金の合計が5,000 JPY以上のご注文は、通常配送が送料無料となります。これに満たない場合は、地域別の送料が注文時に加算されます。判定は割引適用後の金額で行い、ギフトカードは対象に含みません。\n\n## 配送日数\n\n通常配送は、注文確定から2日でのお届けを標準とします。離島や一部の山間部では日数が延びることがあり、その場合は事前にお知らせします。出荷後は、追跡番号をメールでご案内します。\n\n## サポート対応\n\nカスタマーサポートは、送料をご案内する前に注文金額と無料条件を確認してください。遅延が発生した場合は運送会社へ照会し、当日中にお客様へ状況を連絡します。"
+ },
+ "policies/vn/warranty-air-purifier-v1": {
+  "id": "policies/vn/warranty-air-purifier-v1",
+  "title": "Chính sách bảo hành máy lọc không khí Việt Nam v1",
+  "description": "Chính sách bảo hành máy lọc không khí v1 tại Việt Nam, áp dụng từ 25/02/2025 và đã bị thay thế.",
+  "body": "## Phạm vi và hiệu lực\n\nChính sách này áp dụng cho các dòng máy lọc không khí do Hikari Home phân phối tại Việt Nam, có hiệu lực từ ngày 25/02/2025. Phiên bản v1 hiện đã ngừng áp dụng và đã được thay thế bởi chính sách bảo hành mới hơn. Tài liệu chỉ dùng để tra cứu các sản phẩm mua trong thời gian v1 còn hiệu lực.\n\n## Thời hạn bảo hành\n\nMáy lọc không khí được bảo hành 36 tháng kể từ ngày mua, tính theo hóa đơn hoặc phiếu bảo hành điện tử. Bảo hành áp dụng cho lỗi kỹ thuật của động cơ, bo mạch và cảm biến trong điều kiện sử dụng bình thường.\n\n## Điều kiện loại trừ\n\nBảo hành không áp dụng cho hư hỏng do rơi vỡ, vào nước, tự ý sửa chữa hoặc sử dụng sai hướng dẫn. Màng lọc HEPA và các vật tư tiêu hao được xem là hàng hao mòn và không nằm trong phạm vi bảo hành.\n\n## Quy trình\n\nKhách hàng liên hệ bộ phận CS, cung cấp số sê-ri và hóa đơn để được hướng dẫn mang máy đến trung tâm bảo hành."
+ },
+ "policies/vn/warranty-air-purifier-v2": {
+  "id": "policies/vn/warranty-air-purifier-v2",
+  "title": "Chính sách bảo hành máy lọc không khí – Việt Nam (v2)",
+  "description": "Chính sách bảo hành phiên bản 2 cho máy lọc không khí Hikari Home tại Việt Nam, áp dụng từ ngày 11/08/2026.",
+  "body": "## Phạm vi áp dụng\n\nChính sách này áp dụng cho tất cả máy lọc không khí do Hikari Home phân phối chính hãng tại Việt Nam. Phiên bản v2 có hiệu lực từ ngày 11/08/2026 và thay thế phiên bản v1 (policies/vn/warranty-air-purifier-v1), vốn đã được thay thế và không còn được áp dụng cho các đơn hàng mới.\n\n## Thời hạn bảo hành\n\nThời hạn bảo hành tiêu chuẩn là 12 tháng kể từ ngày khách hàng nhận sản phẩm, được xác nhận bằng hóa đơn hoặc phiếu bảo hành điện tử. Trong thời gian này, Hikari Home miễn phí công sửa chữa và linh kiện thay thế nếu lỗi xuất phát từ nhà sản xuất.\n\n## Điều kiện và quy trình\n\n- Sản phẩm phải được sử dụng đúng hướng dẫn và vệ sinh bộ lọc theo định kỳ.\n- Không bảo hành đối với hư hỏng do rơi vỡ, vào nước, tự ý tháo sửa hoặc dùng bộ lọc không chính hãng.\n- Bộ lọc là vật tư tiêu hao nên không thuộc phạm vi bảo hành.\n\nKhách hàng liên hệ tổng đài chăm sóc khách hàng để được hướng dẫn kiểm tra, sau đó gửi sản phẩm đến trung tâm bảo hành gần nhất. Bộ phận CS xử lý yêu cầu và thông báo kết quả cho khách hàng."
+ },
+ "policies/jp/warranty-air-purifier-v2": {
+  "id": "policies/jp/warranty-air-purifier-v2",
+  "title": "Air Purifier Warranty Policy – Japan (v2)",
+  "description": "Version 2 of the warranty policy for Hikari Home air purifiers sold in Japan, effective March 12, 2026.",
+  "body": "## Scope\n\nThis policy covers all Hikari Home air purifiers sold through authorized channels in Japan. Version 2 takes effect on March 12, 2026 and applies to all purchases made on or after that date.\n\n## Warranty Period\n\nThe standard warranty period is 12 months from the date of delivery, as shown on the purchase receipt or the electronic warranty record. During this period, Hikari Home repairs or replaces defective parts free of charge when the defect is attributable to manufacturing.\n\n## Exclusions\n\n- Damage caused by drops, liquid ingress, or unauthorized disassembly.\n- Use of non-genuine filters or accessories.\n- Consumable parts such as filters, which are not covered by the warranty.\n\n## Claim Process\n\nCustomers should contact the Customer Support team with their proof of purchase and a description of the issue. Support will arrange a pickup or direct the customer to an authorized service center. Repairs are normally completed within ten business days, and the customer is notified of the outcome by email or phone."
+ },
+ "policies/vn/warranty-rice-cooker-v1": {
+  "id": "policies/vn/warranty-rice-cooker-v1",
+  "title": "Chính sách bảo hành nồi cơm điện – Việt Nam (v1, đã thay thế)",
+  "description": "Chính sách bảo hành nồi cơm điện phiên bản 1 tại Việt Nam, đã bị thay thế bởi phiên bản v2.",
+  "body": "## Trạng thái văn bản\n\nPhiên bản v1 có hiệu lực từ ngày 26/04/2025 và hiện đã bị thay thế bởi phiên bản v2 (policies/vn/warranty-rice-cooker-v2). Tài liệu này chỉ được lưu để tham khảo và không còn áp dụng cho các đơn hàng mới.\n\n## Thời hạn bảo hành\n\nTheo phiên bản v1, nồi cơm điện của Hikari Home tại Việt Nam được bảo hành 24 tháng kể từ ngày khách hàng nhận sản phẩm. Trong thời gian này, công sửa chữa và linh kiện thay thế do lỗi nhà sản xuất được miễn phí.\n\n## Điều kiện\n\n- Có hóa đơn mua hàng hoặc phiếu bảo hành điện tử hợp lệ.\n- Không bảo hành đối với hư hỏng do rơi vỡ, vào nước hoặc tự ý sửa chữa.\n- Lòng nồi và gioăng cao su bị hao mòn tự nhiên không thuộc phạm vi bảo hành.\n\n## Lưu ý\n\nCác yêu cầu bảo hành cho sản phẩm đã mua trong thời gian v1 có hiệu lực vẫn được xử lý theo bộ phận CS. Nhân viên cần tham chiếu phiên bản v2 khi tư vấn cho khách hàng mua mới."
+ },
+ "policies/vn/warranty-rice-cooker-v2": {
+  "id": "policies/vn/warranty-rice-cooker-v2",
+  "title": "Chính sách bảo hành nồi cơm điện – Việt Nam (v2)",
+  "description": "Chính sách bảo hành nồi cơm điện phiên bản 2 tại Việt Nam, hiệu lực từ ngày 22/06/2026, thay thế phiên bản v1.",
+  "body": "## Hiệu lực và phạm vi\n\nPhiên bản v2 có hiệu lực từ ngày 22/06/2026 và thay thế phiên bản v1 (policies/vn/warranty-rice-cooker-v1). Chính sách áp dụng cho mọi nồi cơm điện Hikari Home phân phối chính hãng tại Việt Nam.\n\n## Thời hạn bảo hành\n\nThời hạn bảo hành mới là 12 tháng kể từ ngày khách hàng nhận sản phẩm, rút ngắn so với 24 tháng của phiên bản trước. Trong thời gian này, Hikari Home miễn phí công sửa chữa và linh kiện thay thế nếu lỗi do nhà sản xuất.\n\n## Điều kiện và quy trình\n\n- Khách hàng xuất trình hóa đơn hoặc phiếu bảo hành điện tử.\n- Không bảo hành với hư hỏng do rơi vỡ, vào nước, tự ý tháo sửa hoặc sử dụng sai hướng dẫn.\n- Lòng nồi và gioăng cao su hao mòn tự nhiên không thuộc phạm vi bảo hành.\n\nKhi có sự cố, khách hàng liên hệ bộ phận chăm sóc khách hàng để được kiểm tra từ xa. Nếu cần, sản phẩm sẽ được gửi đến trung tâm bảo hành để sửa chữa hoặc đổi mới."
+ },
+ "policies/jp/warranty-rice-cooker-v2": {
+  "id": "policies/jp/warranty-rice-cooker-v2",
+  "title": "炊飯器保証ポリシー 日本版(v2)",
+  "description": "日本で販売するHikari Home炊飯器の保証ポリシー第2版で、2025年10月26日から適用されます。",
+  "body": "## 適用範囲\n\n本ポリシーは、日本国内の正規販売店で購入されたHikari Home製炊飯器すべてに適用されます。第2版は2025年10月26日より有効です。\n\n## 保証期間\n\n保証期間は、お客様が商品を受け取った日から12か月間です。購入時のレシートまたは電子保証書で購入日を確認します。この期間内に製造上の原因による故障が発生した場合、修理費用および交換部品代は無料となります。\n\n## 保証の対象外\n\n- 落下、水濡れ、または無断での分解による故障\n- 内釜やパッキンなどの消耗品の自然な摩耗\n- 取扱説明書に反する使用が原因の不具合\n\n## 申請手順\n\nお客様は購入証明書をご用意のうえ、カスタマーサポートへご連絡ください。症状を確認したあと、集荷の手配または提携サービスセンターへのご案内を行います。修理は通常10営業日以内に完了し、結果はメールまたは電話でお知らせします。"
+ },
+ "policies/vn/installment-v1": {
+  "id": "policies/vn/installment-v1",
+  "title": "Installment Payment Policy – Vietnam (v1, Superseded)",
+  "description": "Version 1 of the Vietnam installment payment policy, now superseded by v2 and no longer applied to new orders.",
+  "body": "## Status\n\nThis version 1 policy took effect on July 3, 2025. It has been superseded by v2 (policies/vn/installment-v2) and is retained for reference only. It must not be applied to new orders.\n\n## Eligibility\n\nUnder v1, customers in Vietnam could pay for Hikari Home products in installments when the order value was at least 5,000,000 VND. Orders below this threshold had to be paid in full at the time of purchase.\n\n## Installment Terms\n\nThe maximum installment period was 24 months. Installments were arranged through partner banks and consumer finance companies, and the monthly amount was calculated by the partner according to its own rate schedule.\n\n## Handling of Existing Agreements\n\n- Installment agreements signed while v1 was in force continue under their original terms.\n- Finance staff should refer to v2 when advising new customers or approving new applications.\n- Questions about legacy contracts should be sent to the Finance department."
+ },
+ "policies/vn/installment-v2": {
+  "id": "policies/vn/installment-v2",
+  "title": "Installment Payment Policy – Vietnam (v2)",
+  "description": "Version 2 of the Vietnam installment payment policy, effective March 10, 2026, with a lower minimum order and shorter maximum term.",
+  "body": "## Effective Date and Scope\n\nThis version 2 policy takes effect on March 10, 2026 and supersedes v1 (policies/vn/installment-v1). It applies to all Hikari Home orders in Vietnam paid through installment plans.\n\n## Eligibility\n\nCustomers may choose installment payment when the order value is at least 2,000,000 VND. This is lower than the 5,000,000 VND threshold used in v1 and opens installment plans to more mid-priced appliances. Orders below the minimum must be paid in full.\n\n## Installment Terms\n\nThe maximum installment period is 12 months, shortened from 24 months under v1 to reduce credit risk. Plans are arranged through partner banks and consumer finance companies, which set the monthly amount according to their own schedules.\n\n## Process\n\n- Sales staff confirm the order value and offer the available plans.\n- The partner completes the credit check and approval.\n- Finance reconciles partner payments monthly and reports exceptions to the Finance manager."
+ },
+ "policies/vn/installment-v3": {
+  "id": "policies/vn/installment-v3",
+  "title": "Installment Payment Policy – Vietnam (v3, Draft)",
+  "description": "Draft proposal for version 3 of the Vietnam installment policy, pending approval, proposed to take effect November 1, 2026.",
+  "body": "## Status\n\nThis is a draft proposal for version 3 of the Vietnam installment policy and is pending approval. If approved, it would take effect on November 1, 2026 and supersede v2 (policies/vn/installment-v2). Until then, v2 remains in force.\n\n## Proposed Eligibility\n\nThe draft raises the minimum order value for installment payment to 3,000,000 VND, compared with 2,000,000 VND under v2. The aim is to focus installment plans on higher-value appliances and reduce the administrative cost of small plans.\n\n## Proposed Terms\n\nThe draft extends the maximum installment period to 24 months, up from 12 months under v2, so customers can spread the cost of premium products over a longer period.\n\n## Next Steps\n\n- Finance to complete a credit risk assessment with partner banks.\n- Sales and CS to review the customer impact.\n- The final proposal will be submitted for management approval before any announcement."
+ },
+ "policies/jp/installment-v2": {
+  "id": "policies/jp/installment-v2",
+  "title": "分割払いポリシー(日本) v2",
+  "description": "日本市場における分割払いの対象金額と最大分割回数を定めた、2025年10月16日施行の第2版ポリシーです。",
+  "body": "## 目的と適用範囲\n\n本ポリシーは、Hikari Home の日本国内における家電製品の分割払いについて、対象条件と運用ルールを定めるものです。施行日は2025年10月16日です。オンラインストアおよび直営店舗でのご注文に適用します。\n\n## 対象条件\n\n分割払いを利用できるのは、1回のご注文合計が25,000 JPY以上の場合に限ります。25,000 JPY未満のご注文は一括払いのみとなります。分割回数は最大12回までとし、お客様は3回、6回、12回などの回数から選択できます。\n\n## 運用上の注意\n\n- 分割手数料は、選択された回数に応じて決済代行会社の規定に従い請求されます。\n- 途中での繰り上げ返済は、カスタマーサポートへの申請により受け付けます。\n- 与信審査の結果により、ご利用をお断りする場合があります。\n\n## 見直し\n\n財務部は、本ポリシーの内容を年1回確認し、必要に応じて改定案を経営会議へ提出します。運用に関する質問は財務部までお問い合わせください。"
+ },
+ "policies/jp/installment-v3": {
+  "id": "policies/jp/installment-v3",
+  "title": "分割払いポリシー(日本) v3【草案】",
+  "description": "分割払いの最大回数を24回へ拡大することを提案する、承認待ちの第3版ポリシー草案です。",
+  "body": "## 草案の位置づけ\n\n本書は、日本市場における分割払いポリシーの第3版に関する草案であり、現在は承認待ちの提案段階です。承認された場合、2026年11月1日から施行し、現行の第2版(policies/jp/installment-v2)に代わるものとします。承認されるまでは第2版が有効です。\n\n## 提案内容\n\n最大分割回数を、現行の12回から24回へ拡大することを提案します。高額な大型家電の購入時に、お客様の月々の負担を軽減することが目的です。分割払いの対象となる最低注文金額は、第2版と同じく25,000 JPYを維持します。\n\n## 検討事項\n\n- 分割回数の増加に伴う与信リスクと未回収リスクの評価\n- 決済代行会社との手数料条件の再交渉\n- サイトおよび店舗での案内表示、社内研修の準備\n\n## 今後の進め方\n\n財務部は、経営会議での承認を得たうえで、施行前にカスタマーサポートおよび営業部門へ周知します。"
+ },
+ "policies/vn/loyalty-v1": {
+  "id": "policies/vn/loyalty-v1",
+  "title": "Loyalty Program Policy (Vietnam) v1 – Deprecated",
+  "description": "The first version of the Vietnam loyalty points policy, now deprecated and superseded by v2.",
+  "body": "## Status\n\nThis policy is deprecated. It was superseded by Loyalty Program Policy (Vietnam) v2 (policies/vn/loyalty-v2), which took effect on 3 March 2026. It is kept here for reference only and should not be used to answer current customer questions.\n\n## Scope and effective date\n\nVersion 1 took effect on 12 June 2024 and applied to all Hikari Home customers in Vietnam who enrolled in the loyalty program through our stores, website or hotline.\n\n## Points expiry\n\nUnder v1, earned loyalty points expired 24 months after the date they were issued. Customers could check their balance and upcoming expiry dates through the customer app or by contacting Customer Support. Expired points could not be reinstated.\n\n## Handling of legacy cases\n\n- Points issued while v1 was in force are handled according to the transition rules in v2.\n- Customer Support should refer to the current policy for any request made after 3 March 2026.\n- Questions about historical cases can be escalated to the CS team lead."
+ },
+ "policies/vn/loyalty-v2": {
+  "id": "policies/vn/loyalty-v2",
+  "title": "Loyalty Program Policy (Vietnam) v2",
+  "description": "The current Vietnam loyalty policy, shortening the points expiry period to 6 months from 3 March 2026.",
+  "body": "## Purpose and effective date\n\nThis policy sets out how loyalty points work for Hikari Home customers in Vietnam. It takes effect on 3 March 2026 and supersedes Loyalty Program Policy (Vietnam) v1 (policies/vn/loyalty-v1).\n\n## Points expiry\n\nLoyalty points now expire 6 months after the date they are issued, replacing the previous 24-month period. The shorter window encourages timely redemption and reduces the long-term point liability on our books. Customers can see their balance and expiry dates in the customer app.\n\n## Customer communication\n\n- Customer Support sends a reminder notification before points are due to expire.\n- Expired points cannot be reinstated, except where a system error is confirmed by CS.\n- Frontline staff should explain the change clearly to customers who joined under v1.\n\n## Ownership and review\n\nThe CS department owns this policy and reviews redemption data each quarter. Any change proposals must be submitted to the marketing and finance teams for approval before being published."
+ },
+ "policies/vn/loyalty-v3": {
+  "id": "policies/vn/loyalty-v3",
+  "title": "Loyalty Program Policy (Vietnam) v3 – Draft",
+  "description": "A draft proposal, pending approval, to extend the Vietnam loyalty points expiry period to 12 months.",
+  "body": "## Draft status\n\nThis document is a draft proposal pending approval. If approved, it would take effect on 1 November 2026 and supersede Loyalty Program Policy (Vietnam) v2 (policies/vn/loyalty-v2). Until approval is confirmed, v2 remains the policy in force.\n\n## Proposed change\n\nThe draft proposes extending the points expiry period from 6 months to 12 months after issue. Customer feedback since March 2026 showed that the 6-month window was too short for buyers of large appliances, who purchase infrequently and often lost points before their next order.\n\n## Points to assess\n\n- Impact on point liability and the promotional budget.\n- Updates to the customer app and expiry reminder messages.\n- Training for store staff and the hotline team.\n\n## Next steps\n\nThe CS department will present the proposal to marketing and finance leadership. If approved, a communication plan will be issued at least four weeks before the effective date."
+ },
+ "policies/jp/loyalty-v1": {
+  "id": "policies/jp/loyalty-v1",
+  "title": "ロイヤルティプログラムポリシー(日本) v1【廃止】",
+  "description": "日本向けロイヤルティポイント制度の第1版であり、現在は廃止され第2版に置き換えられています。",
+  "body": "## 位置づけ\n\n本ポリシーは廃止されています。2026年4月20日に施行された第2版(policies/jp/loyalty-v2)に置き換えられました。本書は参照用に保管しているものであり、現在のお問い合わせ対応には使用しないでください。\n\n## 施行日と適用範囲\n\n第1版は2024年6月21日に施行され、日本国内で Hikari Home のロイヤルティプログラムに登録したすべてのお客様に適用されました。店舗、公式サイト、電話窓口のいずれで購入した場合も対象です。\n\n## ポイントの有効期限\n\n第1版では、付与されたポイントの有効期限は付与日から18か月と定められていました。有効期限を過ぎたポイントは失効し、復活はできませんでした。残高と期限はマイページから確認できました。\n\n## 過去案件の扱い\n\n- 第1版の期間中に付与されたポイントは、第2版の移行規定に従って処理します。\n- 2026年4月20日以降の問い合わせには、現行ポリシーを参照してください。\n- 過去の個別案件は、CS部門のチームリーダーへエスカレーションしてください。"
+ },
+ "policies/jp/loyalty-v2": {
+  "id": "policies/jp/loyalty-v2",
+  "title": "ロイヤルティプログラムポリシー(日本) v2",
+  "description": "日本向けロイヤルティポイント制度の現行版で、有効期限を24か月に延長した2026年4月20日施行のポリシーです。",
+  "body": "## 目的と施行日\n\n本ポリシーは、日本国内の Hikari Home のお客様に対するロイヤルティポイント制度の運用ルールを定めるものです。施行日は2026年4月20日で、第1版(policies/jp/loyalty-v1)に代わる現行のポリシーです。\n\n## ポイントの有効期限\n\n付与されたポイントの有効期限は、付与日から24か月とします。第1版の18か月から延長することで、購入頻度の低い大型家電のお客様にも、ポイントを無理なくご利用いただけるようにしました。残高と失効予定日は、マイページおよびアプリから確認できます。\n\n## 運用ルール\n\n- 失効が近いポイントについては、事前にメールでお知らせします。\n- 失効したポイントの復活は、システム障害が確認された場合を除き行いません。\n- 第1版で付与されたポイントの扱いは、移行規定に従います。\n\n## 管理と見直し\n\n本ポリシーはCS部門が管理し、ポイントの利用状況を四半期ごとに確認します。改定を行う場合は、マーケティング部門および財務部門の承認を得たうえで公開します。"
+ },
+ "policies/vn/privacy-v1": {
+  "id": "policies/vn/privacy-v1",
+  "title": "Chính sách quyền riêng tư (Việt Nam) v1 – Đã ngừng áp dụng",
+  "description": "Phiên bản đầu tiên của chính sách quyền riêng tư tại Việt Nam, hiện đã ngừng áp dụng và được thay thế bằng phiên bản mới hơn.",
+  "body": "## Tình trạng\n\nChính sách này đã ngừng áp dụng (deprecated) và đã được thay thế bởi phiên bản mới hơn của Chính sách quyền riêng tư tại Việt Nam. Tài liệu chỉ được lưu để tham khảo, không dùng để trả lời các yêu cầu hiện tại của khách hàng.\n\n## Phạm vi và ngày hiệu lực\n\nPhiên bản v1 có hiệu lực từ ngày 14/06/2025 và áp dụng cho toàn bộ dữ liệu cá nhân mà Hikari Home thu thập từ khách hàng tại Việt Nam, bao gồm thông tin liên hệ, địa chỉ giao hàng và lịch sử mua hàng qua cửa hàng, website và tổng đài.\n\n## Yêu cầu xóa dữ liệu\n\nKhi khách hàng yêu cầu xóa dữ liệu cá nhân, Hikari Home phải xử lý và phản hồi trong vòng 30 ngày kể từ ngày nhận được yêu cầu hợp lệ. Bộ phận Pháp chế xác minh danh tính người yêu cầu trước khi thực hiện.\n\n## Lưu ý\n\n- Các yêu cầu phát sinh trong thời gian v1 có hiệu lực được xử lý theo quy định chuyển tiếp.\n- Mọi thắc mắc xin liên hệ bộ phận Pháp chế."
+ },
+ "policies/vn/privacy-v2": {
+  "id": "policies/vn/privacy-v2",
+  "title": "Chính sách Bảo mật Dữ liệu Khách hàng – Việt Nam (v2)",
+  "description": "Chính sách v2 quy định cách Hikari Home Việt Nam thu thập, sử dụng, bảo vệ dữ liệu cá nhân và xử lý yêu cầu xóa dữ liệu.",
+  "body": "## Phạm vi và hiệu lực\n\nChính sách này có hiệu lực từ ngày 22/09/2025 và thay thế phiên bản v1 (policies/vn/privacy-v1), vốn đã được thay thế. Chính sách áp dụng cho toàn bộ nhân viên và đối tác của Hikari Home tại Việt Nam khi xử lý dữ liệu cá nhân của khách hàng.\n\n## Nguyên tắc thu thập và sử dụng\n\nChúng tôi chỉ thu thập dữ liệu cần thiết cho việc bán hàng, giao hàng, bảo hành và chăm sóc khách hàng. Dữ liệu không được chia sẻ cho bên thứ ba nếu chưa có sự đồng ý của khách hàng, trừ trường hợp pháp luật yêu cầu. Mọi hệ thống lưu trữ dữ liệu phải được mã hóa và phân quyền truy cập theo vai trò.\n\n## Yêu cầu xóa dữ liệu\n\nKhách hàng có quyền yêu cầu xóa dữ liệu cá nhân qua email hoặc tổng đài. Bộ phận Pháp chế phải xử lý và xác nhận yêu cầu trong vòng 14 ngày kể từ khi nhận được yêu cầu hợp lệ. Trường hợp dữ liệu phải lưu giữ theo quy định pháp luật, khách hàng sẽ được thông báo lý do bằng văn bản.\n\n## Sự cố và báo cáo\n\nMọi nghi ngờ rò rỉ dữ liệu phải được báo ngay cho bộ phận Pháp chế và Bảo mật để đánh giá và xử lý kịp thời."
+ },
+ "policies/jp/privacy-v2": {
+  "id": "policies/jp/privacy-v2",
+  "title": "個人情報保護ポリシー 日本版(v2)",
+  "description": "日本におけるお客様の個人情報の取り扱いと、削除請求への対応期限を定めた第2版のポリシーです。",
+  "body": "## 目的と適用開始日\n\n本ポリシーは2026年4月7日より施行され、Hikari Home 日本法人の全従業員および委託先が、お客様の個人情報を取り扱う際に遵守すべき基準を定めるものです。個人情報保護法およびその関連ガイドラインに準拠して運用します。\n\n## 取得と利用\n\n個人情報は、商品の販売、配送、保証対応、およびカスタマーサポートに必要な範囲でのみ取得します。お客様の同意なく第三者へ提供することはありません。ただし、法令に基づく場合はこの限りではありません。保管するデータは暗号化し、業務上必要な担当者のみがアクセスできるよう権限を管理します。\n\n## 削除請求への対応\n\nお客様から個人情報の削除請求があった場合、法務部は本人確認を行ったうえで、請求受領から14日以内に対応結果をご連絡します。法令上保存が必要なデータについては、その理由を書面でお伝えします。\n\n## 漏えい時の対応\n\n情報漏えいの疑いを認識した従業員は、直ちに法務部およびセキュリティ担当へ報告し、原因調査と再発防止策を実施してください。"
+ },
+ "policies/vn/gift-wrap-v1": {
+  "id": "policies/vn/gift-wrap-v1",
+  "title": "Chính sách Gói quà – Việt Nam (v1, đã ngừng áp dụng)",
+  "description": "Chính sách v1 về dịch vụ gói quà tại Việt Nam với phí 20.000 VND, hiện đã bị thay thế.",
+  "body": "## Hiệu lực và tình trạng\n\nChính sách này có hiệu lực từ ngày 07/03/2024. Hiện nay chính sách đã ngừng áp dụng và đã được thay thế bởi phiên bản v2 (policies/vn/gift-wrap-v2). Tài liệu này chỉ được lưu để tham khảo lịch sử.\n\n## Nội dung dịch vụ\n\nKhách hàng mua sản phẩm của Hikari Home tại Việt Nam có thể chọn dịch vụ gói quà cho từng đơn hàng. Phí gói quà là 20.000 VND cho mỗi sản phẩm được gói. Dịch vụ bao gồm giấy gói, nơ trang trí và thiệp chúc mừng in sẵn.\n\n## Quy trình xử lý\n\nKhách hàng chọn gói quà khi đặt hàng trực tuyến hoặc tại cửa hàng. Bộ phận CS xác nhận yêu cầu và chuyển cho kho thực hiện. Sản phẩm đã gói quà không áp dụng đổi trả nếu bao bì bị hư hỏng do khách hàng. Trường hợp hủy đơn trước khi gói, khách hàng không phải trả phí gói quà."
+ },
+ "policies/vn/gift-wrap-v2": {
+  "id": "policies/vn/gift-wrap-v2",
+  "title": "Chính sách Gói quà – Việt Nam (v2)",
+  "description": "Chính sách v2 điều chỉnh phí dịch vụ gói quà tại Việt Nam lên 50.000 VND, thay thế phiên bản v1.",
+  "body": "## Hiệu lực\n\nChính sách này có hiệu lực từ ngày 13/08/2026 và thay thế phiên bản v1 (policies/vn/gift-wrap-v1), vốn đã được thay thế. Chính sách áp dụng cho mọi đơn hàng của Hikari Home tại Việt Nam.\n\n## Phí và nội dung dịch vụ\n\nPhí gói quà là 50.000 VND cho mỗi sản phẩm. Mức phí mới phản ánh chi phí vật liệu cao cấp hơn, gồm hộp quà cứng, giấy gói, nơ và thiệp có thể ghi lời chúc theo yêu cầu của khách hàng.\n\n## Quy trình\n\nKhách hàng chọn gói quà khi đặt hàng trực tuyến hoặc tại cửa hàng và có thể nhập lời chúc. Bộ phận CS xác nhận yêu cầu và phối hợp với kho để hoàn tất trước khi giao. Nếu khách hàng hủy đơn trước khi sản phẩm được gói, phí gói quà sẽ không bị tính. Sản phẩm đã gói không áp dụng đổi trả nếu bao bì hư hỏng do khách hàng. Các đơn đặt trước ngày hiệu lực vẫn được tính theo mức phí cũ."
+ },
+ "policies/vn/gift-wrap-v3": {
+  "id": "policies/vn/gift-wrap-v3",
+  "title": "Chính sách Gói quà – Việt Nam (v3, bản nháp)",
+  "description": "Bản nháp v3 đề xuất giảm phí gói quà tại Việt Nam xuống 20.000 VND, đang chờ phê duyệt.",
+  "body": "## Tình trạng\n\nĐây là bản nháp đề xuất, đang chờ phê duyệt và chưa có hiệu lực. Nếu được thông qua, chính sách sẽ có hiệu lực từ ngày 01/11/2026 và thay thế phiên bản v2 (policies/vn/gift-wrap-v2). Cho đến khi được phê duyệt, phiên bản v2 vẫn được áp dụng.\n\n## Đề xuất thay đổi\n\nBộ phận CS đề xuất giảm phí gói quà xuống 20.000 VND cho mỗi sản phẩm, nhằm khuyến khích khách hàng sử dụng dịch vụ trong mùa mua sắm cuối năm và các chiến dịch của bộ phận Marketing. Dịch vụ vẫn gồm hộp quà, giấy gói, nơ và thiệp chúc mừng.\n\n## Các bước tiếp theo\n\nĐề xuất cần được Ban điều hành và bộ phận Marketing xem xét, đánh giá tác động đến doanh thu và chi phí vật liệu. Sau khi được phê duyệt, CS sẽ cập nhật hệ thống bán hàng và đào tạo nhân viên trước ngày hiệu lực. Mọi góp ý xin gửi về bộ phận CS trước khi kết thúc quá trình xem xét."
+ },
+ "policies/jp/gift-wrap-v1": {
+  "id": "policies/jp/gift-wrap-v1",
+  "title": "ギフトラッピングポリシー 日本版(v1・廃止)",
+  "description": "日本でのギフトラッピング料金を150円と定めた第1版のポリシーで、現在は第2版に置き換えられています。",
+  "body": "## 適用開始日と現在の状況\n\n本ポリシーは2025年5月6日に施行されましたが、現在は廃止されており、第2版(policies/jp/gift-wrap-v2)に置き換えられています。本書は履歴参照用として保管されています。\n\n## サービス内容\n\nHikari Home 日本でご購入いただいた商品について、お客様はご注文ごとにギフトラッピングを選択できます。ラッピング料金は1点につき150 JPYです。包装紙、リボン、メッセージカードが含まれます。\n\n## 運用ルール\n\nお客様はオンラインまたは店頭でのご注文時にラッピングを選択します。CS部門が内容を確認し、倉庫へ作業を依頼します。ラッピング前にご注文をキャンセルされた場合、ラッピング料金は発生しません。お客様の取り扱いにより包装が破損した場合は、返品・交換をお受けできないことがあります。"
+ },
+ "policies/jp/gift-wrap-v2": {
+  "id": "policies/jp/gift-wrap-v2",
+  "title": "ギフトラッピングポリシー 日本版(v2)",
+  "description": "日本でのギフトラッピング料金を100円に改定し、第1版を置き換えた現行ポリシーです。",
+  "body": "## 適用開始日\n\n本ポリシーは2026年5月13日より施行され、第1版(policies/jp/gift-wrap-v1)に置き換わるものです。第1版は廃止されています。Hikari Home 日本のすべてのご注文に適用されます。\n\n## 料金とサービス内容\n\nギフトラッピング料金は1点につき100 JPYです。お客様により気軽にご利用いただくため、従来の150 JPYから引き下げました。包装紙、リボン、お名前やメッセージを記載できるカードが含まれます。\n\n## 運用ルール\n\nお客様はオンラインまたは店頭でご注文時にラッピングを選択し、メッセージを入力できます。CS部門が内容を確認し、倉庫と連携して発送前に作業を完了します。ラッピング前にご注文をキャンセルされた場合、料金は発生しません。お客様の取り扱いによる包装の破損については、返品・交換をお受けできない場合があります。施行日より前のご注文は旧料金を適用します。"
+ },
+ "sop/warehouse/receiving": {
+  "id": "sop/warehouse/receiving",
+  "title": "入荷業務標準手順書(SOP)",
+  "description": "倉庫における入荷時の受け入れ、検品、システム登録の標準手順と検品期限を定めた手順書です。",
+  "body": "## 目的と適用範囲\n\n本手順書は、Hikari Home の倉庫で仕入先やメーカーから商品を受け入れる際の標準的な流れを定めます。すべての倉庫担当者が、誤出荷や在庫差異を防ぐため本手順に従って作業してください。\n\n## 受け入れ手順\n\n1. 到着した荷物と納品書、発注書の内容を照合し、数量と品番を確認します。\n2. 外箱の破損や水濡れがないか目視で確認し、異常があれば写真を撮影して記録します。\n3. 荷受け担当者は受領サインを行い、入荷予定表に到着時刻を記入します。\n\n## 検品と登録\n\n検品は入荷から24時間以内に完了しなければなりません。数量、外観、動作確認を行い、結果を在庫管理システムへ登録します。不良品や数量差異が見つかった場合は、直ちに購買部門へ報告し、仕入先への連絡を依頼します。検品完了後、商品は指定の保管棚へ移動し、ロケーションを必ずシステムに反映してください。\n\n## 記録の保管\n\n納品書、検品記録、写真は所定のフォルダに保管し、監査に備えてください。"
+ },
+ "sop/warehouse/stock-count": {
+  "id": "sop/warehouse/stock-count",
+  "title": "SOP Kiểm kê tồn kho định kỳ – Kho Hikari Home Việt Nam",
+  "description": "Quy trình kiểm kê hàng tồn kho định kỳ 30 ngày một lần tại kho Hikari Home.",
+  "body": "## Mục đích và phạm vi\n\nQuy trình này áp dụng cho toàn bộ kho của Hikari Home tại Việt Nam nhằm bảo đảm số liệu tồn kho trên hệ thống khớp với số lượng thực tế. Quy trình có hiệu lực từ ngày 16/04/2024.\n\n## Tần suất và nguyên tắc\n\n- Kiểm kê toàn bộ kho định kỳ 30 ngày một lần, vào ngày làm việc cuối cùng của chu kỳ.\n- Trong thời gian kiểm kê, tạm dừng nhập và xuất hàng tại khu vực đang đếm.\n- Mỗi khu vực do hai nhân viên độc lập thực hiện: một người đếm, một người đối chiếu.\n\n## Các bước thực hiện\n\n1. Trưởng kho lập kế hoạch và thông báo cho các bộ phận liên quan trước ít nhất hai ngày.\n2. Xuất danh sách tồn kho từ hệ thống và in phiếu kiểm kê.\n3. Đếm thực tế, ghi số lượng vào phiếu và ký xác nhận.\n4. Đối chiếu chênh lệch; các mã hàng lệch phải được đếm lại.\n5. Lập biên bản chênh lệch, trình quản lý kho phê duyệt trước khi điều chỉnh số liệu.\n\n## Báo cáo\n\nKết quả kiểm kê được gửi cho phòng Kế toán trong vòng hai ngày làm việc sau khi hoàn tất. Các nguyên nhân chênh lệch lặp lại cần được phân tích và đề xuất biện pháp khắc phục."
+ },
+ "sop/warehouse/packing": {
+  "id": "sop/warehouse/packing",
+  "title": "SOP Đóng gói hàng hóa – Kho Hikari Home Việt Nam",
+  "description": "Quy trình đóng gói sản phẩm, quy định trọng lượng tối đa mỗi kiện là 30 kg.",
+  "body": "## Mục đích\n\nQuy trình này quy định cách đóng gói sản phẩm gia dụng của Hikari Home nhằm hạn chế hư hỏng khi vận chuyển và bảo đảm an toàn cho nhân viên. Có hiệu lực từ ngày 09/07/2025.\n\n## Quy định chung\n\n- Trọng lượng tối đa của mỗi kiện hàng là 30 kg. Hàng nặng hơn phải chia thành nhiều kiện.\n- Sử dụng thùng carton đúng kích thước, không để khoảng trống lớn bên trong.\n- Sản phẩm dễ vỡ như nồi cơm điện, lò vi sóng phải có lớp đệm xốp hoặc màng bọc khí ở mọi mặt.\n- Dán nhãn \"Hàng dễ vỡ\" và mũi tên chỉ chiều đặt hàng lên thùng khi cần thiết.\n\n## Các bước thực hiện\n\n1. Kiểm tra đơn hàng và tình trạng sản phẩm trước khi đóng.\n2. Đặt sản phẩm cùng phụ kiện, sách hướng dẫn và phiếu bảo hành vào thùng.\n3. Chèn vật liệu chống sốc, dán kín thùng bằng băng keo ít nhất ba đường.\n4. Cân kiện hàng, ghi trọng lượng và dán nhãn vận chuyển.\n5. Chuyển kiện sang khu vực chờ xuất kho.\n\n## Kiểm soát\n\nNhân viên kiểm tra chéo ngẫu nhiên mỗi ca; các kiện sai quy cách phải được đóng gói lại ngay."
+ },
+ "sop/warehouse/forklift": {
+  "id": "sop/warehouse/forklift",
+  "title": "SOP Vận hành xe nâng – Kho Hikari Home Việt Nam",
+  "description": "Quy định an toàn khi vận hành xe nâng trong kho, với tốc độ tối đa 10 km/giờ.",
+  "body": "## Mục đích và hiệu lực\n\nQuy trình này bảo đảm an toàn khi sử dụng xe nâng trong các kho của Hikari Home tại Việt Nam. Quy trình có hiệu lực từ ngày 14/05/2026.\n\n## Quy định vận hành\n\n- Chỉ nhân viên có chứng chỉ vận hành xe nâng còn hiệu lực mới được điều khiển.\n- Tốc độ tối đa trong kho là 10 km/giờ; giảm tốc độ khi qua góc cua và lối giao nhau.\n- Không chở người trên càng nâng hoặc trên xe.\n- Luôn hạ càng nâng cách mặt sàn khoảng 15 cm khi di chuyển.\n- Bấm còi khi tiến vào khu vực có tầm nhìn hạn chế.\n\n## Kiểm tra trước ca\n\n1. Kiểm tra phanh, còi, đèn, lốp và hệ thống thủy lực.\n2. Kiểm tra mức pin hoặc nhiên liệu.\n3. Ghi kết quả vào sổ kiểm tra; xe có lỗi phải ngừng sử dụng và báo cho bộ phận bảo trì.\n\n## Xử lý sự cố\n\nMọi sự cố hoặc suýt xảy ra tai nạn phải được báo cho trưởng kho ngay lập tức và ghi nhận vào biên bản an toàn lao động."
+ },
+ "sop/warehouse/returns-processing": {
+  "id": "sop/warehouse/returns-processing",
+  "title": "SOP Xử lý hàng trả lại (bản nháp) – Kho Hikari Home Việt Nam",
+  "description": "Bản nháp quy trình xử lý hàng khách trả lại trong vòng 3 ngày, đang chờ phê duyệt.",
+  "body": "## Tình trạng tài liệu\n\nĐây là bản nháp đề xuất, đang chờ phê duyệt của Giám đốc vận hành. Ngày cập nhật gần nhất là 04/04/2025 và quy trình chưa có hiệu lực chính thức.\n\n## Nội dung đề xuất\n\nMục tiêu là rút ngắn thời gian xử lý hàng khách trả lại tại kho Hikari Home Việt Nam. Thời gian xử lý đề xuất là 3 ngày làm việc kể từ khi kho nhận được hàng.\n\n## Các bước đề xuất\n\n1. Tiếp nhận hàng, đối chiếu mã đơn trả với hệ thống.\n2. Kiểm tra tình trạng bên ngoài và chụp ảnh lưu hồ sơ.\n3. Phân loại: còn nguyên seal, đã mở hộp nhưng dùng tốt, hoặc hư hỏng.\n4. Hàng còn nguyên seal được nhập lại kho bán; hàng đã mở hộp chuyển sang kiểm tra chức năng; hàng hư hỏng chuyển bộ phận bảo hành.\n5. Thông báo kết quả cho phòng Chăm sóc khách hàng để hoàn tiền hoặc đổi hàng.\n\n## Các vấn đề cần xác nhận\n\n- Phối hợp với phòng Kế toán về thời điểm hoàn tiền.\n- Khu vực lưu trữ riêng cho hàng chờ kiểm tra.\n\nSau khi được phê duyệt, tài liệu sẽ được chuyển sang trạng thái chính thức và triển khai đào tạo cho nhân viên kho."
+ },
+ "sop/warehouse/cold-storage": {
+  "id": "sop/warehouse/cold-storage",
+  "title": "SOP Bảo quản kho lạnh – Kho Hikari Home Việt Nam",
+  "description": "Quy trình bảo quản linh kiện nhạy cảm trong kho lạnh ở nhiệt độ 4 độ C.",
+  "body": "## Mục đích\n\nQuy trình này quy định việc bảo quản các linh kiện và vật tư nhạy cảm với nhiệt độ, như keo dán, cảm biến và chất làm lạnh, tại kho lạnh của Hikari Home Việt Nam. Có hiệu lực từ ngày 08/09/2024.\n\n## Yêu cầu nhiệt độ\n\n- Nhiệt độ kho lạnh được duy trì ở 4 °C (4 độ C).\n- Nhiệt độ được ghi nhận tự động và kiểm tra thủ công hai lần mỗi ca.\n- Khi nhiệt độ lệch quá 2 °C so với mức quy định, phải báo ngay cho trưởng kho.\n\n## Quy tắc sử dụng\n\n1. Hạn chế mở cửa; mỗi lần mở không quá vài phút.\n2. Xếp hàng theo nguyên tắc nhập trước xuất trước, chừa khoảng cách để không khí lưu thông.\n3. Không để hàng trực tiếp trên sàn; dùng pallet hoặc kệ.\n4. Nhân viên vào kho phải mặc quần áo giữ nhiệt và găng tay.\n\n## Xử lý sự cố\n\nKhi hệ thống làm lạnh gặp sự cố, chuyển hàng sang kho dự phòng và thông báo bộ phận bảo trì. Toàn bộ sự việc được ghi vào nhật ký kho lạnh."
+ },
+ "sop/warehouse/dispatch": {
+  "id": "sop/warehouse/dispatch",
+  "title": "SOP Xuất kho và giao hàng – Kho Hikari Home Việt Nam",
+  "description": "Quy trình xuất kho, với giờ chốt đơn trong ngày là 14 giờ.",
+  "body": "## Phạm vi\n\nQuy trình này áp dụng cho việc xuất kho và bàn giao hàng cho đơn vị vận chuyển tại kho Hikari Home Việt Nam. Có hiệu lực từ ngày 22/06/2025.\n\n## Giờ chốt đơn\n\nĐơn hàng được xác nhận trước 14 giờ sẽ được xuất kho ngay trong ngày. Đơn hàng xác nhận sau 14 giờ sẽ được xử lý vào ngày làm việc kế tiếp. Trường hợp khẩn cấp cần được quản lý kho phê duyệt.\n\n## Các bước thực hiện\n\n1. Nhận danh sách đơn cần xuất từ hệ thống quản lý đơn hàng.\n2. Lấy hàng theo phiếu, quét mã vạch để xác nhận đúng mã và số lượng.\n3. Chuyển hàng sang khu đóng gói và dán nhãn vận chuyển.\n4. Tập kết hàng theo từng đơn vị vận chuyển.\n5. Bàn giao cho tài xế, ký nhận trên biên bản và cập nhật trạng thái đơn trên hệ thống.\n\n## Kiểm soát\n\nCuối ngày, trưởng kho đối chiếu số đơn đã xuất với số đơn đã chốt. Đơn chưa xuất phải ghi rõ lý do và được chuyển sang ngày hôm sau."
+ },
+ "sop/warehouse/damaged-goods": {
+  "id": "sop/warehouse/damaged-goods",
+  "title": "SOP Xử lý hàng hư hỏng – Kho Hikari Home Việt Nam",
+  "description": "Quy trình báo cáo và xử lý hàng hư hỏng, yêu cầu báo cáo trong vòng 2 giờ.",
+  "body": "## Mục đích\n\nQuy trình này quy định cách phát hiện, báo cáo và xử lý hàng hư hỏng tại kho Hikari Home Việt Nam, giúp giảm thiểu tổn thất và xác định nguyên nhân. Có hiệu lực từ ngày 14/06/2026.\n\n## Thời hạn báo cáo\n\nNhân viên phát hiện hàng hư hỏng phải báo cáo cho trưởng kho trong vòng 2 giờ kể từ khi phát hiện. Báo cáo gồm mã sản phẩm, số lượng, vị trí, mô tả hư hỏng và ảnh chụp.\n\n## Các bước xử lý\n\n1. Cách ly hàng hư hỏng sang khu vực riêng, dán nhãn \"Hàng lỗi\".\n2. Trưởng kho xác nhận và ghi nhận vào hệ thống.\n3. Xác định nguyên nhân: do nhà cung cấp, vận chuyển hay thao tác trong kho.\n4. Đề xuất phương án: trả nhà cung cấp, sửa chữa hoặc tiêu hủy.\n5. Phòng Kế toán cập nhật giá trị tồn kho sau khi phương án được phê duyệt.\n\n## Phòng ngừa\n\nHằng tháng, quản lý kho tổng hợp số liệu hàng hư hỏng và đề xuất cải tiến về đóng gói, xếp dỡ hoặc đào tạo nhân viên."
+ },
+ "sop/warehouse/labeling": {
+  "id": "sop/warehouse/labeling",
+  "title": "SOP Dán nhãn hàng hóa (bản nháp) – Kho Hikari Home Việt Nam",
+  "description": "Bản nháp quy trình dán nhãn hàng hóa, đề xuất lưu nhãn 90 ngày, đang chờ phê duyệt.",
+  "body": "## Tình trạng tài liệu\n\nĐây là bản nháp đề xuất, đang chờ phê duyệt của quản lý kho khu vực. Ngày cập nhật gần nhất là 22/12/2025; quy trình chưa có hiệu lực chính thức.\n\n## Nội dung đề xuất\n\nQuy trình đề xuất chuẩn hóa việc dán nhãn sản phẩm và kiện hàng tại kho Hikari Home Việt Nam, nhằm giảm nhầm lẫn khi lấy hàng và xuất kho.\n\n- Mỗi sản phẩm và kiện hàng có nhãn mã vạch gồm mã sản phẩm, số lô và ngày nhập.\n- Nhãn được dán ở vị trí cố định, dễ quét, không che thông tin của nhà sản xuất.\n- Dữ liệu nhãn và nhật ký in nhãn được lưu trong 90 ngày để phục vụ truy xuất khi có khiếu nại.\n\n## Các bước đề xuất\n\n1. In nhãn từ hệ thống quản lý kho theo phiếu nhập.\n2. Dán nhãn và quét thử để xác nhận đọc được.\n3. Nhãn lỗi được hủy và ghi vào nhật ký.\n4. Kiểm tra ngẫu nhiên mỗi ca bởi trưởng ca.\n\n## Bước tiếp theo\n\nSau khi được phê duyệt, tài liệu sẽ chuyển sang chính thức và tổ chức đào tạo cho nhân viên kho."
+ },
+ "sop/warehouse/hazmat": {
+  "id": "sop/warehouse/hazmat",
+  "title": "危険物取扱手順書(倉庫部門)",
+  "description": "倉庫における危険物の保管・取扱い・緊急時対応の標準手順と、担当者の研修要件を定めた手順書。",
+  "body": "## 目的と適用範囲\n本手順書は、Hikari Homeの倉庫で取り扱うスプレー缶、リチウム電池、加熱機器用ガスカートリッジなどの危険物について、安全な受入れ・保管・出荷の方法を定めるものです。ベトナムおよび日本の全倉庫に適用し、2026年7月15日付で最新版として運用しています。\n\n## 保管と取扱いのルール\n危険物は専用の区画に保管し、一般在庫と混在させません。区画には品名と危険区分を明示したラベルを掲示し、通路は常に確保します。入出庫時は数量を二人で確認し、在庫管理システムに即時記録してください。破損や液漏れを発見した場合は、直ちに作業を止めて周囲を立入禁止とし、倉庫責任者へ報告します。\n\n## 研修要件\n危険物区画で作業する担当者は、配属前に4時間の安全研修を修了する必要があります。研修では、ラベルの読み方、保護具の着用、消火器の使用方法、漏洩時の初期対応を実技を交えて学びます。修了記録は倉庫部門で保管し、年に一度の再確認を行います。未修了者は単独で危険物を扱ってはなりません。"
+ },
+ "sop/cs/ticket-triage": {
+  "id": "sop/cs/ticket-triage",
+  "title": "チケットトリアージ手順書(カスタマーサポート)",
+  "description": "問い合わせチケットの優先度判定と担当振り分け、初回応答の目標時間を定めたCS部門の手順書。",
+  "body": "## 目的\n本手順書は、カスタマーサポート部門に届く問い合わせチケットを迅速かつ公平に振り分けるための基準を定めます。2024年6月21日付で改定した内容が現在の正式版です。\n\n## 優先度の判定\n受信したチケットは、内容に応じて「緊急」「高」「通常」に分類します。発煙・発火など安全に関わる事案や、設置直後の完全な故障は「緊急」とし、直ちに上長へ共有します。修理や交換の依頼は「高」、使い方の質問や資料請求は「通常」とします。判断に迷う場合は、より高い優先度を選んでください。\n\n## 初回応答と担当振り分け\nすべてのチケットに対し、受信から4時間以内に初回応答を行うことを目標とします。初回応答では、受付の旨、担当者名、今後の見通しをお客様に伝えます。製品カテゴリと言語(日本語・ベトナム語)に基づき担当チームへ割り当て、重複した問い合わせは統合します。応答時間の達成状況は毎週集計し、月次のCS会議で共有します。"
+ },
+ "sop/cs/refund-approval": {
+  "id": "sop/cs/refund-approval",
+  "title": "返金承認手順書(カスタマーサポート)",
+  "description": "返金申請の確認手順と、担当者が自動承認できる上限額および上長承認の条件を定めた手順書。",
+  "body": "## 目的\n本手順書は、お客様からの返金申請を適切かつ迅速に処理するための承認フローを定めます。2025年10月5日付で運用している現行版です。\n\n## 申請の確認\n担当者は、注文履歴、購入日、保証期間、返品された商品の状態を確認します。初期不良や配送中の破損など当社に責任がある場合は、原則として全額返金の対象となります。お客様都合による返品は、返品条件を満たしている場合のみ受け付けます。不正が疑われる申請は、承認前にリスク管理担当へ相談してください。\n\n## 承認権限\n返金額が1,000,000 VND以下の場合、CS担当者が自動承認できます。これを超える金額は、CSマネージャーの承認が必要です。承認後は、決済方法に応じて経理部門へ返金処理を依頼し、お客様へ完了の連絡をします。すべての返金は理由と承認者を記録し、月末に経理部門と照合します。"
+ },
+ "sop/cs/escalation": {
+  "id": "sop/cs/escalation",
+  "title": "エスカレーション手順書(カスタマーサポート)",
+  "description": "未解決の問い合わせを上位担当者へ引き上げる基準と手順、および期限を定めたCS部門の手順書。",
+  "body": "## 目的\n本手順書は、一次対応で解決できない問い合わせを、適切なタイミングで上位担当者や関連部門へ引き上げるための基準を定めます。2026年5月10日付で更新した最新版です。\n\n## エスカレーションの基準\n次のいずれかに該当する場合は、エスカレーションを行います。\n- 問い合わせの受付から48時間が経過しても解決していない\n- 安全性や法令に関わる可能性がある\n- お客様から責任者との対応を明確に求められた\n\n特に48時間を超えた案件は、担当者の判断を待たず、チームリーダーへ自動的に引き継ぎます。\n\n## 引き継ぎの手順\n担当者は、これまでの対応履歴、お客様の要望、確認済みの事実をチケットに整理して記載します。引き継ぎ後も、お客様へ担当変更と次回連絡の予定を必ず伝えてください。チームリーダーで解決できない場合は、CSマネージャーおよび製品・品質部門と連携します。エスカレーションの件数と理由は毎月集計し、再発防止に活用します。"
+ },
+ "sop/cs/vip-customers": {
+  "id": "sop/cs/vip-customers",
+  "title": "Quy trình chăm sóc khách hàng VIP (Bộ phận CS)",
+  "description": "Quy trình tiếp nhận, bảo mật thông tin và gọi lại nhanh dành cho khách hàng VIP của bộ phận CS.",
+  "body": "## Mục đích\nQuy trình này quy định cách phục vụ khách hàng VIP của Hikari Home nhằm bảo đảm trải nghiệm nhất quán và bảo vệ thông tin cá nhân. Quy trình có hiệu lực từ ngày 17/04/2026 và là phiên bản hiện hành.\n\n## Nhận diện và bảo mật\nKhách hàng VIP được xác định dựa trên giá trị mua hàng tích lũy hoặc theo chỉ định của quản lý. Danh sách VIP chỉ được truy cập bởi nhân viên được phân quyền. Nhân viên không sao chép, chia sẻ hoặc lưu trữ thông tin cá nhân của khách hàng ngoài hệ thống CS chính thức. Mọi thao tác xem hồ sơ đều được ghi nhận.\n\n## Thời gian phản hồi\nKhi khách hàng VIP để lại yêu cầu hoặc cuộc gọi nhỡ, nhân viên phải gọi lại trong vòng 30 phút. Cuộc gọi cần do một nhân viên phụ trách cố định thực hiện, nắm rõ lịch sử trao đổi trước đó. Nếu chưa giải quyết được ngay, nhân viên cần thông báo rõ thời điểm liên lạc tiếp theo và chuyển vụ việc lên quản lý khi cần thiết."
+ },
+ "sop/cs/chat-handling": {
+  "id": "sop/cs/chat-handling",
+  "title": "チャット対応手順書(カスタマーサポート)",
+  "description": "チャットサポートの応対品質と、担当者が同時に対応できる件数の上限を定めた手順書。",
+  "body": "## 目的\n本手順書は、ウェブサイトおよびアプリのチャットで問い合わせを受ける際の応対基準を定めます。2025年8月1日付で運用している現行版です。\n\n## 応対の基本\n新規チャットには、できるだけ早く挨拶と担当者名を伝えます。お客様の状況を確認し、丁寧で簡潔な言葉で案内してください。個人情報や決済情報をチャット上で直接聞き出すことは避け、必要な場合は所定の安全な手段を案内します。日本語とベトナム語の両方に対応できるよう、定型文はチームで共有します。\n\n## 同時対応数\n応対品質を保つため、1人の担当者が同時に対応できるチャットは最大4件とします。上限に達した場合は、新規のチャットを他の担当者へ自動的に割り振ります。複雑な案件は、対応中であっても電話やチケットに切り替えてください。チャットの終了時には、対応内容を要約してチケットに記録し、満足度アンケートを送付します。"
+ },
+ "sop/cs/complaint": {
+  "id": "sop/cs/complaint",
+  "title": "Complaint Handling SOP (Customer Support)",
+  "description": "Standard procedure for logging, investigating and resolving customer complaints within the target resolution time.",
+  "body": "## Purpose\nThis SOP defines how the Customer Support team receives and resolves complaints about Hikari Home products and services in Vietnam and Japan. It was last updated on 23 November 2024 and remains the current version.\n\n## Intake and Acknowledgement\nEvery complaint must be logged as a ticket tagged \"complaint\", regardless of the channel it arrives through. The agent acknowledges receipt to the customer the same business day, apologizes for the inconvenience, and explains the next steps. Complaints involving safety, injury, or legal claims must be reported to the CS manager immediately.\n\n## Investigation and Resolution\nThe assigned agent gathers facts, reviews order and service history, and consults the relevant product or logistics team. The target is to resolve each complaint within 5 days of receipt. If more time is needed, the agent informs the customer of the delay and the reason, and updates the ticket accordingly. Proposed remedies, such as repair, replacement, or refund, follow the applicable approval limits.\n\n## Closure\nBefore closing, confirm the outcome with the customer and record the root cause. Complaint trends are reviewed monthly to drive corrective actions."
+ },
+ "sop/cs/warranty-claims": {
+  "id": "sop/cs/warranty-claims",
+  "title": "Warranty Claims SOP (Customer Support)",
+  "description": "Procedure for verifying eligibility, collecting evidence and processing warranty claims for Hikari Home appliances.",
+  "body": "## Purpose\nThis SOP describes how the Customer Support team handles warranty claims for Hikari Home appliances sold in Vietnam and Japan. It has been in effect since 28 April 2024.\n\n## Eligibility Check\nThe agent first confirms the purchase date, model code, and serial number against the sales record. A claim is eligible when the product is within its warranty period and the fault is not caused by misuse, unauthorized repair, or accidental damage. Customers without a receipt may be verified through their registered account or the retailer's records.\n\n## Required Evidence\nTo file a claim, customers must submit 2 photos: one showing the serial number label and one clearly showing the defect or damage. Claims lacking these photos are placed on hold, and the agent requests the missing items through the customer's preferred channel. Additional video may be requested for intermittent faults.\n\n## Processing\nOnce approved, the agent arranges repair, replacement, or pickup by an authorized service partner and shares the tracking details with the customer. All decisions and evidence are attached to the ticket for audit and quality review."
+ },
+ "sop/cs/call-recording": {
+  "id": "sop/cs/call-recording",
+  "title": "SOP Ghi âm cuộc gọi chăm sóc khách hàng – Hikari Home Việt Nam",
+  "description": "Quy trình ghi âm cuộc gọi của bộ phận CSKH, bao gồm thông báo cho khách hàng, bảo mật và thời hạn lưu trữ 180 ngày.",
+  "body": "## Mục đích và phạm vi\n\nQuy trình này áp dụng cho toàn bộ nhân viên Chăm sóc khách hàng (CS) của Hikari Home tại Việt Nam khi tiếp nhận và gọi ra cho khách hàng. Việc ghi âm nhằm phục vụ kiểm soát chất lượng, giải quyết khiếu nại và đào tạo nhân viên. Quy trình có hiệu lực từ ngày 17/01/2025.\n\n## Nguyên tắc thực hiện\n\n- Trước khi bắt đầu tư vấn, nhân viên phải thông báo rõ cho khách hàng rằng cuộc gọi đang được ghi âm.\n- Nếu khách hàng từ chối, nhân viên ghi nhận yêu cầu và chuyển sang kênh văn bản (email hoặc chat).\n- Không được ghi âm hoặc chia sẻ thông tin thẻ thanh toán, mật khẩu hay dữ liệu cá nhân nhạy cảm; nếu khách hàng đọc các thông tin này, nhân viên phải yêu cầu dừng.\n- Không tự ý tải, sao chép hoặc gửi file ghi âm ra ngoài hệ thống của công ty.\n\n## Lưu trữ và truy cập\n\nFile ghi âm được lưu trong hệ thống nội bộ đã mã hóa và được giữ tối đa 180 ngày kể từ ngày cuộc gọi. Sau 180 ngày, hệ thống tự động xóa vĩnh viễn, trừ trường hợp đang có khiếu nại hoặc yêu cầu pháp lý.\n\nChỉ trưởng nhóm CS, bộ phận QA và IT được cấp quyền nghe lại. Mọi lượt truy cập đều được ghi log và rà soát hằng quý. Vi phạm quy định bảo mật sẽ bị xử lý theo nội quy lao động."
+ },
+ "sop/it/password": {
+  "id": "sop/it/password",
+  "title": "SOP Quản lý mật khẩu – Hikari Home Việt Nam",
+  "description": "Quy định về độ mạnh, bảo quản và đổi mật khẩu định kỳ mỗi 90 ngày cho tài khoản công ty.",
+  "body": "## Mục đích và phạm vi\n\nQuy trình này áp dụng cho mọi nhân viên, cộng tác viên và nhà thầu sử dụng tài khoản hệ thống của Hikari Home tại Việt Nam. Mục tiêu là giảm nguy cơ lộ lọt tài khoản và truy cập trái phép. Quy trình có hiệu lực từ ngày 18/04/2025.\n\n## Yêu cầu về mật khẩu\n\n- Độ dài tối thiểu 12 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt.\n- Không dùng thông tin cá nhân như ngày sinh, số điện thoại hoặc tên công ty.\n- Không dùng lại mật khẩu của các dịch vụ cá nhân.\n- Bắt buộc bật xác thực hai lớp (MFA) cho email, VPN và hệ thống ERP.\n\n## Đổi mật khẩu và bảo quản\n\nMật khẩu phải được đổi định kỳ sau mỗi 90 ngày. Hệ thống sẽ nhắc trước 7 ngày; quá hạn tài khoản sẽ bị khóa tạm thời cho đến khi đặt lại. Không được đổi sang một trong 5 mật khẩu gần nhất.\n\nNhân viên nên dùng trình quản lý mật khẩu do IT cung cấp, tuyệt đối không ghi mật khẩu ra giấy hay chia sẻ qua chat, email. Khi nghi ngờ lộ mật khẩu, hãy đổi ngay và báo cho Helpdesk IT để được hỗ trợ."
+ },
+ "sop/it/access-request": {
+  "id": "sop/it/access-request",
+  "title": "SOP Access Request – Hikari Home (VN & JP)",
+  "description": "Procedure for requesting, approving and granting system access, with a 24-hour approval SLA.",
+  "body": "## Purpose and Scope\n\nThis SOP defines how employees and contractors at Hikari Home in Vietnam and Japan request access to internal systems, shared folders and applications. It has been effective since 1 February 2026 and applies to all departments.\n\n## Request Process\n\n1. The requester submits a ticket in the IT service portal, stating the system, the access level and the business justification.\n2. The direct manager reviews the request and confirms that it is needed for the person's role.\n3. The system owner approves or rejects the request.\n4. IT provisions the access and notifies the requester.\n\nAccess follows the principle of least privilege. Administrator rights and access to finance or customer personal data require an additional approval from the IT Security lead.\n\n## Service Levels and Review\n\nApprovers must respond within 24 hours of receiving a request during business days. Requests not handled in that window are escalated automatically to the approver's manager. Urgent requests may be flagged in the ticket and handled by the on-call IT engineer.\n\nAll granted access is reviewed every quarter, and temporary access expires automatically at the end date. When an employee changes role or leaves the company, the manager must submit a removal ticket on the same day."
+ },
+ "sop/it/backup": {
+  "id": "sop/it/backup",
+  "title": "SOP Backup Policy – Hikari Home (VN & JP) – Draft v2",
+  "description": "Draft proposal for backup schedules and a 90-day retention period, pending approval.",
+  "body": "## Status\n\nThis document is a draft proposal pending approval by the IT Steering Committee. It was last updated on 15 June 2026 and is not yet in force. The current practice remains in effect until the proposal is formally approved and an effective date is announced.\n\n## Proposed Backup Rules\n\n- Production databases (ERP, CRM, order management) are backed up daily, with incremental snapshots every 4 hours.\n- File servers and shared drives are backed up nightly.\n- One copy is kept on-site and one encrypted copy is stored in a cloud region separate from the primary data center, covering both the Vietnam and Japan operations.\n\n## Retention and Testing\n\nThe proposal sets a backup retention period of 90 days. Backups older than 90 days are deleted automatically, unless a legal hold applies.\n\nRestore tests would be run every quarter on a sample of critical systems, and the results reported to the IT manager. Failed backup jobs must be investigated within one business day.\n\n## Next Steps\n\nDepartment heads are asked to send feedback on retention needs to IT before the review meeting. Once approved, the final version will replace this draft and be announced to all staff."
+ },
+ "sop/it/incident": {
+  "id": "sop/it/incident",
+  "title": "SOP Security Incident Response – Hikari Home (VN & JP)",
+  "description": "Steps for reporting and handling IT security incidents, including the 30-minute reporting requirement.",
+  "body": "## Purpose and Scope\n\nThis SOP describes how Hikari Home staff in Vietnam and Japan must report and respond to IT security incidents, such as phishing, malware, lost devices or suspected data leaks. It has been effective since 10 February 2026.\n\n## Reporting\n\nAny employee who notices or suspects an incident must report it within 30 minutes of discovery. Reports can be made through the IT Helpdesk hotline, the incident channel or by email to the security team. Include what happened, the affected system or device and the time it was noticed.\n\nDo not attempt to investigate on your own, delete evidence or restart affected machines unless told to by IT.\n\n## Response Steps\n\n1. Triage: the IT on-call engineer classifies severity from Low to Critical.\n2. Containment: affected accounts are disabled and devices are isolated from the network.\n3. Eradication and recovery: the cause is removed and services are restored from clean backups.\n4. Notification: for incidents involving personal data, Legal decides whether regulators and customers must be informed under Vietnamese and Japanese law.\n\n## Follow-up\n\nA post-incident review is held within five business days, and corrective actions are tracked until completion."
+ },
+ "sop/it/laptop": {
+  "id": "sop/it/laptop",
+  "title": "SOP Laptop Management and Replacement – Hikari Home (VN & JP)",
+  "description": "Rules for issuing, securing and replacing company laptops on a 3-year cycle.",
+  "body": "## Purpose and Scope\n\nThis SOP covers the issuing, use, maintenance and replacement of company laptops for employees of Hikari Home in Vietnam and Japan. It has been effective since 21 October 2025.\n\n## Issuing and Security Requirements\n\n- Each laptop is registered in the asset inventory and assigned to one named user.\n- Disk encryption, endpoint protection and the company management agent must be enabled before handover.\n- Users must not install unlicensed software or disable security tools.\n- Lost or stolen laptops must be reported to IT immediately so the device can be locked and wiped remotely.\n\n## Maintenance and Replacement\n\nLaptops are scheduled for replacement every 3 years from the date of issue. Devices with serious hardware faults may be replaced earlier, subject to approval from the IT manager. IT contacts the user about two months before the replacement date to arrange the exchange.\n\nWhen returning a laptop, the user must back up work files to the approved cloud storage and hand the device to IT. IT wipes the data securely and either reassigns the device or disposes of it through a certified recycler, keeping a record of the process."
+ },
+ "sop/it/vpn": {
+  "id": "sop/it/vpn",
+  "title": "SOP Sử dụng VPN – Hikari Home Việt Nam",
+  "description": "Quy trình kết nối VPN an toàn khi làm việc từ xa, với thời gian phiên tối đa 8 giờ.",
+  "body": "## Mục đích và phạm vi\n\nQuy trình này hướng dẫn nhân viên Hikari Home tại Việt Nam sử dụng VPN để truy cập hệ thống nội bộ khi làm việc từ xa hoặc từ mạng bên ngoài văn phòng. Quy trình có hiệu lực từ ngày 09/03/2026.\n\n## Quy định sử dụng\n\n- Chỉ kết nối VPN từ thiết bị do công ty cấp hoặc thiết bị đã được IT phê duyệt.\n- Bắt buộc xác thực hai lớp (MFA) mỗi lần đăng nhập.\n- Không chia sẻ tài khoản VPN và không dùng VPN cho mục đích cá nhân như tải nội dung giải trí dung lượng lớn.\n- Không kết nối khi đang dùng Wi-Fi công cộng không có mật khẩu; nên dùng mạng 4G/5G hoặc Wi-Fi tin cậy.\n\n## Thời gian phiên và hỗ trợ\n\nMỗi phiên VPN có thời gian tối đa 8 giờ. Hết thời gian này, hệ thống tự động ngắt kết nối và nhân viên cần đăng nhập lại. Phiên cũng bị ngắt nếu không hoạt động trong 30 phút.\n\nNếu không kết nối được, hãy kiểm tra mạng và phiên bản phần mềm VPN, sau đó tạo ticket tại cổng dịch vụ IT hoặc liên hệ Helpdesk. Khi nghi ngờ thiết bị bị mất hoặc nhiễm mã độc, phải báo ngay cho IT để thu hồi quyền truy cập."
+ },
+ "sop/hr/leave": {
+  "id": "sop/hr/leave",
+  "title": "SOP Nghỉ phép – Hikari Home Việt Nam",
+  "description": "Quy trình đăng ký và phê duyệt nghỉ phép, yêu cầu báo trước tối thiểu 5 ngày.",
+  "body": "## Mục đích và phạm vi\n\nQuy trình này hướng dẫn nhân viên chính thức của Hikari Home tại Việt Nam đăng ký nghỉ phép năm và các loại nghỉ có lương khác. Quy trình có hiệu lực từ ngày 18/08/2025.\n\n## Đăng ký nghỉ phép\n\n- Nhân viên gửi đơn nghỉ phép trên hệ thống nhân sự, ghi rõ loại nghỉ, ngày bắt đầu, ngày kết thúc và người bàn giao công việc.\n- Đối với nghỉ phép năm, nhân viên phải báo trước ít nhất 5 ngày làm việc.\n- Nghỉ đột xuất do ốm đau hoặc việc gia đình khẩn cấp phải thông báo cho quản lý trực tiếp ngay trong ngày và bổ sung đơn sau khi quay lại làm việc.\n\n## Phê duyệt và ghi nhận\n\nQuản lý trực tiếp xem xét và phản hồi trong vòng 2 ngày làm việc, có cân nhắc đến kế hoạch của đội nhóm. Trường hợp nhiều người cùng đăng ký một thời điểm, ưu tiên theo thứ tự nộp đơn.\n\nSau khi được duyệt, bộ phận Nhân sự cập nhật số ngày phép còn lại của nhân viên. Nghỉ quá 3 ngày liên tục cần có kế hoạch bàn giao bằng văn bản. Nghỉ không có phê duyệt sẽ được tính là nghỉ không lương và xử lý theo nội quy lao động."
+ },
+ "sop/hr/onboarding": {
+  "id": "sop/hr/onboarding",
+  "title": "新入社員オンボーディング手順書(日本 v2)",
+  "description": "新入社員が入社後に円滑に業務へ慣れるための受け入れ手順と、バディ制度の運用ルールを定めた手順書です。",
+  "body": "## 目的と適用範囲\n本手順書は、Hikari Home 日本拠点に入社する全ての新入社員の受け入れ手順を定めるものです。2025年10月14日より有効となり、正社員・契約社員の双方に適用します。\n\n## 入社初日から第1週\n人事部は入社前日までにPC、社員証、各種システムのアカウントを準備します。初日は会社概要、就業規則、情報セキュリティについてのオリエンテーションを実施し、配属部署の責任者へ引き継ぎます。\n\n## バディ制度\n各新入社員には、同じ部署の先輩社員をバディとして1名指名します。バディ期間は2週間とし、業務の進め方、社内ツールの使い方、社内の相談先などを日常的にサポートします。バディは週に一度、人事部へ進捗を簡単に報告してください。\n\n## 試用期間中のフォロー\n入社1か月後に人事部と上長による面談を行い、業務への適応状況や困りごとを確認します。面談の結果は記録し、必要に応じて追加の研修を手配します。"
+ },
+ "sop/hr/overtime": {
+  "id": "sop/hr/overtime",
+  "title": "時間外労働管理手順書(日本 v3)",
+  "description": "時間外労働の事前申請、上限時間、超過時の対応を定めた人事部の手順書です。",
+  "body": "## 目的\n本手順書は、従業員の健康を守り適正な労働時間管理を行うため、Hikari Home 日本拠点における時間外労働の取扱いを定めます。2026年1月8日より有効です。\n\n## 上限時間\n時間外労働は月30時間を上限とします。この上限は部署単位ではなく従業員個人ごとに管理し、勤怠システムで毎週集計されます。\n\n## 申請と承認\n時間外労働を行う場合は、原則として前日までに勤怠システムから申請し、直属の上長の承認を受けてください。緊急対応で事前申請ができなかった場合は、翌営業日中に事後申請を行います。\n\n## 上限に近づいた場合\n月の累計が上限に近づいた従業員には、人事部から上長へ通知が届きます。上長は業務の再配分や優先順位の見直しを速やかに行ってください。やむを得ず上限を超える場合は、人事部長の事前承認が必要です。"
+ },
+ "sop/hr/expense": {
+  "id": "sop/hr/expense",
+  "title": "経費精算手順書(日本 v1 ドラフト)",
+  "description": "経費精算の申請期限と手続きを整理した、承認待ちのドラフト案です。",
+  "body": "## 位置づけ\n本書はドラフト案であり、現時点では承認待ちの提案段階にあります。正式な承認が下りるまでは、従来の運用が引き続き有効です。承認後の施行日は別途通知します(最終更新日:2026年8月28日)。\n\n## 申請期限\n経費は、支払日から15日以内に経費精算システムで申請することを提案します。期限を過ぎた申請は、原則として上長の理由書を添付した場合に限り受け付けます。\n\n## 申請時の必要書類\n領収書の画像を必ず添付し、目的、参加者、取引先名を明記してください。交通費は経路と区間を入力します。私的利用が含まれる場合は、その分を除いて申請します。\n\n## 承認フロー\n上長が内容を確認したのち、経理部が金額と証憑の整合性をチェックします。不備があれば申請者へ差し戻し、修正後に再申請となります。承認された経費は、翌月の給与支払日に精算される予定です。"
+ },
+ "sop/hr/remote-work": {
+  "id": "sop/hr/remote-work",
+  "title": "リモートワーク運用手順書(日本 v1 ドラフト)",
+  "description": "在宅勤務の頻度や申請方法を定める、承認待ちのドラフト案です。",
+  "body": "## 位置づけ\n本書はドラフト案であり、経営会議での承認を待つ提案段階の文書です。承認されるまでは現行の運用を継続します(最終更新日:2025年9月6日)。\n\n## 対象と頻度\n在宅勤務の対象は、入社後3か月を経過した正社員とします。頻度は週3日を上限とし、部署ごとの出社日を除いて各自が上長と調整して決定します。\n\n## 申請と勤務ルール\n在宅勤務の日は、前週までに勤怠システムへ予定を登録してください。勤務中は始業と終業の連絡を必ず行い、チャットとビデオ会議で常時連絡が取れる状態を保ちます。\n\n## 情報セキュリティ\n会社支給のPCとVPNの利用を必須とします。公共の場所での機密情報の閲覧や、私物端末への業務データの保存は禁止します。紛失や不審な事象が発生した場合は、直ちに情報システム部へ報告してください。"
+ },
+ "sop/hr/offboarding": {
+  "id": "sop/hr/offboarding",
+  "title": "Quy trình nghỉ việc và bàn giao (Việt Nam v2)",
+  "description": "Quy trình xử lý khi nhân viên nghỉ việc, gồm thời hạn báo trước, bàn giao và hoàn tất thủ tục.",
+  "body": "## Mục đích\nQuy trình này quy định các bước xử lý khi nhân viên Hikari Home tại Việt Nam nghỉ việc, nhằm bảo đảm bàn giao công việc đầy đủ và bảo vệ tài sản của công ty. Quy trình có hiệu lực từ ngày 08/07/2026.\n\n## Thông báo nghỉ việc\nNhân viên phải gửi đơn xin nghỉ việc cho quản lý trực tiếp và phòng Nhân sự trước ít nhất 30 ngày. Phòng Nhân sự xác nhận ngày làm việc cuối cùng bằng văn bản trong vòng 3 ngày làm việc kể từ khi nhận đơn.\n\n## Bàn giao\nTrong thời gian báo trước, nhân viên lập danh sách bàn giao gồm công việc đang thực hiện, tài liệu, tài khoản hệ thống và khách hàng phụ trách. Quản lý trực tiếp xác nhận việc bàn giao. Nhân viên hoàn trả thẻ ra vào, máy tính và các thiết bị được cấp.\n\n## Hoàn tất thủ tục\nPhòng Nhân sự tổ chức buổi phỏng vấn nghỉ việc, chốt lương và các khoản phụ cấp còn lại, đồng thời thu hồi quyền truy cập hệ thống vào ngày làm việc cuối cùng. Sổ bảo hiểm và giấy xác nhận làm việc sẽ được trả theo quy định pháp luật."
+ },
+ "contracts/acme-corp/distribution-202604": {
+  "id": "contracts/acme-corp/distribution-202604",
+  "title": "Hợp đồng phân phối – ACME Corp (Việt Nam)",
+  "description": "Hợp đồng phân phối sản phẩm gia dụng Hikari Home cho ACME Corp tại thị trường Việt Nam trong thời hạn hai năm.",
+  "body": "## Các bên và loại hợp đồng\nHợp đồng phân phối này được ký giữa Công ty Hikari Home (Bên A) và ACME Corp (Bên B) tại Việt Nam. Bên B được quyền phân phối các sản phẩm gia dụng của Hikari Home trong phạm vi lãnh thổ đã thỏa thuận.\n\n## Thời hạn hiệu lực\nHợp đồng có hiệu lực từ ngày 18/04/2026 đến hết ngày 17/04/2028.\n\n## Giá trị và thanh toán\nGiá trị hợp đồng là 2,991,000,000 VND. Bên B thanh toán mỗi hóa đơn trong vòng 30 ngày kể từ ngày nhận hóa đơn hợp lệ, bằng chuyển khoản vào tài khoản do Bên A chỉ định. Thanh toán chậm sẽ phát sinh lãi theo quy định của hợp đồng.\n\n## Gia hạn và chấm dứt\nMột bên muốn gia hạn hợp đồng phải thông báo bằng văn bản trước ít nhất 90 ngày so với ngày hết hạn. Nếu không có thông báo, hợp đồng tự động chấm dứt khi hết thời hạn. Mọi thay đổi về điều khoản phải được lập thành phụ lục và có chữ ký của hai bên."
+ },
+ "contracts/sakura-trading/distribution-202410": {
+  "id": "contracts/sakura-trading/distribution-202410",
+  "title": "Distribution Agreement – Sakura Trading (Japan)",
+  "description": "Three-year distribution agreement under which Sakura Trading distributes Hikari Home appliances in Japan.",
+  "body": "## Parties and Contract Type\nThis distribution agreement is made between Hikari Home (the Supplier) and Sakura Trading (the Distributor) for the Japanese market. The Distributor is authorized to purchase and resell Hikari Home home appliances within the agreed territory.\n\n## Term\nThe agreement is effective from 2024-10-10 and remains in force until 2027-10-09, unless terminated earlier in accordance with its provisions.\n\n## Contract Value and Payment\nThe total contract value is 6,770,000 JPY. The Distributor shall pay each invoice within 30 days of receipt by bank transfer to the account designated by the Supplier. Late payments may be subject to interest as set out in the agreement.\n\n## Renewal\nEither party wishing to renew the agreement must give written notice at least 90 days before the expiry date. Absent such notice, the agreement expires at the end of the term. Any amendment must be made in writing and signed by both parties."
+ },
+ "contracts/minh-phat-jsc/installation-202506": {
+  "id": "contracts/minh-phat-jsc/installation-202506",
+  "title": "Installation Services Agreement – Minh Phat JSC (Vietnam)",
+  "description": "One-year agreement for Hikari Home to provide appliance installation services to Minh Phat JSC in Vietnam.",
+  "body": "## Parties and Contract Type\nThis installation services agreement is entered into between Hikari Home (the Provider) and Minh Phat JSC (the Customer) in Vietnam. The Provider will install Hikari Home appliances at the Customer's project sites and provide related commissioning support.\n\n## Term\nThe agreement is effective from 2025-06-07 to 2026-06-06.\n\n## Contract Value and Payment\nThe total contract value is 4,800,000,000 VND. The Customer shall pay each invoice within 30 days of receiving a valid invoice, by bank transfer. Invoices are issued upon completion and acceptance of each installation batch.\n\n## Renewal\nTo renew the agreement, either party must give written notice at least 60 days before the end date. If no notice is given, the agreement ends on 2026-06-06. Any change to the scope of work or pricing must be documented in a written amendment signed by both parties."
+ },
+ "contracts/tokyo-denki-retail/maintenance-202512": {
+  "id": "contracts/tokyo-denki-retail/maintenance-202512",
+  "title": "Tokyo Denki Retail Maintenance Contract (JP, December 2025)",
+  "description": "Three-year maintenance contract between Hikari Home and Tokyo Denki Retail covering appliance servicing in Japan, valued at 46,950,000 JPY.",
+  "body": "## Parties and Type\n\nThis maintenance contract is made between Hikari Home (the \"Provider\") and Tokyo Denki Retail (the \"Customer\") for the servicing of Hikari Home appliances across the Customer's retail stores in Japan. It was prepared by the Sales department and finalized on 15 December 2025.\n\n## Term and Value\n\nThe contract takes effect on 27 December 2025 and remains in force until 26 December 2028, a period of three years. The total contract value is 46,950,000 JPY, covering scheduled inspections, repairs, replacement parts, and on-site technician visits for the appliances listed in the service schedule.\n\n## Payment Terms\n\nThe Provider will invoice the Customer in accordance with the agreed billing schedule. Each invoice is payable within 30 days of the invoice date, by bank transfer to the account designated by the Provider. Late payments may be subject to interest as set out in the general terms.\n\n## Renewal\n\nEither party wishing to renew, amend, or terminate the contract at the end of the term must give written notice at least 30 days before the expiry date of 26 December 2028. If no notice is given, the parties will meet to discuss renewal conditions before the contract lapses."
+ },
+ "contracts/saigon-hotels-group/installation-202404": {
+  "id": "contracts/saigon-hotels-group/installation-202404",
+  "title": "Saigon Hotels Group Installation Contract (VN, April 2024)",
+  "description": "Three-year installation contract between Hikari Home and Saigon Hotels Group for appliance installation in Vietnam, valued at 243,000,000 VND.",
+  "body": "## Parties and Type\n\nThis installation contract is entered into between Hikari Home (the \"Supplier\") and Saigon Hotels Group (the \"Customer\"). Under it, the Supplier will deliver and install Hikari Home appliances, including air conditioners and water heaters, in the Customer's hotel properties in Vietnam. The Sales department prepared the contract on 22 March 2024.\n\n## Term and Value\n\nThe contract is effective from 10 April 2024 and expires on 9 April 2027. The total contract value is 243,000,000 VND, which covers equipment installation, commissioning, testing, and handover documentation for each property.\n\n## Payment Terms\n\nThe Supplier will issue invoices upon completion of each installation milestone. The Customer shall pay each invoice within 60 days of receipt, by bank transfer in Vietnamese dong.\n\n## Renewal\n\nIf either party wishes to renew or renegotiate the contract, it must notify the other party in writing at least 60 days before the expiry date of 9 April 2027. Without such notice, the contract ends on that date and any further installation work will require a new agreement."
+ },
+ "contracts/osaka-office-supply/distribution-202405": {
+  "id": "contracts/osaka-office-supply/distribution-202405",
+  "title": "大阪オフィスサプライ 販売代理店契約(JP・2024年5月)",
+  "description": "Hikari Homeと大阪オフィスサプライの間で締結された、日本国内向け家電製品の1年間の販売(ディストリビューション)契約。",
+  "body": "## 契約当事者と種類\n\n本契約は、Hikari Home(以下「甲」)と大阪オフィスサプライ(以下「乙」)との間で締結される販売代理店(ディストリビューション)契約です。乙は日本国内において、甲の家電製品を取り扱い、法人顧客向けに販売します。営業部が2024年5月8日に作成しました。\n\n## 契約期間と金額\n\n契約期間は2024年5月19日から2025年5月18日までの1年間です。契約金額は26,490,000 JPYとし、対象製品の仕入総額の上限を示します。納品数量および価格は別紙の製品一覧に従います。\n\n## 支払条件\n\n甲は納品ごとに請求書を発行し、乙は請求書の日付から30日以内に、甲の指定する銀行口座へ振込により支払うものとします。\n\n## 更新\n\n本契約の更新または条件変更を希望する場合、いずれの当事者も、契約満了日である2025年5月18日の90日前までに書面で相手方へ通知しなければなりません。通知がない場合、契約は期間満了をもって終了します。"
+ },
+ "contracts/acme-corp/distribution-202307": {
+  "id": "contracts/acme-corp/distribution-202307",
+  "title": "Hợp đồng phân phối ACME Corp (VN, tháng 7/2023)",
+  "description": "Hợp đồng phân phối một năm giữa Hikari Home và ACME Corp cho các sản phẩm gia dụng tại Việt Nam, trị giá 4.970.000.000 VND.",
+  "body": "## Các bên và loại hợp đồng\n\nHợp đồng phân phối này được ký giữa Hikari Home (\"Bên A\") và ACME Corp (\"Bên B\"). Theo hợp đồng, Bên B được quyền phân phối các sản phẩm gia dụng của Hikari Home tại thị trường Việt Nam. Phòng Kinh doanh soạn thảo hợp đồng ngày 04/07/2023.\n\n## Thời hạn và giá trị\n\nHợp đồng có hiệu lực từ ngày 08/07/2023 đến hết ngày 07/07/2024. Tổng giá trị hợp đồng là 4.970.000.000 VND (4,970,000,000 VND), bao gồm toàn bộ các đơn hàng sản phẩm theo danh mục và bảng giá đính kèm.\n\n## Điều khoản thanh toán\n\nBên A xuất hóa đơn cho từng đợt giao hàng. Bên B có trách nhiệm thanh toán trong vòng 45 ngày kể từ ngày nhận hóa đơn, bằng chuyển khoản ngân hàng theo tài khoản do Bên A chỉ định.\n\n## Gia hạn\n\nNếu một trong hai bên muốn gia hạn hoặc điều chỉnh hợp đồng, bên đó phải thông báo bằng văn bản cho bên kia ít nhất 60 ngày trước ngày hết hạn 07/07/2024. Nếu không có thông báo, hợp đồng sẽ chấm dứt khi hết thời hạn."
+ },
+ "contracts/sakura-trading/supply-202604": {
+  "id": "contracts/sakura-trading/supply-202604",
+  "title": "さくらトレーディング 供給契約(JP・2026年4月)",
+  "description": "Hikari Homeとさくらトレーディングの間で締結された、2026年4月から1年間の家電製品供給契約。",
+  "body": "## 契約当事者と種類\n\n本契約は、Hikari Home(以下「甲」)とSakura Trading(さくらトレーディング、以下「乙」)との間で締結される供給契約です。甲は乙に対し、家電製品を継続的に供給します。営業部が2026年3月23日に作成しました。\n\n## 契約期間と金額\n\n契約期間は2026年4月7日から2027年4月6日までの1年間です。契約金額は9,000,000 JPYとし、期間中に供給される製品の総額を示します。数量および納期は、発注書ごとに両者が確認します。\n\n## 支払条件\n\n甲は納品後に請求書を発行し、乙は請求書の日付から45日以内に、甲の指定する銀行口座へ振込により支払うものとします。\n\n## 更新\n\n契約の更新または条件変更を希望する当事者は、契約満了日である2027年4月6日の90日前までに、書面で相手方へ通知するものとします。期限までに通知がない場合、本契約は満了により終了します。"
+ },
+ "contracts/minh-phat-jsc/maintenance-202502": {
+  "id": "contracts/minh-phat-jsc/maintenance-202502",
+  "title": "Hợp đồng bảo trì Minh Phat JSC (VN, tháng 2/2025)",
+  "description": "Hợp đồng bảo trì một năm giữa Hikari Home và Minh Phat JSC cho thiết bị gia dụng tại Việt Nam, trị giá 1.754.000.000 VND.",
+  "body": "## Các bên và loại hợp đồng\n\nHợp đồng bảo trì này được ký giữa Hikari Home (\"Bên A\") và Công ty cổ phần Minh Phat JSC (\"Bên B\"). Bên A cung cấp dịch vụ bảo trì định kỳ và sửa chữa cho các thiết bị gia dụng Hikari Home mà Bên B đang sử dụng tại Việt Nam. Phòng Kinh doanh soạn thảo hợp đồng ngày 13/02/2025.\n\n## Thời hạn và giá trị\n\nHợp đồng có hiệu lực từ ngày 25/02/2025 đến hết ngày 24/02/2026. Tổng giá trị hợp đồng là 1.754.000.000 VND (1,754,000,000 VND), bao gồm kiểm tra định kỳ, thay thế linh kiện và hỗ trợ kỹ thuật tại chỗ.\n\n## Điều khoản thanh toán\n\nBên A xuất hóa đơn theo lịch thanh toán đã thỏa thuận. Bên B thanh toán mỗi hóa đơn trong vòng 45 ngày kể từ ngày nhận hóa đơn, bằng chuyển khoản ngân hàng.\n\n## Gia hạn\n\nBên nào muốn gia hạn hoặc chấm dứt hợp đồng phải gửi thông báo bằng văn bản cho bên kia ít nhất 90 ngày trước ngày hết hạn 24/02/2026. Nếu không có thông báo, hợp đồng kết thúc khi hết thời hạn."
+ },
+ "contracts/tokyo-denki-retail/maintenance-202506": {
+  "id": "contracts/tokyo-denki-retail/maintenance-202506",
+  "title": "東京電器リテール 保守契約(JP・2025年6月)",
+  "description": "Hikari Homeと東京電器リテール(Tokyo Denki Retail)の間の、2025年6月から1年間の家電保守契約。",
+  "body": "## 契約当事者と種類\n\n本契約は、Hikari Home(以下「甲」)とTokyo Denki Retail(東京電器リテール、以下「乙」)との間で締結される保守契約です。甲は、乙の店舗で使用される家電製品について、定期点検および修理サービスを提供します。営業部が2025年5月29日に作成しました。\n\n## 契約期間と金額\n\n契約期間は2025年6月1日から2026年5月31日までの1年間です。契約金額は33,830,000 JPYとし、定期点検、部品交換、技術者の訪問対応を含みます。\n\n## 支払条件\n\n甲は請求書を発行し、乙は請求書の日付から60日以内に、甲の指定する銀行口座へ振込により支払うものとします。\n\n## 更新\n\n契約の更新または終了を希望する当事者は、契約満了日である2026年5月31日の90日前までに書面で相手方へ通知するものとします。通知がない場合、契約は期間満了により終了します。"
+ },
+ "contracts/saigon-hotels-group/installation-202510": {
+  "id": "contracts/saigon-hotels-group/installation-202510",
+  "title": "Hợp đồng lắp đặt Saigon Hotels Group (VN, tháng 10/2025)",
+  "description": "Hợp đồng lắp đặt hai năm giữa Hikari Home và Saigon Hotels Group tại Việt Nam, trị giá 4.602.000.000 VND.",
+  "body": "## Các bên và loại hợp đồng\n\nHợp đồng lắp đặt này được ký giữa Hikari Home (\"Bên A\") và Saigon Hotels Group (\"Bên B\"). Bên A cung cấp và lắp đặt thiết bị gia dụng Hikari Home tại các khách sạn thuộc Bên B trên địa bàn Việt Nam. Phòng Kinh doanh soạn thảo hợp đồng ngày 24/09/2025.\n\n## Thời hạn và giá trị\n\nHợp đồng có hiệu lực từ ngày 13/10/2025 đến hết ngày 12/10/2027. Tổng giá trị hợp đồng là 4.602.000.000 VND (4,602,000,000 VND), bao gồm vận chuyển, lắp đặt, chạy thử và bàn giao thiết bị cho từng khách sạn.\n\n## Điều khoản thanh toán\n\nBên A xuất hóa đơn sau khi hoàn thành từng hạng mục lắp đặt. Bên B thanh toán trong vòng 30 ngày kể từ ngày nhận hóa đơn, bằng chuyển khoản ngân hàng.\n\n## Gia hạn\n\nBên nào muốn gia hạn hoặc điều chỉnh hợp đồng phải thông báo bằng văn bản cho bên kia ít nhất 30 ngày trước ngày hết hạn 12/10/2027. Nếu không có thông báo, hợp đồng chấm dứt khi hết thời hạn."
+ },
+ "contracts/osaka-office-supply/maintenance-202606": {
+  "id": "contracts/osaka-office-supply/maintenance-202606",
+  "title": "大阪オフィスサプライ様 保守契約書(2026年6月)",
+  "description": "Hikari Homeと大阪オフィスサプライ様との間で締結した、1年間の家電保守サービス契約の内容をまとめた文書です。",
+  "body": "## 契約概要\n\n本契約は、Hikari Home(以下「甲」)と大阪オフィスサプライ(以下「乙」)との間で締結する保守契約です。甲は乙が設置する空調機器および業務用家電について、定期点検と故障時の修理対応を提供します。\n\n## 契約期間と金額\n\n契約の有効期間は2026年6月9日から2027年6月8日までの1年間です。契約金額は15,420,000 JPYとし、保守作業に必要な部品交換費用の一部を含みます。\n\n## 支払条件\n\n甲は毎月末に請求書を発行し、乙は請求書の受領日から60日以内に銀行振込で支払うものとします。振込手数料は乙の負担とします。\n\n## 更新\n\n本契約を更新しない場合、または条件を変更したい場合は、契約満了の90日前までに書面で相手方へ通知するものとします。期限内に通知がない場合は、同一条件で自動的に更新されます。"
+ },
+ "contracts/acme-corp/distribution-202507": {
+  "id": "contracts/acme-corp/distribution-202507",
+  "title": "Hợp đồng phân phối ACME Corp (tháng 7/2025)",
+  "description": "Hợp đồng phân phối sản phẩm gia dụng giữa Hikari Home và ACME Corp có hiệu lực trong một năm tại Việt Nam.",
+  "body": "## Các bên và loại hợp đồng\n\nHợp đồng phân phối này được ký giữa Hikari Home (Bên A) và ACME Corp (Bên B). Bên A cung cấp các sản phẩm gia dụng như nồi cơm điện, máy lọc không khí và máy giặt, Bên B phân phối các sản phẩm này tại thị trường Việt Nam.\n\n## Thời hạn và giá trị\n\nHợp đồng có hiệu lực từ ngày 07/07/2025 đến ngày 06/07/2026. Tổng giá trị hợp đồng là 3.214.000.000 VND, được tính theo đơn giá và sản lượng đặt hàng trong từng quý.\n\n## Điều khoản thanh toán\n\nBên B thanh toán trong vòng 30 ngày kể từ ngày nhận hóa đơn hợp lệ bằng chuyển khoản ngân hàng. Chậm thanh toán sẽ chịu lãi theo thỏa thuận giữa hai bên.\n\n## Gia hạn\n\nNếu một bên muốn gia hạn hoặc chấm dứt hợp đồng, bên đó phải thông báo bằng văn bản trước 90 ngày so với ngày hết hạn. Nếu không có thông báo, hai bên sẽ thương lượng điều kiện gia hạn mới."
+ },
+ "contracts/sakura-trading/supply-202402": {
+  "id": "contracts/sakura-trading/supply-202402",
+  "title": "サクラトレーディング様 供給契約書(2024年2月)",
+  "description": "Hikari Homeとサクラトレーディング様との間の、家電製品供給に関する1年間の契約内容を記載した文書です。",
+  "body": "## 契約当事者と種別\n\n本契約は、Hikari Home(以下「甲」)とサクラトレーディング(以下「乙」)との間で締結する供給契約です。甲は乙に対し、炊飯器、掃除機、空気清浄機などの家電製品を継続的に供給します。\n\n## 契約期間と金額\n\n契約期間は2024年2月15日から2025年2月14日までです。契約金額は28,720,000 JPYとし、納品数量に応じて月ごとに精算します。\n\n## 支払条件\n\n乙は、甲が発行した請求書の受領日から45日以内に、指定の銀行口座へ振込により支払うものとします。\n\n## 更新\n\n契約を更新しない場合、または条件の見直しを希望する場合は、満了日の60日前までに書面で通知するものとします。通知がない場合は、双方協議のうえ更新条件を決定します。"
+ },
+ "contracts/minh-phat-jsc/maintenance-202401": {
+  "id": "contracts/minh-phat-jsc/maintenance-202401",
+  "title": "Maintenance Contract – Minh Phat JSC (January 2024)",
+  "description": "A two-year maintenance service agreement between Hikari Home and Minh Phat JSC covering appliance servicing in Vietnam.",
+  "body": "## Parties and Contract Type\n\nThis maintenance contract is entered into between Hikari Home (the \"Provider\") and Minh Phat JSC (the \"Customer\"). The Provider will deliver scheduled preventive maintenance, on-site repairs and spare-part replacement for home appliances installed at the Customer's facilities in Vietnam.\n\n## Term and Value\n\nThe contract is effective from January 27, 2024 to January 26, 2026, a term of two years. The total contract value is 4,086,000,000 VND, covering labor, standard spare parts and response-time commitments.\n\n## Payment Terms\n\nThe Provider will invoice the Customer quarterly. The Customer shall pay each invoice by bank transfer within 60 days of receipt. Late payments may be subject to interest as agreed in writing.\n\n## Renewal\n\nEither party wishing to renew, renegotiate or terminate the contract must give written notice at least 90 days before the expiry date. Absent such notice, the parties will meet to discuss renewal terms."
+ },
+ "contracts/tokyo-denki-retail/supply-202506": {
+  "id": "contracts/tokyo-denki-retail/supply-202506",
+  "title": "東京電機リテール様 供給契約書(2025年6月)",
+  "description": "Hikari Homeと東京電機リテール様との間の、3年間にわたる家電製品供給契約の主要条件をまとめた文書です。",
+  "body": "## 契約当事者と種別\n\n本契約は、Hikari Home(以下「甲」)と東京電機リテール(以下「乙」)との間で締結する供給契約です。甲は乙の店舗網に向けて、調理家電、洗濯機、空調機器などを安定的に供給します。\n\n## 契約期間と金額\n\n契約期間は2025年6月4日から2028年6月3日までの3年間です。契約金額は49,940,000 JPYとし、年間の販売計画に基づいて発注数量を調整します。\n\n## 支払条件\n\n乙は、請求書の受領日から30日以内に銀行振込で支払うものとします。\n\n## 更新\n\n本契約の更新または条件変更を希望する場合は、満了日の60日前までに書面で通知するものとします。通知がない場合、双方は更新条件について誠実に協議します。"
+ },
+ "contracts/saigon-hotels-group/maintenance-202411": {
+  "id": "contracts/saigon-hotels-group/maintenance-202411",
+  "title": "Hợp đồng bảo trì Saigon Hotels Group (tháng 11/2024)",
+  "description": "Hợp đồng bảo trì thiết bị gia dụng một năm giữa Hikari Home và Saigon Hotels Group tại Việt Nam.",
+  "body": "## Các bên và loại hợp đồng\n\nHợp đồng bảo trì này được ký giữa Hikari Home (Bên A) và Saigon Hotels Group (Bên B). Bên A thực hiện bảo trì định kỳ, sửa chữa và thay thế linh kiện cho các thiết bị gia dụng như máy điều hòa, máy giặt và máy sấy đặt tại hệ thống khách sạn của Bên B.\n\n## Thời hạn và giá trị\n\nHợp đồng có hiệu lực từ ngày 25/11/2024 đến ngày 24/11/2025. Giá trị hợp đồng là 1.579.000.000 VND, bao gồm nhân công và các linh kiện tiêu chuẩn.\n\n## Điều khoản thanh toán\n\nBên B thanh toán trong vòng 60 ngày kể từ ngày nhận hóa đơn, bằng hình thức chuyển khoản ngân hàng vào tài khoản do Bên A chỉ định.\n\n## Gia hạn\n\nBên nào muốn gia hạn hoặc chấm dứt hợp đồng phải thông báo bằng văn bản trước 60 ngày so với ngày hết hạn. Nếu không có thông báo, hai bên sẽ cùng thảo luận điều kiện gia hạn."
+ },
+ "contracts/osaka-office-supply/maintenance-202603": {
+  "id": "contracts/osaka-office-supply/maintenance-202603",
+  "title": "大阪オフィスサプライ様 保守契約書(2026年3月)",
+  "description": "Hikari Homeと大阪オフィスサプライ様との間で締結した、3年間の家電保守サービス契約の内容をまとめた文書です。",
+  "body": "## 契約概要\n\n本契約は、Hikari Home(以下「甲」)と大阪オフィスサプライ(以下「乙」)との間で締結する保守契約です。甲は乙の事務所に設置された家電・空調設備について、定期点検、故障修理、部品交換を提供します。\n\n## 契約期間と金額\n\n契約期間は2026年3月7日から2029年3月6日までの3年間です。契約金額は27,690,000 JPYとし、標準的な部品代と出張費用を含みます。\n\n## 支払条件\n\n乙は、甲が発行する請求書の受領日から30日以内に銀行振込で支払うものとします。\n\n## 更新\n\n契約の更新または変更を希望する場合は、満了日の90日前までに書面で相手方へ通知するものとします。通知がない場合は、双方で更新条件を協議します。"
+ },
+ "contracts/acme-corp/maintenance-202505": {
+  "id": "contracts/acme-corp/maintenance-202505",
+  "title": "Hợp đồng bảo trì ACME Corp (tháng 5/2025)",
+  "description": "Hợp đồng bảo trì ba năm giữa Hikari Home và ACME Corp cho các thiết bị gia dụng tại Việt Nam.",
+  "body": "## Các bên và loại hợp đồng\n\nHợp đồng bảo trì này được ký giữa Hikari Home (Bên A) và ACME Corp (Bên B). Bên A cung cấp dịch vụ kiểm tra định kỳ, sửa chữa tại chỗ và thay thế linh kiện cho các thiết bị gia dụng của Bên B trên toàn quốc.\n\n## Thời hạn và giá trị\n\nHợp đồng có hiệu lực từ ngày 18/05/2025 đến ngày 17/05/2028, tức ba năm. Tổng giá trị hợp đồng là 3.326.000.000 VND, đã bao gồm nhân công và linh kiện thay thế tiêu chuẩn.\n\n## Điều khoản thanh toán\n\nBên B thanh toán trong vòng 60 ngày kể từ ngày nhận hóa đơn hợp lệ bằng chuyển khoản ngân hàng.\n\n## Gia hạn\n\nNếu muốn gia hạn hoặc chấm dứt hợp đồng, mỗi bên phải thông báo bằng văn bản cho bên còn lại trước 90 ngày so với ngày hết hạn. Nếu không có thông báo, hai bên sẽ thương lượng điều kiện gia hạn."
+ },
+ "contracts/sakura-trading/supply-202510": {
+  "id": "contracts/sakura-trading/supply-202510",
+  "title": "Supply Contract – Sakura Trading (JP)",
+  "description": "Two-year supply agreement between Hikari Home and Sakura Trading covering appliance deliveries in Japan, valued at 28,940,000 JPY.",
+  "body": "## Parties and Scope\n\nThis Supply Contract is entered into between Hikari Home (the \"Supplier\") and Sakura Trading (the \"Customer\"), a wholesale buyer in Japan. Hikari Home agrees to supply home appliances from its Japan catalogue according to purchase orders issued by the Customer during the term. The contract was prepared by the Sales department and last updated on 2025-10-18.\n\n## Term and Value\n\nThe contract takes effect on 2025-10-31 and remains in force until 2027-10-27. The total contract value is 28,940,000 JPY, covering all product deliveries made under the agreement. Individual orders will specify models, quantities and delivery dates, and are invoiced against this overall value.\n\n## Payment Terms\n\nThe Customer shall pay each invoice within 45 days of the invoice date, by bank transfer to the account designated by Hikari Home. Late payments may be subject to interest as set out in the general terms and conditions.\n\n## Renewal and Termination\n\nEither party wishing to renew, renegotiate or end the agreement must give written notice at least 60 days before the end of the term. If no notice is given, the parties will meet to discuss continuation on updated terms. Termination for material breach is governed by the general terms."
+ },
+ "contracts/minh-phat-jsc/maintenance-202403": {
+  "id": "contracts/minh-phat-jsc/maintenance-202403",
+  "title": "Hợp đồng bảo trì – Minh Phat JSC (VN), tháng 3/2024",
+  "description": "Hợp đồng bảo trì thiết bị giữa Hikari Home và Minh Phat JSC, thời hạn hai năm, giá trị 2.119.000.000 VND.",
+  "body": "## Các bên và phạm vi\n\nHợp đồng bảo trì này được ký giữa Hikari Home (Bên cung cấp dịch vụ) và Công ty Cổ phần Minh Phat (Bên sử dụng dịch vụ) tại Việt Nam. Hikari Home cam kết thực hiện bảo trì định kỳ và sửa chữa các thiết bị gia dụng do Minh Phat JSC đang sử dụng, bao gồm kiểm tra, thay thế linh kiện hao mòn và hỗ trợ kỹ thuật khi có sự cố. Hợp đồng do bộ phận Kinh doanh soạn thảo, cập nhật ngày 2024-03-17.\n\n## Thời hạn và giá trị\n\nHợp đồng có hiệu lực từ ngày 2024-03-24 đến hết ngày 2026-03-23. Tổng giá trị hợp đồng là 2.119.000.000 VND (2,119,000,000 VND), đã bao gồm chi phí nhân công và vật tư bảo trì theo lịch đã thỏa thuận.\n\n## Điều khoản thanh toán\n\nBên sử dụng dịch vụ thanh toán mỗi hóa đơn trong vòng 60 ngày kể từ ngày phát hành hóa đơn, bằng chuyển khoản vào tài khoản do Hikari Home chỉ định.\n\n## Gia hạn\n\nNếu một bên muốn gia hạn hoặc chấm dứt hợp đồng, bên đó phải thông báo bằng văn bản trước ít nhất 30 ngày so với ngày hết hạn. Nếu không có thông báo, hai bên sẽ họp để thống nhất các điều khoản tiếp theo."
+ },
+ "contracts/tokyo-denki-retail/maintenance-202501": {
+  "id": "contracts/tokyo-denki-retail/maintenance-202501",
+  "title": "保守契約書 – Tokyo Denki Retail(JP)2025年1月",
+  "description": "Hikari HomeとTokyo Denki Retailが締結した3年間の保守契約で、契約金額は34,860,000 JPYです。",
+  "body": "## 契約当事者と目的\n\n本契約は、Hikari Home(以下「甲」)とTokyo Denki Retail(以下「乙」)との間で締結される保守契約です。甲は、乙が日本国内の店舗で販売・使用する家電製品について、定期点検、部品交換、故障時の技術サポートを提供します。本契約は営業部が作成し、2025年1月2日に更新されました。\n\n## 契約期間と金額\n\n契約期間は2025年1月22日から2028年1月21日までの3年間です。契約金額は総額34,860,000 JPYで、点検作業および消耗部品の費用を含みます。\n\n## 支払条件\n\n乙は、請求書発行日から60日以内に、甲が指定する銀行口座へ振込により支払うものとします。\n\n## 更新\n\n本契約の更新または終了を希望する当事者は、契約期間満了の60日前までに書面で通知しなければなりません。通知がない場合、両者は協議のうえ、更新条件を決定します。"
+ },
+ "contracts/saigon-hotels-group/installation-202504": {
+  "id": "contracts/saigon-hotels-group/installation-202504",
+  "title": "Installation Contract – Saigon Hotels Group (VN)",
+  "description": "One-year installation contract between Hikari Home and Saigon Hotels Group for appliance installation across its hotels, valued at 4,252,000,000 VND.",
+  "body": "## Parties and Scope\n\nThis Installation Contract is made between Hikari Home (the \"Contractor\") and Saigon Hotels Group (the \"Customer\") in Vietnam. Hikari Home will supply and install home appliances, including air conditioning and water heating units, at the Customer's hotel properties according to an agreed rollout schedule. The document was prepared by the Sales department and updated on 2025-03-31.\n\n## Term and Value\n\nThe contract is effective from 2025-04-20 to 2026-04-19. The total contract value is 4,252,000,000 VND, covering equipment, installation labor, testing and commissioning at each site.\n\n## Payment Terms\n\nThe Customer shall settle each invoice within 60 days of the invoice date by bank transfer. Invoices are issued upon completion and acceptance of each installation batch.\n\n## Renewal\n\nEither party wishing to renew or terminate must provide written notice at least 30 days before the end date. Absent notice, the parties will negotiate in good faith regarding any extension, including installation of additional properties."
+ },
+ "contracts/osaka-office-supply/installation-202505": {
+  "id": "contracts/osaka-office-supply/installation-202505",
+  "title": "Installation Contract – Osaka Office Supply (JP)",
+  "description": "Two-year installation contract between Hikari Home and Osaka Office Supply for appliance installation services in Japan, valued at 6,910,000 JPY.",
+  "body": "## Parties and Scope\n\nThis Installation Contract is concluded between Hikari Home (the \"Contractor\") and Osaka Office Supply (the \"Customer\"), based in Japan. Hikari Home will install appliances purchased by the Customer at its offices and facilities, including delivery to site, mounting, wiring and operational checks. The Sales department prepared this contract, last updated on 2025-05-14.\n\n## Term and Value\n\nThe contract takes effect on 2025-05-22 and continues until 2027-05-21. The total contract value is 6,910,000 JPY, which covers labor, standard installation materials and post-installation testing.\n\n## Payment Terms\n\nThe Customer shall pay each invoice within 30 days of the invoice date, by bank transfer to the account specified by Hikari Home.\n\n## Renewal\n\nA party that wishes to renew, modify or end the contract must notify the other in writing at least 60 days before the end of the term. If no notice is given, the parties will meet to agree on terms for any continued installation work."
+ },
+ "contracts/minh-phat-jsc/maintenance-202402": {
+  "id": "contracts/minh-phat-jsc/maintenance-202402",
+  "title": "Hợp đồng bảo trì – Minh Phat JSC (VN), tháng 2/2024",
+  "description": "Hợp đồng bảo trì hai năm giữa Hikari Home và Minh Phat JSC với giá trị 4.942.000.000 VND.",
+  "body": "## Các bên và phạm vi\n\nHợp đồng bảo trì này được ký giữa Hikari Home (Bên cung cấp dịch vụ) và Minh Phat JSC (Bên sử dụng dịch vụ) tại Việt Nam. Hikari Home thực hiện bảo trì định kỳ, vệ sinh, thay thế linh kiện và hỗ trợ sửa chữa khẩn cấp cho các thiết bị gia dụng của Minh Phat JSC. Hợp đồng do bộ phận Kinh doanh soạn thảo và cập nhật ngày 2024-02-07.\n\n## Thời hạn và giá trị\n\nHợp đồng có hiệu lực từ ngày 2024-02-23 đến ngày 2026-02-22. Tổng giá trị hợp đồng là 4.942.000.000 VND (4,942,000,000 VND), bao gồm nhân công, vật tư và chi phí đi lại của kỹ thuật viên.\n\n## Điều khoản thanh toán\n\nBên sử dụng dịch vụ thanh toán mỗi hóa đơn trong vòng 45 ngày kể từ ngày phát hành hóa đơn, bằng chuyển khoản ngân hàng.\n\n## Gia hạn\n\nBên muốn gia hạn hoặc chấm dứt hợp đồng phải gửi thông báo bằng văn bản trước ít nhất 60 ngày so với ngày hết hạn. Nếu không có thông báo, hai bên sẽ họp để thảo luận điều khoản mới."
+ },
+ "contracts/sakura-trading/distribution-202308": {
+  "id": "contracts/sakura-trading/distribution-202308",
+  "title": "販売代理店契約書 – Sakura Trading(JP)2023年8月",
+  "description": "Hikari HomeとSakura Tradingの1年間の販売(ディストリビューション)契約で、契約金額は11,890,000 JPYです。",
+  "body": "## 契約当事者と目的\n\n本契約は、Hikari Home(以下「甲」)とSakura Trading(以下「乙」)との間で締結される販売契約(ディストリビューション契約)です。甲は乙に対し、日本国内の販売チャネルでの家電製品の流通を許諾し、乙は甲の製品を継続的に仕入れて販売します。本契約は営業部が作成し、2023年8月5日に更新されました。\n\n## 契約期間と金額\n\n契約期間は2023年8月16日から2024年8月15日までの1年間です。契約金額は総額11,890,000 JPYで、期間中の仕入れ取引に適用されます。\n\n## 支払条件\n\n乙は、請求書発行日から45日以内に、甲の指定する銀行口座へ振込により代金を支払うものとします。\n\n## 更新\n\n契約の更新または終了を希望する当事者は、期間満了の30日前までに書面で相手方へ通知するものとします。通知がない場合は、両者が協議のうえ、更新の可否および条件を決定します。"
+ },
+ "contracts/acme-corp/installation-202604": {
+  "id": "contracts/acme-corp/installation-202604",
+  "title": "Hợp đồng lắp đặt – ACME Corp (VN), tháng 4/2026",
+  "description": "Hợp đồng lắp đặt thiết bị hai năm giữa Hikari Home và ACME Corp, giá trị 3.226.000.000 VND.",
+  "body": "## Các bên và phạm vi\n\nHợp đồng lắp đặt này được ký giữa Hikari Home (Nhà thầu) và ACME Corp (Khách hàng) tại Việt Nam. Hikari Home chịu trách nhiệm cung cấp và lắp đặt các thiết bị gia dụng tại các cơ sở của ACME Corp, bao gồm vận chuyển, lắp đặt, chạy thử và bàn giao. Hợp đồng do bộ phận Kinh doanh soạn thảo, cập nhật ngày 2026-04-11.\n\n## Thời hạn và giá trị\n\nHợp đồng có hiệu lực từ ngày 2026-04-20 đến ngày 2028-04-19. Tổng giá trị hợp đồng là 3.226.000.000 VND (3,226,000,000 VND), đã bao gồm thiết bị, nhân công lắp đặt và kiểm tra nghiệm thu.\n\n## Điều khoản thanh toán\n\nKhách hàng thanh toán mỗi hóa đơn trong vòng 60 ngày kể từ ngày phát hành hóa đơn, bằng chuyển khoản vào tài khoản do Hikari Home chỉ định.\n\n## Gia hạn\n\nBên muốn gia hạn hoặc chấm dứt hợp đồng cần thông báo bằng văn bản trước ít nhất 30 ngày so với ngày hết hạn. Nếu không có thông báo, hai bên sẽ họp để thỏa thuận các điều khoản tiếp theo."
+ },
+ "contracts/acme-corp/supply-202504": {
+  "id": "contracts/acme-corp/supply-202504",
+  "title": "Hợp đồng cung cấp thiết bị gia dụng – ACME Corp (VN)",
+  "description": "Hợp đồng cung cấp thiết bị gia dụng giữa Hikari Home và ACME Corp tại Việt Nam, hiệu lực từ 06/04/2025 đến 05/04/2026.",
+  "body": "## Các bên và loại hợp đồng\n\nHợp đồng cung cấp (supply) này được ký giữa Công ty Hikari Home (Bên bán) và ACME Corp (Bên mua) tại thị trường Việt Nam. Hikari Home cam kết cung cấp các dòng thiết bị gia dụng theo đơn đặt hàng định kỳ của ACME Corp.\n\n## Thời hạn và giá trị\n\n- Ngày hiệu lực: 06/04/2025.\n- Ngày kết thúc: 05/04/2026.\n- Tổng giá trị hợp đồng: 3.996.000.000 VND, đã bao gồm chi phí vận chuyển đến kho của ACME Corp.\n\nGiá trị này được phân bổ theo từng đợt giao hàng dựa trên kế hoạch đặt hàng hằng quý do hai bên thống nhất.\n\n## Điều khoản thanh toán\n\nACME Corp thanh toán trong vòng 60 ngày kể từ ngày nhận hóa đơn hợp lệ, bằng chuyển khoản ngân hàng. Thanh toán chậm sẽ chịu lãi theo quy định của pháp luật hiện hành.\n\n## Gia hạn và chấm dứt\n\nMỗi bên cần thông báo bằng văn bản về ý định gia hạn trước ít nhất 60 ngày so với ngày kết thúc hợp đồng. Nếu không có thông báo, hợp đồng sẽ chấm dứt khi hết hạn. Bảo hành sản phẩm áp dụng theo chính sách bảo hành B2B hiện hành của Hikari Home."
+ },
+ "contracts/acme-corp/installation-202605": {
+  "id": "contracts/acme-corp/installation-202605",
+  "title": "Hợp đồng lắp đặt thiết bị – ACME Corp (VN)",
+  "description": "Hợp đồng lắp đặt thiết bị giữa Hikari Home và ACME Corp tại Việt Nam, hiệu lực từ 04/05/2026 đến 03/05/2027.",
+  "body": "## Các bên và loại hợp đồng\n\nHợp đồng lắp đặt (installation) này được ký giữa Công ty Hikari Home (Bên cung cấp dịch vụ) và ACME Corp (Khách hàng) tại Việt Nam. Hikari Home chịu trách nhiệm lắp đặt, chạy thử và bàn giao các thiết bị gia dụng tại các địa điểm do ACME Corp chỉ định.\n\n## Thời hạn và giá trị\n\n- Ngày hiệu lực: 04/05/2026.\n- Ngày kết thúc: 03/05/2027.\n- Giá trị hợp đồng: 1.085.000.000 VND, bao gồm nhân công, vật tư phụ và chi phí đi lại của đội kỹ thuật.\n\n## Điều khoản thanh toán\n\nACME Corp thanh toán trong vòng 30 ngày kể từ ngày ký biên bản nghiệm thu của từng đợt lắp đặt, bằng chuyển khoản ngân hàng.\n\n## Gia hạn\n\nBên muốn gia hạn phải gửi thông báo bằng văn bản trước ít nhất 30 ngày so với ngày kết thúc. Các điều chỉnh về phạm vi hoặc giá sẽ được lập thành phụ lục và có chữ ký của cả hai bên."
+ },
+ "contracts/minh-phat-jsc/supply-202601": {
+  "id": "contracts/minh-phat-jsc/supply-202601",
+  "title": "Hợp đồng cung cấp thiết bị gia dụng – Công ty Cổ phần Minh Phát (VN)",
+  "description": "Hợp đồng cung cấp thiết bị gia dụng giữa Hikari Home và Minh Phat JSC, hiệu lực hai năm từ 20/01/2026 đến 19/01/2028.",
+  "body": "## Các bên và loại hợp đồng\n\nHợp đồng cung cấp (supply) này được ký giữa Công ty Hikari Home (Bên bán) và Minh Phat JSC (Bên mua) tại Việt Nam. Hikari Home cung cấp thiết bị gia dụng theo kế hoạch đặt hàng của Minh Phat JSC để phân phối tại hệ thống cửa hàng của khách hàng.\n\n## Thời hạn và giá trị\n\n- Ngày hiệu lực: 20/01/2026.\n- Ngày kết thúc: 19/01/2028.\n- Tổng giá trị hợp đồng: 3.014.000.000 VND cho toàn bộ thời hạn hai năm.\n\n## Điều khoản thanh toán\n\nMinh Phat JSC thanh toán trong vòng 45 ngày kể từ ngày nhận hóa đơn hợp lệ, bằng chuyển khoản ngân hàng vào tài khoản do Hikari Home chỉ định.\n\n## Gia hạn\n\nMỗi bên phải gửi thông báo gia hạn bằng văn bản trước ít nhất 60 ngày so với ngày kết thúc hợp đồng. Nếu không có thông báo, hợp đồng tự động chấm dứt khi hết hạn."
+ },
+ "meetings/finance/2026-03-17-budget": {
+  "id": "meetings/finance/2026-03-17-budget",
+  "title": "Finance Budget Meeting Notes – 2026-03-17",
+  "description": "Notes from the Finance department budget meeting on 17 March 2026, where the budget was set at 90 million VND.",
+  "body": "## Meeting Overview\n\nDate: 2026-03-17. Attending department: Finance. The team reviewed the quarterly spending forecast and compared it against actual expenses from the previous quarter.\n\n## Discussion\n\nThe team went through operating costs across the Vietnam and Japan offices. Several items were flagged as running above plan, mainly logistics and software subscriptions. Finance proposed tighter approval thresholds for discretionary spending and a monthly variance report for department heads.\n\n## Decisions\n\n- The budget for the upcoming quarter's discretionary spending was set at 90 million VND.\n- Any request above the approved amount requires written sign-off from the Finance lead.\n- A monthly variance report will be circulated to all department heads.\n- The next meeting will be held in 4 weeks to review progress against the approved budget.\n\n## Follow-up\n\nFinance will publish the approved budget breakdown internally and collect outstanding cost reports from each department before the next session."
+ },
+ "meetings/hr/2026-06-08-hiring": {
+  "id": "meetings/hr/2026-06-08-hiring",
+  "title": "Biên bản họp Nhân sự về kế hoạch tuyển dụng – 08/06/2026",
+  "description": "Biên bản cuộc họp phòng Nhân sự ngày 08/06/2026 về kế hoạch tuyển dụng và ngân sách 70 triệu VND.",
+  "body": "## Thông tin cuộc họp\n\nNgày họp: 08/06/2026. Phòng ban tham dự: Nhân sự (HR). Cuộc họp tập trung vào kế hoạch tuyển dụng cho quý tới tại văn phòng Việt Nam.\n\n## Nội dung thảo luận\n\nPhòng Nhân sự rà soát nhu cầu nhân lực của các bộ phận, trong đó ưu tiên vị trí chăm sóc khách hàng và kỹ thuật viên lắp đặt. Nhóm cũng thảo luận về việc sử dụng các kênh tuyển dụng trực tuyến, hội chợ việc làm và chương trình giới thiệu nội bộ để giảm thời gian tuyển.\n\n## Quyết định\n\n- Ngân sách tuyển dụng được duyệt là 70 triệu VND, dùng cho đăng tin, phí nền tảng và tổ chức phỏng vấn.\n- Ưu tiên hoàn tất tuyển các vị trí kỹ thuật viên trước.\n- Chương trình thưởng giới thiệu nội bộ sẽ được cập nhật và thông báo toàn công ty.\n- Cuộc họp tiếp theo sẽ diễn ra sau 2 tuần để đánh giá số lượng hồ sơ nhận được.\n\nPhòng Nhân sự chịu trách nhiệm gửi bản tổng hợp yêu cầu tuyển dụng cho các trưởng bộ phận."
+ },
+ "meetings/sales/2026-04-06-launch": {
+  "id": "meetings/sales/2026-04-06-launch",
+  "title": "Sales Product Launch Meeting Notes – 2026-04-06",
+  "description": "Notes from the Sales department's product launch planning meeting on 6 April 2026, with a launch budget of 640 million VND.",
+  "body": "## Meeting Overview\n\nDate: 2026-04-06. Attending department: Sales, with representatives from marketing and product joining for the discussion. The purpose was to finalize the plan for the upcoming home-appliance launch in Vietnam.\n\n## Discussion\n\nThe team reviewed the launch timeline, target retail partners and promotional channels. Marketing presented a proposal combining in-store displays, online advertising and demo events at partner showrooms. Sales raised concerns about stock availability during the first two weeks and asked for early allocation to key distributors.\n\n## Decisions\n\n- The launch budget was approved at 640 million VND, covering advertising, showroom demos and promotional materials.\n- Key distributors will receive priority stock allocation before the public launch.\n- Marketing will prepare final creative assets and share them with Sales for review.\n- The next meeting will be held in 1 week to confirm readiness and address open risks.\n\n## Action Items\n\nSales will confirm distributor commitments, and product will provide final training material for showroom staff."
+ },
+ "meetings/sales/2026-04-07-kpi": {
+  "id": "meetings/sales/2026-04-07-kpi",
+  "title": "Sales KPI Review Meeting Notes – 2026-04-07",
+  "description": "Notes from the Sales KPI review on 7 April 2026, including the approved incentive budget of 700 million VND.",
+  "body": "## Meeting Overview\n\nDate: 2026-04-07. Attending department: Sales. The meeting reviewed performance against the quarterly KPIs and set targets for the next period across the Vietnam and Japan teams.\n\n## Discussion\n\nThe team compared actual revenue, new-customer acquisition and B2B contract renewals with targets. B2B accounts performed above plan, while retail showed slower growth in some regions. Managers discussed how to align incentives with conversion rates and repeat orders instead of raw volume alone.\n\n## Decisions\n\n- The sales incentive and KPI program budget was set at 700 million VND for the coming period.\n- KPIs will place greater weight on renewal rate and customer satisfaction.\n- Regional managers will submit revised targets for their teams by the end of the week.\n- The next meeting will be held in 4 weeks to review interim results.\n\n## Follow-up\n\nSales operations will update the dashboard to show the new KPI definitions and share it with all team leads."
+ },
+ "meetings/it/2026-04-23-security-review": {
+  "id": "meetings/it/2026-04-23-security-review",
+  "title": "IT Security Review Meeting Notes – 2026-04-23",
+  "description": "Notes from the IT security review on 23 April 2026, with a security improvement budget of 320 million VND.",
+  "body": "## Meeting Overview\n\nDate: 2026-04-23. Attending department: IT. The meeting covered the results of the recent security review of internal systems, employee accounts and customer-facing applications.\n\n## Discussion\n\nThe team reviewed findings from the vulnerability scan and access audit. Key issues included outdated software on several office machines, inconsistent use of multi-factor authentication, and incomplete logging on a few internal services. IT also discussed the need for refreshed employee awareness training on phishing.\n\n## Decisions\n\n- A security improvement budget of 320 million VND was approved for patching, endpoint protection and logging upgrades.\n- Multi-factor authentication will be mandatory for all employee accounts.\n- Outdated systems will be updated or retired according to a prioritized list.\n- The next meeting will be held in 4 weeks to check remediation progress.\n\n## Action Items\n\nIT will publish the remediation schedule and coordinate the phishing awareness sessions with HR."
+ },
+ "meetings/warehouse/2025-10-28-inventory-planning": {
+  "id": "meetings/warehouse/2025-10-28-inventory-planning",
+  "title": "Warehouse Inventory Planning Meeting Notes – 2025-10-28",
+  "description": "Notes from the Warehouse department's inventory planning meeting on 28 October 2025, covering stock levels and the approved budget.",
+  "body": "## Overview\n\nThe Warehouse department met on 2025-10-28 to review inventory levels ahead of the year-end sales season. Attendees included the warehouse manager, the inventory control team, and representatives from logistics.\n\n## Discussion\n\nThe team reviewed current stock of refrigerators, rice cookers and air purifiers across the Hanoi and Ho Chi Minh City distribution centers. Fast-moving items are running lower than forecast, while some older washing machine models are occupying too much shelf space. Logistics raised concerns about supplier lead times, which have grown by several days since September. The group agreed that safety stock thresholds need to be recalculated using the last six months of sales data.\n\n## Decisions\n\n- The inventory replenishment and storage budget is set at 130 million VND, to be allocated mainly to fast-moving product lines and temporary racking.\n- Inventory control will publish revised safety stock thresholds before the next review.\n- Slow-moving stock will be flagged for discount consideration with the Sales team.\n- The next meeting will be held in 4 weeks to check progress against these actions.\n\nAction owners were assigned during the meeting and will report status by email in between sessions."
+ },
+ "meetings/finance/2026-08-27-budget": {
+  "id": "meetings/finance/2026-08-27-budget",
+  "title": "財務部 予算会議議事録 2026-08-27",
+  "description": "2026年8月27日に開催された財務部の予算会議で、承認された予算額と今後の進め方をまとめた議事録。",
+  "body": "## 概要\n\n2026年8月27日、財務部の予算会議を開催しました。出席者は財務部長、経理担当、および各部門の予算管理責任者です。下半期の支出状況と、来期に向けた予算配分について協議しました。\n\n## 協議内容\n\nベトナムと日本の両拠点における第3四半期の支出実績を確認しました。ベトナム拠点では物流費と人件費が計画をやや上回っており、為替の変動も費用を押し上げる要因として挙げられました。一方、日本拠点は概ね計画どおりに推移しています。各部門から追加予算の要望が出され、優先順位の高いものから精査することになりました。\n\n## 決定事項\n\n- 今回承認された予算額は700百万VND(7億VND)とし、物流および人員関連費用を優先して配分する。\n- 各部門は予算の使途明細を来週までに財務部へ提出する。\n- 為替リスクへの対応方針を財務部で取りまとめ、共有する。\n- 次回会議は4週間後に開催し、執行状況を確認する。\n\n担当者は決定事項の進捗を随時メールで報告することとしました。"
+ },
+ "meetings/hr/2026-06-30-hiring": {
+  "id": "meetings/hr/2026-06-30-hiring",
+  "title": "HR Hiring Meeting Notes – 2026-06-30",
+  "description": "Notes from the HR department's hiring meeting on 30 June 2026, summarizing recruitment priorities and the approved hiring budget.",
+  "body": "## Overview\n\nThe HR department held its hiring review on 2026-06-30. Attendees were the HR director, recruiters, and hiring managers from Sales, Warehouse and Customer Support.\n\n## Discussion\n\nThe team reviewed open positions in Vietnam and Japan. Demand is highest for warehouse operators, after-sales technicians and sales representatives ahead of the second-half product launches. Recruiters reported that technician roles take the longest to fill, averaging more than two months. Candidate quality from university partnerships was strong, and the group discussed expanding referral incentives to speed up placements. Onboarding capacity was also reviewed, as trainers are stretched during peak intake periods.\n\n## Decisions\n\n- The hiring and onboarding budget is fixed at 660 million VND for the coming period, covering job advertising, agency fees and training.\n- Priority will go to after-sales technician and warehouse operator positions.\n- HR will launch an updated referral program within the month.\n- The next meeting will take place in 4 weeks to review hiring progress and spending.\n\nHiring managers will submit final headcount justifications to HR by the end of next week."
+ },
+ "meetings/sales/2025-11-16-launch": {
+  "id": "meetings/sales/2025-11-16-launch",
+  "title": "営業部 新製品発売会議議事録 2025-11-16",
+  "description": "2025年11月16日に開催された営業部の新製品発売会議で、販促計画と決定した予算をまとめた議事録。",
+  "body": "## 概要\n\n2025年11月16日、営業部の新製品発売会議を開催しました。出席者は営業部長、マーケティング担当、商品企画担当、およびベトナム・日本の販売責任者です。\n\n## 協議内容\n\n来期に発売予定の新型空気清浄機と炊飯器について、発売時期と販促施策を確認しました。ベトナム市場ではオンライン販売とショールーム展示を中心に、日本市場では家電量販店との共同キャンペーンを進める方針です。競合他社の価格動向も共有され、発売初期の価格設定は慎重に検討する必要があるとの意見が出ました。商品企画からは、在庫の確保状況について報告がありました。\n\n## 決定事項\n\n- 発売に関する販促・広告予算は710百万VND(7億1,000万VND)とする。\n- ベトナムではオンライン広告とショールームを重点施策とする。\n- 日本では量販店との共同キャンペーンを来月までに具体化する。\n- 次回会議は4週間後に開催し、準備状況を確認する。\n\n各担当者は進捗を営業部内で共有し、課題があれば速やかに報告することとしました。"
+ },
+ "meetings/sales/2026-03-16-kpi": {
+  "id": "meetings/sales/2026-03-16-kpi",
+  "title": "Sales KPI Meeting Notes – 2026-03-16",
+  "description": "Notes from the Sales department's KPI review on 16 March 2026, including performance findings and the approved incentive budget.",
+  "body": "## Overview\n\nThe Sales department held its KPI review on 2026-03-16. Attendees included the sales director, regional managers for Vietnam and Japan, and the sales operations analyst.\n\n## Discussion\n\nFirst-quarter results were reviewed against targets. Revenue in Vietnam is on track, driven by strong demand for air conditioners and refrigerators, while Japan is slightly behind plan because of slower foot traffic in retail partner stores. Conversion rates from online leads were discussed, and the team agreed the follow-up process is too slow. Sales operations also proposed simplifying the KPI dashboard so that regional managers can track pipeline and order fulfillment in one view.\n\n## Decisions\n\n- A sales incentive and campaign budget of 450 million VND is approved for the second quarter.\n- Regional managers will reduce lead follow-up time to within one business day.\n- Sales operations will release the simplified KPI dashboard by the end of the month.\n- The next meeting will be held in 4 weeks to review updated figures.\n\nAll action owners will send short status updates before the next session."
+ },
+ "meetings/it/2026-03-23-security-review": {
+  "id": "meetings/it/2026-03-23-security-review",
+  "title": "IT Security Review Meeting Notes – 2026-03-23",
+  "description": "Notes from the IT department's security review on 23 March 2026, covering identified risks and the approved remediation budget.",
+  "body": "## Overview\n\nThe IT department convened on 2026-03-23 for a security review. Attendees were the IT manager, the network and systems engineers, and a representative from Finance.\n\n## Discussion\n\nThe team reviewed the results of the recent vulnerability scan across the Vietnam and Japan offices and the warehouse systems. Several laptops were running outdated operating system patches, and two legacy servers lack support for multi-factor authentication. Phishing attempts against staff email increased last month, prompting a discussion on additional awareness training. The group also examined access rights for former contractors and found a few accounts that should have been disabled.\n\n## Decisions\n\n- A remediation budget of 280 million VND is approved, covering server upgrades, endpoint protection licenses and staff training.\n- All outdated laptops will be patched within two weeks.\n- Unused contractor accounts will be disabled immediately and access reviews made quarterly.\n- Because of the urgency, the next meeting will be held in 1 week to confirm progress on patching and account cleanup.\n\nThe IT manager will report the outcome to management after the follow-up meeting."
+ },
+ "meetings/warehouse/2026-07-15-inventory-planning": {
+  "id": "meetings/warehouse/2026-07-15-inventory-planning",
+  "title": "Biên bản họp kế hoạch tồn kho – Kho vận – 2026-07-15",
+  "description": "Biên bản cuộc họp kế hoạch tồn kho của bộ phận Kho vận ngày 15/07/2026, ghi nhận nội dung thảo luận và ngân sách được duyệt.",
+  "body": "## Tổng quan\n\nNgày 15/07/2026, bộ phận Kho vận đã họp để lập kế hoạch tồn kho cho quý tới. Tham dự gồm trưởng kho, nhóm kiểm soát tồn kho, đại diện logistics và đại diện phòng Kinh doanh.\n\n## Nội dung thảo luận\n\nCuộc họp rà soát mức tồn kho hiện tại của các dòng máy lạnh, tủ lạnh và nồi cơm điện tại các kho ở Hà Nội và TP. Hồ Chí Minh. Nhu cầu máy lạnh tăng mạnh trong mùa nóng nên tồn kho một số mẫu đang xuống thấp. Ngược lại, một số mẫu máy giặt đời cũ tồn quá lâu. Bộ phận logistics cho biết thời gian giao hàng của nhà cung cấp còn kéo dài, cần đặt hàng sớm hơn.\n\n## Quyết định\n\n- Ngân sách nhập hàng và lưu kho được duyệt là 370 triệu VND, ưu tiên các mẫu bán chạy.\n- Nhóm kiểm soát tồn kho cập nhật lại mức tồn kho an toàn trong tuần này.\n- Phối hợp với Kinh doanh để có phương án xử lý hàng tồn lâu.\n- Cuộc họp tiếp theo sẽ diễn ra sau 4 tuần để đánh giá tiến độ.\n\nCác đầu mối sẽ báo cáo tình hình thực hiện qua email trước buổi họp kế tiếp."
+ },
+ "meetings/finance/2026-06-24-budget": {
+  "id": "meetings/finance/2026-06-24-budget",
+  "title": "Finance Budget Meeting Notes – 2026-06-24",
+  "description": "Notes from the Finance department's budget meeting on 24 June 2026, summarizing spending review and the approved budget.",
+  "body": "## Overview\n\nThe Finance department held a budget meeting on 2026-06-24. Attendees included the finance director, accounting staff, and budget owners from Sales, Warehouse, HR and IT.\n\n## Discussion\n\nThe group reviewed second-quarter spending in Vietnam and Japan. Logistics and marketing costs are above plan, partly due to exchange rate movements between VND and JPY. Departments submitted additional funding requests, and Finance noted that several were missing supporting detail. The team also discussed tightening approval steps for purchases and improving the monthly forecasting process so that variances are spotted earlier.\n\n## Decisions\n\n- The consolidated budget for the second half of the year is set at 850 million VND, with priority given to logistics and workforce costs.\n- Budget owners must submit itemized spending plans to Finance by the end of this week.\n- Finance will draft an exchange rate risk guideline and circulate it for comment.\n- Because the budget is time-sensitive, the next meeting will be held in 1 week to confirm the final allocations.\n\nAccounting will distribute the approved allocation sheet to all departments after the follow-up meeting."
+ },
+ "meetings/hr/2026-08-08-hiring": {
+  "id": "meetings/hr/2026-08-08-hiring",
+  "title": "Biên bản họp Nhân sự về tuyển dụng – 08/08/2026",
+  "description": "Phòng Nhân sự thống nhất ngân sách tuyển dụng 80 triệu VND và lịch họp tiếp theo sau 2 tuần.",
+  "body": "## Thông tin cuộc họp\n\nNgày họp: 08/08/2026. Thành phần tham dự: Phòng Nhân sự, đại diện Phòng Bán hàng và Phòng Kho vận của Hikari Home tại Việt Nam.\n\n## Nội dung thảo luận\n\nCuộc họp xem xét nhu cầu tuyển dụng nửa cuối năm 2026, tập trung vào vị trí nhân viên chăm sóc khách hàng, nhân viên kho và chuyên viên tư vấn bán hàng. Nhân sự cho biết thời gian tuyển trung bình hiện là 6 tuần, cao hơn mục tiêu. Các bên thảo luận việc đăng tin trên các nền tảng việc làm, chương trình giới thiệu nhân viên và chi phí tổ chức phỏng vấn.\n\n## Quyết định\n\n- Ngân sách tuyển dụng được duyệt là 80 triệu VND, bao gồm phí đăng tin, thưởng giới thiệu và chi phí phỏng vấn.\n- Phòng Nhân sự ưu tiên hoàn tất tuyển vị trí chăm sóc khách hàng trước.\n- Các phòng ban gửi bản mô tả công việc cập nhật cho Nhân sự trong tuần này.\n- Cuộc họp tiếp theo sẽ diễn ra sau 2 tuần để rà soát tiến độ và số lượng hồ sơ nhận được."
+ },
+ "meetings/sales/2026-02-01-launch": {
+  "id": "meetings/sales/2026-02-01-launch",
+  "title": "Biên bản họp Bán hàng về kế hoạch ra mắt sản phẩm – 01/02/2026",
+  "description": "Phòng Bán hàng chốt ngân sách ra mắt sản phẩm 590 triệu VND và hẹn họp lại sau 4 tuần.",
+  "body": "## Thông tin cuộc họp\n\nNgày họp: 01/02/2026. Tham dự: Phòng Bán hàng, Phòng Marketing và đại diện bộ phận sản phẩm của Hikari Home Việt Nam.\n\n## Nội dung thảo luận\n\nCác bên rà soát kế hoạch ra mắt dòng sản phẩm gia dụng mới trong quý tới. Nội dung chính gồm thời điểm ra mắt, kênh phân phối ưu tiên tại các siêu thị điện máy và cửa hàng trực tuyến, cũng như thông điệp truyền thông. Bộ phận sản phẩm xác nhận hàng mẫu sẽ sẵn sàng đúng hạn; Marketing đề xuất kết hợp quảng cáo mạng xã hội và sự kiện trải nghiệm tại cửa hàng.\n\n## Quyết định\n\n- Ngân sách ra mắt được phê duyệt là 590 triệu VND, phân bổ cho quảng cáo, sự kiện và vật phẩm trưng bày.\n- Phòng Bán hàng chịu trách nhiệm đào tạo nhân viên cửa hàng về tính năng sản phẩm.\n- Marketing gửi kế hoạch truyền thông chi tiết trước buổi họp kế tiếp.\n- Cuộc họp tiếp theo diễn ra sau 4 tuần để đánh giá tiến độ chuẩn bị."
+ },
+ "meetings/sales/2026-06-27-kpi": {
+  "id": "meetings/sales/2026-06-27-kpi",
+  "title": "Biên bản họp Bán hàng về KPI – 27/06/2026",
+  "description": "Phòng Bán hàng rà soát KPI quý và duyệt ngân sách thưởng, đào tạo 700 triệu VND, họp lại sau 1 tuần.",
+  "body": "## Thông tin cuộc họp\n\nNgày họp: 27/06/2026. Tham dự: Phòng Bán hàng, đại diện Phòng Tài chính và các trưởng nhóm khu vực của Hikari Home Việt Nam.\n\n## Nội dung thảo luận\n\nCuộc họp đánh giá kết quả KPI quý hai so với mục tiêu. Doanh số khu vực miền Nam vượt kế hoạch, trong khi miền Bắc còn chậm ở nhóm sản phẩm máy giặt và nồi cơm điện. Các trưởng nhóm đề xuất điều chỉnh chỉ tiêu quý ba theo mùa vụ và bổ sung KPI về tỷ lệ khách hàng quay lại. Tài chính lưu ý cần kiểm soát chi phí khuyến mãi.\n\n## Quyết định\n\n- Ngân sách thưởng KPI và đào tạo cho quý ba được duyệt là 700 triệu VND.\n- Chỉ tiêu quý ba của miền Bắc được điều chỉnh sau khi rà soát số liệu.\n- Mỗi trưởng nhóm nộp báo cáo KPI hàng tuần cho Trưởng phòng Bán hàng.\n- Cuộc họp tiếp theo diễn ra sau 1 tuần để chốt bảng chỉ tiêu cuối cùng."
+ },
+ "meetings/it/2026-02-16-security-review": {
+  "id": "meetings/it/2026-02-16-security-review",
+  "title": "IT部門 セキュリティレビュー会議議事録(2026年2月16日)",
+  "description": "IT部門がセキュリティ対策を見直し、予算670百万VNDと次回会議を1週間後とすることを決定した。",
+  "body": "## 会議概要\n\n開催日は2026年2月16日。出席部門はIT部門で、情報システム担当者とセキュリティ担当者が参加した。\n\n## 討議内容\n\nベトナムおよび日本拠点の社内システムに対するセキュリティ状況を確認した。主な論点は、従業員アカウントの多要素認証の未導入端末、旧型サーバーのパッチ適用遅れ、外部委託先からのアクセス権限の棚卸しである。直近の監査では権限が過剰に付与されたアカウントが複数見つかっており、早急な是正が必要との認識で一致した。また、フィッシングメールへの注意喚起と従業員向け訓練の実施頻度についても意見を交わした。\n\n## 決定事項\n\n- セキュリティ強化のための予算として670百万VNDを承認した。\n- 全社員アカウントに多要素認証を適用し、旧型サーバーのパッチを優先的に更新する。\n- 委託先のアクセス権限を棚卸しし、不要な権限を削除する。\n- 進捗確認のため、次回会議は1週間後に開催する。"
+ },
+ "meetings/warehouse/2026-07-14-inventory-planning": {
+  "id": "meetings/warehouse/2026-07-14-inventory-planning",
+  "title": "倉庫部門 在庫計画会議議事録(2026年7月14日)",
+  "description": "倉庫部門が下期の在庫計画を検討し、予算460百万VNDと次回会議を2週間後とすることを決めた。",
+  "body": "## 会議概要\n\n開催日は2026年7月14日。出席部門は倉庫部門で、物流担当および販売部門の代表者が同席した。\n\n## 討議内容\n\n下期の需要予測に基づき、主力製品である炊飯器、洗濯機、空気清浄機の在庫水準を確認した。ベトナムの倉庫では繁忙期前に保管スペースが不足する見込みであり、日本向け輸出分の出荷スケジュールとの調整が課題となった。また、滞留在庫の削減と、欠品が多い部品の安全在庫の引き上げについても議論した。販売部門からは、キャンペーン時期に合わせた前倒し入荷の要望が出された。\n\n## 決定事項\n\n- 下期の在庫計画に関する予算として460百万VNDを承認した。\n- 保管スペース不足に備え、外部倉庫の一時利用を検討する。\n- 欠品の多い部品の安全在庫を見直し、次回までに数値案を提出する。\n- 次回会議は2週間後に開催し、入荷計画の進捗を確認する。"
+ },
+ "meetings/hr/2026-06-30-budget": {
+  "id": "meetings/hr/2026-06-30-budget",
+  "title": "人事部門 予算会議議事録(2026年6月30日)",
+  "description": "人事部門が下期の予算を協議し、740百万VNDを決定して次回会議を1週間後に設定した。",
+  "body": "## 会議概要\n\n開催日は2026年6月30日。出席部門は人事部門で、財務部門の担当者もオブザーバーとして参加した。\n\n## 討議内容\n\n2026年下期の人事関連予算について、採用費、研修費、福利厚生費の三項目を中心に検討した。ベトナム拠点では従業員数の増加に伴い研修費の増額が求められ、日本拠点では福利厚生制度の見直しが議題となった。財務部門からは、前年実績と比較して支出の妥当性を示す資料を提出するよう要請があった。また、評価制度の改定に伴う管理職向け研修の必要性も共有された。\n\n## 決定事項\n\n- 下期の人事予算として740百万VNDを承認した。\n- 研修費は両拠点の従業員数に応じて配分する。\n- 財務部門向けの支出根拠資料を人事部門が作成する。\n- 詳細な配分案を確認するため、次回会議は1週間後に開催する。"
+ },
+ "meetings/sales/2026-08-07-hiring": {
+  "id": "meetings/sales/2026-08-07-hiring",
+  "title": "営業部門 採用会議議事録(2026年8月7日)",
+  "description": "営業部門が採用計画を協議し、採用予算240百万VNDと次回会議を4週間後とすることを決定した。",
+  "body": "## 会議概要\n\n開催日は2026年8月7日。出席部門は営業部門で、人事部門の担当者が同席した。\n\n## 討議内容\n\n営業部門の人員計画について、ベトナム国内の法人営業および日本向け輸出営業の増員要否を検討した。現状では大手家電量販店との取引拡大により、担当者一人あたりの顧客数が増加しており、対応の遅れが懸念されている。人事部門からは、募集媒体ごとの応募状況と、経験者採用にかかる平均期間の説明があった。あわせて、新入社員向けの営業研修プログラムの整備についても意見が出た。\n\n## 決定事項\n\n- 営業部門の採用予算として240百万VNDを承認した。\n- 法人営業の経験者を優先して募集し、募集要項を今月中に確定する。\n- 新入社員研修の内容案を営業部門が作成し、人事部門と共有する。\n- 次回会議は4週間後に開催し、応募状況を確認する。"
+ },
+ "meetings/sales/2025-12-07-launch": {
+  "id": "meetings/sales/2025-12-07-launch",
+  "title": "営業部門 新製品発売会議議事録(2025年12月7日)",
+  "description": "営業部門が新製品の発売計画を確認し、発売予算780百万VNDと次回会議を1週間後とすることを決めた。",
+  "body": "## 会議概要\n\n開催日は2025年12月7日。出席部門は営業部門で、マーケティング部門および製品部門の担当者が参加した。\n\n## 討議内容\n\n2026年初頭に予定している新型家電シリーズの発売について、スケジュールと販売戦略を確認した。ベトナムでは主要な家電量販店とオンラインストアでの同時発売を目指し、日本では既存の取引先を通じた段階的な展開を検討している。製品部門からは量産準備が順調であると報告があり、マーケティング部門は発売告知の広告施策と店頭展示の案を提示した。価格設定については競合製品との比較資料をもとに議論した。\n\n## 決定事項\n\n- 発売に関する予算として780百万VNDを承認した。\n- 店頭販売員向けの製品説明資料を営業部門が用意する。\n- 広告施策の詳細案をマーケティング部門が提出する。\n- 準備状況を確認するため、次回会議は1週間後に開催する。"
+ },
+ "meetings/sales/2026-02-21-kpi": {
+  "id": "meetings/sales/2026-02-21-kpi",
+  "title": "Sales KPI Review Meeting Notes – 2026-02-21",
+  "description": "Notes from the Sales department's KPI review on 21 February 2026, covering results, the approved budget and follow-up timing.",
+  "body": "## Overview\n\nDate: 2026-02-21. Attendees: Sales department (regional managers for Vietnam and Japan, sales operations and the channel team). The meeting reviewed progress against the first-quarter KPIs for both markets.\n\n## Discussion\n\n- Vietnam retail sell-through is on track, driven by air purifiers and rice cookers, while online conversion is still below the target set in January.\n- Japan showed steady repeat orders from existing distributors, but new-account acquisition lagged behind plan.\n- The team agreed that the current KPI dashboard mixes gross and net revenue, which makes comparisons between regions unreliable. Sales operations will separate the two measures.\n- Several managers asked for clearer targets on lead follow-up time and average deal size.\n\n## Decisions\n\n- The Sales KPI improvement budget for the next period is set at 270 million VND, to be used for training, dashboard rework and regional promotions.\n- Sales operations will publish a revised KPI definition sheet before the next session.\n- Each regional manager will submit an action plan for underperforming metrics.\n- The next meeting will be held in 1 week to confirm the revised definitions and review the first action plans."
+ },
+ "meetings/hr/2026-07-04-security-review": {
+  "id": "meetings/hr/2026-07-04-security-review",
+  "title": "セキュリティレビュー会議 議事録(2026年7月4日)",
+  "description": "2026年7月4日に人事部が実施したセキュリティレビューの議論内容と決定事項をまとめた議事録。",
+  "body": "## 概要\n\n日時は2026年7月4日。出席部門は人事部で、情報システム担当者もオブザーバーとして参加した。従業員情報の取り扱いとアクセス管理について、現状の課題を確認した。\n\n## 議論内容\n\n- 人事システムへのアクセス権限が退職者や異動者について速やかに見直されておらず、定期的な棚卸しが必要であるとの指摘があった。\n- 給与・評価データを含む共有フォルダの閲覧範囲が広すぎるため、担当者ごとに制限する方針を確認した。\n- ベトナムと日本の両拠点で、パスワード管理と多要素認証の運用ルールに差があることが分かった。\n- 全従業員向けのセキュリティ研修について、受講率が目標に届いていない点も議題となった。\n\n## 決定事項\n\n- セキュリティ対策の予算として500百万VNDを承認した。アクセス管理ツールの導入と研修の実施に充てる。\n- 権限の棚卸しは月次で実施し、担当は人事部と情報システム部が共同で行う。\n- 両拠点で多要素認証の運用ルールを統一する。\n- 進捗確認のため、次回会議は1週間後に開催する。"
+ },
+ "meetings/hr/2025-12-26-inventory-planning": {
+  "id": "meetings/hr/2025-12-26-inventory-planning",
+  "title": "Biên bản họp kế hoạch tồn kho – 26/12/2025",
+  "description": "Biên bản cuộc họp ngày 26/12/2025 của phòng Nhân sự về kế hoạch tồn kho và nhân lực kho vận.",
+  "body": "## Tổng quan\n\nNgày họp: 2025-12-26. Thành phần tham dự: phòng Nhân sự, cùng đại diện bộ phận kho vận được mời phối hợp. Cuộc họp bàn về nhu cầu nhân lực phục vụ kế hoạch tồn kho đầu năm 2026 tại Việt Nam.\n\n## Nội dung thảo luận\n\n- Lượng hàng nhập cho mùa cao điểm sau Tết dự kiến tăng, kéo theo nhu cầu bổ sung nhân viên kho thời vụ.\n- Phòng Nhân sự cho biết thời gian tuyển và đào tạo an toàn lao động cần ít nhất vài tuần, nên phải khởi động sớm.\n- Bộ phận kho đề nghị bố trí lại ca làm việc để tránh quá tải vào những ngày kiểm kê cuối tháng.\n- Các bên thống nhất cần số liệu tồn kho thực tế theo tuần để điều chỉnh kế hoạch nhân sự kịp thời.\n\n## Quyết định\n\n- Phê duyệt ngân sách 110 triệu VND cho tuyển dụng thời vụ, đào tạo và phụ cấp ca kiểm kê.\n- Phòng Nhân sự lập danh sách ứng viên và lịch đào tạo trong tuần tới.\n- Bộ phận kho gửi báo cáo tồn kho hằng tuần cho phòng Nhân sự.\n- Cuộc họp tiếp theo sẽ diễn ra sau 1 tuần để rà soát tiến độ."
+ },
+ "meetings/sales/2026-04-30-budget": {
+  "id": "meetings/sales/2026-04-30-budget",
+  "title": "予算会議 議事録(2026年4月30日)",
+  "description": "2026年4月30日に営業部が開催した予算会議の議論内容と決定事項の議事録。",
+  "body": "## 概要\n\n日時は2026年4月30日。出席部門は営業部で、ベトナムおよび日本の営業責任者と営業企画担当が参加した。下半期に向けた営業予算の配分について協議した。\n\n## 議論内容\n\n- 上半期の販促費は日本市場で計画を下回った一方、ベトナム市場ではオンライン広告費が予定より増加した。\n- 新製品の発売に合わせ、店頭プロモーションと販売代理店向けインセンティブを強化する必要があるとの意見が出た。\n- 為替の変動により、日本円建てとベトナムドン建ての予算比較が難しくなっているため、統一した換算基準を設けることになった。\n- 費用対効果の低い施策は見直し、成果の高いチャネルへ配分を移す方針を確認した。\n\n## 決定事項\n\n- 下半期の営業予算として840百万VNDを承認した。\n- 営業企画は、施策別の予算配分表と換算基準を作成して共有する。\n- 各地域の責任者は、月次で予算の消化状況を報告する。\n- 配分表の確認のため、次回会議は2週間後に開催する。"
+ },
+ "products/air-purifier/hk-ai659": {
+  "id": "products/air-purifier/hk-ai659",
+  "title": "Product Spec: HK-AI659 Air Purifier",
+  "description": "Specification summary of the Hikari Home HK-AI659 air purifier, including power rating, launch year and key features.",
+  "body": "## Overview\n\nThe HK-AI659 is a large-room air purifier in the Hikari Home lineup, sold in both Vietnam and Japan. It launched in 2023 and targets urban households concerned about dust, pollen and fine particulate matter.\n\n## Key Specifications\n\n- Rated power: 1350 W at maximum operation, including the heater-free air circulation fan and ionizer module.\n- Filtration: multi-stage system with a pre-filter, activated carbon layer and HEPA filter.\n- Suitable room size: living rooms and open-plan spaces of roughly 60 square meters.\n- Controls: touch panel, remote control and an auto mode driven by an air quality sensor.\n- Noise: quiet sleep mode designed for bedroom use.\n\n## Sales Notes\n\nSales teams should position the HK-AI659 as the premium option for larger homes. Filter replacement is recommended about every twelve months, depending on air quality, and replacement filters are stocked in both markets. Customers should be reminded that the unit needs clearance around the intake vents for best performance. Warranty terms follow the standard Hikari Home appliance policy for each region, so please check the current policy before quoting coverage."
+ },
+ "products/rice-cooker/hk-ri655": {
+  "id": "products/rice-cooker/hk-ri655",
+  "title": "製品仕様書:HK-RI655 炊飯器(販売終了)",
+  "description": "Hikari Home の炊飯器HK-RI655の仕様概要と、販売終了に伴う位置づけをまとめた製品仕様書。",
+  "body": "## 概要\n\nHK-RI655は2022年に発売された圧力IH式の炊飯器である。現在はステータスが廃止(deprecated)となっており、後継モデルに置き換えられたため、新規の販売は行わない。\n\n## 主な仕様\n\n- 定格消費電力:1080 W(炊飯時の最大値)\n- 発売年:2022\n- 加熱方式:圧力IH方式により、ふっくらとした炊き上がりを実現\n- メニュー:白米、玄米、おかゆ、早炊きなど複数のモードを搭載\n- 内釜:多層構造で保温性が高く、お手入れも容易\n\n## 営業向け注意事項\n\n本モデルは後継機種に置き換えられているため、新規提案では後継モデルを案内すること。既存のお客様からの問い合わせには、保証およびサポートが所定の期間内で継続される旨を説明する。在庫が残っている場合は、販売店と調整のうえ計画的に処分する。交換用の内釜や部品の提供期間については、最新のサポート方針を確認すること。"
+ },
+ "products/aircon/hk-ai432": {
+  "id": "products/aircon/hk-ai432",
+  "title": "製品仕様書:HK-AI432 エアコン(販売終了)",
+  "description": "Hikari Home のエアコンHK-AI432の仕様概要と、後継機への置き換えに関する情報をまとめた製品仕様書。",
+  "body": "## 概要\n\nHK-AI432は2021年に発売された家庭用エアコンである。現在はステータスが廃止(deprecated)で、後継モデルに置き換えられたため、新規販売の対象外となっている。\n\n## 主な仕様\n\n- 定格消費電力:1240 W(冷房運転時の最大値)\n- 発売年:2021\n- 方式:インバーター制御により、設定温度への到達が早く、安定した運転が可能\n- 機能:自動運転、除湿、送風、タイマー設定に対応\n- 設置目安:一般的な居室に適した容量\n\n## 営業向け注意事項\n\n新規のお客様には後継モデルを提案すること。既存のお客様には、保証とアフターサービスが所定の期間内で継続されることを案内する。修理用部品や消耗品の提供期間は、最新のサポート方針に従って確認する。販売店に残る在庫については、営業部が窓口となり、計画的な入れ替えを進める。"
+ },
+ "products/fridge/hk-fr159": {
+  "id": "products/fridge/hk-fr159",
+  "title": "製品仕様書:HK-FR159 冷蔵庫(販売終了)",
+  "description": "Hikari Home の冷蔵庫HK-FR159の仕様概要と、後継機への置き換えに関する情報をまとめた製品仕様書。",
+  "body": "## 概要\n\nHK-FR159は2023年に発売された大容量の家庭用冷蔵庫である。現在はステータスが廃止(deprecated)となっており、後継モデルに置き換えられたため、新規の販売は終了している。\n\n## 主な仕様\n\n- 定格消費電力:1840 W(霜取り運転を含む最大値)\n- 発売年:2023\n- 構成:多ドア式で、冷蔵室、野菜室、冷凍室を独立して温度管理\n- 機能:急速冷凍、省エネ運転、ドア開放警告に対応\n- 設置:放熱のため、背面と側面に十分な間隔を確保すること\n\n## 営業向け注意事項\n\n新規提案では後継モデルを案内すること。既存のお客様には、保証およびサポートが所定の期間内で継続されることを説明する。交換部品の提供期間や、引き取り・買い替えの手続きについては、最新のサポート方針を確認する。販売店の在庫は、営業部が調整して計画的に入れ替える。"
+ },
+ "products/washer/hk-wa436": {
+  "id": "products/washer/hk-wa436",
+  "title": "Thông số sản phẩm máy giặt HK-WA436",
+  "description": "Tài liệu tóm tắt thông số kỹ thuật và định vị bán hàng của máy giặt HK-WA436 do Hikari Home phân phối tại Việt Nam và Nhật Bản.",
+  "body": "## Tổng quan sản phẩm\n\nHK-WA436 là mẫu máy giặt cửa trước thuộc dòng phổ thông của Hikari Home, được ra mắt vào năm 2021. Sản phẩm hướng đến các hộ gia đình nhỏ và trung bình tại Việt Nam và Nhật Bản, ưu tiên độ bền, vận hành êm và dễ sử dụng.\n\n## Thông số kỹ thuật\n\n- Công suất tiêu thụ: 520 W\n- Năm ra mắt: 2021\n- Chương trình giặt: giặt nhanh, giặt chăn màn, giặt đồ len và giặt tiết kiệm điện\n- Thiết kế lồng giặt chống rung, giúp giảm tiếng ồn khi vắt\n\nMức công suất 520 W giúp máy tiêu thụ điện thấp hơn so với nhiều dòng cùng phân khúc, phù hợp với khách hàng quan tâm đến chi phí sử dụng lâu dài.\n\n## Lưu ý cho đội ngũ bán hàng\n\nKhi tư vấn, nhân viên cần nhấn mạnh ưu điểm tiết kiệm điện và độ ổn định đã được kiểm chứng sau nhiều năm có mặt trên thị trường kể từ năm 2021. Với khách hàng có nhu cầu giặt khối lượng lớn, nên giới thiệu thêm các mẫu công suất cao hơn trong danh mục. Thông tin bảo hành và lắp đặt áp dụng theo chính sách hiện hành của từng thị trường."
+ },
+ "products/air-purifier/hk-ai532": {
+  "id": "products/air-purifier/hk-ai532",
+  "title": "Thông số sản phẩm máy lọc không khí HK-AI532",
+  "description": "Tài liệu mô tả thông số kỹ thuật và điểm bán hàng chính của máy lọc không khí HK-AI532.",
+  "body": "## Tổng quan sản phẩm\n\nHK-AI532 là máy lọc không khí công suất lớn của Hikari Home, ra mắt năm 2022. Máy phù hợp với phòng khách, văn phòng nhỏ và các không gian có nhu cầu lọc bụi mịn, mùi và phấn hoa thường xuyên.\n\n## Thông số kỹ thuật\n\n- Công suất tiêu thụ tối đa: 2190 W\n- Năm ra mắt: 2022\n- Hệ thống lọc nhiều lớp gồm màng lọc thô, HEPA và than hoạt tính\n- Chế độ tự động điều chỉnh tốc độ quạt theo chất lượng không khí\n\nMức công suất 2190 W phản ánh khả năng vận hành mạnh mẽ ở chế độ tối đa, giúp làm sạch không khí nhanh trong không gian rộng. Ở chế độ ban đêm, máy hoạt động với mức tiêu thụ thấp hơn đáng kể.\n\n## Gợi ý cho đội ngũ bán hàng\n\nKhi tư vấn, cần giải thích rõ sự khác biệt giữa công suất tối đa và công suất vận hành thường ngày để khách hàng không lo ngại về điện năng. Nên đề xuất thay màng lọc định kỳ và giới thiệu gói phụ kiện đi kèm. Chính sách bảo hành thực hiện theo quy định hiện hành."
+ },
+ "products/rice-cooker/hk-ri346": {
+  "id": "products/rice-cooker/hk-ri346",
+  "title": "Product Specification: HK-RI346 Rice Cooker (Deprecated)",
+  "description": "Specification summary for the HK-RI346 rice cooker, which is now deprecated and no longer recommended for new sales.",
+  "body": "## Overview\n\nThe HK-RI346 is an electric rice cooker from Hikari Home, launched in 2022 for the Vietnam and Japan markets. This specification has been deprecated and superseded by newer rice cooker models in the current catalog. It is retained for reference on existing customer orders and after-sales support only.\n\n## Technical Specifications\n\n- Power consumption: 990 W\n- Launch year: 2022\n- Cooking modes: white rice, brown rice, porridge and quick cook\n- Inner pot with non-stick coating and keep-warm function\n\nThe 990 W heating element delivers even cooking for family-sized batches and was well received for its consistent texture.\n\n## Guidance for Sales\n\nSales staff should not actively promote the HK-RI346 for new orders. When customers ask about this model, redirect them to the current replacement models and explain the upgrades in efficiency and features. Remaining inventory may be cleared through approved promotions only. Warranty and repair services for units already sold continue under existing policy."
+ },
+ "products/aircon/hk-ai648": {
+  "id": "products/aircon/hk-ai648",
+  "title": "Product Specification: HK-AI648 Air Conditioner",
+  "description": "Overview of the HK-AI648 air conditioner, including key technical specifications and sales positioning.",
+  "body": "## Overview\n\nThe HK-AI648 is an inverter air conditioner from Hikari Home, launched in 2024. It is designed for bedrooms and small living spaces in both Vietnam and Japan, combining quiet operation with efficient cooling and heating.\n\n## Technical Specifications\n\n- Power consumption: 1120 W\n- Launch year: 2024\n- Inverter compressor with variable-speed control\n- Modes: cooling, heating, dehumidifying and eco\n- Low-noise indoor unit suitable for night use\n\nAt 1120 W, the unit offers a balanced trade-off between cooling performance and running cost, making it a strong option for energy-conscious households.\n\n## Sales Notes\n\nSales teams should highlight the inverter technology and the quiet indoor unit when advising customers. For larger rooms, recommend higher-capacity models in the catalog. Installation is handled by authorized technicians, and warranty terms follow the current regional policy. Please confirm stock availability with the logistics team before promising delivery dates to customers."
+ },
+ "products/fridge/hk-fr976": {
+  "id": "products/fridge/hk-fr976",
+  "title": "Thông số sản phẩm tủ lạnh HK-FR976",
+  "description": "Tài liệu tóm tắt thông số kỹ thuật và điểm nổi bật của tủ lạnh HK-FR976 ra mắt năm 2024.",
+  "body": "## Tổng quan sản phẩm\n\nHK-FR976 là tủ lạnh dung tích lớn của Hikari Home, ra mắt vào năm 2024. Sản phẩm dành cho gia đình đông người tại Việt Nam và Nhật Bản, tập trung vào khả năng bảo quản thực phẩm tươi lâu và vận hành ổn định.\n\n## Thông số kỹ thuật\n\n- Công suất tiêu thụ tối đa: 1650 W\n- Năm ra mắt: 2024\n- Công nghệ làm lạnh đa chiều với ngăn đông mềm\n- Bộ lọc khử mùi và đèn LED tiết kiệm điện\n\nCông suất 1650 W là mức tối đa khi máy nén hoạt động hết tải; trong điều kiện sử dụng thông thường, mức tiêu thụ thực tế thấp hơn nhiều nhờ máy nén biến tần.\n\n## Lưu ý cho đội ngũ bán hàng\n\nNhân viên nên giải thích rõ sự khác biệt giữa công suất tối đa và điện năng tiêu thụ thực tế. Khi khách hàng có không gian bếp hạn chế, cần kiểm tra kích thước lắp đặt trước khi chốt đơn. Chính sách bảo hành và giao hàng áp dụng theo quy định hiện hành của từng thị trường."
+ },
+ "products/washer/hk-wa672": {
+  "id": "products/washer/hk-wa672",
+  "title": "Thông số sản phẩm máy giặt HK-WA672",
+  "description": "Tài liệu mô tả thông số kỹ thuật và định hướng bán hàng của máy giặt HK-WA672 tích hợp sấy.",
+  "body": "## Tổng quan sản phẩm\n\nHK-WA672 là máy giặt kết hợp sấy của Hikari Home, ra mắt năm 2022. Mẫu máy hướng đến các gia đình bận rộn, cần giặt và sấy khô quần áo trong một chu trình, đặc biệt hữu ích trong mùa mưa ở Việt Nam và mùa đông ở Nhật Bản.\n\n## Thông số kỹ thuật\n\n- Công suất tiêu thụ tối đa: 2330 W\n- Năm ra mắt: 2022\n- Chức năng giặt, vắt và sấy gió nóng\n- Cảm biến khối lượng tự động điều chỉnh lượng nước và thời gian\n\nMức công suất 2330 W chủ yếu phát sinh ở giai đoạn sấy; khi chỉ giặt, mức tiêu thụ thấp hơn nhiều.\n\n## Gợi ý cho đội ngũ bán hàng\n\nKhi tư vấn, cần nêu rõ lợi ích tiết kiệm thời gian và không gian phơi đồ. Nên lưu ý khách hàng về yêu cầu nguồn điện và vị trí lắp đặt phù hợp với công suất máy. Thông tin bảo hành, lắp đặt và bảo trì thực hiện theo chính sách hiện hành."
+ },
+ "products/air-purifier/hk-ai856": {
+  "id": "products/air-purifier/hk-ai856",
+  "title": "Thông số sản phẩm máy lọc không khí HK-AI856 (ngừng sử dụng)",
+  "description": "Thông số kỹ thuật của máy lọc không khí HK-AI856, tài liệu này đã bị thay thế và chỉ giữ để tham khảo.",
+  "body": "## Tổng quan\n\nHK-AI856 là máy lọc không khí của Hikari Home, dự kiến ra mắt năm 2025. Tài liệu thông số này đã ngừng sử dụng (deprecated) và đã được thay thế bởi các phiên bản thông số mới hơn trong danh mục sản phẩm. Nội dung chỉ được lưu lại để tra cứu cho các đơn hàng và yêu cầu hỗ trợ cũ.\n\n## Thông số kỹ thuật\n\n- Công suất tiêu thụ tối đa: 1860 W\n- Năm ra mắt: 2025\n- Lọc đa lớp với màng HEPA và than hoạt tính\n- Cảm biến bụi mịn và chế độ vận hành tự động\n\n## Hướng dẫn cho đội ngũ bán hàng\n\nĐội ngũ bán hàng không nên giới thiệu HK-AI856 cho các đơn hàng mới. Khi khách hàng hỏi về mẫu này, hãy hướng dẫn họ sang các mẫu thay thế hiện hành và giải thích những cải tiến. Vui lòng xác nhận với bộ phận kỹ thuật trước khi cung cấp bất kỳ thông tin chi tiết nào cho khách."
+ },
+ "products/rice-cooker/hk-ri804": {
+  "id": "products/rice-cooker/hk-ri804",
+  "title": "Thông số sản phẩm nồi cơm điện HK-RI804 (ngừng sử dụng)",
+  "description": "Thông số kỹ thuật của nồi cơm điện HK-RI804, tài liệu đã bị thay thế và chỉ dùng để tham khảo.",
+  "body": "## Tổng quan\n\nHK-RI804 là nồi cơm điện cao tần của Hikari Home, ra mắt năm 2024. Tài liệu thông số này đã ngừng sử dụng (deprecated) và đã được thay thế bởi các thông số của dòng nồi cơm điện mới trong danh mục hiện hành. Tài liệu được giữ lại để hỗ trợ các đơn hàng đã bán.\n\n## Thông số kỹ thuật\n\n- Công suất tiêu thụ: 1680 W\n- Năm ra mắt: 2024\n- Công nghệ gia nhiệt cảm ứng cho cơm chín đều\n- Các chế độ: cơm trắng, gạo lứt, cháo và nấu nhanh\n\nCông suất 1680 W giúp nồi đạt nhiệt nhanh, rút ngắn thời gian nấu so với các dòng công suất thấp.\n\n## Hướng dẫn cho đội ngũ bán hàng\n\nKhông giới thiệu HK-RI804 cho đơn hàng mới. Nếu khách hàng quan tâm, hãy tư vấn các mẫu thay thế hiện hành. Hàng tồn chỉ được xả qua các chương trình khuyến mãi đã được phê duyệt. Dịch vụ bảo hành cho sản phẩm đã bán vẫn tiếp tục theo chính sách hiện hành."
+ },
+ "products/aircon/hk-ai293": {
+  "id": "products/aircon/hk-ai293",
+  "title": "HK-AI293 Air Conditioner Product Spec",
+  "description": "Product specification for the Hikari Home HK-AI293 inverter air conditioner, covering power draw, launch background and sales positioning.",
+  "body": "## Overview\n\nThe HK-AI293 is Hikari Home's mid-range inverter air conditioner, designed for bedrooms and small living rooms in both Vietnam and Japan. It was launched in 2022 and has remained a steady seller in the Sales catalogue since then. This document summarizes the key points the Sales team needs when speaking with retailers and end customers.\n\n## Key Specifications\n\n- Model code: HK-AI293\n- Maximum power consumption: 1440 watts at full cooling load\n- Launch year: 2022\n- Compressor: inverter type with variable-speed control\n- Features: AI-assisted temperature control, quiet night mode, washable dust filter\n\nThe 1440 watts figure is the peak rating. In normal operation, once the room reaches the target temperature, the inverter compressor slows down and real consumption is considerably lower, which is a strong argument for customers concerned about electricity bills.\n\n## Sales Guidance\n\nPosition the HK-AI293 as a reliable, energy-conscious choice for households upgrading from fixed-speed units. Because it has been on the market since 2022, spare parts and service knowledge are widely available across our service network. Sales staff should always confirm room size before recommending the model, and refer installation questions to the CS team."
+ },
+ "products/fridge/hk-fr763": {
+  "id": "products/fridge/hk-fr763",
+  "title": "HK-FR763 冷蔵庫 製品仕様書",
+  "description": "Hikari Home の冷蔵庫 HK-FR763 の消費電力と発売年を含む製品仕様の概要です。",
+  "body": "## 製品概要\n\nHK-FR763は、Hikari Homeが2023年に発売したファミリー向け冷蔵庫です。日本とベトナムの両市場で販売しており、省エネ性能と使いやすい収納設計を特長としています。本書は営業部門が販売店やお客様へ説明する際の基本情報をまとめたものです。\n\n## 主な仕様\n\n- 型番：HK-FR763\n- 消費電力：720ワット（最大時）\n- 発売年：2023年\n- 冷却方式：インバーター制御による省エネ運転\n- 機能：野菜室の湿度調整、急速冷凍、静音設計\n\n720ワットは最大時の数値であり、通常運転では庫内温度が安定するとコンプレッサーの回転数が下がるため、実際の消費電力はこれより低くなります。\n\n## 営業向けの案内\n\nお客様には、家族の人数と設置スペースを確認したうえで提案してください。2023年の発売以降、部品供給とサービス体制は整っており、故障時の対応も安心です。設置や保証に関するご質問はカスタマーサポート部門へご案内ください。"
+ },
+ "products/washer/hk-wa856": {
+  "id": "products/washer/hk-wa856",
+  "title": "Thông số sản phẩm máy giặt HK-WA856",
+  "description": "Tài liệu thông số sản phẩm máy giặt HK-WA856 của Hikari Home, gồm công suất, năm ra mắt và hướng dẫn bán hàng.",
+  "body": "## Tổng quan\n\nHK-WA856 là máy giặt cửa trước thế hệ mới của Hikari Home, ra mắt vào năm 2024 cho thị trường Việt Nam và Nhật Bản. Sản phẩm hướng đến các hộ gia đình cần một thiết bị giặt bền bỉ, tiết kiệm nước và vận hành êm. Tài liệu này giúp đội Kinh doanh nắm nhanh các thông tin chính khi tư vấn khách hàng.\n\n## Thông số chính\n\n- Mã sản phẩm: HK-WA856\n- Công suất tối đa: 1370 watt khi vừa giặt vừa gia nhiệt\n- Năm ra mắt: 2024\n- Động cơ: inverter truyền động trực tiếp\n- Tính năng: chế độ giặt nhanh, giặt nước nóng diệt khuẩn, khóa trẻ em\n\nMức 1370 watt là công suất đỉnh, thường chỉ đạt khi làm nóng nước. Ở các chương trình giặt thông thường, mức tiêu thụ thấp hơn đáng kể.\n\n## Hướng dẫn bán hàng\n\nNhân viên nên hỏi số thành viên trong gia đình và không gian lắp đặt trước khi tư vấn. Vì đây là mẫu ra mắt năm 2024, khách hàng được hưởng chính sách bảo hành đầy đủ. Các câu hỏi về lắp đặt và bảo hành xin chuyển cho bộ phận CSKH."
+ },
+ "faq/warranty-0": {
+  "id": "faq/warranty-0",
+  "title": "Warranty FAQ for Customer Support",
+  "description": "Answers to the most common customer questions about Hikari Home product warranty coverage and claims.",
+  "body": "## Coverage\n\n**What does the standard warranty cover?**\nHikari Home warranty covers manufacturing defects and component failures that occur under normal household use. It does not cover damage caused by misuse, unauthorized repairs, power surges, or accidents.\n\n**How long does the warranty last?**\nThe warranty period depends on the product category and is printed on the warranty card supplied in the box. Compressors and motors typically carry a longer period than other parts.\n\n## Making a Claim\n\n**How do I submit a claim?**\nContact Customer Support by phone or through the website, and provide the model code, serial number and proof of purchase. An agent will register the case and arrange a technician visit or a drop-off at an authorized service center.\n\n**Do I need the original receipt?**\nYes. A receipt or order confirmation showing the purchase date is required. If you registered the product online, we can look up the purchase for you.\n\n## Good to Know\n\nRepairs performed under warranty do not extend the original warranty period. Replaced parts are covered for the remainder of the original term. For anything not answered here, please contact the CS team, who will be glad to help."
+ },
+ "faq/shipping-1": {
+  "id": "faq/shipping-1",
+  "title": "Câu hỏi thường gặp về giao hàng",
+  "description": "Giải đáp các thắc mắc phổ biến của khách hàng về thời gian, phí và theo dõi giao hàng của Hikari Home.",
+  "body": "## Thời gian giao hàng\n\n**Bao lâu tôi nhận được hàng?**\nĐơn hàng tại các thành phố lớn thường được giao trong vài ngày làm việc kể từ khi xác nhận. Khu vực xa hơn có thể mất thêm thời gian. Thời gian dự kiến sẽ hiển thị khi bạn đặt hàng.\n\n**Tôi có thể chọn ngày giờ giao không?**\nCó. Sau khi đơn được xác nhận, nhân viên CSKH sẽ liên hệ để thống nhất khung giờ phù hợp với bạn.\n\n## Lắp đặt và kiểm tra hàng\n\n**Sản phẩm lớn có được lắp đặt không?**\nĐiều hòa, tủ lạnh và máy giặt được đội kỹ thuật giao và hướng dẫn sử dụng tại nhà. Vui lòng chuẩn bị sẵn vị trí lắp đặt và nguồn điện.\n\n**Nếu hàng bị hư hỏng khi nhận thì sao?**\nHãy kiểm tra ngoại quan ngay khi nhận hàng. Nếu phát hiện hư hỏng, xin chụp ảnh và báo cho chúng tôi trong ngày để được đổi hoặc xử lý nhanh chóng.\n\n## Theo dõi đơn hàng\n\nBạn có thể theo dõi tình trạng đơn hàng bằng mã đơn trên website hoặc gọi tổng đài CSKH. Nếu cần thay đổi địa chỉ giao hàng, hãy liên hệ trước khi đơn được chuyển đi."
+ },
+ "faq/billing-2": {
+  "id": "faq/billing-2",
+  "title": "Câu hỏi thường gặp về thanh toán và hóa đơn",
+  "description": "Giải đáp các thắc mắc thường gặp về phương thức thanh toán, hóa đơn và hoàn tiền tại Hikari Home.",
+  "body": "## Phương thức thanh toán\n\n**Tôi có thể thanh toán bằng cách nào?**\nHikari Home chấp nhận thanh toán bằng thẻ ngân hàng, chuyển khoản, ví điện tử và thanh toán khi nhận hàng tại các khu vực được hỗ trợ. Với đơn hàng giá trị lớn, chúng tôi khuyến khích chuyển khoản để thuận tiện đối soát.\n\n**Tôi có thể trả góp không?**\nMột số sản phẩm hỗ trợ trả góp qua các đối tác tài chính. Điều kiện cụ thể được hiển thị ở bước thanh toán.\n\n## Hóa đơn\n\n**Làm sao để nhận hóa đơn VAT?**\nVui lòng cung cấp tên công ty, mã số thuế và địa chỉ khi đặt hàng, hoặc gửi yêu cầu cho CSKH trong thời gian quy định sau khi mua. Hóa đơn điện tử sẽ được gửi qua email của bạn.\n\n## Hoàn tiền\n\n**Khi nào tôi được hoàn tiền?**\nKhi đơn hàng bị hủy hoặc sản phẩm được chấp nhận trả lại, khoản tiền sẽ được hoàn về đúng phương thức thanh toán ban đầu. Thời gian xử lý phụ thuộc vào ngân hàng hoặc đơn vị trung gian. Nếu cần hỗ trợ thêm, hãy liên hệ bộ phận CSKH."
+ },
+ "faq/loyalty-3": {
+  "id": "faq/loyalty-3",
+  "title": "Loyalty Program FAQ",
+  "description": "Answers to common customer questions about earning, using and keeping points in the Hikari Home loyalty program.",
+  "body": "## Joining the Program\n\n**Who can join?**\nAny customer with a Hikari Home account can join the loyalty program at no cost. Enrollment happens automatically when you register a purchase, or you can sign up on our website or through a Customer Support agent.\n\n**Is the program available in both countries?**\nYes. The program operates in Vietnam and Japan, and points are tracked per account in the local market.\n\n## Earning and Using Points\n\n**How do I earn points?**\nYou earn points on eligible purchases of appliances, accessories and extended service plans. Promotional campaigns may offer bonus points, which are announced on the website.\n\n**How can I redeem points?**\nPoints can be applied as a discount at checkout or exchanged for selected accessories and service vouchers. Points cannot be exchanged for cash.\n\n## Account Questions\n\n**Do points expire?**\nPoints remain valid for a limited period shown in your account dashboard, and we send a reminder before they expire.\n\n**What happens if I return a product?**\nPoints earned on a returned item are deducted from your balance. For other questions, please contact the CS team."
+ },
+ "faq/privacy-4": {
+  "id": "faq/privacy-4",
+  "title": "プライバシーに関するよくあるご質問",
+  "description": "Hikari Homeがお客様の個人情報をどのように取り扱うかについて、よくあるご質問をまとめたFAQです。",
+  "body": "## 収集する情報について\n\n**どのような情報を収集しますか？**\nご購入やサポートのご利用にあたり、お名前、ご住所、電話番号、メールアドレス、購入履歴などをお預かりします。これらは商品のお届け、保証対応、アフターサービスのために使用します。\n\n**情報は何のために使いますか？**\n注文の処理、配送、修理の手配、ご本人確認、サービス改善のために利用します。お客様の同意なく、これらの目的以外で使用することはありません。\n\n## 第三者への提供\n\n**個人情報を第三者に提供しますか？**\n配送業者や修理を担当するサービス拠点など、業務に必要な委託先に限って提供します。委託先には適切な管理を義務付けています。法令に基づく場合を除き、それ以外の第三者へ提供することはありません。\n\n## お客様の権利\n\n**自分の情報を確認・訂正・削除できますか？**\nはい。カスタマーサポートまたはウェブサイトのアカウント画面から、開示、訂正、削除、利用停止をご依頼いただけます。本人確認のうえ、速やかに対応いたします。\n\n**マーケティング連絡を止めたい場合は？**\nメール内の配信停止リンク、またはカスタマーサポートへのご連絡でいつでも停止できます。"
+ },
+ "faq/privacy-5": {
+  "id": "faq/privacy-5",
+  "title": "個人情報の取り扱いに関するよくある質問(FAQ)",
+  "description": "お客様の個人情報の収集・利用・開示請求に関するカスタマーサポート向けのよくある質問と回答をまとめた資料です。",
+  "body": "## 収集する情報について\n\nHikari Homeでは、製品のご登録、修理のご依頼、お問い合わせの際に、お名前、ご住所、電話番号、メールアドレス、製品の型番および購入日を取得しております。これらの情報は、サポートの提供と保証の確認を目的としてのみ利用いたします。\n\n**Q. 取得した情報は第三者に提供されますか。**\n\nA. 法令に基づく場合を除き、ご本人の同意なく第三者へ提供することはありません。ただし、修理のために委託している提携サービス拠点には、業務に必要な範囲でのみ情報を共有します。委託先とは秘密保持契約を締結し、適切に管理しています。\n\n## 開示・訂正・削除の請求\n\n**Q. 自分の個人情報を確認したい場合はどうすればよいですか。**\n\nA. カスタマーサポート窓口までご連絡ください。ご本人確認を行ったうえで、原則として所定の期間内に開示いたします。訂正や利用停止、削除のご希望も同じ窓口で承ります。\n\n**Q. 削除を依頼すると保証は受けられなくなりますか。**\n\nA. 購入履歴を削除した場合、保証期間内であっても保証の確認ができなくなる可能性があります。お手続き前にオペレーターから内容を必ずご案内します。\n\n## オペレーター向けの注意事項\n\n電話やメールで個人情報を伺う際は、必ずご本人確認を行ってください。パスワードやクレジットカード番号を口頭やメールで尋ねてはいけません。不審な問い合わせを受けた場合は、直ちに上長へエスカレーションしてください。"
+ },
+ "faq/warranty-6": {
+  "id": "faq/warranty-6",
+  "title": "Warranty FAQ: Coverage, Claims and Exclusions",
+  "description": "Answers to common customer questions about Hikari Home product warranty coverage, how to file a claim, and what is excluded.",
+  "body": "## Coverage basics\n\n**Q. What does the standard warranty cover?**\n\nA. Hikari Home warrants that each appliance will be free from defects in materials and workmanship under normal household use. If a covered defect appears during the warranty period, we will repair or replace the product at no charge.\n\n**Q. When does the warranty start?**\n\nA. The warranty period begins on the date of purchase shown on your receipt or registered order. Please keep proof of purchase, as we need it to verify eligibility. Registering your product in the customer portal makes future claims faster.\n\n## Filing a claim\n\n**Q. How do I request warranty service?**\n\nA. Contact Customer Support by phone, email or the web form with your model code, serial number, purchase date and a short description of the problem. Photos or a short video help us diagnose faster. An agent will confirm eligibility and arrange either a technician visit or a pickup, depending on the product and your location in Vietnam or Japan.\n\n## Exclusions\n\n**Q. What is not covered?**\n\nA. Damage from misuse, unauthorized repair, power surges, liquids entering non-waterproof parts, or normal wear on consumables such as filters and seals is excluded. Commercial use is also outside the standard warranty. If we determine a claim is not covered, we will explain why and can offer a paid repair quote."
+ },
+ "faq/loyalty-7": {
+  "id": "faq/loyalty-7",
+  "title": "Loyalty Program FAQ: Points, Tiers and Redemption",
+  "description": "Answers to frequently asked customer questions about earning, tracking and redeeming points in the Hikari Home loyalty program.",
+  "body": "## Earning points\n\n**Q. How do I earn loyalty points?**\n\nA. Members earn points on eligible purchases made through Hikari Home stores and the official online shop. Points are credited after the return window for the order has closed. Accessories and extended-care plans also earn points, while gift cards and taxes do not.\n\n**Q. Do I need an account to join?**\n\nA. Yes. Sign up with your email or phone number in the customer portal. Existing customers can link earlier purchases by entering their order numbers, and our support team can help if an order does not appear.\n\n## Tiers and benefits\n\n**Q. What are the membership tiers?**\n\nA. There are three tiers based on the amount you spend in a calendar year. Higher tiers receive a larger points rate, early access to seasonal sales and priority handling from Customer Support. Your tier is reviewed once a year, and you will receive an email before any change takes effect.\n\n## Redeeming and expiry\n\n**Q. How do I use my points?**\n\nA. At checkout, choose to apply points to reduce the payment. Points cannot be exchanged for cash or transferred between accounts.\n\n**Q. Do points expire?**\n\nA. Yes. Points expire after a period of account inactivity. We send a reminder email before expiry so you have time to redeem them. Points from returned orders are removed automatically."
+ },
+ "faq/billing-8": {
+  "id": "faq/billing-8",
+  "title": "請求・お支払いに関するよくある質問(FAQ)",
+  "description": "ご請求書の見方、お支払い方法、二重請求や返金に関するカスタマーサポート向けのよくある質問をまとめた資料です。",
+  "body": "## お支払い方法について\n\n**Q. どのような支払い方法が利用できますか。**\n\nA. クレジットカード、銀行振込、コンビニ払い、代金引換をご利用いただけます。ベトナムのお客様には、銀行振込および電子ウォレットにも対応しています。ご利用いただける方法は、購入チャネルによって異なる場合があります。\n\n**Q. 請求書や領収書は発行できますか。**\n\nA. 会員ページからPDFをダウンロードできます。宛名の変更が必要な場合は、カスタマーサポートまでご連絡ください。ご注文から一定期間内であれば再発行いたします。\n\n## 請求に関するトラブル\n\n**Q. 同じ注文で二重に請求されたようです。**\n\nA. ご注文番号とカード明細のご利用日をお知らせください。二重請求が確認できた場合は、重複分を速やかに返金手続きいたします。カード会社の処理により、明細への反映まで数週間かかることがあります。\n\n**Q. 請求金額が見積もりと違います。**\n\nA. 送料、設置費用、キャンペーン割引の適用有無をご確認ください。それでも相違がある場合は、明細を添えてご連絡いただければ担当者が調査します。\n\n## オペレーター向けの注意事項\n\nお客様のカード番号全桁をお伺いしてはいけません。返金対応は、必ず経理部門の承認手順に従い、対応内容を顧客管理システムへ記録してください。"
+ },
+ "faq/returns-9": {
+  "id": "faq/returns-9",
+  "title": "Returns FAQ: Eligibility, Process and Refunds",
+  "description": "Answers to common customer questions about returning Hikari Home products, including eligibility, the return process and refund timing.",
+  "body": "## Return eligibility\n\n**Q. Can I return a product I bought?**\n\nA. Yes, unused products in their original packaging with all accessories can be returned within the return window stated on your order confirmation. Items showing signs of use, damage caused by the customer, or missing parts may be declined or refunded only in part.\n\n**Q. Are any products non-returnable?**\n\nA. Installed built-in appliances, items customized to order and consumables such as filters that have been opened cannot be returned unless they are defective. Clearance items are marked at the time of sale.\n\n## How to return\n\n**Q. What is the process?**\n\nA. Contact Customer Support with your order number and the reason for the return. We will issue a return authorization and arrange a pickup or provide a drop-off location in Vietnam or Japan. Please pack the item securely and include the authorization number. Do not ship without it, as we may not be able to match your parcel.\n\n## Refunds\n\n**Q. When will I get my refund?**\n\nA. After the returned item passes inspection, refunds are sent to the original payment method. Card refunds may take a few billing cycles to show on your statement. If the return is due to a defect or our error, we cover the return shipping cost. Otherwise the shipping fee may be deducted."
+ },
+ "announcements/office-move-0": {
+  "id": "announcements/office-move-0",
+  "title": "【お知らせ】営業部オフィス移転のご案内",
+  "description": "営業部が新しいオフィスへ移転するにあたり、移転時期、業務への影響、社員へのお願いをお知らせする社内告知です。",
+  "body": "## 移転の概要\n\n営業部は、事業拡大に伴う人員増加と会議室不足を解消するため、より広いフロアを備えた新オフィスへ移転することになりました。新オフィスは主要駅から徒歩圏内にあり、お客様のご来訪や外出の際の利便性が向上します。移転の具体的な日程と新住所は、別途総務部より社内ポータルでご案内します。\n\n## 移転期間中の業務について\n\n移転作業の当日は、営業部の電話回線が一時的につながりにくくなります。お客様との商談や納期に関わる連絡は、事前に日程を調整し、前営業日までに必要な対応を済ませてください。緊急のお問い合わせは、代表窓口が転送対応を行います。\n\n## 社員の皆さまへのお願い\n\n- 個人の荷物は、指定の箱に詰めて期日までに提出してください。\n- 機密書類は、シュレッダー処理または専用ケースで運搬してください。\n- 名刺、封筒、ウェブサイトの住所表記は、順次更新します。\n- 通勤経路の変更が生じる方は、人事部へ届け出てください。\n\nご不明な点は、営業部の庶務担当までお問い合わせください。ご協力をお願いいたします。"
+ },
+ "announcements/office-move-1": {
+  "id": "announcements/office-move-1",
+  "title": "Announcement: IT Department Office Relocation",
+  "description": "Notice to staff about the IT department's move to a new office location, including service impact and required preparation.",
+  "body": "## Overview\n\nThe IT department will relocate to a new floor as part of the company's workspace consolidation. The new space offers a dedicated server-support room, improved network cabling and additional meeting areas. Facilities will share the exact move date and layout through the intranet.\n\n## Impact on IT services\n\nOn the day of the move, the help desk will operate in a reduced mode. Please submit non-urgent requests through the ticketing portal ahead of time, and expect longer response times for the first day at the new location. Critical outages will still be handled by the on-call engineer. Planned maintenance windows for internal systems will be scheduled away from the move to avoid overlapping risks.\n\n## What staff need to do\n\n- Back up local files to the company cloud storage before the move.\n- Label all monitors, docking stations and peripherals with your name.\n- Do not disconnect or pack devices issued to other teams.\n- Report any missing or damaged equipment to the help desk right after setup.\n\nOffice access cards for the new floor will be activated on the first working day. If your card does not work, contact the front desk or the IT help desk. Thank you for your cooperation and patience."
+ },
+ "announcements/office-move-2": {
+  "id": "announcements/office-move-2",
+  "title": "【お知らせ】人事部オフィス移転について",
+  "description": "人事部の新オフィスへの移転にともなう、窓口対応の変更点と従業員へのお願いをお知らせする社内告知です。",
+  "body": "## 移転のお知らせ\n\n人事部は、面談スペースの拡充と個人情報を扱う執務環境の改善を目的として、新しいフロアへ移転いたします。新しい執務室には、プライバシーに配慮した個室の面談ブースを設けます。移転日および新しい場所の詳細は、総務部より別途お知らせします。\n\n## 窓口対応の変更\n\n移転作業の期間中は、対面での人事相談の受付を一時的に停止いたします。各種申請書類は、社内ポータルからの電子申請をご利用ください。入退社の手続き、社会保険、勤怠に関する緊急のご相談は、メールまたは内線でお受けします。移転後の窓口の受付時間は、従来と変わりません。\n\n## 従業員の皆さまへのお願い\n\n- 提出期限が近い書類は、移転前に余裕をもってご提出ください。\n- 住所や連絡先に変更がある場合は、この機会にご登録内容を更新してください。\n- 面談のご予約は、新しい面談ブースの利用開始後に改めてご案内します。\n\nご不便をおかけしますが、ご理解とご協力をお願いいたします。ご質問は人事部の代表メールまでお寄せください。"
+ },
+ "announcements/security-training-3": {
+  "id": "announcements/security-training-3",
+  "title": "【お知らせ】2026年度 情報セキュリティ研修の実施について",
+  "description": "全社員を対象とした2026年度の情報セキュリティ研修の実施概要と受講方法をお知らせします。",
+  "body": "## 概要\n\n人事部より、2026年度の情報セキュリティ研修についてお知らせします。近年、ベトナム拠点および日本拠点の双方でフィッシングメールによる被害が報告されており、全社員が最新の脅威と対策を正しく理解することを目的としています。本研修は正社員、契約社員、派遣社員を含む全従業員が対象です。\n\n## 研修内容\n\n研修はオンライン形式で、所要時間は約60分です。主な内容は次のとおりです。\n\n- フィッシングメールや不審なリンクの見分け方\n- パスワード管理と多要素認証の設定方法\n- 社用端末および家電製品の顧客情報の取り扱いルール\n- 情報漏えいが疑われる場合の報告手順\n\n## 受講方法と期限\n\n受講案内は2026年2月1日付で社内ポータルに掲載されています。ポータルにログインし、ご自身の言語(日本語またはベトナム語)を選択して受講してください。受講完了後は理解度テストに合格することで修了となります。期限までに受講が完了しない場合は、所属長へ通知されますのでご注意ください。\n\nご不明な点は、人事部またはIT部門までお問い合わせください。全社員のご協力をお願いいたします。"
+ },
+ "announcements/security-training-4": {
+  "id": "announcements/security-training-4",
+  "title": "Thông báo: Đào tạo an ninh thông tin dành cho Phòng Kinh doanh",
+  "description": "Thông báo lịch và nội dung đào tạo an ninh thông tin bắt buộc dành cho toàn bộ nhân viên Phòng Kinh doanh.",
+  "body": "## Giới thiệu\n\nPhòng Kinh doanh thông báo chương trình đào tạo an ninh thông tin bắt buộc dành cho toàn bộ nhân viên kinh doanh của Hikari Home tại Việt Nam. Nhân viên Phòng Kinh doanh thường xuyên trao đổi thông tin khách hàng, báo giá và hợp đồng qua email nên là nhóm dễ bị tấn công lừa đảo nhất. Vì vậy, việc nắm vững các quy tắc bảo mật là rất cần thiết.\n\n## Nội dung đào tạo\n\nKhóa học được tổ chức trực tuyến, kéo dài khoảng 60 phút, gồm các phần chính:\n\n- Nhận biết email lừa đảo và liên kết đáng ngờ\n- Quản lý mật khẩu và bật xác thực đa yếu tố\n- Quy định lưu trữ và chia sẻ dữ liệu khách hàng, báo giá\n- Quy trình báo cáo sự cố khi nghi ngờ rò rỉ thông tin\n\n## Thời gian và cách tham gia\n\nThông báo này có hiệu lực từ ngày 03/09/2026. Nhân viên đăng nhập cổng thông tin nội bộ, chọn khóa đào tạo an ninh thông tin và hoàn thành bài kiểm tra cuối khóa. Trưởng nhóm kinh doanh sẽ theo dõi tiến độ hoàn thành của từng thành viên.\n\nNếu có thắc mắc, vui lòng liên hệ Phòng IT hoặc Phòng Kinh doanh. Cảm ơn sự hợp tác của mọi người."
+ },
+ "announcements/new-system-5": {
+  "id": "announcements/new-system-5",
+  "title": "Thông báo: Triển khai hệ thống quản lý yêu cầu khách hàng mới cho Phòng CS",
+  "description": "Thông báo về việc đưa vào vận hành hệ thống quản lý yêu cầu khách hàng mới dành cho Phòng Chăm sóc khách hàng.",
+  "body": "## Tổng quan\n\nPhòng Chăm sóc khách hàng (CS) thông báo Hikari Home sẽ đưa vào sử dụng hệ thống quản lý yêu cầu khách hàng mới, thay thế công cụ theo dõi bằng bảng tính đang dùng. Hệ thống giúp tập trung mọi yêu cầu bảo hành, sửa chữa và khiếu nại của khách hàng tại Việt Nam và Nhật Bản vào một nơi duy nhất.\n\n## Tính năng chính\n\n- Tự động tạo phiếu từ email và tổng đài\n- Theo dõi thời hạn xử lý và cảnh báo khi sắp quá hạn\n- Tra cứu lịch sử bảo hành theo mã sản phẩm và số sê-ri\n- Báo cáo hiệu suất xử lý theo từng nhân viên và từng nhóm\n\n## Lộ trình và hỗ trợ\n\nThông báo được ban hành ngày 24/07/2025. Nhân viên CS sẽ được hướng dẫn qua các buổi đào tạo ngắn do Phòng IT phối hợp tổ chức. Trong giai đoạn chuyển đổi, các phiếu cũ vẫn được xử lý trên công cụ hiện tại và sẽ được chuyển sang hệ thống mới theo từng đợt.\n\nMọi ý kiến phản hồi hoặc sự cố khi sử dụng, vui lòng gửi cho Phòng IT hoặc trưởng nhóm CS để được hỗ trợ kịp thời."
+ },
+ "announcements/price-change-6": {
+  "id": "announcements/price-change-6",
+  "title": "Thông báo: Điều chỉnh giá bán sản phẩm từ ngày 01/03/2026",
+  "description": "Phòng Kinh doanh thông báo việc điều chỉnh bảng giá bán một số dòng sản phẩm gia dụng áp dụng từ tháng 3 năm 2026.",
+  "body": "## Nội dung điều chỉnh\n\nPhòng Kinh doanh thông báo Hikari Home sẽ điều chỉnh bảng giá bán lẻ và giá bán cho đại lý của một số dòng sản phẩm gia dụng tại Việt Nam. Việc điều chỉnh xuất phát từ chi phí nguyên vật liệu và vận chuyển tăng trong thời gian qua. Bảng giá mới có hiệu lực từ ngày 01/03/2026.\n\n## Phạm vi áp dụng\n\n- Áp dụng cho các đơn hàng phát sinh từ ngày 01/03/2026\n- Các báo giá đã gửi và được khách hàng xác nhận trước ngày này vẫn giữ nguyên giá đã thỏa thuận\n- Các chương trình khuyến mại đang chạy sẽ được thông báo riêng nếu có thay đổi\n\n## Yêu cầu đối với nhân viên\n\nNhân viên kinh doanh cần cập nhật bảng giá mới trên hệ thống báo giá và thông báo kịp thời cho khách hàng, đại lý đang có đơn hàng chưa chốt. Vui lòng không sử dụng bảng giá cũ sau ngày hiệu lực. Bảng giá chi tiết theo từng mã sản phẩm sẽ được gửi qua email nội bộ và đăng trên cổng thông tin.\n\nMọi thắc mắc xin liên hệ trưởng phòng Kinh doanh để được giải đáp."
+ },
+ "announcements/new-system-7": {
+  "id": "announcements/new-system-7",
+  "title": "Thông báo: Triển khai hệ thống quản lý bán hàng mới cho Phòng Kinh doanh",
+  "description": "Thông báo về việc triển khai hệ thống quản lý bán hàng mới thay thế công cụ cũ của Phòng Kinh doanh.",
+  "body": "## Giới thiệu\n\nPhòng Kinh doanh thông báo Hikari Home sẽ triển khai hệ thống quản lý bán hàng mới nhằm thay thế công cụ theo dõi đơn hàng hiện tại. Hệ thống được xây dựng để đồng bộ dữ liệu khách hàng, báo giá, đơn hàng và tồn kho giữa hai thị trường Việt Nam và Nhật Bản.\n\n## Lợi ích chính\n\n- Quản lý toàn bộ quy trình từ báo giá đến giao hàng trên một nền tảng\n- Báo cáo doanh số theo khu vực, kênh bán và sản phẩm theo thời gian thực\n- Kết nối trực tiếp với kho để kiểm tra tồn kho khi lập đơn\n- Phân quyền truy cập rõ ràng để bảo vệ dữ liệu khách hàng\n\n## Kế hoạch triển khai\n\nThông báo này được ban hành ngày 19/06/2026. Nhân viên kinh doanh sẽ tham gia các buổi hướng dẫn do Phòng IT tổ chức trước khi chuyển đổi chính thức. Dữ liệu từ hệ thống cũ sẽ được di chuyển tự động, nhân viên không cần nhập lại. Trong thời gian chuyển đổi, vui lòng kiểm tra lại các đơn hàng đang xử lý.\n\nNếu gặp khó khăn khi sử dụng, hãy liên hệ Phòng IT hoặc trưởng nhóm kinh doanh."
+ },
+ "announcements/office-move-8": {
+  "id": "announcements/office-move-8",
+  "title": "【お知らせ】オフィス移転に伴う経理部の対応について",
+  "description": "オフィス移転に伴い、経理部が実施する業務スケジュールの調整と社員へのお願い事項をお知らせします。",
+  "body": "## 移転の概要\n\n経理部より、オフィス移転に関するお知らせです。Hikari Homeでは業務拡大に伴い、新しいオフィスへ移転することになりました。本お知らせは2026年2月22日に発行されたもので、移転期間中の経理業務への影響と、社員の皆さまへのお願いをまとめています。\n\n## 経理業務への影響\n\n移転作業の期間中は、経費精算や請求書処理の対応に遅れが生じる可能性があります。主な留意点は次のとおりです。\n\n- 経費精算の申請は、移転前の締め日までに提出してください\n- 紙の領収書や請求書は、原本を新オフィスへ移送するため、経理部の指定箱に入れてください\n- 支払処理のスケジュールは、別途社内ポータルで案内します\n\n## 社員の皆さまへのお願い\n\n各自のデスク周辺にある経理関連の書類は、移転日までに整理し、不要な書類は所定の方法で廃棄してください。機密性の高い書類は、シュレッダー処理を行うか、経理部へ直接お渡しください。\n\nご不明な点がありましたら、経理部の担当者までお気軽にご連絡ください。ご協力をお願いいたします。"
+ },
+ "announcements/office-move-9": {
+  "id": "announcements/office-move-9",
+  "title": "Announcement: Office Relocation and Legal Department Notices",
+  "description": "The Legal department explains how the office relocation affects contract handling, document storage, and notarization requests.",
+  "body": "## Overview\n\nThe Legal department is announcing the upcoming office relocation and its effect on our regular work. This notice was issued on 3 June 2026. To keep contracts, corporate records, and compliance documents safe during the move, we ask all employees in Vietnam and Japan to follow the guidance below.\n\n## Impact on Legal Services\n\n- Contract review requests may take slightly longer while files are being transferred\n- Original signed contracts and corporate seals will be moved only by Legal staff\n- Notarization and government filing requests should be submitted early to avoid delays\n- Physical archives will be temporarily unavailable during the move\n\n## What We Need From You\n\nPlease submit any pending contract review requests before the relocation begins, and clearly mark urgent items. Do not leave signed agreements, NDAs, or other confidential papers on desks; deliver them to the Legal department or place them in the locked collection boxes provided.\n\nAfter the move, new storage locations and contact details will be posted on the intranet. If you have questions about how the relocation affects a specific contract or filing, please contact the Legal department directly. Thank you for your cooperation."
+ }
+}

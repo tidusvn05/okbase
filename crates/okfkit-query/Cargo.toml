@@ -1,0 +1,21 @@
+[package]
+name = "okfkit-query"
+description = "Read APIs for okfkit bundles: grep, get, list, query, catalog, stats."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+okfkit-core.workspace = true
+okfkit-index.workspace = true
+okfkit-analyze.workspace = true

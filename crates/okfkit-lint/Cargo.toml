@@ -1,0 +1,20 @@
+[package]
+name = "okfkit-lint"
+description = "Lint rule engine and okfkit standard rules (L0-L3)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+okfkit-core.workspace = true
+okfkit-standard.workspace = true

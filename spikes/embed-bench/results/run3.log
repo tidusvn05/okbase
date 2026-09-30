@@ -1,0 +1,30 @@
+=== bm25
+bm25               R@1=0.267 R@3=0.356 MRR=0.317 | same R@1=0.733 cross R@1=0.033
+load=8ms index30=8ms thr=None/s q_p50=0.4ms q_p95=0.7ms rss_load=NoneMB rss_peak=39MB disk=NoneMB
+=== e5-small
+bm25               R@1=0.267 R@3=0.356 MRR=0.317 | same R@1=0.733 cross R@1=0.033
+e5-small           R@1=0.478 R@3=0.778 MRR=0.639 | same R@1=0.933 cross R@1=0.250
+rrf-w1             R@1=0.356 R@3=0.433 MRR=0.452 | same R@1=0.933 cross R@1=0.067
+rrf-w0.3           R@1=0.367 R@3=0.456 MRR=0.472 | same R@1=0.933 cross R@1=0.083
+rrf-w0.1           R@1=0.367 R@3=0.478 MRR=0.482 | same R@1=0.933 cross R@1=0.083
+convex-a0.3        R@1=0.411 R@3=0.567 MRR=0.542 | same R@1=0.967 cross R@1=0.133
+convex-a0.1        R@1=0.433 R@3=0.667 MRR=0.591 | same R@1=0.933 cross R@1=0.183
+load=2258ms index30=643ms thr=Some(48.0)/s q_p50=9.3ms q_p95=12.1ms rss_load=Some(1010.0)MB rss_peak=1144MB disk=Some(465.0)MB
+=== e5-base
+bm25               R@1=0.267 R@3=0.356 MRR=0.317 | same R@1=0.733 cross R@1=0.033
+e5-base            R@1=0.678 R@3=0.867 MRR=0.787 | same R@1=1.000 cross R@1=0.517
+rrf-w1             R@1=0.367 R@3=0.433 MRR=0.472 | same R@1=0.933 cross R@1=0.083
+rrf-w0.3           R@1=0.400 R@3=0.444 MRR=0.499 | same R@1=1.000 cross R@1=0.100
+rrf-w0.1           R@1=0.422 R@3=0.467 MRR=0.527 | same R@1=1.000 cross R@1=0.133
+convex-a0.3        R@1=0.500 R@3=0.722 MRR=0.655 | same R@1=1.000 cross R@1=0.250
+convex-a0.1        R@1=0.622 R@3=0.856 MRR=0.745 | same R@1=1.000 cross R@1=0.433
+load=3198ms index30=1868ms thr=Some(16.0)/s q_p50=23.1ms q_p95=27.2ms rss_load=Some(1621.0)MB rss_peak=1960MB disk=Some(1075.0)MB
+=== bge-m3
+bm25               R@1=0.267 R@3=0.356 MRR=0.317 | same R@1=0.733 cross R@1=0.033
+bge-m3             R@1=0.978 R@3=1.000 MRR=0.989 | same R@1=1.000 cross R@1=0.967
+rrf-w1             R@1=0.378 R@3=0.589 MRR=0.549 | same R@1=0.933 cross R@1=0.100
+rrf-w0.3           R@1=0.411 R@3=0.656 MRR=0.578 | same R@1=1.000 cross R@1=0.117
+rrf-w0.1           R@1=0.456 R@3=0.822 MRR=0.642 | same R@1=1.000 cross R@1=0.183
+convex-a0.3        R@1=0.867 R@3=1.000 MRR=0.930 | same R@1=1.000 cross R@1=0.800
+convex-a0.1        R@1=0.978 R@3=1.000 MRR=0.989 | same R@1=1.000 cross R@1=0.967
+load=2932ms index30=6426ms thr=Some(5.0)/s q_p50=70.9ms q_p95=83.7ms rss_load=Some(1718.0)MB rss_peak=2139MB disk=Some(2179.0)MB

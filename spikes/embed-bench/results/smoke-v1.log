@@ -1,0 +1,26 @@
+=== gemma
+gemma              R@1=0.967 R@3=1.000 MRR=0.983 | same R@1=1.000 cross R@1=0.950
+load=11579ms thr=Some(12.2)/s q_p50=38.2ms q_p95=44.2ms rss_load=Some(770.0)MB rss_peak=869MB disk=Some(1198.0)MB
+=== gemma-q
+Error: Invalid argument: Dynamic quantization cannot be used with batching. This is due to the dynamic quantization process adjusting the data range to fit each batch, making the embeddings incompatible across batches. Try specifying a batch size of `None`, or use a model with static or no quantization.
+=== gemma-q4
+gemma-q4           R@1=0.967 R@3=1.000 MRR=0.981 | same R@1=1.000 cross R@1=0.950
+load=5192ms thr=Some(9.9)/s q_p50=35.8ms q_p95=48.7ms rss_load=Some(456.0)MB rss_peak=555MB disk=Some(1682.0)MB
+=== bge-m3-int8
+bge-m3-int8        R@1=0.967 R@3=1.000 MRR=0.983 | same R@1=1.000 cross R@1=0.950
+load=3119ms thr=Some(8.4)/s q_p50=31.6ms q_p95=41.8ms rss_load=Some(1110.0)MB rss_peak=1669MB disk=Some(558.0)MB
+=== gte-mb
+gte-mb             R@1=0.989 R@3=1.000 MRR=0.994 | same R@1=0.967 cross R@1=1.000
+load=4931ms thr=Some(12.6)/s q_p50=26.7ms q_p95=31.3ms rss_load=Some(1778.0)MB rss_peak=3206MB disk=Some(1214.0)MB
+=== gte-mb-int8
+gte-mb-int8        R@1=0.989 R@3=1.000 MRR=0.994 | same R@1=1.000 cross R@1=0.983
+load=2107ms thr=Some(19.5)/s q_p50=13.0ms q_p95=18.0ms rss_load=Some(890.0)MB rss_peak=1231MB disk=Some(341.0)MB
+=== e5-large
+e5-large           R@1=0.667 R@3=0.956 MRR=0.799 | same R@1=1.000 cross R@1=0.500
+load=19074ms thr=Some(4.5)/s q_p50=73.2ms q_p95=84.2ms rss_load=Some(1720.0)MB rss_peak=1928MB disk=Some(2149.0)MB
+=== nomic-v2
+nomic-v2           R@1=0.956 R@3=1.000 MRR=0.976 | same R@1=0.967 cross R@1=0.950
+load=22170ms thr=Some(2.7)/s q_p50=176.1ms q_p95=211.0ms rss_load=Some(2138.0)MB rss_peak=3670MB disk=Some(1829.0)MB
+=== qwen3-0.6b
+qwen3-0.6b         R@1=0.967 R@3=1.000 MRR=0.983 | same R@1=0.967 cross R@1=0.967
+load=8329ms thr=Some(0.8)/s q_p50=422.3ms q_p95=539.9ms rss_load=Some(2411.0)MB rss_peak=3462MB disk=Some(1147.0)MB

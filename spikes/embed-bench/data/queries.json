@@ -1,0 +1,121 @@
+[
+{"gold":"vi-return","lang":"vi","q":"mua về không vừa ý thì có mang trả lại được không, trong bao lâu?"},
+{"gold":"vi-return","lang":"en","q":"Can I send back a product I bought if I don't like it, and what is the deadline?"},
+{"gold":"vi-return","lang":"ja","q":"購入した商品が気に入らない場合、何日以内なら返品や交換ができますか？"},
+
+{"gold":"vi-warranty","lang":"vi","q":"máy lọc khí bị hỏng động cơ thì được sửa miễn phí mấy năm"},
+{"gold":"vi-warranty","lang":"en","q":"How long is the guarantee on the air purifier motor?"},
+{"gold":"vi-warranty","lang":"ja","q":"空気清浄機の保証期間はどのくらいですか？"},
+
+{"gold":"vi-shipping-domestic","lang":"vi","q":"ship về Đà Nẵng mất mấy ngày, có mất phí không"},
+{"gold":"vi-shipping-domestic","lang":"en","q":"How many days does delivery take to provinces in Vietnam and is it free?"},
+{"gold":"vi-shipping-domestic","lang":"ja","q":"ベトナム国内の配送料と届くまでの日数を教えてください"},
+
+{"gold":"vi-payment-installment","lang":"vi","q":"không đủ tiền mua tủ lạnh, có chia nhỏ thanh toán hàng tháng được không"},
+{"gold":"vi-payment-installment","lang":"en","q":"Can I pay in monthly installments with no interest?"},
+{"gold":"vi-payment-installment","lang":"ja","q":"分割払いで金利なしで購入できますか？"},
+
+{"gold":"vi-loyalty","lang":"vi","q":"hạng kim cương được ưu đãi gì"},
+{"gold":"vi-loyalty","lang":"en","q":"What discount do gold and diamond members get and how are points earned?"},
+{"gold":"vi-loyalty","lang":"ja","q":"会員ランクごとの割引率とポイントの貯め方は？"},
+
+{"gold":"vi-store-hours","lang":"vi","q":"chủ nhật cửa hàng ở Sài Gòn có mở không, mấy giờ đóng cửa"},
+{"gold":"vi-store-hours","lang":"en","q":"What time does the Ho Chi Minh City showroom close on weekends?"},
+{"gold":"vi-store-hours","lang":"ja","q":"ハノイのショールームの営業時間は何時から何時までですか？"},
+
+{"gold":"vi-leave-policy","lang":"vi","q":"một năm tôi được nghỉ bao nhiêu ngày có lương"},
+{"gold":"vi-leave-policy","lang":"en","q":"How many days of annual vacation do staff get and can unused days carry over?"},
+{"gold":"vi-leave-policy","lang":"ja","q":"年次有給休暇は何日ありますか？繰り越しはできますか？"},
+
+{"gold":"vi-invoice","lang":"vi","q":"công ty tôi cần hóa đơn đỏ thì phải cung cấp thông tin gì"},
+{"gold":"vi-invoice","lang":"en","q":"My company needs a tax invoice with our tax code, what do I need to provide?"},
+{"gold":"vi-invoice","lang":"ja","q":"法人として付加価値税のインボイスを発行してもらうには何が必要ですか？"},
+
+{"gold":"vi-aircon-cleaning","lang":"vi","q":"tự rửa lưới lọc máy lạnh ở nhà như thế nào"},
+{"gold":"vi-aircon-cleaning","lang":"en","q":"How do I wash the dust filter of my air conditioner myself?"},
+{"gold":"vi-aircon-cleaning","lang":"ja","q":"エアコンを自分で掃除する方法を教えてください"},
+
+{"gold":"vi-password-reset","lang":"vi","q":"quên pass app không đăng nhập được"},
+{"gold":"vi-password-reset","lang":"en","q":"I forgot my login password for the mobile app, how do I recover it?"},
+{"gold":"vi-password-reset","lang":"ja","q":"アプリのパスワードを忘れてログインできません"},
+
+{"gold":"en-refund","lang":"vi","q":"trả hàng rồi bao lâu thì tiền về thẻ tín dụng"},
+{"gold":"en-refund","lang":"en","q":"When will I get my money back on my credit card after returning an item?"},
+{"gold":"en-refund","lang":"ja","q":"返品後、クレジットカードへの返金はいつ反映されますか？"},
+
+{"gold":"en-international-shipping","lang":"vi","q":"có gửi hàng sang Nhật Bản không, thuế nhập khẩu ai trả"},
+{"gold":"en-international-shipping","lang":"en","q":"Do you deliver overseas and who pays customs duties?"},
+{"gold":"en-international-shipping","lang":"ja","q":"海外発送はしていますか？関税は誰が払いますか？"},
+
+{"gold":"en-api-rate-limit","lang":"vi","q":"gọi API bị lỗi 429 là sao, giới hạn bao nhiêu request"},
+{"gold":"en-api-rate-limit","lang":"en","q":"what happens if my integration sends too many calls per minute"},
+{"gold":"en-api-rate-limit","lang":"ja","q":"APIのリクエスト数の上限はいくつですか？"},
+
+{"gold":"en-security-incident","lang":"vi","q":"nghi ngờ bị lộ mật khẩu công ty thì báo cho ai, làm gì"},
+{"gold":"en-security-incident","lang":"en","q":"I clicked a phishing link, what should I do?"},
+{"gold":"en-security-incident","lang":"ja","q":"不正アクセスやフィッシングを見つけたときの報告手順は？"},
+
+{"gold":"en-remote-work","lang":"vi","q":"một tuần được làm việc ở nhà mấy ngày"},
+{"gold":"en-remote-work","lang":"en","q":"How many days a week can I work from home?"},
+{"gold":"en-remote-work","lang":"ja","q":"在宅勤務は週に何日まで可能ですか？"},
+
+{"gold":"en-onboarding","lang":"vi","q":"nhân viên mới ngày đầu tiên đi làm sẽ nhận được gì"},
+{"gold":"en-onboarding","lang":"en","q":"What happens during a newcomer's first week at the company?"},
+{"gold":"en-onboarding","lang":"ja","q":"新入社員は入社初日に何を受け取りますか？"},
+
+{"gold":"en-rice-cooker-error","lang":"vi","q":"nồi cơm điện báo lỗi E2 là bị gì"},
+{"gold":"en-rice-cooker-error","lang":"en","q":"my rice cooker shows E3 on the display"},
+{"gold":"en-rice-cooker-error","lang":"ja","q":"炊飯器にエラーコードE1が表示されました"},
+
+{"gold":"en-privacy-data","lang":"vi","q":"tôi muốn xóa toàn bộ thông tin cá nhân khỏi hệ thống"},
+{"gold":"en-privacy-data","lang":"en","q":"How can I have my personal information erased?"},
+{"gold":"en-privacy-data","lang":"ja","q":"個人情報の削除を依頼したいです"},
+
+{"gold":"en-b2b-bulk","lang":"vi","q":"doanh nghiệp mua số lượng lớn có được chiết khấu không"},
+{"gold":"en-b2b-bulk","lang":"en","q":"Is there a volume discount for corporate purchases?"},
+{"gold":"en-b2b-bulk","lang":"ja","q":"法人で大量購入すると割引はありますか？"},
+
+{"gold":"en-expense","lang":"vi","q":"đi công tác thì khách sạn được thanh toán tối đa bao nhiêu"},
+{"gold":"en-expense","lang":"en","q":"what is the hotel cap for business trips abroad"},
+{"gold":"en-expense","lang":"ja","q":"出張の経費精算の期限と宿泊費の上限は？"},
+
+{"gold":"ja-aircon-filter","lang":"vi","q":"bao lâu thì phải thay tấm lọc khử mùi của điều hòa"},
+{"gold":"ja-aircon-filter","lang":"en","q":"How often should I replace the deodorizing filter in the air conditioner?"},
+{"gold":"ja-aircon-filter","lang":"ja","q":"エアコンの脱臭フィルターはいつ取り替えればいいですか？"},
+
+{"gold":"ja-delivery-time","lang":"vi","q":"ở Nhật có chọn được khung giờ giao hàng buổi tối không"},
+{"gold":"ja-delivery-time","lang":"en","q":"Can I choose an evening delivery time slot in Japan?"},
+{"gold":"ja-delivery-time","lang":"ja","q":"夜に届けてもらうことはできますか？"},
+
+{"gold":"ja-recycling","lang":"vi","q":"mua tủ lạnh mới thì có thu gom tủ lạnh cũ không"},
+{"gold":"ja-recycling","lang":"en","q":"Will you take away my old washing machine when delivering the new one?"},
+{"gold":"ja-recycling","lang":"ja","q":"古い冷蔵庫を処分したいのですが、引き取ってもらえますか？"},
+
+{"gold":"ja-points","lang":"vi","q":"điểm tích lũy có bị hết hạn không"},
+{"gold":"ja-points","lang":"en","q":"Do my reward points expire?"},
+{"gold":"ja-points","lang":"ja","q":"ポイントはいつまで使えますか？"},
+
+{"gold":"ja-overtime","lang":"vi","q":"muốn làm thêm giờ thì phải đăng ký thế nào"},
+{"gold":"ja-overtime","lang":"en","q":"How do I get approval to work extra hours beyond my schedule?"},
+{"gold":"ja-overtime","lang":"ja","q":"残業するときはどう申請すればいいですか？"},
+
+{"gold":"ja-wifi-setup","lang":"vi","q":"kết nối máy với wifi nhà không được"},
+{"gold":"ja-wifi-setup","lang":"en","q":"How do I connect my smart appliance to the wireless network?"},
+{"gold":"ja-wifi-setup","lang":"ja","q":"家電がネットにつながりません"},
+
+{"gold":"ja-cancel-order","lang":"vi","q":"tôi đặt nhầm, có hủy đơn được không"},
+{"gold":"ja-cancel-order","lang":"en","q":"Can I cancel my order before it ships?"},
+{"gold":"ja-cancel-order","lang":"ja","q":"注文を取り消したいです"},
+
+{"gold":"ja-gift-wrap","lang":"vi","q":"có gói quà tặng không, giá bao nhiêu"},
+{"gold":"ja-gift-wrap","lang":"en","q":"Do you offer gift wrapping and how much does it cost?"},
+{"gold":"ja-gift-wrap","lang":"ja","q":"プレゼント用に包装してもらえますか？"},
+
+{"gold":"ja-earthquake","lang":"vi","q":"khi có động đất lúc đang làm việc thì phải làm gì"},
+{"gold":"ja-earthquake","lang":"en","q":"What should staff do if an earthquake hits during work?"},
+{"gold":"ja-earthquake","lang":"ja","q":"大きな揺れが来たらどうすればいいですか？"},
+
+{"gold":"ja-receipt-reissue","lang":"vi","q":"làm mất biên lai thì có xin cấp lại được không"},
+{"gold":"ja-receipt-reissue","lang":"en","q":"I lost my receipt, can you issue a new one?"},
+{"gold":"ja-receipt-reissue","lang":"ja","q":"領収書をなくしてしまいました"}
+]

@@ -1,0 +1,6122 @@
+{
+ "S-E-1": {
+  "key": "x89492660",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated"
+ },
+ "S-E-7": {
+  "key": "x61934381",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default, interrupt aborts"
+ },
+ "S-E-21": {
+  "key": "x86273352",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https://, /search, cache key all covered"
+ },
+ "S-A-20": {
+  "key": "x90864293",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true and excerpts stated"
+ },
+ "S-F-9": {
+  "key": "x79593404",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present"
+ },
+ "S-A-24": {
+  "key": "x72629925",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disables requests, use desktop app"
+ },
+ "S-H-27": {
+  "key": "x67701576",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China value, intl default all given"
+ },
+ "S-A-1": {
+  "key": "x51837517",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated"
+ },
+ "S-E-19": {
+  "key": "x73959308",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "cdpPort per instance; avoid same cdpUrl"
+ },
+ "S-H-2": {
+  "key": "x95599259",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24h, persists restarts"
+ },
+ "S-A-10": {
+  "key": "x195684610",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false set; default preload implied by native load endpoint"
+ },
+ "S-E-25": {
+  "key": "x828630311",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct"
+ },
+ "S-E-17": {
+  "key": "x17318050",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both stated."
+ },
+ "S-A-0": {
+  "key": "x16388421",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "S-H-14": {
+  "key": "x37784732",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl localhost and omit apiKey stated."
+ },
+ "S-F-24": {
+  "key": "x40857273",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disables requests, desktop app all stated."
+ },
+ "S-E-12": {
+  "key": "x59562284",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "S-G-3": {
+  "key": "x32981995",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "ID fields, no auto-send, raft CLI commands all present."
+ },
+ "S-G-9": {
+  "key": "x91657616",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated, no contradictions."
+ },
+ "S-F-19": {
+  "key": "x71814897",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "cdpPort key and cdpUrl warning stated."
+ },
+ "S-G-25": {
+  "key": "x71966738",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct."
+ },
+ "S-A-21": {
+  "key": "x29428999",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https, /search, and cache key all stated."
+ },
+ "S-E-15": {
+  "key": "x210371410",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick facts, thorough synthesis all stated."
+ },
+ "S-D-4": {
+  "key": "x314564111",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, default terminal, side-effects caveat all stated."
+ },
+ "S-G-1": {
+  "key": "x22869790",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "S-H-25": {
+  "key": "x59271971",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct."
+ },
+ "S-F-21": {
+  "key": "x11187062",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https prefix, /search, cache key all covered."
+ },
+ "S-F-17": {
+  "key": "x19685833",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call."
+ },
+ "S-G-14": {
+  "key": "x39807284",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local server, omit apiKey."
+ },
+ "S-A-12": {
+  "key": "x91789935",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values given correctly."
+ },
+ "S-G-5": {
+  "key": "x57870846",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Debug log, record, and contents all correct."
+ },
+ "S-F-28": {
+  "key": "x71210787",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, behavior, other options correct."
+ },
+ "S-D-23": {
+  "key": "x77258198",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust domain, trust, separate gateways."
+ },
+ "S-F-27": {
+  "key": "x39426939",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China value, and default all correct."
+ },
+ "S-E-9": {
+  "key": "x966751910",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered, no contradiction."
+ },
+ "S-A-6": {
+  "key": "x712217111",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, set true/remove, no restart all stated."
+ },
+ "S-H-20": {
+  "key": "x70221740",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly"
+ },
+ "S-F-7": {
+  "key": "x89869521",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default, interrupt aborts"
+ },
+ "S-A-11": {
+  "key": "x31073112",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix"
+ },
+ "S-G-18": {
+  "key": "x46134443",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "120 gap correct; derived ports +108 vs base+110 not stated"
+ },
+ "S-F-4": {
+  "key": "x15498144",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered"
+ },
+ "S-D-14": {
+  "key": "x87685965",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local, omit apiKey"
+ },
+ "S-F-16": {
+  "key": "x24291916",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days"
+ },
+ "S-A-28": {
+  "key": "x33869277",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own; off/all listed; allowlist omitted but minor"
+ },
+ "S-G-17": {
+  "key": "x57237678",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates, no model call"
+ },
+ "S-G-20": {
+  "key": "x79979679",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly"
+ },
+ "S-E-26": {
+  "key": "x738512810",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default"
+ },
+ "S-E-24": {
+  "key": "x254388711",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, disabled requests, desktop app all stated"
+ },
+ "S-F-25": {
+  "key": "x96681300",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly."
+ },
+ "S-H-1": {
+  "key": "x53690501",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered."
+ },
+ "S-H-24": {
+  "key": "x78626262",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disables requests, use desktop app all stated."
+ },
+ "S-G-29": {
+  "key": "x75175883",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, and reaction bot registration both stated."
+ },
+ "S-A-2": {
+  "key": "x47591054",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24h, persists across restarts."
+ },
+ "S-D-15": {
+  "key": "x27732495",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated."
+ },
+ "S-G-16": {
+  "key": "x89227526",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days."
+ },
+ "S-G-15": {
+  "key": "x84263667",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated."
+ },
+ "S-H-16": {
+  "key": "x59670688",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All defaults correct."
+ },
+ "S-H-28": {
+  "key": "x50615199",
+  "correct": false,
+  "facts_hit": 0,
+  "reason": "Said don't know; no facts given."
+ },
+ "S-F-15": {
+  "key": "x515212810",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated."
+ },
+ "S-G-8": {
+  "key": "x899647811",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID and start ticks, no procps."
+ },
+ "S-F-20": {
+  "key": "x14347880",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights:true and key-sentence excerpts both stated."
+ },
+ "S-E-0": {
+  "key": "x42986461",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "S-D-18": {
+  "key": "x65200182",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 ports and base+110 both stated."
+ },
+ "S-G-28": {
+  "key": "x23168043",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot messages, other options all listed."
+ },
+ "S-D-8": {
+  "key": "x28844594",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/start ticks, no procps."
+ },
+ "S-D-24": {
+  "key": "x29038645",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disables requests, use desktop app."
+ },
+ "S-E-13": {
+  "key": "x23398856",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three config facts stated."
+ },
+ "S-G-0": {
+  "key": "x16869937",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "S-F-22": {
+  "key": "x98484148",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Setting, contents, and nothing else sent all covered."
+ },
+ "S-F-8": {
+  "key": "x79641439",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/ticks, no procps."
+ },
+ "S-H-11": {
+  "key": "x345495310",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key format, no lmstudio/ prefix."
+ },
+ "S-A-17": {
+  "key": "x134445211",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call."
+ },
+ "S-E-22": {
+  "key": "x83163070",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated, including no prompts/messages/keys/paths sent."
+ },
+ "S-F-23": {
+  "key": "x36897641",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust domain, trust-only sharing, separate gateways all stated."
+ },
+ "S-E-2": {
+  "key": "x45095222",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Bridge event id, 24 hours, persists across restarts."
+ },
+ "S-G-23": {
+  "key": "x70790903",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated; extra caveat harmless."
+ },
+ "S-E-4": {
+  "key": "x33428874",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, default terminal, side-effect warning all present."
+ },
+ "S-D-28": {
+  "key": "x45814885",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits allowlist option; only off and all mentioned."
+ },
+ "S-H-12": {
+  "key": "x30156716",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values given correctly."
+ },
+ "S-E-23": {
+  "key": "x26062027",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated; doc-not-found remarks don't contradict."
+ },
+ "S-F-1": {
+  "key": "x25558738",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/permission errors."
+ },
+ "S-G-6": {
+  "key": "x28492759",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Correct key, set true/remove, no restart needed."
+ },
+ "S-H-7": {
+  "key": "x550810610",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Steer default and interrupt abort correct."
+ },
+ "S-A-27": {
+  "key": "x227760711",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Correct key, China URL, international default."
+ },
+ "S-F-0": {
+  "key": "x27432470",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "S-H-0": {
+  "key": "x54399291",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "S-D-29": {
+  "key": "x52508242",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts present; extra emoji detail harmless."
+ },
+ "S-G-12": {
+  "key": "x11750383",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "S-H-29": {
+  "key": "x80221194",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts present."
+ },
+ "S-H-5": {
+  "key": "x97771135",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "S-E-3": {
+  "key": "x28399556",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifiers, no auto-send, and CLI commands all stated."
+ },
+ "S-D-22": {
+  "key": "x77450197",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated including nothing else sent."
+ },
+ "S-E-16": {
+  "key": "x54554538",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days correct."
+ },
+ "S-A-13": {
+  "key": "x99253059",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All rollback settings stated correctly."
+ },
+ "S-H-17": {
+  "key": "x152822210",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both stated."
+ },
+ "S-F-5": {
+  "key": "x792624811",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present; caveat doesn't contradict."
+ },
+ "S-A-29": {
+  "key": "x86582640",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated: add-only, explicit error; bot registered with reaction."
+ },
+ "S-H-23": {
+  "key": "x94304231",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "S-A-22": {
+  "key": "x86143082",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts including nothing sensitive sent."
+ },
+ "S-A-5": {
+  "key": "x39433823",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts match."
+ },
+ "S-D-10": {
+  "key": "x52545124",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload:false under lmstudio and default enabled stated."
+ },
+ "S-A-7": {
+  "key": "x30684025",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default, interrupt aborts."
+ },
+ "S-A-15": {
+  "key": "x42971256",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts correct."
+ },
+ "S-G-2": {
+  "key": "x33265397",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24h, persists across restarts."
+ },
+ "S-E-5": {
+  "key": "x37800238",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts match."
+ },
+ "S-D-20": {
+  "key": "x82231549",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true and excerpts stated."
+ },
+ "S-F-18": {
+  "key": "x116125510",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 ports spacing and base+110 stated."
+ },
+ "S-G-22": {
+  "key": "x205342411",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated."
+ },
+ "S-F-13": {
+  "key": "x14220810",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "S-A-26": {
+  "key": "x16456371",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "S-H-6": {
+  "key": "x79221832",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, true/remove, no restart all stated."
+ },
+ "S-E-11": {
+  "key": "x54568713",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Raw model key, no prefix."
+ },
+ "S-F-6": {
+  "key": "x81314014",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "S-G-11": {
+  "key": "x82293295",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Raw key, no lmstudio/ prefix."
+ },
+ "S-D-25": {
+  "key": "x54964896",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Ctrl+Enter sends, Enter newline, 8,000 chars."
+ },
+ "S-D-2": {
+  "key": "x53847467",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24h, survives restart."
+ },
+ "S-H-4": {
+  "key": "x34720308",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, default terminal, side-effects caveat."
+ },
+ "S-D-11": {
+  "key": "x31255709",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Raw model key, no prefix."
+ },
+ "S-G-27": {
+  "key": "x294755610",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China URL, intl default all given."
+ },
+ "S-H-15": {
+  "key": "x751907311",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick facts, thorough synthesis."
+ },
+ "S-D-12": {
+  "key": "x56518700",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values stated correctly."
+ },
+ "S-D-17": {
+  "key": "x81731011",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both stated."
+ },
+ "S-A-23": {
+  "key": "x94123632",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three trust-domain facts present; extras don't contradict."
+ },
+ "S-A-3": {
+  "key": "x68096393",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifier list, no auto-send, raft message check/send all covered."
+ },
+ "S-E-8": {
+  "key": "x57868514",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID, start ticks, no procps on Alpine."
+ },
+ "S-D-7": {
+  "key": "x93673075",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default; interrupt aborts and starts fresh."
+ },
+ "S-A-16": {
+  "key": "x17819456",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days all correct."
+ },
+ "S-D-27": {
+  "key": "x72576037",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China URL, and intl default all stated."
+ },
+ "S-D-19": {
+  "key": "x91346568",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "cdpPort per profile and avoid same cdpUrl stated."
+ },
+ "S-H-18": {
+  "key": "x32562019",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "S-G-7": {
+  "key": "x285448210",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default; interrupt aborts and restarts."
+ },
+ "S-A-18": {
+  "key": "x754533911",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "S-G-4": {
+  "key": "x83350450",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "S-G-24": {
+  "key": "x78160751",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, disabled requests, and desktop app all stated."
+ },
+ "S-H-8": {
+  "key": "x24017622",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID and start ticks, no procps."
+ },
+ "S-E-28": {
+  "key": "x53842843",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, semantics, other options all correct."
+ },
+ "S-G-10": {
+  "key": "x45654694",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false and default preload both stated."
+ },
+ "S-E-27": {
+  "key": "x70125595",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China URL, and intl default all present."
+ },
+ "S-D-16": {
+  "key": "x16608396",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3, 90 days correct."
+ },
+ "S-D-13": {
+  "key": "x81895237",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All rollback settings match."
+ },
+ "S-H-3": {
+  "key": "x66145728",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "ID fields, no auto-send, CLI commands all given."
+ },
+ "S-G-21": {
+  "key": "x82581419",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https prefix, /search, cache key all covered."
+ },
+ "S-A-14": {
+  "key": "x694765010",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local and omit apiKey."
+ },
+ "S-H-22": {
+  "key": "x822608111",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated correctly."
+ },
+ "S-A-4": {
+  "key": "x55963960",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated, including side-effects caveat."
+ },
+ "S-E-29": {
+  "key": "x43083451",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts present."
+ },
+ "S-G-26": {
+  "key": "x43030282",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds DashScope default stated."
+ },
+ "S-E-18": {
+  "key": "x93477293",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "S-D-3": {
+  "key": "x95103234",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All identifiers, no auto-send, CLI commands covered."
+ },
+ "S-G-13": {
+  "key": "x79080405",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three settings match."
+ },
+ "S-F-26": {
+  "key": "x44710966",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds default; extra details not contradictory."
+ },
+ "S-D-5": {
+  "key": "x70903717",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Matches all facts."
+ },
+ "S-D-21": {
+  "key": "x72841618",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https, /search, cache key all covered."
+ },
+ "S-D-0": {
+  "key": "x95815119",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Permissions, Files.Read.All condition, admin consent covered."
+ },
+ "S-H-21": {
+  "key": "x539753110",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "S-D-1": {
+  "key": "x722559711",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/errors."
+ },
+ "S-A-9": {
+  "key": "x46515300",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated; extra detail not contradictory."
+ },
+ "S-F-2": {
+  "key": "x95064641",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Bridge event id, 24h, persists across restarts."
+ },
+ "S-E-10": {
+  "key": "x22021622",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload:false under lmstudio provider; default preload stated."
+ },
+ "S-F-12": {
+  "key": "x14104683",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values given correctly."
+ },
+ "S-D-9": {
+  "key": "x62200424",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered."
+ },
+ "S-H-19": {
+  "key": "x52584585",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "cdpPort per instance; avoid same cdpUrl."
+ },
+ "S-D-26": {
+  "key": "x93445946",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds DashScope default."
+ },
+ "S-A-25": {
+  "key": "x78803257",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Ctrl+Enter sends, Enter newline, 8,000 chars."
+ },
+ "S-G-19": {
+  "key": "x84578868",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly."
+ },
+ "S-E-6": {
+  "key": "x40893219",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, set true/remove, no restart needed."
+ },
+ "S-D-6": {
+  "key": "x871381910",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, true/remove, no restart."
+ },
+ "S-F-29": {
+  "key": "x350879711",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, remove rejected; bot needs reaction feature."
+ },
+ "S-F-3": {
+  "key": "x11208080",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "S-F-10": {
+  "key": "x36794301",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false and default preload both stated."
+ },
+ "S-H-13": {
+  "key": "x37187532",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All rollback settings correct."
+ },
+ "S-H-10": {
+  "key": "x50458693",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Setting stated; default preload implied by 'skips its preload step'."
+ },
+ "S-A-19": {
+  "key": "x90519564",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts correct."
+ },
+ "S-A-8": {
+  "key": "x62826055",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID, start ticks, no procps."
+ },
+ "S-F-11": {
+  "key": "x76223216",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix."
+ },
+ "S-H-9": {
+  "key": "x28496387",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "S-F-14": {
+  "key": "x52860578",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local and apiKey omitted."
+ },
+ "S-E-14": {
+  "key": "x32419049",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local and apiKey omitted."
+ },
+ "S-H-26": {
+  "key": "x185866910",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "S-E-20": {
+  "key": "x796724011",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, key-sentence excerpts."
+ },
+ "L-G-15": {
+  "key": "x21885410",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "M-G-4": {
+  "key": "x57596451",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope option, terminal default, and side-effect caveat all present."
+ },
+ "XL-E-28": {
+  "key": "x95826512",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Default own and options listed, but lacks bot-message-only emission detail."
+ },
+ "XL-G-21": {
+  "key": "x51124763",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered."
+ },
+ "M-E-28": {
+  "key": "x25832824",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default, behavior, and other options all correct."
+ },
+ "M-G-18": {
+  "key": "x60584245",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Says 120 gap but omits base+110 derived port reach."
+ },
+ "M-F-8": {
+  "key": "x10628576",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "M-F-0": {
+  "key": "x16393587",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered; Files.Read.All not required for history."
+ },
+ "M-F-22": {
+  "key": "x72152528",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated correctly."
+ },
+ "M-F-25": {
+  "key": "x43241429",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts correct."
+ },
+ "XL-G-12": {
+  "key": "x943604710",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values given correctly."
+ },
+ "M-F-1": {
+  "key": "x678582711",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/errors all stated."
+ },
+ "M-G-20": {
+  "key": "x68510830",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights:true and key-sentence excerpts both stated"
+ },
+ "XL-E-29": {
+  "key": "x70703291",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, bot reaction feature all stated"
+ },
+ "M-F-23": {
+  "key": "x60715612",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust domain, trusted people, separate gateways stated"
+ },
+ "M-E-7": {
+  "key": "x44973423",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default and interrupt aborts correct"
+ },
+ "M-G-14": {
+  "key": "x43118844",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl localhost and omit apiKey stated"
+ },
+ "L-G-26": {
+  "key": "x83245875",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds DashScope default stated"
+ },
+ "XL-E-23": {
+  "key": "x50145006",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust boundary, trusting team, separate gateways for adversarial"
+ },
+ "M-E-12": {
+  "key": "x72570617",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct"
+ },
+ "M-F-11": {
+  "key": "x15179018",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix"
+ },
+ "M-F-3": {
+  "key": "x33567949",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All identifier fields, no auto-send, CLI check/send"
+ },
+ "M-E-16": {
+  "key": "x125761510",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days all correct"
+ },
+ "M-F-15": {
+  "key": "x474355911",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick facts, thorough synthesis"
+ },
+ "M-F-20": {
+  "key": "x89519180",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true and key-sentence excerpts stated."
+ },
+ "L-E-5": {
+  "key": "x19475421",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "M-F-6": {
+  "key": "x28283572",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, true/remove, no restart all stated."
+ },
+ "M-E-10": {
+  "key": "x38985253",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false under lmstudio; default preload stated."
+ },
+ "XL-G-23": {
+  "key": "x90271554",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust domain, trusted teams, separate gateways for adversarial."
+ },
+ "L-E-8": {
+  "key": "x98510455",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID and start ticks, no procps."
+ },
+ "XL-G-26": {
+  "key": "x71133016",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds DashScope default."
+ },
+ "XL-G-9": {
+  "key": "x38515457",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Says don't retry; contradicts retry guidance; omits host load check."
+ },
+ "M-F-18": {
+  "key": "x75109568",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "XL-G-13": {
+  "key": "x32075319",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All rollback settings correct."
+ },
+ "M-G-25": {
+  "key": "x308721210",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Ctrl+Enter sends, Enter newline, 8,000 chars."
+ },
+ "L-G-18": {
+  "key": "x184784511",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Has 120 spacing but omits base+110 fact."
+ },
+ "M-F-17": {
+  "key": "x54781770",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both stated."
+ },
+ "L-E-25": {
+  "key": "x37528001",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct."
+ },
+ "M-F-14": {
+  "key": "x97611362",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Local baseUrl and omit apiKey stated."
+ },
+ "L-E-1": {
+  "key": "x59135013",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/errors."
+ },
+ "L-E-9": {
+  "key": "x94157654",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "M-E-21": {
+  "key": "x91114435",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https, /search, cache key all covered."
+ },
+ "M-E-24": {
+  "key": "x75428906",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disables, use desktop app."
+ },
+ "XL-E-12": {
+  "key": "x78225137",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "L-E-3": {
+  "key": "x26966928",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "IDs, no auto-send, CLI commands all stated."
+ },
+ "M-F-16": {
+  "key": "x82991559",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days."
+ },
+ "M-E-0": {
+  "key": "x608002710",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Permissions, Files.Read.All condition, admin consent covered."
+ },
+ "L-E-2": {
+  "key": "x991113311",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24h, persists restarts."
+ },
+ "XL-E-24": {
+  "key": "x83385660",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disables requests, desktop app all stated."
+ },
+ "XL-E-7": {
+  "key": "x67709961",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default and interrupt abort correct."
+ },
+ "M-G-23": {
+  "key": "x72152692",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust domain, trusted only, separate gateways."
+ },
+ "M-F-9": {
+  "key": "x18840533",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "L-E-11": {
+  "key": "x74190004",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio prefix."
+ },
+ "XL-E-17": {
+  "key": "x41953325",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates, no model call."
+ },
+ "M-E-20": {
+  "key": "x78565357",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true; key-sentence excerpts."
+ },
+ "XL-G-4": {
+  "key": "x81802998",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, terminal default, side-effect warning all covered."
+ },
+ "L-E-22": {
+  "key": "x59969659",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing statement that no prompts/messages/keys/paths are sent."
+ },
+ "XL-G-15": {
+  "key": "x767560910",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Q&A about user, quick facts, thorough synthesis."
+ },
+ "M-E-11": {
+  "key": "x402664111",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key example, no prefix."
+ },
+ "XL-G-7": {
+  "key": "x16439576",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default, interrupt aborts."
+ },
+ "L-G-8": {
+  "key": "x31865970",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/start ticks, no procps on Alpine all stated"
+ },
+ "L-G-29": {
+  "key": "x33781911",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, remove explicit error, bot reaction feature all covered"
+ },
+ "M-G-17": {
+  "key": "x34593832",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call stated"
+ },
+ "L-E-13": {
+  "key": "x16747133",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three rollback settings correctly stated"
+ },
+ "L-G-25": {
+  "key": "x37089484",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Ctrl+Enter sends, Enter newline, 8,000 chars"
+ },
+ "L-E-0": {
+  "key": "x41739055",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "ChannelMessage.Read.All, Files.Read.All conditional, admin consent covered"
+ },
+ "XL-G-2": {
+  "key": "x56889486",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24 hours, persists across restarts"
+ },
+ "L-G-17": {
+  "key": "x62713087",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call stated"
+ },
+ "XL-G-8": {
+  "key": "x81697288",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/start ticks, no procps needed"
+ },
+ "XL-E-25": {
+  "key": "x11128909",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Ctrl+Enter sends, Enter newline, 8,000 chars"
+ },
+ "L-E-26": {
+  "key": "x568451810",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default"
+ },
+ "L-G-6": {
+  "key": "x437737011",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Correct key, set true/remove, no restart needed"
+ },
+ "L-E-27": {
+  "key": "x69902660",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "M-E-3": {
+  "key": "x98362871",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All identifiers, no auto-send, CLI commands covered."
+ },
+ "XL-E-15": {
+  "key": "x33279642",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Matches all facts."
+ },
+ "L-E-28": {
+  "key": "x81316793",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, semantics, other options correct."
+ },
+ "M-E-1": {
+  "key": "x30631504",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false and rationale match."
+ },
+ "M-E-2": {
+  "key": "x30014205",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, event id, survives restart."
+ },
+ "XL-G-16": {
+  "key": "x47107936",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days."
+ },
+ "L-E-6": {
+  "key": "x82106257",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, true/remove, no restart all stated."
+ },
+ "M-G-24": {
+  "key": "x16299728",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redaction disabling, desktop app all covered."
+ },
+ "L-E-15": {
+  "key": "x61101229",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Matches all facts."
+ },
+ "XL-E-14": {
+  "key": "x537505710",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local server and omit apiKey stated."
+ },
+ "L-G-28": {
+  "key": "x719999711",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, semantics, other options correct."
+ },
+ "L-E-7": {
+  "key": "x69732280",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both steer default and interrupt stated."
+ },
+ "XL-G-24": {
+  "key": "x38404481",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disables requests, desktop app all stated."
+ },
+ "L-E-10": {
+  "key": "x24989202",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false and default preload both covered."
+ },
+ "M-G-2": {
+  "key": "x16786463",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24h, restart persistence all stated."
+ },
+ "M-G-12": {
+  "key": "x39123864",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values given correctly."
+ },
+ "M-E-17": {
+  "key": "x66529295",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call."
+ },
+ "L-E-17": {
+  "key": "x51366456",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call."
+ },
+ "M-E-15": {
+  "key": "x61858427",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "XL-E-8": {
+  "key": "x26472378",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/ticks, no procps."
+ },
+ "L-E-18": {
+  "key": "x29850379",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "XL-G-5": {
+  "key": "x990361510",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "XL-E-5": {
+  "key": "x266775811",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "M-G-28": {
+  "key": "x25181520",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated: default own, bot messages, other options."
+ },
+ "M-E-23": {
+  "key": "x69363861",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "States one trust domain, trusted only, separate gateways."
+ },
+ "M-F-29": {
+  "key": "x41073352",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, reaction bot capability both covered."
+ },
+ "XL-E-0": {
+  "key": "x97103313",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All permissions, consent, Files.Read.All condition covered."
+ },
+ "L-G-2": {
+  "key": "x98294004",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24 hours, persists across restarts."
+ },
+ "L-G-24": {
+  "key": "x60357135",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Lookup order, disabled requests, desktop app all present."
+ },
+ "XL-G-1": {
+  "key": "x19053616",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/errors."
+ },
+ "XL-G-0": {
+  "key": "x53247247",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Permissions, Files.Read.All condition, admin consent all present."
+ },
+ "L-G-16": {
+  "key": "x70935718",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days."
+ },
+ "M-E-27": {
+  "key": "x97270739",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China URL, and intl default all stated."
+ },
+ "L-E-21": {
+  "key": "x895590110",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https prefix, /search append, cache key all covered."
+ },
+ "L-E-12": {
+  "key": "x289548511",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correctly given."
+ },
+ "M-F-27": {
+  "key": "x30263940",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China value, and intl default all stated."
+ },
+ "M-G-29": {
+  "key": "x66960491",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts covered."
+ },
+ "M-F-12": {
+  "key": "x58606482",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "XL-E-2": {
+  "key": "x94900273",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24h, restart persistence all stated."
+ },
+ "L-G-7": {
+  "key": "x26472504",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default, interrupt aborts."
+ },
+ "XL-E-18": {
+  "key": "x96024255",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "XL-E-1": {
+  "key": "x77791146",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/permission errors."
+ },
+ "M-G-22": {
+  "key": "x96106427",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts including not sending prompts/keys/paths."
+ },
+ "XL-G-11": {
+  "key": "x33709448",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key without lmstudio prefix."
+ },
+ "M-E-13": {
+  "key": "x85753779",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three config facts correct."
+ },
+ "XL-E-4": {
+  "key": "x915774610",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, terminal default, side-effects warning all present."
+ },
+ "L-G-20": {
+  "key": "x219380711",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true with key sentence excerpts."
+ },
+ "L-G-23": {
+  "key": "x10498380",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "States one trust domain, trusted teams only, separate gateways for adversarial users."
+ },
+ "XL-G-3": {
+  "key": "x34277491",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All identifier fields, no auto-send, CLI check/send covered."
+ },
+ "M-E-29": {
+  "key": "x62169812",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Explains add-only, explicit error, and reaction-feature bot registration."
+ },
+ "L-G-9": {
+  "key": "x27432473",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Covers host load/logs, no broadening permissions, retry."
+ },
+ "M-E-22": {
+  "key": "x98497084",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "M-E-5": {
+  "key": "x84089295",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Debug log, record name, and contents all covered."
+ },
+ "M-G-10": {
+  "key": "x82005966",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Gives preload:false under lmstudio provider; notes default on."
+ },
+ "M-F-2": {
+  "key": "x35669007",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id dedup, 24 hours, persists across restarts."
+ },
+ "M-F-5": {
+  "key": "x54017268",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated; extra caveat doesn't contradict."
+ },
+ "L-G-21": {
+  "key": "x60480299",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https:// prefix, /search append, cache key all stated."
+ },
+ "M-G-8": {
+  "key": "x206799710",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID and start ticks, no procps on Alpine."
+ },
+ "XL-G-19": {
+  "key": "x889762311",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Correct cdpPort key and avoid same cdpUrl."
+ },
+ "L-E-24": {
+  "key": "x69185430",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disables requests, desktop app all stated."
+ },
+ "XL-G-25": {
+  "key": "x39531301",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct."
+ },
+ "XL-E-11": {
+  "key": "x95769702",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no prefix."
+ },
+ "M-G-7": {
+  "key": "x62229153",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default, interrupt aborts."
+ },
+ "M-E-26": {
+  "key": "x62604844",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds DashScope default."
+ },
+ "M-E-6": {
+  "key": "x56045735",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, true/remove, no restart all covered."
+ },
+ "M-G-11": {
+  "key": "x12156616",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no prefix."
+ },
+ "M-G-15": {
+  "key": "x67839457",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing 'LLM-powered Q&A' framing; only says asks about user."
+ },
+ "XL-E-27": {
+  "key": "x15433228",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China URL, intl default all correct."
+ },
+ "XL-G-17": {
+  "key": "x49602299",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates, no model call."
+ },
+ "M-F-28": {
+  "key": "x255901310",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot messages, other options listed."
+ },
+ "XL-E-20": {
+  "key": "x574581311",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, excerpts included."
+ },
+ "XL-G-22": {
+  "key": "x29642080",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing 'no prompts, messages, keys, paths sent'; adds location claims."
+ },
+ "M-G-27": {
+  "key": "x84807011",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated correctly."
+ },
+ "XL-E-6": {
+  "key": "x84146302",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, remove false/set true, no restart all stated."
+ },
+ "M-G-19": {
+  "key": "x76123623",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated."
+ },
+ "L-G-4": {
+  "key": "x24747624",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "M-F-7": {
+  "key": "x74461615",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Steer default and interrupt correct."
+ },
+ "L-E-4": {
+  "key": "x71792446",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "M-E-18": {
+  "key": "x24104057",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "M-F-4": {
+  "key": "x19578778",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "M-F-24": {
+  "key": "x64349989",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact behavior, desktop app all stated."
+ },
+ "L-G-14": {
+  "key": "x751031510",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local and omit apiKey stated."
+ },
+ "XL-E-16": {
+  "key": "x995562511",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days all correct."
+ },
+ "XL-G-28": {
+  "key": "x86742810",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated: own default, bot messages, other options."
+ },
+ "M-F-10": {
+  "key": "x67751391",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload:false under lmstudio provider; default preload stated."
+ },
+ "XL-G-27": {
+  "key": "x78615852",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Correct key, China value, and intl default."
+ },
+ "M-G-16": {
+  "key": "x79400423",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days all correct."
+ },
+ "M-G-13": {
+  "key": "x64335454",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "dmPolicy disabled, exec deny/always, elevated disabled."
+ },
+ "XL-E-3": {
+  "key": "x69721585",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifier fields, no auto-send, raft message check/send."
+ },
+ "M-F-21": {
+  "key": "x55289506",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https prefix, /search append, cache key all covered."
+ },
+ "M-E-14": {
+  "key": "x27707197",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl to local server and omit apiKey."
+ },
+ "XL-E-22": {
+  "key": "x28885838",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing statement that no prompts, messages, keys, paths are sent."
+ },
+ "M-E-4": {
+  "key": "x36835779",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, default terminal, no side effects caveat."
+ },
+ "L-G-13": {
+  "key": "x628069810",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All rollback settings correctly stated."
+ },
+ "XL-G-29": {
+  "key": "x721779011",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, and reaction bot feature required."
+ },
+ "M-F-26": {
+  "key": "x40826280",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds DashScope default stated"
+ },
+ "XL-G-18": {
+  "key": "x87937751",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Missing base+110 derived port reach fact"
+ },
+ "M-G-3": {
+  "key": "x32464002",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All identifiers, no auto-send, CLI commands covered"
+ },
+ "L-G-1": {
+  "key": "x25449883",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/errors"
+ },
+ "M-F-13": {
+  "key": "x57831634",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All rollback settings correct"
+ },
+ "L-E-29": {
+  "key": "x12209475",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, reaction feature bot"
+ },
+ "M-G-5": {
+  "key": "x98467406",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Log, record, and contents all matched"
+ },
+ "M-G-21": {
+  "key": "x93591997",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https prefix, /search, cache key all stated"
+ },
+ "M-G-0": {
+  "key": "x10754818",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Permissions, Files.Read.All condition, admin consent covered"
+ },
+ "XL-E-21": {
+  "key": "x25653329",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated"
+ },
+ "M-G-1": {
+  "key": "x678498410",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, lookup cost, avoids extra traffic"
+ },
+ "L-G-5": {
+  "key": "x363291711",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Log, record, contents all matched"
+ },
+ "M-E-9": {
+  "key": "x85699550",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated; extra orphan detail not contradictory"
+ },
+ "L-G-0": {
+  "key": "x65319251",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered including admin consent and Files.Read.All condition"
+ },
+ "L-E-19": {
+  "key": "x26961512",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly"
+ },
+ "L-G-19": {
+  "key": "x80982763",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated"
+ },
+ "L-E-20": {
+  "key": "x55925794",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true and excerpts stated"
+ },
+ "XL-G-10": {
+  "key": "x11717145",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false and default preload stated"
+ },
+ "L-G-12": {
+  "key": "x87029026",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct"
+ },
+ "M-G-9": {
+  "key": "x88206837",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated"
+ },
+ "L-G-22": {
+  "key": "x46054608",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing statement that no prompts/messages/keys/paths are sent"
+ },
+ "L-G-27": {
+  "key": "x85554279",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China URL, and intl default all given"
+ },
+ "XL-E-19": {
+  "key": "x991900910",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated"
+ },
+ "M-G-26": {
+  "key": "x818338111",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds DashScope default stated"
+ },
+ "M-E-25": {
+  "key": "x36272360",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts match."
+ },
+ "M-F-19": {
+  "key": "x95874431",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly."
+ },
+ "XL-G-6": {
+  "key": "x12415752",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, set true/remove false, no restart all stated."
+ },
+ "M-G-6": {
+  "key": "x60384963",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-E-16": {
+  "key": "x66771614",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days all correct."
+ },
+ "L-G-3": {
+  "key": "x47078895",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "ID fields, no auto-send, raft check/send all covered."
+ },
+ "L-G-10": {
+  "key": "x31675176",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Doesn't clearly state preload is enabled by default."
+ },
+ "XL-E-13": {
+  "key": "x30424577",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All rollback settings correct."
+ },
+ "XL-E-10": {
+  "key": "x58272028",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Setting and default preload behavior both mentioned."
+ },
+ "M-E-19": {
+  "key": "x86482549",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated."
+ },
+ "M-E-8": {
+  "key": "x348831110",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/ticks, no procps all stated."
+ },
+ "L-G-11": {
+  "key": "x635825811",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix."
+ },
+ "XL-E-9": {
+  "key": "x27204810",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated; extra detail not contradictory."
+ },
+ "L-E-14": {
+  "key": "x99362891",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl localhost and omit apiKey both stated."
+ },
+ "XL-G-14": {
+  "key": "x87400422",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl localhost and omit apiKey both stated."
+ },
+ "L-E-23": {
+  "key": "x18489333",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust domain, trusted teams only, separate gateways for adversarial."
+ },
+ "XL-E-26": {
+  "key": "x64470974",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "XL-G-20": {
+  "key": "x64705055",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true; key sentence excerpts included."
+ },
+ "L-D-5": {
+  "key": "x24872260",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "XL-H-17": {
+  "key": "x33431911",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both stated."
+ },
+ "L-A-14": {
+  "key": "x27565222",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local server and omit apiKey."
+ },
+ "L-H-29": {
+  "key": "x50419473",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, reaction feature bot registration."
+ },
+ "M-I-18": {
+  "key": "x59234404",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "XL-I-27": {
+  "key": "x20650875",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China URL, and intl default all given."
+ },
+ "L-D-28": {
+  "key": "x63827576",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot messages only, other options listed."
+ },
+ "M-D-0": {
+  "key": "x84283847",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "ChannelMessage.Read.All, Files.Read.All conditional, admin consent."
+ },
+ "L-H-8": {
+  "key": "x81324808",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/ticks, no procps."
+ },
+ "XL-A-12": {
+  "key": "x26154579",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values given correctly."
+ },
+ "S-I-5": {
+  "key": "x544197710",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "L-A-25": {
+  "key": "x515273411",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct."
+ },
+ "M-H-26": {
+  "key": "x18124040",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default; stated."
+ },
+ "XL-H-19": {
+  "key": "x86298991",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly."
+ },
+ "M-I-28": {
+  "key": "x18826692",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot messages, off/all mentioned; allowlist omitted but essentially fine."
+ },
+ "L-A-22": {
+  "key": "x75332993",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing the no prompts/messages/keys/paths fact; adds request surface."
+ },
+ "L-I-24": {
+  "key": "x79063274",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact behavior, desktop app all correct."
+ },
+ "M-I-4": {
+  "key": "x21615305",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-H-25": {
+  "key": "x21958366",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct."
+ },
+ "L-H-3": {
+  "key": "x76830387",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifier fields, no auto-send, raft check/send all present."
+ },
+ "L-D-17": {
+  "key": "x46480558",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates, no model call."
+ },
+ "L-H-1": {
+  "key": "x49774089",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra Graph lookup, avoids traffic/errors."
+ },
+ "XL-D-21": {
+  "key": "x116821010",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https prefix, /search append, cache key all stated."
+ },
+ "M-H-7": {
+  "key": "x641560011",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default; interrupt aborts and restarts."
+ },
+ "XL-I-0": {
+  "key": "x51263580",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered; Files.Read.All optional for history stated"
+ },
+ "L-D-18": {
+  "key": "x81759531",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 both stated"
+ },
+ "XL-A-7": {
+  "key": "x45157822",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default; interrupt aborts"
+ },
+ "XL-A-9": {
+  "key": "x82446373",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present"
+ },
+ "L-D-25": {
+  "key": "x10990254",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct"
+ },
+ "L-D-3": {
+  "key": "x47329505",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "ID fields, no auto-send, CLI commands all present"
+ },
+ "M-D-25": {
+  "key": "x97707666",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct"
+ },
+ "M-I-22": {
+  "key": "x16368897",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts correctly stated"
+ },
+ "XL-A-6": {
+  "key": "x84759768",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, set true, no restart all stated"
+ },
+ "M-H-15": {
+  "key": "x45243059",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick facts, thorough synthesis"
+ },
+ "S-I-11": {
+  "key": "x906968610",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix"
+ },
+ "XL-I-15": {
+  "key": "x667937111",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick facts, thorough synthesis"
+ },
+ "M-D-29": {
+  "key": "x65930640",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly."
+ },
+ "M-A-25": {
+  "key": "x64847151",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct."
+ },
+ "L-I-13": {
+  "key": "x54781772",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-I-10": {
+  "key": "x92874373",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Missing that preload is enabled by default."
+ },
+ "XL-D-26": {
+  "key": "x67428354",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "M-A-27": {
+  "key": "x37360105",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, value, and default all stated."
+ },
+ "M-I-7": {
+  "key": "x54383246",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default, interrupt aborts."
+ },
+ "XL-D-7": {
+  "key": "x80051627",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default, interrupt aborts."
+ },
+ "XL-H-4": {
+  "key": "x15212558",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered."
+ },
+ "L-A-4": {
+  "key": "x54701819",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered."
+ },
+ "L-D-13": {
+  "key": "x410847410",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "XL-H-11": {
+  "key": "x982969711",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key without prefix, correct."
+ },
+ "L-H-13": {
+  "key": "x52573260",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "M-H-20": {
+  "key": "x79087781",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights:true and key-sentence excerpts stated."
+ },
+ "M-A-13": {
+  "key": "x53963522",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "S-I-6": {
+  "key": "x61415523",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, true/remove, no restart all stated."
+ },
+ "XL-A-10": {
+  "key": "x66512794",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload:false under lmstudio provider; default preload stated."
+ },
+ "M-D-6": {
+  "key": "x26604645",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, set true/remove, no restart all covered."
+ },
+ "M-H-9": {
+  "key": "x20691946",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated; extras not contradictory."
+ },
+ "L-I-23": {
+  "key": "x84021727",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust boundary, trusting people, separate gateways for adversarial users."
+ },
+ "M-D-7": {
+  "key": "x64121958",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default; interrupt aborts and restarts."
+ },
+ "XL-A-25": {
+  "key": "x64891059",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct."
+ },
+ "XL-A-2": {
+  "key": "x797583110",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id dedupe, 24 hours, persists across restarts."
+ },
+ "XL-D-14": {
+  "key": "x283597511",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Local baseUrl example and omit apiKey stated."
+ },
+ "S-I-19": {
+  "key": "x17180090",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly"
+ },
+ "L-D-2": {
+  "key": "x45271231",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Bridge event id, 24h, persists across restarts"
+ },
+ "XL-H-13": {
+  "key": "x74326232",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three settings match"
+ },
+ "XL-D-0": {
+  "key": "x96115243",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present, consent included"
+ },
+ "XL-I-10": {
+  "key": "x63107404",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload:false set; native load endpoint preload default implied"
+ },
+ "XL-D-17": {
+  "key": "x57293485",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates, no model call"
+ },
+ "L-D-9": {
+  "key": "x68912856",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated"
+ },
+ "M-H-29": {
+  "key": "x74158487",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, reaction bot registration"
+ },
+ "M-I-26": {
+  "key": "x77187618",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds DashScope default"
+ },
+ "XL-I-12": {
+  "key": "x57873449",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct"
+ },
+ "XL-H-3": {
+  "key": "x741216010",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered"
+ },
+ "L-D-19": {
+  "key": "x234808611",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly"
+ },
+ "M-D-18": {
+  "key": "x42838620",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "States 120 spacing and base+110 reach."
+ },
+ "XL-I-16": {
+  "key": "x77817511",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days all correct."
+ },
+ "XL-H-25": {
+  "key": "x91955142",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Ctrl+Enter sends, Enter newline, 8,000 chars."
+ },
+ "M-H-19": {
+  "key": "x49973353",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly."
+ },
+ "L-A-16": {
+  "key": "x80299184",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three defaults correct."
+ },
+ "S-I-4": {
+  "key": "x15908445",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, terminal default, side-effects caveat all present."
+ },
+ "XL-I-22": {
+  "key": "x64569596",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing explicit statement that no prompts/messages/keys/paths sent."
+ },
+ "L-H-18": {
+  "key": "x21182437",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "M-A-10": {
+  "key": "x74630258",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false under lmstudio; default preload stated."
+ },
+ "L-D-26": {
+  "key": "x78113649",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "XL-H-7": {
+  "key": "x354713810",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default; interrupt aborts run."
+ },
+ "XL-I-9": {
+  "key": "x220875411",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "No retry to finish registrations; host load not clearly stated."
+ },
+ "XL-D-23": {
+  "key": "x98310970",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "States single trust boundary, trusted team only, separate gateways for adversaries."
+ },
+ "L-H-17": {
+  "key": "x54642171",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both stated."
+ },
+ "XL-I-2": {
+  "key": "x54401392",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24 hours, restart persistence all stated."
+ },
+ "M-I-16": {
+  "key": "x45796743",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h cooldown, 3 fires, 90-day expiry."
+ },
+ "M-D-20": {
+  "key": "x37660874",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, key sentence excerpts."
+ },
+ "XL-I-13": {
+  "key": "x39707235",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All rollback settings match."
+ },
+ "M-H-2": {
+  "key": "x56215656",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "L-D-7": {
+  "key": "x36122127",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default; interrupt aborts run."
+ },
+ "XL-I-23": {
+  "key": "x40398658",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Trust boundary, trusted team, separate gateways covered."
+ },
+ "M-A-19": {
+  "key": "x67023759",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Correct cdpPort key and cdpUrl warning."
+ },
+ "M-D-13": {
+  "key": "x450907810",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All rollback settings match."
+ },
+ "XL-A-23": {
+  "key": "x480100911",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Covers trust boundary, trusted team, separate gateways."
+ },
+ "M-H-12": {
+  "key": "x11535550",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values stated correctly."
+ },
+ "L-A-13": {
+  "key": "x17665401",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts match."
+ },
+ "M-H-8": {
+  "key": "x32767702",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/start ticks, no procps all stated."
+ },
+ "XL-A-1": {
+  "key": "x94782883",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra Graph lookup, avoids traffic/permission errors."
+ },
+ "M-D-28": {
+  "key": "x45651244",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot messages only, other options listed."
+ },
+ "M-H-14": {
+  "key": "x65094555",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local server, apiKey omitted."
+ },
+ "S-I-17": {
+  "key": "x48113526",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call."
+ },
+ "L-H-9": {
+  "key": "x53426077",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "XL-H-12": {
+  "key": "x97459538",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "S-I-20": {
+  "key": "x82219459",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, key-sentence excerpts."
+ },
+ "M-H-0": {
+  "key": "x933323110",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "L-D-29": {
+  "key": "x684986111",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, reaction feature bot registration."
+ },
+ "L-H-21": {
+  "key": "x22022170",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated"
+ },
+ "S-I-0": {
+  "key": "x87039411",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present; extras don't contradict"
+ },
+ "L-I-5": {
+  "key": "x96521422",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts match"
+ },
+ "M-H-25": {
+  "key": "x77735373",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct"
+ },
+ "L-D-15": {
+  "key": "x67295064",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts match"
+ },
+ "M-H-5": {
+  "key": "x22467505",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts match"
+ },
+ "XL-A-27": {
+  "key": "x57079136",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, value, and default all correct"
+ },
+ "L-D-10": {
+  "key": "x13923817",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false and default enabled stated"
+ },
+ "M-A-2": {
+  "key": "x92184998",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts match"
+ },
+ "XL-A-8": {
+  "key": "x45482929",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts match"
+ },
+ "XL-I-18": {
+  "key": "x531126010",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated"
+ },
+ "M-H-18": {
+  "key": "x162383011",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated"
+ },
+ "XL-D-2": {
+  "key": "x83431290",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24h, persists across restarts all stated."
+ },
+ "L-H-28": {
+  "key": "x72003131",
+  "correct": false,
+  "facts_hit": 0,
+  "reason": "Said don't know; missed default 'own'."
+ },
+ "M-A-23": {
+  "key": "x44377962",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust domain, trusted only, separate gateways for adversarial."
+ },
+ "L-I-12": {
+  "key": "x37427013",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correctly given."
+ },
+ "M-I-1": {
+  "key": "x69943154",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra Graph lookup, avoids traffic/permission errors."
+ },
+ "M-A-26": {
+  "key": "x90416735",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "M-I-29": {
+  "key": "x37747196",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, bot needs reaction feature."
+ },
+ "L-I-15": {
+  "key": "x81996797",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick facts, thorough synthesis."
+ },
+ "M-D-14": {
+  "key": "x63076088",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local server, omit apiKey."
+ },
+ "XL-D-6": {
+  "key": "x58235769",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Correct key, set true/remove, no restart."
+ },
+ "XL-H-9": {
+  "key": "x966900210",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Mentions logs, but says retry differently; misses key points partially."
+ },
+ "XL-I-3": {
+  "key": "x631242111",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifiers, no auto-send, raft message check/send."
+ },
+ "XL-D-27": {
+  "key": "x88338090",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China value, and intl default all stated."
+ },
+ "S-I-28": {
+  "key": "x83701061",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot-message events, other options listed."
+ },
+ "L-D-21": {
+  "key": "x81342022",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https prefix, /search append, cache key all covered."
+ },
+ "M-D-1": {
+  "key": "x81597683",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "False default, extra lookup, avoids traffic/permission errors."
+ },
+ "S-I-3": {
+  "key": "x60053664",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifier fields, no auto-send, raft message check/send."
+ },
+ "L-H-10": {
+  "key": "x13714615",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false stated; default preload implied by skip explanation."
+ },
+ "XL-I-19": {
+  "key": "x15995856",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "cdpPort per instance and avoid shared cdpUrl."
+ },
+ "XL-A-21": {
+  "key": "x10524387",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "XL-D-22": {
+  "key": "x80160328",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits explicit statement that no prompts/messages/keys/paths sent."
+ },
+ "XL-I-14": {
+  "key": "x94686789",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Local baseUrl example and omit apiKey."
+ },
+ "L-D-4": {
+  "key": "x938731910",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, default terminal, side-effects caveat all present."
+ },
+ "M-H-27": {
+  "key": "x384916211",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China URL, and intl default all stated."
+ },
+ "XL-H-28": {
+  "key": "x21215770",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Default own and other options right, but omits what own does."
+ },
+ "XL-A-13": {
+  "key": "x69467881",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "XL-D-18": {
+  "key": "x98160692",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 both stated."
+ },
+ "S-I-23": {
+  "key": "x70429523",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust domain, mutual trust, separate gateways for adversarial."
+ },
+ "XL-D-16": {
+  "key": "x27598324",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days."
+ },
+ "XL-H-26": {
+  "key": "x63813275",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "L-A-10": {
+  "key": "x35282806",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Correct setting path and default preload noted."
+ },
+ "L-I-4": {
+  "key": "x84746667",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "M-H-16": {
+  "key": "x91301948",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days."
+ },
+ "XL-H-14": {
+  "key": "x14402299",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local and apiKey omitted."
+ },
+ "XL-A-3": {
+  "key": "x153457610",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifier fields, no auto-send, raft check/send."
+ },
+ "XL-H-22": {
+  "key": "x922572211",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Doesn't state no prompts/messages/keys/paths are sent."
+ },
+ "M-D-23": {
+  "key": "x39470020",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "XL-I-28": {
+  "key": "x24173691",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot messages only, other options listed."
+ },
+ "L-D-6": {
+  "key": "x76466172",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Correct key, set true, no restart needed."
+ },
+ "XL-D-28": {
+  "key": "x52166293",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, reactions to bot messages, other modes listed."
+ },
+ "L-H-4": {
+  "key": "x55387054",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, terminal default, side-effects warning all present."
+ },
+ "M-I-13": {
+  "key": "x41106075",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All rollback settings correct."
+ },
+ "S-I-13": {
+  "key": "x51204036",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All rollback settings correct."
+ },
+ "XL-A-17": {
+  "key": "x91599357",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both stated."
+ },
+ "L-A-19": {
+  "key": "x11557718",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "cdpPort per profile and avoid same cdpUrl stated."
+ },
+ "L-A-18": {
+  "key": "x49633419",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Gives 120 spacing but omits base+110 reach."
+ },
+ "L-I-3": {
+  "key": "x895927810",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifier fields, no auto-send, raft check/send all stated."
+ },
+ "S-I-14": {
+  "key": "x700992511",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Local baseUrl and omit apiKey stated."
+ },
+ "L-A-9": {
+  "key": "x18887560",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated; extra detail not contradictory."
+ },
+ "XL-I-26": {
+  "key": "x36850581",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "M-H-6": {
+  "key": "x65617972",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Correct key, set true, no restart."
+ },
+ "M-I-20": {
+  "key": "x58048323",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, key-sentence excerpts."
+ },
+ "L-A-20": {
+  "key": "x34746764",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, key-sentence excerpts."
+ },
+ "M-I-12": {
+  "key": "x50553815",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "M-D-26": {
+  "key": "x99439296",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "M-A-1": {
+  "key": "x73812337",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered."
+ },
+ "S-I-2": {
+  "key": "x20040548",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24 hours, persists restarts."
+ },
+ "S-I-21": {
+  "key": "x88168439",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https, /search, cache key all covered."
+ },
+ "XL-I-7": {
+  "key": "x614380310",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default; interrupt aborts."
+ },
+ "L-I-7": {
+  "key": "x261264611",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default; interrupt aborts."
+ },
+ "M-A-21": {
+  "key": "x52676420",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated"
+ },
+ "M-D-10": {
+  "key": "x84281821",
+  "correct": true,
+  "facts_hit": 1,
+  "reason": "Preload false correct; default preload only implied, but fine"
+ },
+ "L-A-2": {
+  "key": "x34206442",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present"
+ },
+ "XL-H-2": {
+  "key": "x23424113",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present"
+ },
+ "M-I-6": {
+  "key": "x76875464",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present"
+ },
+ "M-I-21": {
+  "key": "x81648135",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present"
+ },
+ "L-D-27": {
+  "key": "x49460676",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present"
+ },
+ "XL-A-4": {
+  "key": "x64409797",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present"
+ },
+ "XL-I-6": {
+  "key": "x51015398",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present"
+ },
+ "M-A-29": {
+  "key": "x48792049",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated"
+ },
+ "M-A-6": {
+  "key": "x682153510",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present"
+ },
+ "M-H-10": {
+  "key": "x568384811",
+  "correct": true,
+  "facts_hit": 1,
+  "reason": "Preload false correct; default implied"
+ },
+ "L-I-9": {
+  "key": "x72586570",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated; extra details not contradictory."
+ },
+ "XL-A-28": {
+  "key": "x93681601",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot messages only, other options listed."
+ },
+ "XL-D-3": {
+  "key": "x42450562",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifiers, no auto-send, raft message check/send all covered."
+ },
+ "L-H-23": {
+  "key": "x54292243",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust boundary, mutual trust, separate gateways for adversaries."
+ },
+ "S-I-26": {
+  "key": "x72217124",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "S-I-12": {
+  "key": "x11380695",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "XL-H-20": {
+  "key": "x57227386",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, key sentence excerpts."
+ },
+ "L-D-16": {
+  "key": "x35868367",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days."
+ },
+ "M-D-19": {
+  "key": "x87186778",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "cdpPort per instance; avoid same cdpUrl."
+ },
+ "XL-A-15": {
+  "key": "x63669569",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick facts, thorough synthesis."
+ },
+ "L-A-1": {
+  "key": "x814894810",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/permission errors."
+ },
+ "S-I-7": {
+  "key": "x299824611",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default; interrupt aborts."
+ },
+ "M-H-21": {
+  "key": "x60778850",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "S-I-24": {
+  "key": "x81981221",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disabling, desktop app all covered."
+ },
+ "XL-D-12": {
+  "key": "x52174712",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values given correctly."
+ },
+ "XL-H-5": {
+  "key": "x63225273",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Debug log, record, and contents all correct."
+ },
+ "XL-I-17": {
+  "key": "x18742804",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call stated."
+ },
+ "L-H-0": {
+  "key": "x51734305",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Permissions, Files.Read.All condition, admin consent all present."
+ },
+ "XL-A-11": {
+  "key": "x97293326",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix."
+ },
+ "L-I-21": {
+  "key": "x38771447",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "M-H-13": {
+  "key": "x27104128",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "dmPolicy, exec deny/always, elevated disabled all correct."
+ },
+ "M-H-24": {
+  "key": "x26813219",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disabling, desktop app all covered."
+ },
+ "S-I-10": {
+  "key": "x589191910",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false under lmstudio; default preload mentioned."
+ },
+ "M-D-5": {
+  "key": "x951792411",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Debug log, record, and contents all correct."
+ },
+ "M-D-27": {
+  "key": "x44073690",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly"
+ },
+ "L-A-7": {
+  "key": "x76679491",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default and interrupt correct"
+ },
+ "M-D-22": {
+  "key": "x14540502",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present"
+ },
+ "L-D-1": {
+  "key": "x90957313",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, Graph lookup, avoids extra traffic"
+ },
+ "M-D-4": {
+  "key": "x21332084",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts including side-effects caveat"
+ },
+ "XL-D-15": {
+  "key": "x28513685",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts correct"
+ },
+ "XL-I-25": {
+  "key": "x94729656",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct"
+ },
+ "M-I-5": {
+  "key": "x27695377",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Log, record, and contents all correct"
+ },
+ "XL-D-20": {
+  "key": "x69883608",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true and excerpts stated"
+ },
+ "M-A-4": {
+  "key": "x57253039",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts including side-effects caveat"
+ },
+ "S-I-16": {
+  "key": "x579823110",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days"
+ },
+ "L-H-11": {
+  "key": "x355833011",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key raw, no lmstudio/ prefix"
+ },
+ "XL-A-5": {
+  "key": "x20960480",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "M-A-9": {
+  "key": "x37016631",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Covers host load/logs, no broadening, retry; extras not contradictory."
+ },
+ "L-I-0": {
+  "key": "x64951882",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "ChannelMessage.Read.All, Files.Read.All conditional, admin consent all present."
+ },
+ "XL-A-24": {
+  "key": "x96130283",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redaction disabling requests, desktop app all correct."
+ },
+ "M-H-1": {
+  "key": "x54235654",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/errors."
+ },
+ "XL-D-25": {
+  "key": "x80259305",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct."
+ },
+ "L-D-14": {
+  "key": "x69770516",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Local baseUrl and omit apiKey stated."
+ },
+ "M-A-18": {
+  "key": "x94671527",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Says 120 spacing but omits base+110 derived port range."
+ },
+ "XL-H-29": {
+  "key": "x43756088",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, reaction feature registration covered."
+ },
+ "M-H-23": {
+  "key": "x17590409",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust domain, mutual trust, separate gateways."
+ },
+ "M-A-5": {
+  "key": "x354726210",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated correctly."
+ },
+ "XL-D-9": {
+  "key": "x136871611",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Says no broadening; misses host load check and retry remaining registrations."
+ },
+ "XL-I-8": {
+  "key": "x13925880",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "M-I-17": {
+  "key": "x18781711",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call."
+ },
+ "XL-H-10": {
+  "key": "x59312922",
+  "correct": true,
+  "facts_hit": 1,
+  "reason": "preload:false correct; default-enabled not explicit, but implied by skips preload."
+ },
+ "L-A-8": {
+  "key": "x56770593",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated."
+ },
+ "L-H-7": {
+  "key": "x61876854",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default and interrupt correct."
+ },
+ "XL-H-1": {
+  "key": "x13984305",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered."
+ },
+ "L-H-26": {
+  "key": "x38938346",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "L-H-22": {
+  "key": "x57108997",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Setting, fields, and no body/identifiers stated."
+ },
+ "XL-I-24": {
+  "key": "x69766398",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact behavior, desktop app all present."
+ },
+ "L-H-27": {
+  "key": "x85334779",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, value, default all correct."
+ },
+ "M-I-2": {
+  "key": "x390837910",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24h, survives restart."
+ },
+ "L-H-19": {
+  "key": "x281915711",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts correct."
+ },
+ "L-D-12": {
+  "key": "x91577460",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values stated correctly."
+ },
+ "L-I-29": {
+  "key": "x52044391",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Explains add-only/explicit error and reaction feature registration."
+ },
+ "XL-D-1": {
+  "key": "x69926492",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra Graph lookup, avoids traffic/permission errors."
+ },
+ "L-I-6": {
+  "key": "x73468163",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Correct key, set true/remove, no restart."
+ },
+ "S-I-15": {
+  "key": "x57383394",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "M-I-0": {
+  "key": "x78882515",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "ChannelMessage.Read.All, Files.Read.All conditional, admin consent all covered."
+ },
+ "L-I-22": {
+  "key": "x85686646",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits that no prompts/messages/keys/paths are sent."
+ },
+ "M-A-17": {
+  "key": "x92797187",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call."
+ },
+ "L-A-17": {
+  "key": "x65225688",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call."
+ },
+ "L-I-11": {
+  "key": "x87579649",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix."
+ },
+ "XL-D-13": {
+  "key": "x474274810",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All rollback settings match reference."
+ },
+ "XL-D-8": {
+  "key": "x200279111",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID and start ticks, no procps."
+ },
+ "M-D-15": {
+  "key": "x98911730",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "S-I-22": {
+  "key": "x41035501",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Setting, default fields, and nothing-sent items all covered."
+ },
+ "XL-H-0": {
+  "key": "x39261312",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Permission, Files.Read.All condition, admin consent all present."
+ },
+ "L-I-1": {
+  "key": "x93782343",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/errors all stated."
+ },
+ "M-H-28": {
+  "key": "x43756084",
+  "correct": false,
+  "facts_hit": 0,
+  "reason": "Said don't know; no facts provided."
+ },
+ "L-I-17": {
+  "key": "x92205205",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both correct."
+ },
+ "L-D-20": {
+  "key": "x12101436",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true and excerpts included."
+ },
+ "XL-A-16": {
+  "key": "x70213097",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days all correct."
+ },
+ "L-I-19": {
+  "key": "x58067258",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both cdpPort key and cdpUrl warning correct."
+ },
+ "L-I-8": {
+  "key": "x60071519",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/start ticks, no procps all stated."
+ },
+ "M-D-9": {
+  "key": "x220055310",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated; extras don't contradict."
+ },
+ "L-I-28": {
+  "key": "x105869811",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot-message events, other options listed."
+ },
+ "L-A-24": {
+  "key": "x29726860",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "L-A-0": {
+  "key": "x22067871",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present including admin consent."
+ },
+ "M-I-8": {
+  "key": "x53606162",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Matches all facts."
+ },
+ "XL-H-24": {
+  "key": "x43180443",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "L-I-25": {
+  "key": "x50517004",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts correct."
+ },
+ "M-A-14": {
+  "key": "x10282865",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl localhost and omit apiKey stated."
+ },
+ "L-A-5": {
+  "key": "x95204327",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "M-H-3": {
+  "key": "x72986188",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated correctly."
+ },
+ "L-H-6": {
+  "key": "x32348979",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, true/remove, no restart all stated."
+ },
+ "L-I-20": {
+  "key": "x534685510",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights and key-sentence excerpts stated."
+ },
+ "XL-H-23": {
+  "key": "x863218411",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust domain, trusted team, separate gateways for adversaries."
+ },
+ "M-I-25": {
+  "key": "x80825490",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Ctrl+Enter sends, Enter newline, 8,000 chars all stated."
+ },
+ "L-I-18": {
+  "key": "x44375041",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 both stated."
+ },
+ "M-I-11": {
+  "key": "x63863202",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix."
+ },
+ "XL-I-5": {
+  "key": "x20566773",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Debug log, record, and all included fields covered."
+ },
+ "L-I-27": {
+  "key": "x28520064",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Correct key, China value, and intl default."
+ },
+ "L-H-2": {
+  "key": "x34596745",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Bridge event id, 24 hours, persists across restarts."
+ },
+ "M-D-24": {
+  "key": "x60315396",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Lookup order, redact disables standalone, use desktop app."
+ },
+ "M-A-16": {
+  "key": "x65050087",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days all correct."
+ },
+ "S-I-25": {
+  "key": "x70498668",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "All key facts correct; extra shortcuts harmless."
+ },
+ "M-H-17": {
+  "key": "x91192259",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call stated."
+ },
+ "M-H-11": {
+  "key": "x563409810",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no prefix; default set as lmstudio/."
+ },
+ "XL-A-14": {
+  "key": "x154272911",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local server, apiKey omitted."
+ },
+ "L-H-14": {
+  "key": "x88613090",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both baseUrl local server and omit apiKey stated."
+ },
+ "XL-D-4": {
+  "key": "x96700501",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, default terminal, and no side effects all covered."
+ },
+ "XL-D-5": {
+  "key": "x94341082",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "M-A-28": {
+  "key": "x82737723",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot messages only, other options listed."
+ },
+ "XL-D-29": {
+  "key": "x53529684",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, and bot reaction feature registration covered."
+ },
+ "S-I-8": {
+  "key": "x43033285",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID and start ticks, no procps."
+ },
+ "M-I-10": {
+  "key": "x50061296",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Sets preload false; the default preload is implied by skipping the preload step."
+ },
+ "L-D-23": {
+  "key": "x44096477",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust boundary, mutual trust only, separate gateways."
+ },
+ "M-A-3": {
+  "key": "x80763898",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All identifier fields, no auto-send, and CLI check/send."
+ },
+ "XL-H-15": {
+  "key": "x40091369",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick for facts, thorough for synthesis."
+ },
+ "XL-A-26": {
+  "key": "x924837410",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds default from DashScope."
+ },
+ "XL-A-22": {
+  "key": "x124649011",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits the fact that no prompts, messages, keys, or paths are sent."
+ },
+ "XL-I-11": {
+  "key": "x61112220",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key format, no lmstudio/ prefix stated."
+ },
+ "M-D-2": {
+  "key": "x38530851",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24h, survives restarts all stated."
+ },
+ "M-I-19": {
+  "key": "x63323602",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly."
+ },
+ "M-I-23": {
+  "key": "x34014413",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust domain, mutual trust, separate gateways."
+ },
+ "M-D-11": {
+  "key": "x18649334",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts correct."
+ },
+ "M-D-17": {
+  "key": "x62604995",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates, no model call."
+ },
+ "M-A-15": {
+  "key": "x42872086",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "XL-A-19": {
+  "key": "x47405237",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts correct."
+ },
+ "S-I-18": {
+  "key": "x77674048",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "L-A-26": {
+  "key": "x79667719",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds DashScope default."
+ },
+ "XL-A-20": {
+  "key": "x907568810",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, key-sentence excerpts."
+ },
+ "M-A-20": {
+  "key": "x934201111",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, key-sentence excerpts."
+ },
+ "L-D-8": {
+  "key": "x97570520",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "M-A-24": {
+  "key": "x54865671",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disables requests, use desktop app all covered."
+ },
+ "L-H-16": {
+  "key": "x47474832",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days correct."
+ },
+ "S-I-27": {
+  "key": "x22672863",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, value, and default all stated."
+ },
+ "L-I-16": {
+  "key": "x28724294",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days correct."
+ },
+ "M-I-27": {
+  "key": "x85739415",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, value, and default all stated."
+ },
+ "XL-D-10": {
+  "key": "x98978246",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Sets preload false; mentions default native preload."
+ },
+ "S-I-9": {
+  "key": "x50561317",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present, no contradiction."
+ },
+ "M-A-22": {
+  "key": "x15905978",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Setting, default contents, and no prompts/keys/paths sent."
+ },
+ "L-D-22": {
+  "key": "x40758149",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Setting and default contents correct; no prompts/paths implied by no body."
+ },
+ "XL-A-18": {
+  "key": "x914432210",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "120 spacing stated; base+110 fact missing."
+ },
+ "S-I-29": {
+  "key": "x998181311",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly."
+ },
+ "L-H-24": {
+  "key": "x41123400",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redaction disables requests, desktop app all stated."
+ },
+ "XL-H-6": {
+  "key": "x84377941",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, set true, no restart all covered."
+ },
+ "M-A-7": {
+  "key": "x67701292",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default and interrupt correct."
+ },
+ "L-H-5": {
+  "key": "x75539223",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "M-D-12": {
+  "key": "x17339254",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both values correct."
+ },
+ "XL-I-21": {
+  "key": "x86304635",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https, /search, cache key all covered."
+ },
+ "XL-D-11": {
+  "key": "x11622886",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key without prefix, correct."
+ },
+ "L-A-27": {
+  "key": "x92341357",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, value, default all stated."
+ },
+ "M-I-14": {
+  "key": "x72202988",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Local baseUrl and omit apiKey."
+ },
+ "XL-I-20": {
+  "key": "x36486729",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true with excerpts."
+ },
+ "M-I-9": {
+  "key": "x671826010",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present, no contradiction."
+ },
+ "L-A-12": {
+  "key": "x877590811",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "XL-H-21": {
+  "key": "x81004580",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "XL-D-19": {
+  "key": "x33925811",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated; extra detail consistent."
+ },
+ "XL-H-27": {
+  "key": "x99782182",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China value, and intl default all present."
+ },
+ "M-D-21": {
+  "key": "x29099293",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "L-A-3": {
+  "key": "x26762534",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifiers, no auto-send, check/send CLI all present."
+ },
+ "S-I-1": {
+  "key": "x29617265",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, lookup per HTML activity, avoids traffic/errors."
+ },
+ "L-I-26": {
+  "key": "x31702816",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds DashScope default stated."
+ },
+ "M-D-8": {
+  "key": "x24381637",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/start ticks, no procps needed."
+ },
+ "M-A-11": {
+  "key": "x79068018",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix."
+ },
+ "M-A-12": {
+  "key": "x34186919",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "L-D-11": {
+  "key": "x779918210",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no prefix."
+ },
+ "M-D-3": {
+  "key": "x605377511",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifiers, no auto-send, CLI commands all present."
+ },
+ "L-A-23": {
+  "key": "x64672840",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated: one trust domain, mutual trust, separate gateways."
+ },
+ "M-H-4": {
+  "key": "x20161711",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, default terminal, and no side-effects warning all present."
+ },
+ "L-H-12": {
+  "key": "x17821852",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both per-channel-peer and per-account-channel-peer given."
+ },
+ "L-A-21": {
+  "key": "x35773213",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https://, /search rule, and cache key all covered."
+ },
+ "L-H-15": {
+  "key": "x34785994",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick for facts, thorough for synthesis."
+ },
+ "L-I-2": {
+  "key": "x84179655",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id dedup, 24 hours, survives restart."
+ },
+ "XL-A-29": {
+  "key": "x35385856",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, remove rejected explicitly, bot needs reaction feature."
+ },
+ "L-A-15": {
+  "key": "x70435387",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts correctly stated."
+ },
+ "M-D-16": {
+  "key": "x34229098",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h cooldown, 3 fires, 90-day expiry."
+ },
+ "L-A-6": {
+  "key": "x98948179",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Restart not confirmed as unnecessary; hedged and conditional."
+ },
+ "L-H-20": {
+  "key": "x629232310",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, key-sentence excerpts included."
+ },
+ "L-D-24": {
+  "key": "x122429711",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Lookup order, standalone disables requests, use desktop app."
+ },
+ "M-A-0": {
+  "key": "x64524780",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "M-H-22": {
+  "key": "x46493881",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered; extras don't contradict."
+ },
+ "XL-D-24": {
+  "key": "x71404652",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redaction disabling, desktop app all stated."
+ },
+ "XL-H-8": {
+  "key": "x72472703",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/start ticks, no procps."
+ },
+ "M-A-8": {
+  "key": "x35120424",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/start ticks, no procps."
+ },
+ "M-I-24": {
+  "key": "x10511985",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redaction disabling, desktop app all stated."
+ },
+ "L-A-28": {
+  "key": "x93287516",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot messages, other options listed."
+ },
+ "L-A-29": {
+  "key": "x79398257",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Explicit error and reaction feature registration covered."
+ },
+ "XL-I-1": {
+  "key": "x35574298",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids extra traffic/errors."
+ },
+ "XL-I-29": {
+  "key": "x57332049",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Explicit error and reaction feature registration covered."
+ },
+ "M-I-15": {
+  "key": "x722559710",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick facts, thorough synthesis."
+ },
+ "M-I-3": {
+  "key": "x873051411",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "ID fields, no auto-send, raft check/send."
+ },
+ "L-A-11": {
+  "key": "x94486430",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as returned, no lmstudio/ prefix; matches."
+ },
+ "XL-I-4": {
+  "key": "x95673371",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Has scope harness, terminal default, and no side effects caveat."
+ },
+ "L-I-14": {
+  "key": "x35837962",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl to localhost:8000, omit apiKey."
+ },
+ "XL-H-18": {
+  "key": "x65381613",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 ports apart; base+110 stated."
+ },
+ "L-D-0": {
+  "key": "x98896374",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated; extras not contradictory."
+ },
+ "XL-H-16": {
+  "key": "x53233565",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h cooldown, 3 fires, 90 days expiry."
+ },
+ "S-D2-17": {
+  "key": "x75354260",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both stated."
+ },
+ "XL-G2-18": {
+  "key": "x87680331",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated; CDP detail extra, not contradictory."
+ },
+ "S-D2-11": {
+  "key": "x50734982",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix."
+ },
+ "S-D2-12": {
+  "key": "x89889093",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values given correctly."
+ },
+ "S-G2-8": {
+  "key": "x79979674",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/start ticks, no procps on Alpine."
+ },
+ "S-D2-14": {
+  "key": "x15809535",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local server, apiKey omitted."
+ },
+ "S-D2-18": {
+  "key": "x86804726",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "M-G2-28": {
+  "key": "x13667687",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, emits on bot messages, other options listed."
+ },
+ "S-G2-21": {
+  "key": "x15325528",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https://, /search, and cache key all covered."
+ },
+ "L-D2-14": {
+  "key": "x77277349",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local, apiKey omitted."
+ },
+ "S-D2-25": {
+  "key": "x111200010",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Ctrl+Enter sends, Enter newline, 8,000 limit."
+ },
+ "L-G2-12": {
+  "key": "x125016011",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "per-channel-peer and per-account-channel-peer given."
+ },
+ "M-G2-10": {
+  "key": "x74367010",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated: preload false, default preload."
+ },
+ "XL-G2-1": {
+  "key": "x39428611",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered."
+ },
+ "XL-D2-8": {
+  "key": "x50128322",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID and start ticks, no procps."
+ },
+ "XL-D2-20": {
+  "key": "x82581413",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true and key-sentence excerpts."
+ },
+ "S-D2-15": {
+  "key": "x21717294",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated correctly."
+ },
+ "L-D2-7": {
+  "key": "x16359265",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default, interrupt aborts."
+ },
+ "XL-G2-26": {
+  "key": "x64971586",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "XL-D2-27": {
+  "key": "x60009007",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China URL, intl default all present."
+ },
+ "L-D2-24": {
+  "key": "x92489768",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disables, use desktop app."
+ },
+ "M-G2-20": {
+  "key": "x89122209",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, key-sentence excerpts."
+ },
+ "XL-D2-5": {
+  "key": "x645247810",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "M-G2-29": {
+  "key": "x348893111",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Explicit rejection reason and reaction bot registration."
+ },
+ "M-G2-0": {
+  "key": "x22769450",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated, including admin consent and Files.Read.All optional."
+ },
+ "S-G2-12": {
+  "key": "x91105971",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "XL-G2-6": {
+  "key": "x94456662",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, true/remove, no restart all correct."
+ },
+ "M-D2-18": {
+  "key": "x51731093",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 ports and base+110 both stated."
+ },
+ "XL-D2-28": {
+  "key": "x65487014",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Default own and options given, but hedged on what own does."
+ },
+ "XL-G2-19": {
+  "key": "x58447725",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "cdpPort key and avoid same cdpUrl both stated."
+ },
+ "M-G2-7": {
+  "key": "x74986316",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default and interrupt correct."
+ },
+ "M-G2-16": {
+  "key": "x16781607",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days correct."
+ },
+ "S-G2-24": {
+  "key": "x64693278",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Lookup order, redaction disabling requests, desktop app all stated."
+ },
+ "L-D2-10": {
+  "key": "x19508729",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false under lmstudio provider; default preload stated."
+ },
+ "XL-D2-2": {
+  "key": "x579610210",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24 hours, persists across restarts."
+ },
+ "L-G2-25": {
+  "key": "x937043511",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Ctrl+Enter sends, Enter newline, 8,000 chars."
+ },
+ "XL-G2-15": {
+  "key": "x92600690",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "L-G2-27": {
+  "key": "x47930251",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China value, and intl default all present."
+ },
+ "L-G2-0": {
+  "key": "x41871722",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered including admin consent."
+ },
+ "L-G2-10": {
+  "key": "x82991553",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false and default preload both stated."
+ },
+ "S-D2-22": {
+  "key": "x95557854",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Setting, default fields, and nothing sensitive sent."
+ },
+ "M-G2-24": {
+  "key": "x70753885",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redaction disables requests, use desktop app."
+ },
+ "XL-D2-4": {
+  "key": "x53449486",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope option, default terminal, side-effects caveat all stated."
+ },
+ "XL-D2-7": {
+  "key": "x85743097",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default, interrupt aborts."
+ },
+ "M-D2-17": {
+  "key": "x95439738",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates, no model call."
+ },
+ "L-D2-16": {
+  "key": "x98057529",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days."
+ },
+ "S-G2-13": {
+  "key": "x901493810",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All rollback settings stated correctly."
+ },
+ "S-G2-9": {
+  "key": "x562003111",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated, no contradictions."
+ },
+ "S-G2-7": {
+  "key": "x60843460",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly."
+ },
+ "S-D2-9": {
+  "key": "x14153621",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered."
+ },
+ "L-D2-27": {
+  "key": "x97647542",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, value, and default all stated."
+ },
+ "S-G2-11": {
+  "key": "x98257413",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no prefix."
+ },
+ "M-G2-27": {
+  "key": "x68690494",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated."
+ },
+ "S-D2-3": {
+  "key": "x92848835",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All identifiers, no auto-send, CLI commands."
+ },
+ "L-D2-25": {
+  "key": "x72984666",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct."
+ },
+ "L-D2-9": {
+  "key": "x71834737",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-D2-23": {
+  "key": "x67913768",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Trust domain, trust each other, separate gateways."
+ },
+ "XL-G2-16": {
+  "key": "x53581719",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days."
+ },
+ "M-G2-12": {
+  "key": "x365380710",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "L-G2-16": {
+  "key": "x344563811",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All defaults correct."
+ },
+ "XL-G2-29": {
+  "key": "x94081050",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both add-only/explicit error and reaction bot feature stated."
+ },
+ "M-D2-25": {
+  "key": "x26715411",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Ctrl+Enter sends, Enter newline, 8,000 chars."
+ },
+ "XL-D2-29": {
+  "key": "x56608442",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly."
+ },
+ "XL-D2-12": {
+  "key": "x49645963",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "L-G2-11": {
+  "key": "x87465564",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix."
+ },
+ "S-G2-3": {
+  "key": "x68641485",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifiers, no auto-send, and raft CLI commands all present."
+ },
+ "L-D2-12": {
+  "key": "x57987756",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "L-G2-15": {
+  "key": "x98509167",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick facts, thorough synthesis all stated."
+ },
+ "M-D2-4": {
+  "key": "x87215988",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, default terminal, side-effect caveat all covered."
+ },
+ "L-G2-5": {
+  "key": "x13907989",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Debug log, record, and contents all correct."
+ },
+ "S-D2-27": {
+  "key": "x952820110",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China URL, and intl default all given."
+ },
+ "M-D2-14": {
+  "key": "x705323011",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Local baseUrl and omit apiKey stated."
+ },
+ "M-G2-5": {
+  "key": "x27252060",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "M-D2-23": {
+  "key": "x70923651",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Trust domain, trusted-only sharing, separate gateways all covered."
+ },
+ "S-G2-16": {
+  "key": "x89880492",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days all correct."
+ },
+ "S-G2-15": {
+  "key": "x84713043",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts match."
+ },
+ "XL-G2-5": {
+  "key": "x17254194",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present; extra caveat harmless."
+ },
+ "S-G2-0": {
+  "key": "x32932605",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Permissions, Files.Read.All condition, admin consent all stated."
+ },
+ "L-D2-28": {
+  "key": "x87762606",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, behavior, other options correct."
+ },
+ "S-G2-2": {
+  "key": "x57363097",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Bridge event id, 24h, persists across restarts."
+ },
+ "L-G2-6": {
+  "key": "x89914638",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Hedges on restart; says restart if still failing, not definitive no."
+ },
+ "XL-G2-4": {
+  "key": "x54496989",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, default terminal, side-effect warning all present."
+ },
+ "XL-D2-14": {
+  "key": "x147051710",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local and omit apiKey both stated."
+ },
+ "S-D2-6": {
+  "key": "x358398011",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, set true, no restart needed all stated."
+ },
+ "L-G2-18": {
+  "key": "x71953450",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "States 120 spacing and base+110."
+ },
+ "S-D2-0": {
+  "key": "x56937791",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "S-G2-5": {
+  "key": "x16132422",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "M-G2-13": {
+  "key": "x74459253",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three settings correct."
+ },
+ "S-D2-16": {
+  "key": "x79216584",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days correct."
+ },
+ "L-G2-13": {
+  "key": "x76154905",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three settings correct."
+ },
+ "L-D2-5": {
+  "key": "x16987426",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "M-D2-10": {
+  "key": "x78020047",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false and default enabled both stated."
+ },
+ "S-G2-1": {
+  "key": "x82192158",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/errors."
+ },
+ "L-D2-0": {
+  "key": "x39659139",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "XL-D2-24": {
+  "key": "x379977610",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redaction disables requests, use desktop app."
+ },
+ "M-G2-3": {
+  "key": "x717403311",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "M-G2-22": {
+  "key": "x40882400",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated including no prompts/keys/paths sent."
+ },
+ "S-D2-8": {
+  "key": "x11753871",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID, start ticks, no procps all stated."
+ },
+ "L-G2-7": {
+  "key": "x57077292",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default; interrupt aborts and restarts."
+ },
+ "L-D2-13": {
+  "key": "x74591323",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three rollback settings correct."
+ },
+ "XL-D2-17": {
+  "key": "x19427304",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates, no model call."
+ },
+ "M-G2-2": {
+  "key": "x65964035",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Bridge event id, 24h, persists across restarts."
+ },
+ "L-G2-28": {
+  "key": "x69992796",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot messages only, other options listed."
+ },
+ "L-G2-23": {
+  "key": "x88393787",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust boundary, mutual trust, separate gateways for adversarial."
+ },
+ "M-D2-24": {
+  "key": "x19022308",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redaction disables requests, use desktop app."
+ },
+ "M-D2-22": {
+  "key": "x17015359",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated correctly."
+ },
+ "L-D2-11": {
+  "key": "x867782910",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix."
+ },
+ "XL-D2-25": {
+  "key": "x139726411",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Ctrl+Enter sends, Enter newline, 8,000 limit."
+ },
+ "L-G2-4": {
+  "key": "x74303280",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "S-G2-23": {
+  "key": "x20896191",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present, extras consistent."
+ },
+ "XL-D2-1": {
+  "key": "x53257812",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/permission errors."
+ },
+ "L-G2-24": {
+  "key": "x48456383",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redaction disables requests, use desktop app."
+ },
+ "M-D2-2": {
+  "key": "x85213184",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Bridge event id, 24h, persists across restarts."
+ },
+ "XL-D2-0": {
+  "key": "x66684185",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered including admin consent."
+ },
+ "S-G2-26": {
+  "key": "x79080406",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "M-G2-17": {
+  "key": "x41809647",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates, no model call."
+ },
+ "L-D2-1": {
+  "key": "x49090028",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "XL-G2-7": {
+  "key": "x34432699",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default; interrupt aborts run."
+ },
+ "S-G2-4": {
+  "key": "x576371410",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "XL-D2-23": {
+  "key": "x847938711",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits 'share only with mutually trusting people' framing partially; mentions trust team"
+ },
+ "XL-G2-3": {
+  "key": "x37633250",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "L-D2-15": {
+  "key": "x25474131",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts match."
+ },
+ "XL-G2-24": {
+  "key": "x53570262",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redaction disabling, desktop app all stated."
+ },
+ "XL-D2-18": {
+  "key": "x97924863",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 both stated."
+ },
+ "M-D2-28": {
+  "key": "x58583704",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot messages, other options given (allowlist omitted but fine)."
+ },
+ "M-G2-23": {
+  "key": "x60978015",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Trust domain, mutual trust, separate gateways stated."
+ },
+ "S-D2-29": {
+  "key": "x40542656",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, and reaction-capable bot registration stated."
+ },
+ "L-D2-20": {
+  "key": "x34186917",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true and key-sentence excerpts stated."
+ },
+ "M-G2-1": {
+  "key": "x36016828",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/permission errors."
+ },
+ "XL-G2-23": {
+  "key": "x62187769",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Trust boundary, trusted-only, separate gateways for adversarial users."
+ },
+ "L-G2-2": {
+  "key": "x951389310",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24 hours, persists across restarts."
+ },
+ "L-D2-21": {
+  "key": "x577092611",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https prefix, /search, cache key all stated."
+ },
+ "M-G2-21": {
+  "key": "x83369240",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated"
+ },
+ "XL-D2-15": {
+  "key": "x63371341",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present"
+ },
+ "L-G2-26": {
+  "key": "x91663012",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default"
+ },
+ "L-D2-19": {
+  "key": "x87818843",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated"
+ },
+ "M-D2-12": {
+  "key": "x30037754",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both values correct"
+ },
+ "M-D2-20": {
+  "key": "x96358985",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts present"
+ },
+ "S-D2-1": {
+  "key": "x70163436",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered"
+ },
+ "M-G2-15": {
+  "key": "x85335567",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present"
+ },
+ "M-G2-11": {
+  "key": "x92935378",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated"
+ },
+ "XL-G2-20": {
+  "key": "x60701639",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts present"
+ },
+ "L-D2-4": {
+  "key": "x481486610",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated"
+ },
+ "S-D2-20": {
+  "key": "x294216711",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts present"
+ },
+ "S-D2-23": {
+  "key": "x53286380",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated; extras don't contradict."
+ },
+ "M-D2-29": {
+  "key": "x62261741",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, and reaction bot feature both stated."
+ },
+ "S-D2-2": {
+  "key": "x58198102",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Bridge event id, 24 hours, persists across restarts."
+ },
+ "S-D2-5": {
+  "key": "x54888713",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered."
+ },
+ "L-D2-3": {
+  "key": "x92926414",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifier fields, no auto-send, raft message check/send."
+ },
+ "L-D2-26": {
+  "key": "x74309265",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "M-D2-8": {
+  "key": "x33712986",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID, start ticks, no procps."
+ },
+ "S-G2-19": {
+  "key": "x53069017",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both cdpPort per instance and cdpUrl avoidance stated."
+ },
+ "L-D2-18": {
+  "key": "x99897848",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "S-G2-25": {
+  "key": "x87408009",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Ctrl+Enter sends, Enter newline, 8,000 chars."
+ },
+ "XL-D2-11": {
+  "key": "x733026410",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as returned, no lmstudio/ prefix."
+ },
+ "M-D2-7": {
+  "key": "x271373111",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default steer; interrupt aborts and restarts."
+ },
+ "M-G2-26": {
+  "key": "x79995650",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default; matches."
+ },
+ "M-G2-6": {
+  "key": "x65434991",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, true/remove, no restart all stated."
+ },
+ "M-D2-11": {
+  "key": "x17622382",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix."
+ },
+ "M-D2-15": {
+  "key": "x53985413",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "XL-G2-27": {
+  "key": "x41507434",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China value, intl default all present."
+ },
+ "S-G2-17": {
+  "key": "x59956785",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call."
+ },
+ "S-D2-28": {
+  "key": "x25004576",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot messages only, other options listed."
+ },
+ "XL-G2-28": {
+  "key": "x99657997",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Doesn't state own means reactions to bot's messages."
+ },
+ "S-G2-22": {
+  "key": "x46300138",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Setting, default contents, and non-sent items all covered."
+ },
+ "M-D2-27": {
+  "key": "x49422129",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China value, intl default present."
+ },
+ "XL-D2-6": {
+  "key": "x386860810",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, true/remove, no restart all stated."
+ },
+ "M-D2-19": {
+  "key": "x239519311",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "cdpPort per profile and cdpUrl warning stated."
+ },
+ "L-D2-22": {
+  "key": "x95531440",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits fact that no prompts, messages, keys, or paths are sent."
+ },
+ "S-D2-7": {
+  "key": "x51692031",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both steer default and interrupt correct."
+ },
+ "L-G2-21": {
+  "key": "x87191282",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "M-G2-18": {
+  "key": "x63066133",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "S-D2-4": {
+  "key": "x67602294",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts including side-effects caveat covered."
+ },
+ "S-D2-24": {
+  "key": "x80943615",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redaction disables standalone, desktop app all covered."
+ },
+ "XL-G2-14": {
+  "key": "x20236916",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl localhost and omit apiKey stated."
+ },
+ "XL-D2-16": {
+  "key": "x59666567",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days correct."
+ },
+ "S-G2-28": {
+  "key": "x13170838",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, semantics, other options mostly listed; allowlist omitted but acceptable."
+ },
+ "S-D2-10": {
+  "key": "x73143499",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false and default preload stated."
+ },
+ "L-G2-1": {
+  "key": "x677367810",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic errors."
+ },
+ "S-G2-27": {
+  "key": "x659896511",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China URL, and intl default all stated."
+ },
+ "M-D2-16": {
+  "key": "x29552530",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three defaults stated correctly."
+ },
+ "XL-G2-8": {
+  "key": "x64721131",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID, start ticks, no procps all stated."
+ },
+ "M-D2-13": {
+  "key": "x87616992",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three config facts match."
+ },
+ "XL-D2-3": {
+  "key": "x48109023",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "ID fields, no auto-send, raft check/send all present."
+ },
+ "S-D2-21": {
+  "key": "x17565774",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https://, /search, and cache key all covered."
+ },
+ "XL-G2-22": {
+  "key": "x40647685",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits that no prompts, messages, keys, paths are sent."
+ },
+ "M-G2-14": {
+  "key": "x41473916",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Local baseUrl and omit apiKey both stated."
+ },
+ "XL-D2-22": {
+  "key": "x51752957",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits that no prompts, messages, keys, paths are sent."
+ },
+ "M-G2-4": {
+  "key": "x46082548",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, terminal default, side-effects caveat all present."
+ },
+ "XL-G2-11": {
+  "key": "x61775239",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix."
+ },
+ "S-G2-29": {
+  "key": "x594150810",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, remove rejected explicitly, bot reaction registration."
+ },
+ "S-D2-26": {
+  "key": "x417066111",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds DashScope default stated."
+ },
+ "S-G2-18": {
+  "key": "x14493900",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both 120 spacing and base+110 stated"
+ },
+ "M-D2-3": {
+  "key": "x37860911",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All identifiers, no auto-send, raft check/send covered"
+ },
+ "XL-G2-12": {
+  "key": "x34159582",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct"
+ },
+ "S-D2-13": {
+  "key": "x20019093",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three settings correct"
+ },
+ "L-G2-8": {
+  "key": "x40695244",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID, start ticks, no procps"
+ },
+ "M-D2-5": {
+  "key": "x96557625",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Matches reference fully"
+ },
+ "M-D2-21": {
+  "key": "x69699636",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https://, /search, cache key all stated"
+ },
+ "M-D2-0": {
+  "key": "x65322007",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All permissions and admin consent covered"
+ },
+ "XL-D2-21": {
+  "key": "x43103578",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated"
+ },
+ "M-D2-1": {
+  "key": "x59646889",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra lookup, avoids traffic/errors"
+ },
+ "XL-G2-17": {
+  "key": "x237730110",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates, no model call"
+ },
+ "M-G2-9": {
+  "key": "x332364811",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Check load/logs, no broadening, retry"
+ },
+ "XL-G2-21": {
+  "key": "x16613360",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing endpoint being part of the cache key."
+ },
+ "L-G2-22": {
+  "key": "x80333811",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing statement that no prompts/messages/keys/paths are sent."
+ },
+ "L-D2-17": {
+  "key": "x44073692",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both stated."
+ },
+ "XL-G2-0": {
+  "key": "x50749003",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-G2-29": {
+  "key": "x38980324",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, bot reaction feature all covered."
+ },
+ "S-G2-10": {
+  "key": "x13448255",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload:false and default-on both stated."
+ },
+ "XL-G2-13": {
+  "key": "x54933726",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three settings stated correctly."
+ },
+ "M-D2-9": {
+  "key": "x57697877",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Load/logs, no broadening, retry all present."
+ },
+ "XL-G2-10": {
+  "key": "x55676938",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload:false and default preload stated."
+ },
+ "XL-G2-2": {
+  "key": "x64048259",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24h, restart persistence all stated."
+ },
+ "L-D2-2": {
+  "key": "x515583310",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24h, restart persistence all stated."
+ },
+ "XL-D2-19": {
+  "key": "x909334211",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "cdpPort per instance and no shared cdpUrl stated."
+ },
+ "M-D2-26": {
+  "key": "x32522930",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default stated"
+ },
+ "M-G2-25": {
+  "key": "x82423991",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct"
+ },
+ "S-D2-19": {
+  "key": "x70342112",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated"
+ },
+ "S-G2-6": {
+  "key": "x62821603",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, true/remove, no restart all stated"
+ },
+ "M-D2-6": {
+  "key": "x40456764",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present"
+ },
+ "L-G2-19": {
+  "key": "x81212495",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated"
+ },
+ "L-D2-29": {
+  "key": "x45598586",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, reaction feature bot"
+ },
+ "XL-G2-25": {
+  "key": "x59444657",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct"
+ },
+ "XL-G2-9": {
+  "key": "x33798978",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Host load/logs, no broaden, retry all covered"
+ },
+ "XL-D2-13": {
+  "key": "x94096089",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "dmPolicy, exec deny/always, elevated false"
+ },
+ "XL-D2-10": {
+  "key": "x181891210",
+  "correct": true,
+  "facts_hit": 1,
+  "reason": "preload false stated; default implied by 'stop preloading'"
+ },
+ "L-D2-6": {
+  "key": "x854153211",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, true/remove, no restart"
+ },
+ "M-G2-19": {
+  "key": "x69741220",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly."
+ },
+ "M-G2-8": {
+  "key": "x83353651",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "XL-A-0": {
+  "key": "x66263402",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered including admin consent."
+ },
+ "L-G2-3": {
+  "key": "x16323723",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "XL-D2-9": {
+  "key": "x51254324",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Says no broaden permissions; lacks check host load/logs, retry remaining."
+ },
+ "L-G2-14": {
+  "key": "x14462305",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl localhost and omit apiKey."
+ },
+ "S-G2-14": {
+  "key": "x18244906",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl localhost and omit apiKey."
+ },
+ "L-D2-8": {
+  "key": "x93229917",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "L-G2-20": {
+  "key": "x30701538",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, key sentence excerpts."
+ },
+ "L-G2-17": {
+  "key": "x61401559",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates, no model call."
+ },
+ "XL-D2-26": {
+  "key": "x495238410",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds DashScope default."
+ },
+ "L-G2-9": {
+  "key": "x562185111",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "S-G2-20": {
+  "key": "x85976300",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "States default { highlights: true } and key-sentence excerpts included."
+ }
+}

@@ -1,0 +1,198 @@
+{
+  "mode": "gte-mb-int8",
+  "load_ms": 2107,
+  "index_docs_ms": 1536,
+  "throughput_chunks_per_s": 19.52034834295862,
+  "query_p50_ms": 13.030477000000001,
+  "query_p95_ms": 17.98013,
+  "peak_rss_mb": 1230.6875,
+  "rss_after_load_mb": 889.8046875,
+  "model_disk_mb": 340.8482475280762,
+  "results": {
+    "bm25": {
+      "same-lang": {
+        "n": 30,
+        "r1": 0.7333333333333333,
+        "r3": 0.9666666666666667,
+        "mrr": 0.8472222222222222
+      },
+      "doc:ja": {
+        "n": 30,
+        "r1": 0.26666666666666666,
+        "r3": 0.3333333333333333,
+        "mrr": 0.2944444444444444
+      },
+      "q:ja": {
+        "n": 30,
+        "r1": 0.3,
+        "r3": 0.36666666666666664,
+        "mrr": 0.3361111111111111
+      },
+      "q:en": {
+        "n": 30,
+        "r1": 0.23333333333333334,
+        "r3": 0.36666666666666664,
+        "mrr": 0.2944444444444444
+      },
+      "doc:en": {
+        "n": 30,
+        "r1": 0.3,
+        "r3": 0.4,
+        "mrr": 0.3648148148148148
+      },
+      "doc:vi": {
+        "n": 30,
+        "r1": 0.23333333333333334,
+        "r3": 0.3333333333333333,
+        "mrr": 0.29166666666666663
+      },
+      "q:vi": {
+        "n": 30,
+        "r1": 0.26666666666666666,
+        "r3": 0.3333333333333333,
+        "mrr": 0.32037037037037036
+      },
+      "all": {
+        "n": 90,
+        "r1": 0.26666666666666666,
+        "r3": 0.35555555555555557,
+        "mrr": 0.31697530864197526
+      },
+      "cross-lang": {
+        "n": 60,
+        "r1": 0.03333333333333333,
+        "r3": 0.05,
+        "mrr": 0.05185185185185185
+      }
+    },
+    "gte-mb-int8": {
+      "all": {
+        "n": 90,
+        "r1": 0.9888888888888889,
+        "r3": 1.0,
+        "mrr": 0.9944444444444445
+      },
+      "cross-lang": {
+        "n": 60,
+        "r1": 0.9833333333333333,
+        "r3": 1.0,
+        "mrr": 0.9916666666666667
+      },
+      "q:en": {
+        "n": 30,
+        "r1": 1.0,
+        "r3": 1.0,
+        "mrr": 1.0
+      },
+      "q:ja": {
+        "n": 30,
+        "r1": 1.0,
+        "r3": 1.0,
+        "mrr": 1.0
+      },
+      "doc:en": {
+        "n": 30,
+        "r1": 0.9666666666666667,
+        "r3": 1.0,
+        "mrr": 0.9833333333333333
+      },
+      "doc:ja": {
+        "n": 30,
+        "r1": 1.0,
+        "r3": 1.0,
+        "mrr": 1.0
+      },
+      "doc:vi": {
+        "n": 30,
+        "r1": 1.0,
+        "r3": 1.0,
+        "mrr": 1.0
+      },
+      "same-lang": {
+        "n": 30,
+        "r1": 1.0,
+        "r3": 1.0,
+        "mrr": 1.0
+      },
+      "q:vi": {
+        "n": 30,
+        "r1": 0.9666666666666667,
+        "r3": 1.0,
+        "mrr": 0.9833333333333333
+      }
+    }
+  },
+  "misses": {
+    "gte-mb-int8": [
+      "[vi→en-security-incident] nghi ngờ bị lộ mật khẩu công ty thì báo cho ai, làm gì => vi-password-reset"
+    ],
+    "bm25": [
+      "[vi→vi-return] mua về không vừa ý thì có mang trả lại được không, trong bao lâu? => vi-payment-installment",
+      "[en→vi-return] Can I send back a product I bought if I don't like it, and what is the deadline? => en-rice-cooker-error",
+      "[ja→vi-return] 購入した商品が気に入らない場合、何日以内なら返品や交換ができますか？ => ja-cancel-order",
+      "[en→vi-warranty] How long is the guarantee on the air purifier motor? => en-api-rate-limit",
+      "[ja→vi-warranty] 空気清浄機の保証期間はどのくらいですか？ => ja-points",
+      "[vi→vi-shipping-domestic] ship về Đà Nẵng mất mấy ngày, có mất phí không => vi-aircon-cleaning",
+      "[en→vi-shipping-domestic] How many days does delivery take to provinces in Vietnam and is it free? => en-api-rate-limit",
+      "[ja→vi-shipping-domestic] ベトナム国内の配送料と届くまでの日数を教えてください => ja-delivery-time",
+      "[vi→vi-payment-installment] không đủ tiền mua tủ lạnh, có chia nhỏ thanh toán hàng tháng được không => vi-shipping-domestic",
+      "[en→vi-payment-installment] Can I pay in monthly installments with no interest? => en-expense",
+      "[ja→vi-payment-installment] 分割払いで金利なしで購入できますか？ => ja-aircon-filter",
+      "[en→vi-loyalty] What discount do gold and diamond members get and how are points earned? => en-privacy-data",
+      "[ja→vi-loyalty] 会員ランクごとの割引率とポイントの貯め方は？ => ja-points",
+      "[en→vi-store-hours] What time does the Ho Chi Minh City showroom close on weekends? => vi-payment-installment",
+      "[ja→vi-store-hours] ハノイのショールームの営業時間は何時から何時までですか？ => ja-overtime",
+      "[en→vi-leave-policy] How many days of annual vacation do staff get and can unused days carry over? => en-api-rate-limit",
+      "[ja→vi-leave-policy] 年次有給休暇は何日ありますか？繰り越しはできますか？ => ja-delivery-time",
+      "[en→vi-invoice] My company needs a tax invoice with our tax code, what do I need to provide? => en-remote-work",
+      "[ja→vi-invoice] 法人として付加価値税のインボイスを発行してもらうには何が必要ですか？ => ja-receipt-reissue",
+      "[en→vi-aircon-cleaning] How do I wash the dust filter of my air conditioner myself? => en-api-rate-limit",
+      "[ja→vi-aircon-cleaning] エアコンを自分で掃除する方法を教えてください => ja-earthquake",
+      "[en→vi-password-reset] I forgot my login password for the mobile app, how do I recover it? => en-security-incident",
+      "[ja→vi-password-reset] アプリのパスワードを忘れてログインできません => ja-points",
+      "[vi→en-refund] trả hàng rồi bao lâu thì tiền về thẻ tín dụng => vi-payment-installment",
+      "[ja→en-refund] 返品後、クレジットカードへの返金はいつ反映されますか？ => ja-cancel-order",
+      "[vi→en-international-shipping] có gửi hàng sang Nhật Bản không, thuế nhập khẩu ai trả => vi-password-reset",
+      "[ja→en-international-shipping] 海外発送はしていますか？関税は誰が払いますか？ => ja-cancel-order",
+      "[vi→en-security-incident] nghi ngờ bị lộ mật khẩu công ty thì báo cho ai, làm gì => vi-password-reset",
+      "[en→en-security-incident] I clicked a phishing link, what should I do? => en-api-rate-limit",
+      "[ja→en-security-incident] 不正アクセスやフィッシングを見つけたときの報告手順は？ => ja-overtime",
+      "[vi→en-remote-work] một tuần được làm việc ở nhà mấy ngày => vi-aircon-cleaning",
+      "[ja→en-remote-work] 在宅勤務は週に何日まで可能ですか？ => ja-overtime",
+      "[vi→en-onboarding] nhân viên mới ngày đầu tiên đi làm sẽ nhận được gì => vi-leave-policy",
+      "[ja→en-onboarding] 新入社員は入社初日に何を受け取りますか？ => -",
+      "[vi→en-rice-cooker-error] nồi cơm điện báo lỗi E2 là bị gì => vi-warranty",
+      "[ja→en-rice-cooker-error] 炊飯器にエラーコードE1が表示されました => ja-points",
+      "[vi→en-privacy-data] tôi muốn xóa toàn bộ thông tin cá nhân khỏi hệ thống => vi-warranty",
+      "[en→en-privacy-data] How can I have my personal information erased? => en-api-rate-limit",
+      "[ja→en-privacy-data] 個人情報の削除を依頼したいです => ja-delivery-time",
+      "[vi→en-b2b-bulk] doanh nghiệp mua số lượng lớn có được chiết khấu không => vi-invoice",
+      "[en→en-b2b-bulk] Is there a volume discount for corporate purchases? => en-onboarding",
+      "[ja→en-b2b-bulk] 法人で大量購入すると割引はありますか？ => ja-aircon-filter",
+      "[vi→en-expense] đi công tác thì khách sạn được thanh toán tối đa bao nhiêu => vi-invoice",
+      "[ja→en-expense] 出張の経費精算の期限と宿泊費の上限は？ => ja-points",
+      "[vi→ja-aircon-filter] bao lâu thì phải thay tấm lọc khử mùi của điều hòa => vi-aircon-cleaning",
+      "[en→ja-aircon-filter] How often should I replace the deodorizing filter in the air conditioner? => en-api-rate-limit",
+      "[vi→ja-delivery-time] ở Nhật có chọn được khung giờ giao hàng buổi tối không => vi-store-hours",
+      "[en→ja-delivery-time] Can I choose an evening delivery time slot in Japan? => en-international-shipping",
+      "[ja→ja-delivery-time] 夜に届けてもらうことはできますか？ => ja-recycling",
+      "[vi→ja-recycling] mua tủ lạnh mới thì có thu gom tủ lạnh cũ không => vi-payment-installment",
+      "[en→ja-recycling] Will you take away my old washing machine when delivering the new one? => en-security-incident",
+      "[vi→ja-points] điểm tích lũy có bị hết hạn không => vi-leave-policy",
+      "[en→ja-points] Do my reward points expire? => en-privacy-data",
+      "[vi→ja-overtime] muốn làm thêm giờ thì phải đăng ký thế nào => vi-password-reset",
+      "[en→ja-overtime] How do I get approval to work extra hours beyond my schedule? => en-remote-work",
+      "[vi→ja-wifi-setup] kết nối máy với wifi nhà không được => vi-payment-installment",
+      "[en→ja-wifi-setup] How do I connect my smart appliance to the wireless network? => en-api-rate-limit",
+      "[ja→ja-wifi-setup] 家電がネットにつながりません => ja-recycling",
+      "[vi→ja-cancel-order] tôi đặt nhầm, có hủy đơn được không => vi-leave-policy",
+      "[en→ja-cancel-order] Can I cancel my order before it ships? => en-privacy-data",
+      "[vi→ja-gift-wrap] có gói quà tặng không, giá bao nhiêu => vi-warranty",
+      "[en→ja-gift-wrap] Do you offer gift wrapping and how much does it cost? => en-security-incident",
+      "[vi→ja-earthquake] khi có động đất lúc đang làm việc thì phải làm gì => vi-password-reset",
+      "[en→ja-earthquake] What should staff do if an earthquake hits during work? => en-remote-work",
+      "[vi→ja-receipt-reissue] làm mất biên lai thì có xin cấp lại được không => vi-leave-policy",
+      "[en→ja-receipt-reissue] I lost my receipt, can you issue a new one? => en-onboarding"
+    ]
+  }
+}

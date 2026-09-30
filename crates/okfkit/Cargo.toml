@@ -1,0 +1,24 @@
+[package]
+name = "okfkit"
+description = "okfkit: make markdown knowledge bundles (Open Knowledge Format) work well for AI agents."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+okfkit-core.workspace = true
+okfkit-standard.workspace = true
+okfkit-analyze.workspace = true
+okfkit-index.workspace = true
+okfkit-query.workspace = true
+okfkit-lint.workspace = true

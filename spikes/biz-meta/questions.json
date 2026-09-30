@@ -1,0 +1,556 @@
+[
+ {
+  "qid": 0,
+  "cat": "list",
+  "lang": "vi",
+  "q": "Liệt kê các hợp đồng với Sakura Trading còn hiệu lực tại thời điểm hôm nay (30/09/2026).",
+  "expected": [
+   "contracts/sakura-trading/distribution-202410",
+   "contracts/sakura-trading/supply-202604",
+   "contracts/sakura-trading/supply-202510"
+  ],
+  "answer_kind": "set"
+ },
+ {
+  "qid": 1,
+  "cat": "list",
+  "lang": "en",
+  "q": "Which Warehouse SOPs are still in draft status?",
+  "expected": [
+   "sop/warehouse/returns-processing",
+   "sop/warehouse/labeling"
+  ],
+  "answer_kind": "set"
+ },
+ {
+  "qid": 2,
+  "cat": "list",
+  "lang": "ja",
+  "q": "日本向けの現行（有効な）ポリシーをすべて挙げてください。ドラフトや廃止版は除いてください。",
+  "expected": [
+   "policies/jp/returns-v2",
+   "policies/jp/shipping-v2",
+   "policies/jp/warranty-air-purifier-v2",
+   "policies/jp/warranty-rice-cooker-v2",
+   "policies/jp/installment-v2",
+   "policies/jp/loyalty-v2",
+   "policies/jp/privacy-v2",
+   "policies/jp/gift-wrap-v2"
+  ],
+  "answer_kind": "set"
+ },
+ {
+  "qid": 3,
+  "cat": "list",
+  "lang": "vi",
+  "q": "Những tài liệu nào gắn tag security được cập nhật trong năm 2026?",
+  "expected": [
+   "policies/jp/privacy-v2",
+   "sop/it/access-request",
+   "sop/it/backup",
+   "sop/it/incident",
+   "sop/it/vpn",
+   "meetings/it/2026-04-23-security-review",
+   "meetings/it/2026-03-23-security-review",
+   "meetings/it/2026-02-16-security-review",
+   "meetings/hr/2026-07-04-security-review",
+   "announcements/security-training-3",
+   "announcements/security-training-4"
+  ],
+  "answer_kind": "set"
+ },
+ {
+  "qid": 4,
+  "cat": "list",
+  "lang": "en",
+  "q": "List all contracts that expire between 2026-10-01 and 2027-06-30.",
+  "expected": [
+   "contracts/saigon-hotels-group/installation-202404",
+   "contracts/sakura-trading/supply-202604",
+   "contracts/osaka-office-supply/maintenance-202606",
+   "contracts/osaka-office-supply/installation-202505",
+   "contracts/acme-corp/installation-202605"
+  ],
+  "answer_kind": "set"
+ },
+ {
+  "qid": 5,
+  "cat": "list",
+  "lang": "ja",
+  "q": "販売終了（廃止）になった製品モデルの一覧を教えてください。",
+  "expected": [
+   "products/rice-cooker/hk-ri655",
+   "products/aircon/hk-ai432",
+   "products/fridge/hk-fr159",
+   "products/rice-cooker/hk-ri346",
+   "products/air-purifier/hk-ai856",
+   "products/rice-cooker/hk-ri804"
+  ],
+  "answer_kind": "set"
+ },
+ {
+  "qid": 6,
+  "cat": "list",
+  "lang": "vi",
+  "q": "Liệt kê các biên bản họp của phòng Nhân sự (HR) trong năm 2026.",
+  "expected": [
+   "meetings/hr/2026-06-08-hiring",
+   "meetings/hr/2026-06-30-hiring",
+   "meetings/hr/2026-08-08-hiring",
+   "meetings/hr/2026-06-30-budget",
+   "meetings/hr/2026-07-04-security-review"
+  ],
+  "answer_kind": "set"
+ },
+ {
+  "qid": 7,
+  "cat": "list",
+  "lang": "en",
+  "q": "Which Customer Support (CS) SOPs are written in Japanese?",
+  "expected": [
+   "sop/cs/ticket-triage",
+   "sop/cs/refund-approval",
+   "sop/cs/escalation",
+   "sop/cs/chat-handling"
+  ],
+  "answer_kind": "set"
+ },
+ {
+  "qid": 8,
+  "cat": "version",
+  "lang": "vi",
+  "q": "Theo chính sách đổi trả hiện hành tại Việt Nam, được đổi trả trong bao nhiêu ngày?",
+  "expected": {
+   "value": 45,
+   "fact": "return_window_days",
+   "current_doc": "policies/vn/returns-v2",
+   "other_versions": {
+    "policies/vn/returns-v1": 7
+   }
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 9,
+  "cat": "version",
+  "lang": "en",
+  "q": "Under the current return policy for Japan, how many days is the return window?",
+  "expected": {
+   "value": 14,
+   "fact": "return_window_days",
+   "current_doc": "policies/jp/returns-v2",
+   "other_versions": {
+    "policies/jp/returns-v1": 30
+   }
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 10,
+  "cat": "version",
+  "lang": "ja",
+  "q": "日本の現行の配送ポリシーでは、送料無料になる注文金額はいくらですか？",
+  "expected": {
+   "value": 5000,
+   "fact": "free_shipping_threshold",
+   "current_doc": "policies/jp/shipping-v2",
+   "other_versions": {
+    "policies/jp/shipping-v1": 4000
+   }
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 11,
+  "cat": "version",
+  "lang": "vi",
+  "q": "Theo chính sách bảo hành máy lọc không khí hiện hành tại Việt Nam, thời hạn bảo hành là bao nhiêu tháng?",
+  "expected": {
+   "value": 12,
+   "fact": "warranty_months",
+   "current_doc": "policies/vn/warranty-air-purifier-v2",
+   "other_versions": {
+    "policies/vn/warranty-air-purifier-v1": 36
+   }
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 12,
+  "cat": "version",
+  "lang": "en",
+  "q": "Under the current rice cooker warranty policy for Vietnam, how many months is the warranty?",
+  "expected": {
+   "value": 12,
+   "fact": "warranty_months",
+   "current_doc": "policies/vn/warranty-rice-cooker-v2",
+   "other_versions": {
+    "policies/vn/warranty-rice-cooker-v1": 24
+   }
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 13,
+  "cat": "version",
+  "lang": "ja",
+  "q": "ベトナムの現行の分割払いポリシーでは、分割払いの最低注文金額はいくらですか？",
+  "expected": {
+   "value": 2000000,
+   "fact": "min_order_amount",
+   "current_doc": "policies/vn/installment-v2",
+   "other_versions": {
+    "policies/vn/installment-v1": 5000000,
+    "policies/vn/installment-v3": 3000000
+   }
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 14,
+  "cat": "version",
+  "lang": "vi",
+  "q": "Theo chính sách trả góp hiện hành tại Nhật Bản, đơn tối thiểu bao nhiêu để được trả góp?",
+  "expected": {
+   "value": 25000,
+   "fact": "min_order_amount",
+   "current_doc": "policies/jp/installment-v2",
+   "other_versions": {
+    "policies/jp/installment-v3": 25000
+   }
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 15,
+  "cat": "version",
+  "lang": "en",
+  "q": "Under the current loyalty points policy for Vietnam, after how many months do points expire?",
+  "expected": {
+   "value": 6,
+   "fact": "points_expiry_months",
+   "current_doc": "policies/vn/loyalty-v2",
+   "other_versions": {
+    "policies/vn/loyalty-v1": 24,
+    "policies/vn/loyalty-v3": 12
+   }
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 16,
+  "cat": "count",
+  "lang": "vi",
+  "q": "Có bao nhiêu hợp đồng hết hạn trong năm 2026?",
+  "expected": 9,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 17,
+  "cat": "count",
+  "lang": "en",
+  "q": "How many meeting notes did the Sales department record in Q2 2026 (April–June)?",
+  "expected": 4,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 18,
+  "cat": "count",
+  "lang": "ja",
+  "q": "2026年に更新された倉庫部のSOPはいくつありますか？",
+  "expected": 4,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 19,
+  "cat": "count",
+  "lang": "vi",
+  "q": "Hiện có bao nhiêu chính sách đang có hiệu lực (stable) cho thị trường Việt Nam?",
+  "expected": 8,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 20,
+  "cat": "count",
+  "lang": "en",
+  "q": "How many documents are tagged 'privacy'?",
+  "expected": 7,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 21,
+  "cat": "count",
+  "lang": "ja",
+  "q": "ACME Corpとの現在有効な契約の契約金額の合計はいくらですか？",
+  "expected": {
+   "value": 10628000000,
+   "currency": "VND"
+  },
+  "answer_kind": "number"
+ },
+ {
+  "qid": 22,
+  "cat": "count",
+  "lang": "vi",
+  "q": "Có bao nhiêu SOP đang ở trạng thái nháp (draft) trên toàn công ty?",
+  "expected": 5,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 23,
+  "cat": "count",
+  "lang": "en",
+  "q": "How many contracts with Japanese customers are currently active?",
+  "expected": 9,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 24,
+  "cat": "facet",
+  "lang": "vi",
+  "q": "Những phòng ban nào có tài liệu gắn tag privacy?",
+  "expected": [
+   "CS",
+   "Legal"
+  ],
+  "answer_kind": "set"
+ },
+ {
+  "qid": 25,
+  "cat": "facet",
+  "lang": "en",
+  "q": "Which customer has the most currently active contracts, and how many?",
+  "expected": {
+   "customers": [
+    "ACME Corp"
+   ],
+   "count": 4
+  },
+  "answer_kind": "set"
+ },
+ {
+  "qid": 26,
+  "cat": "facet",
+  "lang": "ja",
+  "q": "廃止（販売終了）モデルがある製品カテゴリはどれですか？",
+  "expected": [
+   "air-purifier",
+   "aircon",
+   "fridge",
+   "rice-cooker"
+  ],
+  "answer_kind": "set"
+ },
+ {
+  "qid": 27,
+  "cat": "facet",
+  "lang": "vi",
+  "q": "Những phòng ban nào đang có SOP ở trạng thái nháp?",
+  "expected": [
+   "HR",
+   "IT",
+   "Warehouse"
+  ],
+  "answer_kind": "set"
+ },
+ {
+  "qid": 28,
+  "cat": "facet",
+  "lang": "en",
+  "q": "Which customers have at least one contract expiring in 2026?",
+  "expected": [
+   "ACME Corp",
+   "Minh Phat JSC",
+   "Saigon Hotels Group",
+   "Tokyo Denki Retail"
+  ],
+  "answer_kind": "set"
+ },
+ {
+  "qid": 29,
+  "cat": "facet",
+  "lang": "ja",
+  "q": "新しいバージョンがドラフト（未承認）として準備中のポリシーはどれですか？",
+  "expected": [
+   "policies/vn/installment-v3",
+   "policies/jp/installment-v3",
+   "policies/vn/loyalty-v3",
+   "policies/vn/gift-wrap-v3"
+  ],
+  "answer_kind": "set"
+ },
+ {
+  "qid": 30,
+  "cat": "sheet",
+  "lang": "vi",
+  "q": "Tổng số lượng tồn kho máy lọc không khí (air-purifier) ở kho HCM là bao nhiêu?",
+  "expected": 2647,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 31,
+  "cat": "sheet",
+  "lang": "en",
+  "q": "How many inventory rows in the Tokyo warehouse are below their reorder level?",
+  "expected": 3,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 32,
+  "cat": "sheet",
+  "lang": "ja",
+  "q": "大阪倉庫の炊飯器（rice-cooker）の在庫合計は何台ですか？",
+  "expected": 2249,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 33,
+  "cat": "sheet",
+  "lang": "vi",
+  "q": "Trong năm 2026, tháng nào thị trường Nhật (JP) có doanh thu cao nhất và bao nhiêu?",
+  "expected": {
+   "month": "2026-06",
+   "revenue_jpy": 197006952
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 34,
+  "cat": "sheet",
+  "lang": "en",
+  "q": "What was the total VN revenue (VND) for washing machines (washer) in Q1 2026?",
+  "expected": 9631306267,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 35,
+  "cat": "sheet",
+  "lang": "ja",
+  "q": "2026年第2四半期（4〜6月）にベトナムで最も販売台数が多かったSKUはどれで、何台ですか？",
+  "expected": {
+   "sku": "SKU-AI006",
+   "units": 337
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 36,
+  "cat": "sheet",
+  "lang": "vi",
+  "q": "Có bao nhiêu sản phẩm trong bảng giá đang ở trạng thái discontinued?",
+  "expected": 12,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 37,
+  "cat": "sheet",
+  "lang": "en",
+  "q": "What is the JPY price of SKU-AI008 in the price list?",
+  "expected": 77600,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 38,
+  "cat": "sheet",
+  "lang": "ja",
+  "q": "全倉庫の冷蔵庫（fridge）の在庫合計は？",
+  "expected": 9388,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 39,
+  "cat": "sheet",
+  "lang": "vi",
+  "q": "Tổng số lượng tồn kho của tất cả sản phẩm ở kho HN là bao nhiêu?",
+  "expected": 12374,
+  "answer_kind": "number"
+ },
+ {
+  "qid": 40,
+  "cat": "content",
+  "lang": "vi",
+  "q": "Theo quy trình nhận hàng nhập kho của phòng Kho vận, thời hạn kiểm tra (giờ) được quy định là bao nhiêu?",
+  "expected": {
+   "value": 24,
+   "doc": "sop/warehouse/receiving"
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 41,
+  "cat": "content",
+  "lang": "en",
+  "q": "In the Warehouse stock count SOP, what is the required count frequency (days)?",
+  "expected": {
+   "value": 30,
+   "doc": "sop/warehouse/stock-count"
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 42,
+  "cat": "content",
+  "lang": "ja",
+  "q": "倉庫部の梱包の手順で、梱包の最大重量（kg）はいくつと定められていますか？",
+  "expected": {
+   "value": 30,
+   "doc": "sop/warehouse/packing"
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 43,
+  "cat": "content",
+  "lang": "vi",
+  "q": "Theo quy trình an toàn xe nâng của phòng Kho vận, tốc độ tối đa (km/h) được quy định là bao nhiêu?",
+  "expected": {
+   "value": 10,
+   "doc": "sop/warehouse/forklift"
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 44,
+  "cat": "content",
+  "lang": "en",
+  "q": "What are the payment terms (days) in the distribution agreement with ACME Corp starting 2026-04?",
+  "expected": {
+   "value": 30,
+   "doc": "contracts/acme-corp/distribution-202604"
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 45,
+  "cat": "content",
+  "lang": "ja",
+  "q": "Sakura Tradingとの2024-10開始の販売代理店契約の支払条件は何日ですか？",
+  "expected": {
+   "value": 30,
+   "doc": "contracts/sakura-trading/distribution-202410"
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 46,
+  "cat": "content",
+  "lang": "vi",
+  "q": "Model HK-AI659 (máy lọc không khí) có công suất bao nhiêu W?",
+  "expected": {
+   "value": 1350,
+   "doc": "products/air-purifier/hk-ai659"
+  },
+  "answer_kind": "value"
+ },
+ {
+  "qid": 47,
+  "cat": "content",
+  "lang": "en",
+  "q": "What is the power rating (W) of model HK-WA436 (washing machine)?",
+  "expected": {
+   "value": 520,
+   "doc": "products/washer/hk-wa436"
+  },
+  "answer_kind": "value"
+ }
+]

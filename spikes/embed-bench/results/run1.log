@@ -1,0 +1,15 @@
+=== e5-small
+bm25               R@1=0.267 R@3=0.356 MRR=0.317 | same R@1=0.733 cross R@1=0.033
+e5-small           R@1=0.478 R@3=0.778 MRR=0.639 | same R@1=0.933 cross R@1=0.250
+hybrid(e5-small)   R@1=0.356 R@3=0.433 MRR=0.452 | same R@1=0.933 cross R@1=0.067
+load=7572ms index30=640ms thr=Some(47.0)/s q_p50=10.6ms q_p95=13.7ms rss=1145MB disk=Some(465.0)MB
+=== e5-base
+bm25               R@1=0.267 R@3=0.356 MRR=0.317 | same R@1=0.733 cross R@1=0.033
+e5-base            R@1=0.678 R@3=0.867 MRR=0.787 | same R@1=1.000 cross R@1=0.517
+hybrid(e5-base)    R@1=0.367 R@3=0.433 MRR=0.471 | same R@1=0.933 cross R@1=0.083
+load=15498ms index30=1906ms thr=Some(15.0)/s q_p50=26.6ms q_p95=36.5ms rss=1959MB disk=Some(1540.0)MB
+=== bge-m3
+bm25               R@1=0.267 R@3=0.356 MRR=0.317 | same R@1=0.733 cross R@1=0.033
+bge-m3             R@1=0.978 R@3=1.000 MRR=0.989 | same R@1=1.000 cross R@1=0.967
+hybrid(bge-m3)     R@1=0.389 R@3=0.611 MRR=0.557 | same R@1=0.967 cross R@1=0.100
+load=19751ms index30=6559ms thr=Some(4.0)/s q_p50=78.5ms q_p95=108.7ms rss=2141MB disk=Some(3719.0)MB

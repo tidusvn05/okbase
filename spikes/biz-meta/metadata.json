@@ -1,0 +1,2792 @@
+[
+ {
+  "id": "policies/vn/returns-v1",
+  "kind": "Policy",
+  "topic": "returns",
+  "region": "VN",
+  "lang": "vi",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "returns",
+   "customer-support",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-03-06",
+  "currency": "VND",
+  "effective_from": "2025-03-20",
+  "title": "Chính sách đổi trả Việt Nam v1",
+  "description": "Chính sách đổi trả v1 tại Việt Nam, áp dụng từ 20/03/2025 và đã bị thay thế bởi phiên bản v2."
+ },
+ {
+  "id": "policies/vn/returns-v2",
+  "kind": "Policy",
+  "topic": "returns",
+  "region": "VN",
+  "lang": "vi",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "returns",
+   "customer-support",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-10-31",
+  "currency": "VND",
+  "effective_from": "2025-11-14",
+  "supersedes": "policies/vn/returns-v1",
+  "title": "Chính sách đổi trả Việt Nam v2",
+  "description": "Chính sách đổi trả v2 tại Việt Nam, có hiệu lực từ 14/11/2025 và thay thế phiên bản v1."
+ },
+ {
+  "id": "policies/jp/returns-v1",
+  "kind": "Policy",
+  "topic": "returns",
+  "region": "JP",
+  "lang": "ja",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "returns",
+   "customer-support",
+   "policy",
+   "jp"
+  ],
+  "updated": "2025-05-17",
+  "currency": "JPY",
+  "effective_from": "2025-05-31",
+  "title": "日本向け返品ポリシー v1",
+  "description": "日本市場における返品ポリシーv1で、2025年5月31日に施行され、現在はv2に置き換えられています。"
+ },
+ {
+  "id": "policies/jp/returns-v2",
+  "kind": "Policy",
+  "topic": "returns",
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "returns",
+   "customer-support",
+   "policy",
+   "jp"
+  ],
+  "updated": "2025-12-26",
+  "currency": "JPY",
+  "effective_from": "2026-01-09",
+  "supersedes": "policies/jp/returns-v1",
+  "title": "日本向け返品ポリシー v2",
+  "description": "日本市場における返品ポリシーv2で、2026年1月9日に施行され、v1を置き換えるものです。"
+ },
+ {
+  "id": "policies/vn/shipping-v2",
+  "kind": "Policy",
+  "topic": "shipping",
+  "region": "VN",
+  "lang": "en",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "shipping",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-04-12",
+  "currency": "VND",
+  "effective_from": "2026-04-26",
+  "title": "Vietnam Shipping Policy v2",
+  "description": "Shipping policy v2 for Vietnam, effective 26 April 2026, covering free shipping threshold and standard delivery time."
+ },
+ {
+  "id": "policies/jp/shipping-v1",
+  "kind": "Policy",
+  "topic": "shipping",
+  "region": "JP",
+  "lang": "ja",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "shipping",
+   "policy",
+   "jp"
+  ],
+  "updated": "2025-01-12",
+  "currency": "JPY",
+  "effective_from": "2025-01-26",
+  "title": "日本向け配送ポリシー v1",
+  "description": "日本市場における配送ポリシーv1で、2025年1月26日に施行され、現在はv2に置き換えられています。"
+ },
+ {
+  "id": "policies/jp/shipping-v2",
+  "kind": "Policy",
+  "topic": "shipping",
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "shipping",
+   "policy",
+   "jp"
+  ],
+  "updated": "2026-04-26",
+  "currency": "JPY",
+  "effective_from": "2026-05-10",
+  "supersedes": "policies/jp/shipping-v1",
+  "title": "日本向け配送ポリシー v2",
+  "description": "日本市場における配送ポリシーv2で、2026年5月10日に施行され、v1を置き換える最新版です。"
+ },
+ {
+  "id": "policies/vn/warranty-air-purifier-v1",
+  "kind": "Policy",
+  "topic": "warranty-air-purifier",
+  "region": "VN",
+  "lang": "vi",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "warranty",
+   "air-purifier",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-02-11",
+  "currency": "VND",
+  "effective_from": "2025-02-25",
+  "title": "Chính sách bảo hành máy lọc không khí Việt Nam v1",
+  "description": "Chính sách bảo hành máy lọc không khí v1 tại Việt Nam, áp dụng từ 25/02/2025 và đã bị thay thế."
+ },
+ {
+  "id": "policies/vn/warranty-air-purifier-v2",
+  "kind": "Policy",
+  "topic": "warranty-air-purifier",
+  "region": "VN",
+  "lang": "vi",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "warranty",
+   "air-purifier",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-07-28",
+  "currency": "VND",
+  "effective_from": "2026-08-11",
+  "supersedes": "policies/vn/warranty-air-purifier-v1",
+  "title": "Chính sách bảo hành máy lọc không khí – Việt Nam (v2)",
+  "description": "Chính sách bảo hành phiên bản 2 cho máy lọc không khí Hikari Home tại Việt Nam, áp dụng từ ngày 11/08/2026."
+ },
+ {
+  "id": "policies/jp/warranty-air-purifier-v2",
+  "kind": "Policy",
+  "topic": "warranty-air-purifier",
+  "region": "JP",
+  "lang": "en",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "warranty",
+   "air-purifier",
+   "policy",
+   "jp"
+  ],
+  "updated": "2026-02-26",
+  "currency": "JPY",
+  "effective_from": "2026-03-12",
+  "title": "Air Purifier Warranty Policy – Japan (v2)",
+  "description": "Version 2 of the warranty policy for Hikari Home air purifiers sold in Japan, effective March 12, 2026."
+ },
+ {
+  "id": "policies/vn/warranty-rice-cooker-v1",
+  "kind": "Policy",
+  "topic": "warranty-rice-cooker",
+  "region": "VN",
+  "lang": "vi",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "warranty",
+   "rice-cooker",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-04-12",
+  "currency": "VND",
+  "effective_from": "2025-04-26",
+  "title": "Chính sách bảo hành nồi cơm điện – Việt Nam (v1, đã thay thế)",
+  "description": "Chính sách bảo hành nồi cơm điện phiên bản 1 tại Việt Nam, đã bị thay thế bởi phiên bản v2."
+ },
+ {
+  "id": "policies/vn/warranty-rice-cooker-v2",
+  "kind": "Policy",
+  "topic": "warranty-rice-cooker",
+  "region": "VN",
+  "lang": "vi",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "warranty",
+   "rice-cooker",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-06-08",
+  "currency": "VND",
+  "effective_from": "2026-06-22",
+  "supersedes": "policies/vn/warranty-rice-cooker-v1",
+  "title": "Chính sách bảo hành nồi cơm điện – Việt Nam (v2)",
+  "description": "Chính sách bảo hành nồi cơm điện phiên bản 2 tại Việt Nam, hiệu lực từ ngày 22/06/2026, thay thế phiên bản v1."
+ },
+ {
+  "id": "policies/jp/warranty-rice-cooker-v2",
+  "kind": "Policy",
+  "topic": "warranty-rice-cooker",
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "warranty",
+   "rice-cooker",
+   "policy",
+   "jp"
+  ],
+  "updated": "2025-10-12",
+  "currency": "JPY",
+  "effective_from": "2025-10-26",
+  "title": "炊飯器保証ポリシー 日本版(v2)",
+  "description": "日本で販売するHikari Home炊飯器の保証ポリシー第2版で、2025年10月26日から適用されます。"
+ },
+ {
+  "id": "policies/vn/installment-v1",
+  "kind": "Policy",
+  "topic": "installment",
+  "region": "VN",
+  "lang": "en",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "Finance",
+  "tags": [
+   "billing",
+   "finance",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-06-19",
+  "currency": "VND",
+  "effective_from": "2025-07-03",
+  "title": "Installment Payment Policy – Vietnam (v1, Superseded)",
+  "description": "Version 1 of the Vietnam installment payment policy, now superseded by v2 and no longer applied to new orders."
+ },
+ {
+  "id": "policies/vn/installment-v2",
+  "kind": "Policy",
+  "topic": "installment",
+  "region": "VN",
+  "lang": "en",
+  "status": "stable",
+  "version": "v2",
+  "department": "Finance",
+  "tags": [
+   "billing",
+   "finance",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-02-24",
+  "currency": "VND",
+  "effective_from": "2026-03-10",
+  "supersedes": "policies/vn/installment-v1",
+  "title": "Installment Payment Policy – Vietnam (v2)",
+  "description": "Version 2 of the Vietnam installment payment policy, effective March 10, 2026, with a lower minimum order and shorter maximum term."
+ },
+ {
+  "id": "policies/vn/installment-v3",
+  "kind": "Policy",
+  "topic": "installment",
+  "region": "VN",
+  "lang": "en",
+  "status": "draft",
+  "version": "v3",
+  "department": "Finance",
+  "tags": [
+   "billing",
+   "finance",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-09-10",
+  "currency": "VND",
+  "effective_from": "2026-11-01",
+  "supersedes": "policies/vn/installment-v2",
+  "title": "Installment Payment Policy – Vietnam (v3, Draft)",
+  "description": "Draft proposal for version 3 of the Vietnam installment policy, pending approval, proposed to take effect November 1, 2026."
+ },
+ {
+  "id": "policies/jp/installment-v2",
+  "kind": "Policy",
+  "topic": "installment",
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "Finance",
+  "tags": [
+   "billing",
+   "finance",
+   "policy",
+   "jp"
+  ],
+  "updated": "2025-10-02",
+  "currency": "JPY",
+  "effective_from": "2025-10-16",
+  "title": "分割払いポリシー(日本) v2",
+  "description": "日本市場における分割払いの対象金額と最大分割回数を定めた、2025年10月16日施行の第2版ポリシーです。"
+ },
+ {
+  "id": "policies/jp/installment-v3",
+  "kind": "Policy",
+  "topic": "installment",
+  "region": "JP",
+  "lang": "ja",
+  "status": "draft",
+  "version": "v3",
+  "department": "Finance",
+  "tags": [
+   "billing",
+   "finance",
+   "policy",
+   "jp"
+  ],
+  "updated": "2026-09-09",
+  "currency": "JPY",
+  "effective_from": "2026-11-01",
+  "supersedes": "policies/jp/installment-v2",
+  "title": "分割払いポリシー(日本) v3【草案】",
+  "description": "分割払いの最大回数を24回へ拡大することを提案する、承認待ちの第3版ポリシー草案です。"
+ },
+ {
+  "id": "policies/vn/loyalty-v1",
+  "kind": "Policy",
+  "topic": "loyalty",
+  "region": "VN",
+  "lang": "en",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "loyalty",
+   "marketing",
+   "policy",
+   "vn"
+  ],
+  "updated": "2024-05-29",
+  "currency": "VND",
+  "effective_from": "2024-06-12",
+  "title": "Loyalty Program Policy (Vietnam) v1 – Deprecated",
+  "description": "The first version of the Vietnam loyalty points policy, now deprecated and superseded by v2."
+ },
+ {
+  "id": "policies/vn/loyalty-v2",
+  "kind": "Policy",
+  "topic": "loyalty",
+  "region": "VN",
+  "lang": "en",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "loyalty",
+   "marketing",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-02-17",
+  "currency": "VND",
+  "effective_from": "2026-03-03",
+  "supersedes": "policies/vn/loyalty-v1",
+  "title": "Loyalty Program Policy (Vietnam) v2",
+  "description": "The current Vietnam loyalty policy, shortening the points expiry period to 6 months from 3 March 2026."
+ },
+ {
+  "id": "policies/vn/loyalty-v3",
+  "kind": "Policy",
+  "topic": "loyalty",
+  "region": "VN",
+  "lang": "en",
+  "status": "draft",
+  "version": "v3",
+  "department": "CS",
+  "tags": [
+   "loyalty",
+   "marketing",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-09-20",
+  "currency": "VND",
+  "effective_from": "2026-11-01",
+  "supersedes": "policies/vn/loyalty-v2",
+  "title": "Loyalty Program Policy (Vietnam) v3 – Draft",
+  "description": "A draft proposal, pending approval, to extend the Vietnam loyalty points expiry period to 12 months."
+ },
+ {
+  "id": "policies/jp/loyalty-v1",
+  "kind": "Policy",
+  "topic": "loyalty",
+  "region": "JP",
+  "lang": "ja",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "loyalty",
+   "marketing",
+   "policy",
+   "jp"
+  ],
+  "updated": "2024-06-07",
+  "currency": "JPY",
+  "effective_from": "2024-06-21",
+  "title": "ロイヤルティプログラムポリシー(日本) v1【廃止】",
+  "description": "日本向けロイヤルティポイント制度の第1版であり、現在は廃止され第2版に置き換えられています。"
+ },
+ {
+  "id": "policies/jp/loyalty-v2",
+  "kind": "Policy",
+  "topic": "loyalty",
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "loyalty",
+   "marketing",
+   "policy",
+   "jp"
+  ],
+  "updated": "2026-04-06",
+  "currency": "JPY",
+  "effective_from": "2026-04-20",
+  "supersedes": "policies/jp/loyalty-v1",
+  "title": "ロイヤルティプログラムポリシー(日本) v2",
+  "description": "日本向けロイヤルティポイント制度の現行版で、有効期限を24か月に延長した2026年4月20日施行のポリシーです。"
+ },
+ {
+  "id": "policies/vn/privacy-v1",
+  "kind": "Policy",
+  "topic": "privacy",
+  "region": "VN",
+  "lang": "vi",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "Legal",
+  "tags": [
+   "privacy",
+   "legal",
+   "security",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-05-31",
+  "currency": "VND",
+  "effective_from": "2025-06-14",
+  "title": "Chính sách quyền riêng tư (Việt Nam) v1 – Đã ngừng áp dụng",
+  "description": "Phiên bản đầu tiên của chính sách quyền riêng tư tại Việt Nam, hiện đã ngừng áp dụng và được thay thế bằng phiên bản mới hơn."
+ },
+ {
+  "id": "policies/vn/privacy-v2",
+  "kind": "Policy",
+  "topic": "privacy",
+  "region": "VN",
+  "lang": "vi",
+  "status": "stable",
+  "version": "v2",
+  "department": "Legal",
+  "tags": [
+   "privacy",
+   "legal",
+   "security",
+   "policy",
+   "vn"
+  ],
+  "updated": "2025-09-08",
+  "currency": "VND",
+  "effective_from": "2025-09-22",
+  "supersedes": "policies/vn/privacy-v1",
+  "title": "Chính sách Bảo mật Dữ liệu Khách hàng – Việt Nam (v2)",
+  "description": "Chính sách v2 quy định cách Hikari Home Việt Nam thu thập, sử dụng, bảo vệ dữ liệu cá nhân và xử lý yêu cầu xóa dữ liệu."
+ },
+ {
+  "id": "policies/jp/privacy-v2",
+  "kind": "Policy",
+  "topic": "privacy",
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "Legal",
+  "tags": [
+   "privacy",
+   "legal",
+   "security",
+   "policy",
+   "jp"
+  ],
+  "updated": "2026-03-24",
+  "currency": "JPY",
+  "effective_from": "2026-04-07",
+  "title": "個人情報保護ポリシー 日本版(v2)",
+  "description": "日本におけるお客様の個人情報の取り扱いと、削除請求への対応期限を定めた第2版のポリシーです。"
+ },
+ {
+  "id": "policies/vn/gift-wrap-v1",
+  "kind": "Policy",
+  "topic": "gift-wrap",
+  "region": "VN",
+  "lang": "vi",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "customer-support",
+   "marketing",
+   "policy",
+   "vn"
+  ],
+  "updated": "2024-02-22",
+  "currency": "VND",
+  "effective_from": "2024-03-07",
+  "title": "Chính sách Gói quà – Việt Nam (v1, đã ngừng áp dụng)",
+  "description": "Chính sách v1 về dịch vụ gói quà tại Việt Nam với phí 20.000 VND, hiện đã bị thay thế."
+ },
+ {
+  "id": "policies/vn/gift-wrap-v2",
+  "kind": "Policy",
+  "topic": "gift-wrap",
+  "region": "VN",
+  "lang": "vi",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "customer-support",
+   "marketing",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-07-30",
+  "currency": "VND",
+  "effective_from": "2026-08-13",
+  "supersedes": "policies/vn/gift-wrap-v1",
+  "title": "Chính sách Gói quà – Việt Nam (v2)",
+  "description": "Chính sách v2 điều chỉnh phí dịch vụ gói quà tại Việt Nam lên 50.000 VND, thay thế phiên bản v1."
+ },
+ {
+  "id": "policies/vn/gift-wrap-v3",
+  "kind": "Policy",
+  "topic": "gift-wrap",
+  "region": "VN",
+  "lang": "vi",
+  "status": "draft",
+  "version": "v3",
+  "department": "CS",
+  "tags": [
+   "customer-support",
+   "marketing",
+   "policy",
+   "vn"
+  ],
+  "updated": "2026-09-11",
+  "currency": "VND",
+  "effective_from": "2026-11-01",
+  "supersedes": "policies/vn/gift-wrap-v2",
+  "title": "Chính sách Gói quà – Việt Nam (v3, bản nháp)",
+  "description": "Bản nháp v3 đề xuất giảm phí gói quà tại Việt Nam xuống 20.000 VND, đang chờ phê duyệt."
+ },
+ {
+  "id": "policies/jp/gift-wrap-v1",
+  "kind": "Policy",
+  "topic": "gift-wrap",
+  "region": "JP",
+  "lang": "ja",
+  "status": "deprecated",
+  "version": "v1",
+  "department": "CS",
+  "tags": [
+   "customer-support",
+   "marketing",
+   "policy",
+   "jp"
+  ],
+  "updated": "2025-04-22",
+  "currency": "JPY",
+  "effective_from": "2025-05-06",
+  "title": "ギフトラッピングポリシー 日本版(v1・廃止)",
+  "description": "日本でのギフトラッピング料金を150円と定めた第1版のポリシーで、現在は第2版に置き換えられています。"
+ },
+ {
+  "id": "policies/jp/gift-wrap-v2",
+  "kind": "Policy",
+  "topic": "gift-wrap",
+  "region": "JP",
+  "lang": "ja",
+  "status": "stable",
+  "version": "v2",
+  "department": "CS",
+  "tags": [
+   "customer-support",
+   "marketing",
+   "policy",
+   "jp"
+  ],
+  "updated": "2026-04-29",
+  "currency": "JPY",
+  "effective_from": "2026-05-13",
+  "supersedes": "policies/jp/gift-wrap-v1",
+  "title": "ギフトラッピングポリシー 日本版(v2)",
+  "description": "日本でのギフトラッピング料金を100円に改定し、第1版を置き換えた現行ポリシーです。"
+ },
+ {
+  "id": "sop/warehouse/receiving",
+  "kind": "SOP",
+  "topic": "receiving",
+  "department": "Warehouse",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2026-01-24",
+  "title": "入荷業務標準手順書(SOP)",
+  "description": "倉庫における入荷時の受け入れ、検品、システム登録の標準手順と検品期限を定めた手順書です。"
+ },
+ {
+  "id": "sop/warehouse/stock-count",
+  "kind": "SOP",
+  "topic": "stock-count",
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2024-04-16",
+  "title": "SOP Kiểm kê tồn kho định kỳ – Kho Hikari Home Việt Nam",
+  "description": "Quy trình kiểm kê hàng tồn kho định kỳ 30 ngày một lần tại kho Hikari Home."
+ },
+ {
+  "id": "sop/warehouse/packing",
+  "kind": "SOP",
+  "topic": "packing",
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2025-07-09",
+  "title": "SOP Đóng gói hàng hóa – Kho Hikari Home Việt Nam",
+  "description": "Quy trình đóng gói sản phẩm, quy định trọng lượng tối đa mỗi kiện là 30 kg."
+ },
+ {
+  "id": "sop/warehouse/forklift",
+  "kind": "SOP",
+  "topic": "forklift",
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2026-05-14",
+  "title": "SOP Vận hành xe nâng – Kho Hikari Home Việt Nam",
+  "description": "Quy định an toàn khi vận hành xe nâng trong kho, với tốc độ tối đa 10 km/giờ."
+ },
+ {
+  "id": "sop/warehouse/returns-processing",
+  "kind": "SOP",
+  "topic": "returns-processing",
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "draft",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2025-04-04",
+  "title": "SOP Xử lý hàng trả lại (bản nháp) – Kho Hikari Home Việt Nam",
+  "description": "Bản nháp quy trình xử lý hàng khách trả lại trong vòng 3 ngày, đang chờ phê duyệt."
+ },
+ {
+  "id": "sop/warehouse/cold-storage",
+  "kind": "SOP",
+  "topic": "cold-storage",
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2024-09-08",
+  "title": "SOP Bảo quản kho lạnh – Kho Hikari Home Việt Nam",
+  "description": "Quy trình bảo quản linh kiện nhạy cảm trong kho lạnh ở nhiệt độ 4 độ C."
+ },
+ {
+  "id": "sop/warehouse/dispatch",
+  "kind": "SOP",
+  "topic": "dispatch",
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2025-06-22",
+  "title": "SOP Xuất kho và giao hàng – Kho Hikari Home Việt Nam",
+  "description": "Quy trình xuất kho, với giờ chốt đơn trong ngày là 14 giờ."
+ },
+ {
+  "id": "sop/warehouse/damaged-goods",
+  "kind": "SOP",
+  "topic": "damaged-goods",
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2026-06-14",
+  "title": "SOP Xử lý hàng hư hỏng – Kho Hikari Home Việt Nam",
+  "description": "Quy trình báo cáo và xử lý hàng hư hỏng, yêu cầu báo cáo trong vòng 2 giờ."
+ },
+ {
+  "id": "sop/warehouse/labeling",
+  "kind": "SOP",
+  "topic": "labeling",
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "draft",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2025-12-22",
+  "title": "SOP Dán nhãn hàng hóa (bản nháp) – Kho Hikari Home Việt Nam",
+  "description": "Bản nháp quy trình dán nhãn hàng hóa, đề xuất lưu nhãn 90 ngày, đang chờ phê duyệt."
+ },
+ {
+  "id": "sop/warehouse/hazmat",
+  "kind": "SOP",
+  "topic": "hazmat",
+  "department": "Warehouse",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "sop",
+   "warehouse"
+  ],
+  "updated": "2026-07-15",
+  "title": "危険物取扱手順書(倉庫部門)",
+  "description": "倉庫における危険物の保管・取扱い・緊急時対応の標準手順と、担当者の研修要件を定めた手順書。"
+ },
+ {
+  "id": "sop/cs/ticket-triage",
+  "kind": "SOP",
+  "topic": "ticket-triage",
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "sop"
+  ],
+  "updated": "2024-06-21",
+  "title": "チケットトリアージ手順書(カスタマーサポート)",
+  "description": "問い合わせチケットの優先度判定と担当振り分け、初回応答の目標時間を定めたCS部門の手順書。"
+ },
+ {
+  "id": "sop/cs/refund-approval",
+  "kind": "SOP",
+  "topic": "refund-approval",
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "sop"
+  ],
+  "updated": "2025-10-05",
+  "title": "返金承認手順書(カスタマーサポート)",
+  "description": "返金申請の確認手順と、担当者が自動承認できる上限額および上長承認の条件を定めた手順書。"
+ },
+ {
+  "id": "sop/cs/escalation",
+  "kind": "SOP",
+  "topic": "escalation",
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "sop"
+  ],
+  "updated": "2026-05-10",
+  "title": "エスカレーション手順書(カスタマーサポート)",
+  "description": "未解決の問い合わせを上位担当者へ引き上げる基準と手順、および期限を定めたCS部門の手順書。"
+ },
+ {
+  "id": "sop/cs/vip-customers",
+  "kind": "SOP",
+  "topic": "vip-customers",
+  "department": "CS",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "privacy",
+   "sop"
+  ],
+  "updated": "2026-04-17",
+  "title": "Quy trình chăm sóc khách hàng VIP (Bộ phận CS)",
+  "description": "Quy trình tiếp nhận, bảo mật thông tin và gọi lại nhanh dành cho khách hàng VIP của bộ phận CS."
+ },
+ {
+  "id": "sop/cs/chat-handling",
+  "kind": "SOP",
+  "topic": "chat-handling",
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "sop"
+  ],
+  "updated": "2025-08-01",
+  "title": "チャット対応手順書(カスタマーサポート)",
+  "description": "チャットサポートの応対品質と、担当者が同時に対応できる件数の上限を定めた手順書。"
+ },
+ {
+  "id": "sop/cs/complaint",
+  "kind": "SOP",
+  "topic": "complaint",
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "sop"
+  ],
+  "updated": "2024-11-23",
+  "title": "Complaint Handling SOP (Customer Support)",
+  "description": "Standard procedure for logging, investigating and resolving customer complaints within the target resolution time."
+ },
+ {
+  "id": "sop/cs/warranty-claims",
+  "kind": "SOP",
+  "topic": "warranty-claims",
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "sop"
+  ],
+  "updated": "2024-04-28",
+  "title": "Warranty Claims SOP (Customer Support)",
+  "description": "Procedure for verifying eligibility, collecting evidence and processing warranty claims for Hikari Home appliances."
+ },
+ {
+  "id": "sop/cs/call-recording",
+  "kind": "SOP",
+  "topic": "call-recording",
+  "department": "CS",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "customer-support",
+   "privacy",
+   "security",
+   "sop"
+  ],
+  "updated": "2025-01-17",
+  "title": "SOP Ghi âm cuộc gọi chăm sóc khách hàng – Hikari Home Việt Nam",
+  "description": "Quy trình ghi âm cuộc gọi của bộ phận CSKH, bao gồm thông báo cho khách hàng, bảo mật và thời hạn lưu trữ 180 ngày."
+ },
+ {
+  "id": "sop/it/password",
+  "kind": "SOP",
+  "topic": "password",
+  "department": "IT",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "it",
+   "security",
+   "sop"
+  ],
+  "updated": "2025-04-18",
+  "title": "SOP Quản lý mật khẩu – Hikari Home Việt Nam",
+  "description": "Quy định về độ mạnh, bảo quản và đổi mật khẩu định kỳ mỗi 90 ngày cho tài khoản công ty."
+ },
+ {
+  "id": "sop/it/access-request",
+  "kind": "SOP",
+  "topic": "access-request",
+  "department": "IT",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "it",
+   "security",
+   "sop"
+  ],
+  "updated": "2026-02-01",
+  "title": "SOP Access Request – Hikari Home (VN & JP)",
+  "description": "Procedure for requesting, approving and granting system access, with a 24-hour approval SLA."
+ },
+ {
+  "id": "sop/it/backup",
+  "kind": "SOP",
+  "topic": "backup",
+  "department": "IT",
+  "lang": "en",
+  "status": "draft",
+  "tags": [
+   "it",
+   "security",
+   "sop"
+  ],
+  "updated": "2026-06-15",
+  "title": "SOP Backup Policy – Hikari Home (VN & JP) – Draft v2",
+  "description": "Draft proposal for backup schedules and a 90-day retention period, pending approval."
+ },
+ {
+  "id": "sop/it/incident",
+  "kind": "SOP",
+  "topic": "incident",
+  "department": "IT",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "it",
+   "security",
+   "sop"
+  ],
+  "updated": "2026-02-10",
+  "title": "SOP Security Incident Response – Hikari Home (VN & JP)",
+  "description": "Steps for reporting and handling IT security incidents, including the 30-minute reporting requirement."
+ },
+ {
+  "id": "sop/it/laptop",
+  "kind": "SOP",
+  "topic": "laptop",
+  "department": "IT",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "it",
+   "security",
+   "sop"
+  ],
+  "updated": "2025-10-21",
+  "title": "SOP Laptop Management and Replacement – Hikari Home (VN & JP)",
+  "description": "Rules for issuing, securing and replacing company laptops on a 3-year cycle."
+ },
+ {
+  "id": "sop/it/vpn",
+  "kind": "SOP",
+  "topic": "vpn",
+  "department": "IT",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "it",
+   "security",
+   "sop"
+  ],
+  "updated": "2026-03-09",
+  "title": "SOP Sử dụng VPN – Hikari Home Việt Nam",
+  "description": "Quy trình kết nối VPN an toàn khi làm việc từ xa, với thời gian phiên tối đa 8 giờ."
+ },
+ {
+  "id": "sop/hr/leave",
+  "kind": "SOP",
+  "topic": "leave",
+  "department": "HR",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "sop"
+  ],
+  "updated": "2025-08-18",
+  "title": "SOP Nghỉ phép – Hikari Home Việt Nam",
+  "description": "Quy trình đăng ký và phê duyệt nghỉ phép, yêu cầu báo trước tối thiểu 5 ngày."
+ },
+ {
+  "id": "sop/hr/onboarding",
+  "kind": "SOP",
+  "topic": "onboarding",
+  "department": "HR",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "sop"
+  ],
+  "updated": "2025-10-14",
+  "title": "新入社員オンボーディング手順書(日本 v2)",
+  "description": "新入社員が入社後に円滑に業務へ慣れるための受け入れ手順と、バディ制度の運用ルールを定めた手順書です。"
+ },
+ {
+  "id": "sop/hr/overtime",
+  "kind": "SOP",
+  "topic": "overtime",
+  "department": "HR",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "sop"
+  ],
+  "updated": "2026-01-08",
+  "title": "時間外労働管理手順書(日本 v3)",
+  "description": "時間外労働の事前申請、上限時間、超過時の対応を定めた人事部の手順書です。"
+ },
+ {
+  "id": "sop/hr/expense",
+  "kind": "SOP",
+  "topic": "expense",
+  "department": "HR",
+  "lang": "ja",
+  "status": "draft",
+  "tags": [
+   "hr",
+   "sop"
+  ],
+  "updated": "2026-08-28",
+  "title": "経費精算手順書(日本 v1 ドラフト)",
+  "description": "経費精算の申請期限と手続きを整理した、承認待ちのドラフト案です。"
+ },
+ {
+  "id": "sop/hr/remote-work",
+  "kind": "SOP",
+  "topic": "remote-work",
+  "department": "HR",
+  "lang": "ja",
+  "status": "draft",
+  "tags": [
+   "hr",
+   "sop"
+  ],
+  "updated": "2025-09-06",
+  "title": "リモートワーク運用手順書(日本 v1 ドラフト)",
+  "description": "在宅勤務の頻度や申請方法を定める、承認待ちのドラフト案です。"
+ },
+ {
+  "id": "sop/hr/offboarding",
+  "kind": "SOP",
+  "topic": "offboarding",
+  "department": "HR",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "sop"
+  ],
+  "updated": "2026-07-08",
+  "title": "Quy trình nghỉ việc và bàn giao (Việt Nam v2)",
+  "description": "Quy trình xử lý khi nhân viên nghỉ việc, gồm thời hạn báo trước, bàn giao và hoàn tất thủ tục."
+ },
+ {
+  "id": "contracts/acme-corp/distribution-202604",
+  "kind": "Contract",
+  "topic": "distribution",
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2026-04-05",
+  "effective_from": "2026-04-18",
+  "effective_to": "2028-04-17",
+  "contract_value": 2991000000,
+  "currency": "VND",
+  "title": "Hợp đồng phân phối – ACME Corp (Việt Nam)",
+  "description": "Hợp đồng phân phối sản phẩm gia dụng Hikari Home cho ACME Corp tại thị trường Việt Nam trong thời hạn hai năm."
+ },
+ {
+  "id": "contracts/sakura-trading/distribution-202410",
+  "kind": "Contract",
+  "topic": "distribution",
+  "customer": "Sakura Trading",
+  "region": "JP",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2024-09-21",
+  "effective_from": "2024-10-10",
+  "effective_to": "2027-10-09",
+  "contract_value": 6770000,
+  "currency": "JPY",
+  "title": "Distribution Agreement – Sakura Trading (Japan)",
+  "description": "Three-year distribution agreement under which Sakura Trading distributes Hikari Home appliances in Japan."
+ },
+ {
+  "id": "contracts/minh-phat-jsc/installation-202506",
+  "kind": "Contract",
+  "topic": "installation",
+  "customer": "Minh Phat JSC",
+  "region": "VN",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-05-25",
+  "effective_from": "2025-06-07",
+  "effective_to": "2026-06-06",
+  "contract_value": 4800000000,
+  "currency": "VND",
+  "title": "Installation Services Agreement – Minh Phat JSC (Vietnam)",
+  "description": "One-year agreement for Hikari Home to provide appliance installation services to Minh Phat JSC in Vietnam."
+ },
+ {
+  "id": "contracts/tokyo-denki-retail/maintenance-202512",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "customer": "Tokyo Denki Retail",
+  "region": "JP",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2025-12-15",
+  "effective_from": "2025-12-27",
+  "effective_to": "2028-12-26",
+  "contract_value": 46950000,
+  "currency": "JPY",
+  "title": "Tokyo Denki Retail Maintenance Contract (JP, December 2025)",
+  "description": "Three-year maintenance contract between Hikari Home and Tokyo Denki Retail covering appliance servicing in Japan, valued at 46,950,000 JPY."
+ },
+ {
+  "id": "contracts/saigon-hotels-group/installation-202404",
+  "kind": "Contract",
+  "topic": "installation",
+  "customer": "Saigon Hotels Group",
+  "region": "VN",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2024-03-22",
+  "effective_from": "2024-04-10",
+  "effective_to": "2027-04-09",
+  "contract_value": 243000000,
+  "currency": "VND",
+  "title": "Saigon Hotels Group Installation Contract (VN, April 2024)",
+  "description": "Three-year installation contract between Hikari Home and Saigon Hotels Group for appliance installation in Vietnam, valued at 243,000,000 VND."
+ },
+ {
+  "id": "contracts/osaka-office-supply/distribution-202405",
+  "kind": "Contract",
+  "topic": "distribution",
+  "customer": "Osaka Office Supply",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2024-05-08",
+  "effective_from": "2024-05-19",
+  "effective_to": "2025-05-18",
+  "contract_value": 26490000,
+  "currency": "JPY",
+  "title": "大阪オフィスサプライ 販売代理店契約(JP・2024年5月)",
+  "description": "Hikari Homeと大阪オフィスサプライの間で締結された、日本国内向け家電製品の1年間の販売(ディストリビューション)契約。"
+ },
+ {
+  "id": "contracts/acme-corp/distribution-202307",
+  "kind": "Contract",
+  "topic": "distribution",
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2023-07-04",
+  "effective_from": "2023-07-08",
+  "effective_to": "2024-07-07",
+  "contract_value": 4970000000,
+  "currency": "VND",
+  "title": "Hợp đồng phân phối ACME Corp (VN, tháng 7/2023)",
+  "description": "Hợp đồng phân phối một năm giữa Hikari Home và ACME Corp cho các sản phẩm gia dụng tại Việt Nam, trị giá 4.970.000.000 VND."
+ },
+ {
+  "id": "contracts/sakura-trading/supply-202604",
+  "kind": "Contract",
+  "topic": "supply",
+  "customer": "Sakura Trading",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2026-03-23",
+  "effective_from": "2026-04-07",
+  "effective_to": "2027-04-06",
+  "contract_value": 9000000,
+  "currency": "JPY",
+  "title": "さくらトレーディング 供給契約(JP・2026年4月)",
+  "description": "Hikari Homeとさくらトレーディングの間で締結された、2026年4月から1年間の家電製品供給契約。"
+ },
+ {
+  "id": "contracts/minh-phat-jsc/maintenance-202502",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "customer": "Minh Phat JSC",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-02-13",
+  "effective_from": "2025-02-25",
+  "effective_to": "2026-02-24",
+  "contract_value": 1754000000,
+  "currency": "VND",
+  "title": "Hợp đồng bảo trì Minh Phat JSC (VN, tháng 2/2025)",
+  "description": "Hợp đồng bảo trì một năm giữa Hikari Home và Minh Phat JSC cho thiết bị gia dụng tại Việt Nam, trị giá 1.754.000.000 VND."
+ },
+ {
+  "id": "contracts/tokyo-denki-retail/maintenance-202506",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "customer": "Tokyo Denki Retail",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2025-05-29",
+  "effective_from": "2025-06-01",
+  "effective_to": "2026-05-31",
+  "contract_value": 33830000,
+  "currency": "JPY",
+  "title": "東京電器リテール 保守契約(JP・2025年6月)",
+  "description": "Hikari Homeと東京電器リテール(Tokyo Denki Retail)の間の、2025年6月から1年間の家電保守契約。"
+ },
+ {
+  "id": "contracts/saigon-hotels-group/installation-202510",
+  "kind": "Contract",
+  "topic": "installation",
+  "customer": "Saigon Hotels Group",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-09-24",
+  "effective_from": "2025-10-13",
+  "effective_to": "2027-10-12",
+  "contract_value": 4602000000,
+  "currency": "VND",
+  "title": "Hợp đồng lắp đặt Saigon Hotels Group (VN, tháng 10/2025)",
+  "description": "Hợp đồng lắp đặt hai năm giữa Hikari Home và Saigon Hotels Group tại Việt Nam, trị giá 4.602.000.000 VND."
+ },
+ {
+  "id": "contracts/osaka-office-supply/maintenance-202606",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "customer": "Osaka Office Supply",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2026-06-03",
+  "effective_from": "2026-06-09",
+  "effective_to": "2027-06-08",
+  "contract_value": 15420000,
+  "currency": "JPY",
+  "title": "大阪オフィスサプライ様 保守契約書(2026年6月)",
+  "description": "Hikari Homeと大阪オフィスサプライ様との間で締結した、1年間の家電保守サービス契約の内容をまとめた文書です。"
+ },
+ {
+  "id": "contracts/acme-corp/distribution-202507",
+  "kind": "Contract",
+  "topic": "distribution",
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-06-17",
+  "effective_from": "2025-07-07",
+  "effective_to": "2026-07-06",
+  "contract_value": 3214000000,
+  "currency": "VND",
+  "title": "Hợp đồng phân phối ACME Corp (tháng 7/2025)",
+  "description": "Hợp đồng phân phối sản phẩm gia dụng giữa Hikari Home và ACME Corp có hiệu lực trong một năm tại Việt Nam."
+ },
+ {
+  "id": "contracts/sakura-trading/supply-202402",
+  "kind": "Contract",
+  "topic": "supply",
+  "customer": "Sakura Trading",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2024-02-10",
+  "effective_from": "2024-02-15",
+  "effective_to": "2025-02-14",
+  "contract_value": 28720000,
+  "currency": "JPY",
+  "title": "サクラトレーディング様 供給契約書(2024年2月)",
+  "description": "Hikari Homeとサクラトレーディング様との間の、家電製品供給に関する1年間の契約内容を記載した文書です。"
+ },
+ {
+  "id": "contracts/minh-phat-jsc/maintenance-202401",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "customer": "Minh Phat JSC",
+  "region": "VN",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2024-01-21",
+  "effective_from": "2024-01-27",
+  "effective_to": "2026-01-26",
+  "contract_value": 4086000000,
+  "currency": "VND",
+  "title": "Maintenance Contract – Minh Phat JSC (January 2024)",
+  "description": "A two-year maintenance service agreement between Hikari Home and Minh Phat JSC covering appliance servicing in Vietnam."
+ },
+ {
+  "id": "contracts/tokyo-denki-retail/supply-202506",
+  "kind": "Contract",
+  "topic": "supply",
+  "customer": "Tokyo Denki Retail",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2025-05-30",
+  "effective_from": "2025-06-04",
+  "effective_to": "2028-06-03",
+  "contract_value": 49940000,
+  "currency": "JPY",
+  "title": "東京電機リテール様 供給契約書(2025年6月)",
+  "description": "Hikari Homeと東京電機リテール様との間の、3年間にわたる家電製品供給契約の主要条件をまとめた文書です。"
+ },
+ {
+  "id": "contracts/saigon-hotels-group/maintenance-202411",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "customer": "Saigon Hotels Group",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2024-11-06",
+  "effective_from": "2024-11-25",
+  "effective_to": "2025-11-24",
+  "contract_value": 1579000000,
+  "currency": "VND",
+  "title": "Hợp đồng bảo trì Saigon Hotels Group (tháng 11/2024)",
+  "description": "Hợp đồng bảo trì thiết bị gia dụng một năm giữa Hikari Home và Saigon Hotels Group tại Việt Nam."
+ },
+ {
+  "id": "contracts/osaka-office-supply/maintenance-202603",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "customer": "Osaka Office Supply",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2026-02-18",
+  "effective_from": "2026-03-07",
+  "effective_to": "2029-03-06",
+  "contract_value": 27690000,
+  "currency": "JPY",
+  "title": "大阪オフィスサプライ様 保守契約書(2026年3月)",
+  "description": "Hikari Homeと大阪オフィスサプライ様との間で締結した、3年間の家電保守サービス契約の内容をまとめた文書です。"
+ },
+ {
+  "id": "contracts/acme-corp/maintenance-202505",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-05-01",
+  "effective_from": "2025-05-18",
+  "effective_to": "2028-05-17",
+  "contract_value": 3326000000,
+  "currency": "VND",
+  "title": "Hợp đồng bảo trì ACME Corp (tháng 5/2025)",
+  "description": "Hợp đồng bảo trì ba năm giữa Hikari Home và ACME Corp cho các thiết bị gia dụng tại Việt Nam."
+ },
+ {
+  "id": "contracts/sakura-trading/supply-202510",
+  "kind": "Contract",
+  "topic": "supply",
+  "customer": "Sakura Trading",
+  "region": "JP",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2025-10-18",
+  "effective_from": "2025-10-31",
+  "effective_to": "2027-10-27",
+  "contract_value": 28940000,
+  "currency": "JPY",
+  "title": "Supply Contract – Sakura Trading (JP)",
+  "description": "Two-year supply agreement between Hikari Home and Sakura Trading covering appliance deliveries in Japan, valued at 28,940,000 JPY."
+ },
+ {
+  "id": "contracts/minh-phat-jsc/maintenance-202403",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "customer": "Minh Phat JSC",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2024-03-17",
+  "effective_from": "2024-03-24",
+  "effective_to": "2026-03-23",
+  "contract_value": 2119000000,
+  "currency": "VND",
+  "title": "Hợp đồng bảo trì – Minh Phat JSC (VN), tháng 3/2024",
+  "description": "Hợp đồng bảo trì thiết bị giữa Hikari Home và Minh Phat JSC, thời hạn hai năm, giá trị 2.119.000.000 VND."
+ },
+ {
+  "id": "contracts/tokyo-denki-retail/maintenance-202501",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "customer": "Tokyo Denki Retail",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2025-01-02",
+  "effective_from": "2025-01-22",
+  "effective_to": "2028-01-21",
+  "contract_value": 34860000,
+  "currency": "JPY",
+  "title": "保守契約書 – Tokyo Denki Retail(JP)2025年1月",
+  "description": "Hikari HomeとTokyo Denki Retailが締結した3年間の保守契約で、契約金額は34,860,000 JPYです。"
+ },
+ {
+  "id": "contracts/saigon-hotels-group/installation-202504",
+  "kind": "Contract",
+  "topic": "installation",
+  "customer": "Saigon Hotels Group",
+  "region": "VN",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-03-31",
+  "effective_from": "2025-04-20",
+  "effective_to": "2026-04-19",
+  "contract_value": 4252000000,
+  "currency": "VND",
+  "title": "Installation Contract – Saigon Hotels Group (VN)",
+  "description": "One-year installation contract between Hikari Home and Saigon Hotels Group for appliance installation across its hotels, valued at 4,252,000,000 VND."
+ },
+ {
+  "id": "contracts/osaka-office-supply/installation-202505",
+  "kind": "Contract",
+  "topic": "installation",
+  "customer": "Osaka Office Supply",
+  "region": "JP",
+  "lang": "en",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2025-05-14",
+  "effective_from": "2025-05-22",
+  "effective_to": "2027-05-21",
+  "contract_value": 6910000,
+  "currency": "JPY",
+  "title": "Installation Contract – Osaka Office Supply (JP)",
+  "description": "Two-year installation contract between Hikari Home and Osaka Office Supply for appliance installation services in Japan, valued at 6,910,000 JPY."
+ },
+ {
+  "id": "contracts/minh-phat-jsc/maintenance-202402",
+  "kind": "Contract",
+  "topic": "maintenance",
+  "customer": "Minh Phat JSC",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2024-02-07",
+  "effective_from": "2024-02-23",
+  "effective_to": "2026-02-22",
+  "contract_value": 4942000000,
+  "currency": "VND",
+  "title": "Hợp đồng bảo trì – Minh Phat JSC (VN), tháng 2/2024",
+  "description": "Hợp đồng bảo trì hai năm giữa Hikari Home và Minh Phat JSC với giá trị 4.942.000.000 VND."
+ },
+ {
+  "id": "contracts/sakura-trading/distribution-202308",
+  "kind": "Contract",
+  "topic": "distribution",
+  "customer": "Sakura Trading",
+  "region": "JP",
+  "lang": "ja",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "jp"
+  ],
+  "updated": "2023-08-05",
+  "effective_from": "2023-08-16",
+  "effective_to": "2024-08-15",
+  "contract_value": 11890000,
+  "currency": "JPY",
+  "title": "販売代理店契約書 – Sakura Trading(JP)2023年8月",
+  "description": "Hikari HomeとSakura Tradingの1年間の販売(ディストリビューション)契約で、契約金額は11,890,000 JPYです。"
+ },
+ {
+  "id": "contracts/acme-corp/installation-202604",
+  "kind": "Contract",
+  "topic": "installation",
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2026-04-11",
+  "effective_from": "2026-04-20",
+  "effective_to": "2028-04-19",
+  "contract_value": 3226000000,
+  "currency": "VND",
+  "title": "Hợp đồng lắp đặt – ACME Corp (VN), tháng 4/2026",
+  "description": "Hợp đồng lắp đặt thiết bị hai năm giữa Hikari Home và ACME Corp, giá trị 3.226.000.000 VND."
+ },
+ {
+  "id": "contracts/acme-corp/supply-202504",
+  "kind": "Contract",
+  "topic": "supply",
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2025-03-29",
+  "effective_from": "2025-04-06",
+  "effective_to": "2026-04-05",
+  "contract_value": 3996000000,
+  "currency": "VND",
+  "title": "Hợp đồng cung cấp thiết bị gia dụng – ACME Corp (VN)",
+  "description": "Hợp đồng cung cấp thiết bị gia dụng giữa Hikari Home và ACME Corp tại Việt Nam, hiệu lực từ 06/04/2025 đến 05/04/2026."
+ },
+ {
+  "id": "contracts/acme-corp/installation-202605",
+  "kind": "Contract",
+  "topic": "installation",
+  "customer": "ACME Corp",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2026-04-18",
+  "effective_from": "2026-05-04",
+  "effective_to": "2027-05-03",
+  "contract_value": 1085000000,
+  "currency": "VND",
+  "title": "Hợp đồng lắp đặt thiết bị – ACME Corp (VN)",
+  "description": "Hợp đồng lắp đặt thiết bị giữa Hikari Home và ACME Corp tại Việt Nam, hiệu lực từ 04/05/2026 đến 03/05/2027."
+ },
+ {
+  "id": "contracts/minh-phat-jsc/supply-202601",
+  "kind": "Contract",
+  "topic": "supply",
+  "customer": "Minh Phat JSC",
+  "region": "VN",
+  "lang": "vi",
+  "department": "Sales",
+  "status": "stable",
+  "tags": [
+   "contract",
+   "b2b",
+   "sales",
+   "vn"
+  ],
+  "updated": "2026-01-02",
+  "effective_from": "2026-01-20",
+  "effective_to": "2028-01-19",
+  "contract_value": 3014000000,
+  "currency": "VND",
+  "title": "Hợp đồng cung cấp thiết bị gia dụng – Công ty Cổ phần Minh Phát (VN)",
+  "description": "Hợp đồng cung cấp thiết bị gia dụng giữa Hikari Home và Minh Phat JSC, hiệu lực hai năm từ 20/01/2026 đến 19/01/2028."
+ },
+ {
+  "id": "meetings/finance/2026-03-17-budget",
+  "kind": "Meeting Note",
+  "topic": "budget",
+  "department": "Finance",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "finance",
+   "meeting"
+  ],
+  "updated": "2026-03-17",
+  "meeting_date": "2026-03-17",
+  "title": "Finance Budget Meeting Notes – 2026-03-17",
+  "description": "Notes from the Finance department budget meeting on 17 March 2026, where the budget was set at 90 million VND."
+ },
+ {
+  "id": "meetings/hr/2026-06-08-hiring",
+  "kind": "Meeting Note",
+  "topic": "hiring",
+  "department": "HR",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "meeting"
+  ],
+  "updated": "2026-06-08",
+  "meeting_date": "2026-06-08",
+  "title": "Biên bản họp Nhân sự về kế hoạch tuyển dụng – 08/06/2026",
+  "description": "Biên bản cuộc họp phòng Nhân sự ngày 08/06/2026 về kế hoạch tuyển dụng và ngân sách 70 triệu VND."
+ },
+ {
+  "id": "meetings/sales/2026-04-06-launch",
+  "kind": "Meeting Note",
+  "topic": "launch",
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "marketing",
+   "meeting",
+   "product"
+  ],
+  "updated": "2026-04-06",
+  "meeting_date": "2026-04-06",
+  "title": "Sales Product Launch Meeting Notes – 2026-04-06",
+  "description": "Notes from the Sales department's product launch planning meeting on 6 April 2026, with a launch budget of 640 million VND."
+ },
+ {
+  "id": "meetings/sales/2026-04-07-kpi",
+  "kind": "Meeting Note",
+  "topic": "kpi",
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "meeting",
+   "sales"
+  ],
+  "updated": "2026-04-07",
+  "meeting_date": "2026-04-07",
+  "title": "Sales KPI Review Meeting Notes – 2026-04-07",
+  "description": "Notes from the Sales KPI review on 7 April 2026, including the approved incentive budget of 700 million VND."
+ },
+ {
+  "id": "meetings/it/2026-04-23-security-review",
+  "kind": "Meeting Note",
+  "topic": "security-review",
+  "department": "IT",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "it",
+   "meeting",
+   "security"
+  ],
+  "updated": "2026-04-23",
+  "meeting_date": "2026-04-23",
+  "title": "IT Security Review Meeting Notes – 2026-04-23",
+  "description": "Notes from the IT security review on 23 April 2026, with a security improvement budget of 320 million VND."
+ },
+ {
+  "id": "meetings/warehouse/2025-10-28-inventory-planning",
+  "kind": "Meeting Note",
+  "topic": "inventory-planning",
+  "department": "Warehouse",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "meeting",
+   "warehouse"
+  ],
+  "updated": "2025-10-28",
+  "meeting_date": "2025-10-28",
+  "title": "Warehouse Inventory Planning Meeting Notes – 2025-10-28",
+  "description": "Notes from the Warehouse department's inventory planning meeting on 28 October 2025, covering stock levels and the approved budget."
+ },
+ {
+  "id": "meetings/finance/2026-08-27-budget",
+  "kind": "Meeting Note",
+  "topic": "budget",
+  "department": "Finance",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "finance",
+   "meeting"
+  ],
+  "updated": "2026-08-27",
+  "meeting_date": "2026-08-27",
+  "title": "財務部 予算会議議事録 2026-08-27",
+  "description": "2026年8月27日に開催された財務部の予算会議で、承認された予算額と今後の進め方をまとめた議事録。"
+ },
+ {
+  "id": "meetings/hr/2026-06-30-hiring",
+  "kind": "Meeting Note",
+  "topic": "hiring",
+  "department": "HR",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "meeting"
+  ],
+  "updated": "2026-06-30",
+  "meeting_date": "2026-06-30",
+  "title": "HR Hiring Meeting Notes – 2026-06-30",
+  "description": "Notes from the HR department's hiring meeting on 30 June 2026, summarizing recruitment priorities and the approved hiring budget."
+ },
+ {
+  "id": "meetings/sales/2025-11-16-launch",
+  "kind": "Meeting Note",
+  "topic": "launch",
+  "department": "Sales",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "marketing",
+   "meeting",
+   "product"
+  ],
+  "updated": "2025-11-16",
+  "meeting_date": "2025-11-16",
+  "title": "営業部 新製品発売会議議事録 2025-11-16",
+  "description": "2025年11月16日に開催された営業部の新製品発売会議で、販促計画と決定した予算をまとめた議事録。"
+ },
+ {
+  "id": "meetings/sales/2026-03-16-kpi",
+  "kind": "Meeting Note",
+  "topic": "kpi",
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "meeting",
+   "sales"
+  ],
+  "updated": "2026-03-16",
+  "meeting_date": "2026-03-16",
+  "title": "Sales KPI Meeting Notes – 2026-03-16",
+  "description": "Notes from the Sales department's KPI review on 16 March 2026, including performance findings and the approved incentive budget."
+ },
+ {
+  "id": "meetings/it/2026-03-23-security-review",
+  "kind": "Meeting Note",
+  "topic": "security-review",
+  "department": "IT",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "it",
+   "meeting",
+   "security"
+  ],
+  "updated": "2026-03-23",
+  "meeting_date": "2026-03-23",
+  "title": "IT Security Review Meeting Notes – 2026-03-23",
+  "description": "Notes from the IT department's security review on 23 March 2026, covering identified risks and the approved remediation budget."
+ },
+ {
+  "id": "meetings/warehouse/2026-07-15-inventory-planning",
+  "kind": "Meeting Note",
+  "topic": "inventory-planning",
+  "department": "Warehouse",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "meeting",
+   "warehouse"
+  ],
+  "updated": "2026-07-15",
+  "meeting_date": "2026-07-15",
+  "title": "Biên bản họp kế hoạch tồn kho – Kho vận – 2026-07-15",
+  "description": "Biên bản cuộc họp kế hoạch tồn kho của bộ phận Kho vận ngày 15/07/2026, ghi nhận nội dung thảo luận và ngân sách được duyệt."
+ },
+ {
+  "id": "meetings/finance/2026-06-24-budget",
+  "kind": "Meeting Note",
+  "topic": "budget",
+  "department": "Finance",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "finance",
+   "meeting"
+  ],
+  "updated": "2026-06-24",
+  "meeting_date": "2026-06-24",
+  "title": "Finance Budget Meeting Notes – 2026-06-24",
+  "description": "Notes from the Finance department's budget meeting on 24 June 2026, summarizing spending review and the approved budget."
+ },
+ {
+  "id": "meetings/hr/2026-08-08-hiring",
+  "kind": "Meeting Note",
+  "topic": "hiring",
+  "department": "HR",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "meeting"
+  ],
+  "updated": "2026-08-08",
+  "meeting_date": "2026-08-08",
+  "title": "Biên bản họp Nhân sự về tuyển dụng – 08/08/2026",
+  "description": "Phòng Nhân sự thống nhất ngân sách tuyển dụng 80 triệu VND và lịch họp tiếp theo sau 2 tuần."
+ },
+ {
+  "id": "meetings/sales/2026-02-01-launch",
+  "kind": "Meeting Note",
+  "topic": "launch",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "marketing",
+   "meeting",
+   "product"
+  ],
+  "updated": "2026-02-01",
+  "meeting_date": "2026-02-01",
+  "title": "Biên bản họp Bán hàng về kế hoạch ra mắt sản phẩm – 01/02/2026",
+  "description": "Phòng Bán hàng chốt ngân sách ra mắt sản phẩm 590 triệu VND và hẹn họp lại sau 4 tuần."
+ },
+ {
+  "id": "meetings/sales/2026-06-27-kpi",
+  "kind": "Meeting Note",
+  "topic": "kpi",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "meeting",
+   "sales"
+  ],
+  "updated": "2026-06-27",
+  "meeting_date": "2026-06-27",
+  "title": "Biên bản họp Bán hàng về KPI – 27/06/2026",
+  "description": "Phòng Bán hàng rà soát KPI quý và duyệt ngân sách thưởng, đào tạo 700 triệu VND, họp lại sau 1 tuần."
+ },
+ {
+  "id": "meetings/it/2026-02-16-security-review",
+  "kind": "Meeting Note",
+  "topic": "security-review",
+  "department": "IT",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "it",
+   "meeting",
+   "security"
+  ],
+  "updated": "2026-02-16",
+  "meeting_date": "2026-02-16",
+  "title": "IT部門 セキュリティレビュー会議議事録(2026年2月16日)",
+  "description": "IT部門がセキュリティ対策を見直し、予算670百万VNDと次回会議を1週間後とすることを決定した。"
+ },
+ {
+  "id": "meetings/warehouse/2026-07-14-inventory-planning",
+  "kind": "Meeting Note",
+  "topic": "inventory-planning",
+  "department": "Warehouse",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "meeting",
+   "warehouse"
+  ],
+  "updated": "2026-07-14",
+  "meeting_date": "2026-07-14",
+  "title": "倉庫部門 在庫計画会議議事録(2026年7月14日)",
+  "description": "倉庫部門が下期の在庫計画を検討し、予算460百万VNDと次回会議を2週間後とすることを決めた。"
+ },
+ {
+  "id": "meetings/hr/2026-06-30-budget",
+  "kind": "Meeting Note",
+  "topic": "budget",
+  "department": "HR",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "finance",
+   "meeting"
+  ],
+  "updated": "2026-06-30",
+  "meeting_date": "2026-06-30",
+  "title": "人事部門 予算会議議事録(2026年6月30日)",
+  "description": "人事部門が下期の予算を協議し、740百万VNDを決定して次回会議を1週間後に設定した。"
+ },
+ {
+  "id": "meetings/sales/2026-08-07-hiring",
+  "kind": "Meeting Note",
+  "topic": "hiring",
+  "department": "Sales",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "hr",
+   "meeting"
+  ],
+  "updated": "2026-08-07",
+  "meeting_date": "2026-08-07",
+  "title": "営業部門 採用会議議事録(2026年8月7日)",
+  "description": "営業部門が採用計画を協議し、採用予算240百万VNDと次回会議を4週間後とすることを決定した。"
+ },
+ {
+  "id": "meetings/sales/2025-12-07-launch",
+  "kind": "Meeting Note",
+  "topic": "launch",
+  "department": "Sales",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "marketing",
+   "meeting",
+   "product"
+  ],
+  "updated": "2025-12-07",
+  "meeting_date": "2025-12-07",
+  "title": "営業部門 新製品発売会議議事録(2025年12月7日)",
+  "description": "営業部門が新製品の発売計画を確認し、発売予算780百万VNDと次回会議を1週間後とすることを決めた。"
+ },
+ {
+  "id": "meetings/sales/2026-02-21-kpi",
+  "kind": "Meeting Note",
+  "topic": "kpi",
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "meeting",
+   "sales"
+  ],
+  "updated": "2026-02-21",
+  "meeting_date": "2026-02-21",
+  "title": "Sales KPI Review Meeting Notes – 2026-02-21",
+  "description": "Notes from the Sales department's KPI review on 21 February 2026, covering results, the approved budget and follow-up timing."
+ },
+ {
+  "id": "meetings/hr/2026-07-04-security-review",
+  "kind": "Meeting Note",
+  "topic": "security-review",
+  "department": "HR",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "it",
+   "meeting",
+   "security"
+  ],
+  "updated": "2026-07-04",
+  "meeting_date": "2026-07-04",
+  "title": "セキュリティレビュー会議 議事録(2026年7月4日)",
+  "description": "2026年7月4日に人事部が実施したセキュリティレビューの議論内容と決定事項をまとめた議事録。"
+ },
+ {
+  "id": "meetings/hr/2025-12-26-inventory-planning",
+  "kind": "Meeting Note",
+  "topic": "inventory-planning",
+  "department": "HR",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "inventory",
+   "meeting",
+   "warehouse"
+  ],
+  "updated": "2025-12-26",
+  "meeting_date": "2025-12-26",
+  "title": "Biên bản họp kế hoạch tồn kho – 26/12/2025",
+  "description": "Biên bản cuộc họp ngày 26/12/2025 của phòng Nhân sự về kế hoạch tồn kho và nhân lực kho vận."
+ },
+ {
+  "id": "meetings/sales/2026-04-30-budget",
+  "kind": "Meeting Note",
+  "topic": "budget",
+  "department": "Sales",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "finance",
+   "meeting"
+  ],
+  "updated": "2026-04-30",
+  "meeting_date": "2026-04-30",
+  "title": "予算会議 議事録(2026年4月30日)",
+  "description": "2026年4月30日に営業部が開催した予算会議の議論内容と決定事項の議事録。"
+ },
+ {
+  "id": "products/air-purifier/hk-ai659",
+  "kind": "Product Spec",
+  "topic": "air-purifier",
+  "model": "HK-AI659",
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "product",
+   "air-purifier"
+  ],
+  "updated": "2024-08-14",
+  "title": "Product Spec: HK-AI659 Air Purifier",
+  "description": "Specification summary of the Hikari Home HK-AI659 air purifier, including power rating, launch year and key features."
+ },
+ {
+  "id": "products/rice-cooker/hk-ri655",
+  "kind": "Product Spec",
+  "topic": "rice-cooker",
+  "model": "HK-RI655",
+  "department": "Sales",
+  "lang": "ja",
+  "status": "deprecated",
+  "tags": [
+   "product",
+   "rice-cooker"
+  ],
+  "updated": "2026-02-04",
+  "title": "製品仕様書:HK-RI655 炊飯器(販売終了)",
+  "description": "Hikari Home の炊飯器HK-RI655の仕様概要と、販売終了に伴う位置づけをまとめた製品仕様書。"
+ },
+ {
+  "id": "products/aircon/hk-ai432",
+  "kind": "Product Spec",
+  "topic": "aircon",
+  "model": "HK-AI432",
+  "department": "Sales",
+  "lang": "ja",
+  "status": "deprecated",
+  "tags": [
+   "product",
+   "aircon"
+  ],
+  "updated": "2024-02-11",
+  "title": "製品仕様書:HK-AI432 エアコン(販売終了)",
+  "description": "Hikari Home のエアコンHK-AI432の仕様概要と、後継機への置き換えに関する情報をまとめた製品仕様書。"
+ },
+ {
+  "id": "products/fridge/hk-fr159",
+  "kind": "Product Spec",
+  "topic": "fridge",
+  "model": "HK-FR159",
+  "department": "Sales",
+  "lang": "ja",
+  "status": "deprecated",
+  "tags": [
+   "product",
+   "fridge"
+  ],
+  "updated": "2026-05-14",
+  "title": "製品仕様書:HK-FR159 冷蔵庫(販売終了)",
+  "description": "Hikari Home の冷蔵庫HK-FR159の仕様概要と、後継機への置き換えに関する情報をまとめた製品仕様書。"
+ },
+ {
+  "id": "products/washer/hk-wa436",
+  "kind": "Product Spec",
+  "topic": "washer",
+  "model": "HK-WA436",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "product",
+   "washer"
+  ],
+  "updated": "2025-05-30",
+  "title": "Thông số sản phẩm máy giặt HK-WA436",
+  "description": "Tài liệu tóm tắt thông số kỹ thuật và định vị bán hàng của máy giặt HK-WA436 do Hikari Home phân phối tại Việt Nam và Nhật Bản."
+ },
+ {
+  "id": "products/air-purifier/hk-ai532",
+  "kind": "Product Spec",
+  "topic": "air-purifier",
+  "model": "HK-AI532",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "product",
+   "air-purifier"
+  ],
+  "updated": "2026-05-03",
+  "title": "Thông số sản phẩm máy lọc không khí HK-AI532",
+  "description": "Tài liệu mô tả thông số kỹ thuật và điểm bán hàng chính của máy lọc không khí HK-AI532."
+ },
+ {
+  "id": "products/rice-cooker/hk-ri346",
+  "kind": "Product Spec",
+  "topic": "rice-cooker",
+  "model": "HK-RI346",
+  "department": "Sales",
+  "lang": "en",
+  "status": "deprecated",
+  "tags": [
+   "product",
+   "rice-cooker"
+  ],
+  "updated": "2024-08-05",
+  "title": "Product Specification: HK-RI346 Rice Cooker (Deprecated)",
+  "description": "Specification summary for the HK-RI346 rice cooker, which is now deprecated and no longer recommended for new sales."
+ },
+ {
+  "id": "products/aircon/hk-ai648",
+  "kind": "Product Spec",
+  "topic": "aircon",
+  "model": "HK-AI648",
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "product",
+   "aircon"
+  ],
+  "updated": "2026-01-08",
+  "title": "Product Specification: HK-AI648 Air Conditioner",
+  "description": "Overview of the HK-AI648 air conditioner, including key technical specifications and sales positioning."
+ },
+ {
+  "id": "products/fridge/hk-fr976",
+  "kind": "Product Spec",
+  "topic": "fridge",
+  "model": "HK-FR976",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "product",
+   "fridge"
+  ],
+  "updated": "2024-11-12",
+  "title": "Thông số sản phẩm tủ lạnh HK-FR976",
+  "description": "Tài liệu tóm tắt thông số kỹ thuật và điểm nổi bật của tủ lạnh HK-FR976 ra mắt năm 2024."
+ },
+ {
+  "id": "products/washer/hk-wa672",
+  "kind": "Product Spec",
+  "topic": "washer",
+  "model": "HK-WA672",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "product",
+   "washer"
+  ],
+  "updated": "2026-06-18",
+  "title": "Thông số sản phẩm máy giặt HK-WA672",
+  "description": "Tài liệu mô tả thông số kỹ thuật và định hướng bán hàng của máy giặt HK-WA672 tích hợp sấy."
+ },
+ {
+  "id": "products/air-purifier/hk-ai856",
+  "kind": "Product Spec",
+  "topic": "air-purifier",
+  "model": "HK-AI856",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "deprecated",
+  "tags": [
+   "product",
+   "air-purifier"
+  ],
+  "updated": "2024-12-28",
+  "title": "Thông số sản phẩm máy lọc không khí HK-AI856 (ngừng sử dụng)",
+  "description": "Thông số kỹ thuật của máy lọc không khí HK-AI856, tài liệu này đã bị thay thế và chỉ giữ để tham khảo."
+ },
+ {
+  "id": "products/rice-cooker/hk-ri804",
+  "kind": "Product Spec",
+  "topic": "rice-cooker",
+  "model": "HK-RI804",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "deprecated",
+  "tags": [
+   "product",
+   "rice-cooker"
+  ],
+  "updated": "2024-07-27",
+  "title": "Thông số sản phẩm nồi cơm điện HK-RI804 (ngừng sử dụng)",
+  "description": "Thông số kỹ thuật của nồi cơm điện HK-RI804, tài liệu đã bị thay thế và chỉ dùng để tham khảo."
+ },
+ {
+  "id": "products/aircon/hk-ai293",
+  "kind": "Product Spec",
+  "topic": "aircon",
+  "model": "HK-AI293",
+  "department": "Sales",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "product",
+   "aircon"
+  ],
+  "updated": "2024-02-01",
+  "title": "HK-AI293 Air Conditioner Product Spec",
+  "description": "Product specification for the Hikari Home HK-AI293 inverter air conditioner, covering power draw, launch background and sales positioning."
+ },
+ {
+  "id": "products/fridge/hk-fr763",
+  "kind": "Product Spec",
+  "topic": "fridge",
+  "model": "HK-FR763",
+  "department": "Sales",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "product",
+   "fridge"
+  ],
+  "updated": "2026-03-19",
+  "title": "HK-FR763 冷蔵庫 製品仕様書",
+  "description": "Hikari Home の冷蔵庫 HK-FR763 の消費電力と発売年を含む製品仕様の概要です。"
+ },
+ {
+  "id": "products/washer/hk-wa856",
+  "kind": "Product Spec",
+  "topic": "washer",
+  "model": "HK-WA856",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "product",
+   "washer"
+  ],
+  "updated": "2025-05-03",
+  "title": "Thông số sản phẩm máy giặt HK-WA856",
+  "description": "Tài liệu thông số sản phẩm máy giặt HK-WA856 của Hikari Home, gồm công suất, năm ra mắt và hướng dẫn bán hàng."
+ },
+ {
+  "id": "faq/warranty-0",
+  "kind": "FAQ",
+  "topic": "warranty",
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "warranty"
+  ],
+  "updated": "2026-05-15",
+  "title": "Warranty FAQ for Customer Support",
+  "description": "Answers to the most common customer questions about Hikari Home product warranty coverage and claims."
+ },
+ {
+  "id": "faq/shipping-1",
+  "kind": "FAQ",
+  "topic": "shipping",
+  "department": "CS",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "shipping"
+  ],
+  "updated": "2025-05-28",
+  "title": "Câu hỏi thường gặp về giao hàng",
+  "description": "Giải đáp các thắc mắc phổ biến của khách hàng về thời gian, phí và theo dõi giao hàng của Hikari Home."
+ },
+ {
+  "id": "faq/billing-2",
+  "kind": "FAQ",
+  "topic": "billing",
+  "department": "CS",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "billing"
+  ],
+  "updated": "2026-01-03",
+  "title": "Câu hỏi thường gặp về thanh toán và hóa đơn",
+  "description": "Giải đáp các thắc mắc thường gặp về phương thức thanh toán, hóa đơn và hoàn tiền tại Hikari Home."
+ },
+ {
+  "id": "faq/loyalty-3",
+  "kind": "FAQ",
+  "topic": "loyalty",
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "loyalty"
+  ],
+  "updated": "2026-09-16",
+  "title": "Loyalty Program FAQ",
+  "description": "Answers to common customer questions about earning, using and keeping points in the Hikari Home loyalty program."
+ },
+ {
+  "id": "faq/privacy-4",
+  "kind": "FAQ",
+  "topic": "privacy",
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "privacy"
+  ],
+  "updated": "2025-02-19",
+  "title": "プライバシーに関するよくあるご質問",
+  "description": "Hikari Homeがお客様の個人情報をどのように取り扱うかについて、よくあるご質問をまとめたFAQです。"
+ },
+ {
+  "id": "faq/privacy-5",
+  "kind": "FAQ",
+  "topic": "privacy",
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "privacy"
+  ],
+  "updated": "2026-07-28",
+  "title": "個人情報の取り扱いに関するよくある質問(FAQ)",
+  "description": "お客様の個人情報の収集・利用・開示請求に関するカスタマーサポート向けのよくある質問と回答をまとめた資料です。"
+ },
+ {
+  "id": "faq/warranty-6",
+  "kind": "FAQ",
+  "topic": "warranty",
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "warranty"
+  ],
+  "updated": "2025-03-22",
+  "title": "Warranty FAQ: Coverage, Claims and Exclusions",
+  "description": "Answers to common customer questions about Hikari Home product warranty coverage, how to file a claim, and what is excluded."
+ },
+ {
+  "id": "faq/loyalty-7",
+  "kind": "FAQ",
+  "topic": "loyalty",
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "loyalty"
+  ],
+  "updated": "2025-12-21",
+  "title": "Loyalty Program FAQ: Points, Tiers and Redemption",
+  "description": "Answers to frequently asked customer questions about earning, tracking and redeeming points in the Hikari Home loyalty program."
+ },
+ {
+  "id": "faq/billing-8",
+  "kind": "FAQ",
+  "topic": "billing",
+  "department": "CS",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "billing"
+  ],
+  "updated": "2026-06-28",
+  "title": "請求・お支払いに関するよくある質問(FAQ)",
+  "description": "ご請求書の見方、お支払い方法、二重請求や返金に関するカスタマーサポート向けのよくある質問をまとめた資料です。"
+ },
+ {
+  "id": "faq/returns-9",
+  "kind": "FAQ",
+  "topic": "returns",
+  "department": "CS",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "faq",
+   "customer-support",
+   "returns"
+  ],
+  "updated": "2025-10-31",
+  "title": "Returns FAQ: Eligibility, Process and Refunds",
+  "description": "Answers to common customer questions about returning Hikari Home products, including eligibility, the return process and refund timing."
+ },
+ {
+  "id": "announcements/office-move-0",
+  "kind": "Announcement",
+  "topic": "office-move",
+  "department": "Sales",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "hr"
+  ],
+  "updated": "2025-06-22",
+  "title": "【お知らせ】営業部オフィス移転のご案内",
+  "description": "営業部が新しいオフィスへ移転するにあたり、移転時期、業務への影響、社員へのお願いをお知らせする社内告知です。"
+ },
+ {
+  "id": "announcements/office-move-1",
+  "kind": "Announcement",
+  "topic": "office-move",
+  "department": "IT",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "hr"
+  ],
+  "updated": "2026-03-16",
+  "title": "Announcement: IT Department Office Relocation",
+  "description": "Notice to staff about the IT department's move to a new office location, including service impact and required preparation."
+ },
+ {
+  "id": "announcements/office-move-2",
+  "kind": "Announcement",
+  "topic": "office-move",
+  "department": "HR",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "hr"
+  ],
+  "updated": "2026-07-15",
+  "title": "【お知らせ】人事部オフィス移転について",
+  "description": "人事部の新オフィスへの移転にともなう、窓口対応の変更点と従業員へのお願いをお知らせする社内告知です。"
+ },
+ {
+  "id": "announcements/security-training-3",
+  "kind": "Announcement",
+  "topic": "security-training",
+  "department": "HR",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "security",
+   "it"
+  ],
+  "updated": "2026-02-01",
+  "title": "【お知らせ】2026年度 情報セキュリティ研修の実施について",
+  "description": "全社員を対象とした2026年度の情報セキュリティ研修の実施概要と受講方法をお知らせします。"
+ },
+ {
+  "id": "announcements/security-training-4",
+  "kind": "Announcement",
+  "topic": "security-training",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "security",
+   "it"
+  ],
+  "updated": "2026-09-03",
+  "title": "Thông báo: Đào tạo an ninh thông tin dành cho Phòng Kinh doanh",
+  "description": "Thông báo lịch và nội dung đào tạo an ninh thông tin bắt buộc dành cho toàn bộ nhân viên Phòng Kinh doanh."
+ },
+ {
+  "id": "announcements/new-system-5",
+  "kind": "Announcement",
+  "topic": "new-system",
+  "department": "CS",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "it"
+  ],
+  "updated": "2025-07-24",
+  "title": "Thông báo: Triển khai hệ thống quản lý yêu cầu khách hàng mới cho Phòng CS",
+  "description": "Thông báo về việc đưa vào vận hành hệ thống quản lý yêu cầu khách hàng mới dành cho Phòng Chăm sóc khách hàng."
+ },
+ {
+  "id": "announcements/price-change-6",
+  "kind": "Announcement",
+  "topic": "price-change",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "pricing",
+   "sales"
+  ],
+  "updated": "2026-03-01",
+  "title": "Thông báo: Điều chỉnh giá bán sản phẩm từ ngày 01/03/2026",
+  "description": "Phòng Kinh doanh thông báo việc điều chỉnh bảng giá bán một số dòng sản phẩm gia dụng áp dụng từ tháng 3 năm 2026."
+ },
+ {
+  "id": "announcements/new-system-7",
+  "kind": "Announcement",
+  "topic": "new-system",
+  "department": "Sales",
+  "lang": "vi",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "it"
+  ],
+  "updated": "2026-06-19",
+  "title": "Thông báo: Triển khai hệ thống quản lý bán hàng mới cho Phòng Kinh doanh",
+  "description": "Thông báo về việc triển khai hệ thống quản lý bán hàng mới thay thế công cụ cũ của Phòng Kinh doanh."
+ },
+ {
+  "id": "announcements/office-move-8",
+  "kind": "Announcement",
+  "topic": "office-move",
+  "department": "Finance",
+  "lang": "ja",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "hr"
+  ],
+  "updated": "2026-02-22",
+  "title": "【お知らせ】オフィス移転に伴う経理部の対応について",
+  "description": "オフィス移転に伴い、経理部が実施する業務スケジュールの調整と社員へのお願い事項をお知らせします。"
+ },
+ {
+  "id": "announcements/office-move-9",
+  "kind": "Announcement",
+  "topic": "office-move",
+  "department": "Legal",
+  "lang": "en",
+  "status": "stable",
+  "tags": [
+   "announcement",
+   "hr"
+  ],
+  "updated": "2026-06-03",
+  "title": "Announcement: Office Relocation and Legal Department Notices",
+  "description": "The Legal department explains how the office relocation affects contract handling, document storage, and notarization requests."
+ }
+]

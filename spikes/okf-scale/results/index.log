@@ -1,0 +1,29 @@
+../okf-scale/bundles/XL: 1270 files, 12517 chunks, 12316 need embedding
+  embedded 640/12316 (13.3 chunk/s)
+  embedded 1280/12316 (9.8 chunk/s)
+  embedded 1920/12316 (7.8 chunk/s)
+  embedded 2560/12316 (6.7 chunk/s)
+  embedded 3200/12316 (6.1 chunk/s)
+  embedded 3840/12316 (5.6 chunk/s)
+  embedded 4480/12316 (5.1 chunk/s)
+  embedded 5120/12316 (4.8 chunk/s)
+  embedded 5760/12316 (4.4 chunk/s)
+  embedded 6400/12316 (4.2 chunk/s)
+  embedded 7040/12316 (4.0 chunk/s)
+  embedded 7680/12316 (3.9 chunk/s)
+  embedded 8320/12316 (3.8 chunk/s)
+  embedded 8960/12316 (3.7 chunk/s)
+  embedded 9600/12316 (3.6 chunk/s)
+  embedded 10240/12316 (3.5 chunk/s)
+  embedded 10880/12316 (3.5 chunk/s)
+  embedded 11520/12316 (3.4 chunk/s)
+  embedded 12160/12316 (3.3 chunk/s)
+../okf-scale/bundles/XL: files=1270 chunks=12517 tokens=3727729 embedded_now=12316 in 3831s
+../okf-scale/bundles/L: 287 files, 3171 chunks, 0 need embedding
+../okf-scale/bundles/L: files=287 chunks=3171 tokens=884826 embedded_now=0 in 2s
+../okf-scale/bundles/M: 62 files, 510 chunks, 0 need embedding
+../okf-scale/bundles/M: files=62 chunks=510 tokens=137929 embedded_now=0 in 0s
+../okf-scale/bundles/M: gold doc@1=28/30 gold doc in top-6 chunks=30/30
+../okf-scale/bundles/L: gold doc@1=23/30 gold doc in top-6 chunks=30/30
+../okf-scale/bundles/XL: gold doc@1=22/30 gold doc in top-6 chunks=26/30
+INDEX_DONE

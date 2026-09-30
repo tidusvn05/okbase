@@ -1,0 +1,7 @@
+target/
+.fastembed_cache/
+.models/
+.okf-samples/
+.corpora/
+e2e/
+.embcache/

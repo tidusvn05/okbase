@@ -1,0 +1,24 @@
+=== bm25
+bm25               R@1=0.267 R@3=0.356 MRR=0.317 | same R@1=0.733 cross R@1=0.033
+load=7ms index30=7ms thr=None/s q_p50=0.4ms q_p95=0.7ms rss=39MB disk=NoneMB
+=== e5-small
+bm25               R@1=0.267 R@3=0.356 MRR=0.317 | same R@1=0.733 cross R@1=0.033
+e5-small           R@1=0.478 R@3=0.778 MRR=0.639 | same R@1=0.933 cross R@1=0.250
+hybrid-w1          R@1=0.333 R@3=0.433 MRR=0.441 | same R@1=0.867 cross R@1=0.067
+hybrid-w0.3        R@1=0.367 R@3=0.456 MRR=0.472 | same R@1=0.933 cross R@1=0.083
+hybrid-w0.1        R@1=0.367 R@3=0.478 MRR=0.482 | same R@1=0.933 cross R@1=0.083
+load=2609ms index30=593ms thr=Some(50.0)/s q_p50=10.2ms q_p95=13.3ms rss=1141MB disk=Some(3719.0)MB
+=== e5-base
+bm25               R@1=0.267 R@3=0.356 MRR=0.317 | same R@1=0.733 cross R@1=0.033
+e5-base            R@1=0.678 R@3=0.867 MRR=0.787 | same R@1=1.000 cross R@1=0.517
+hybrid-w1          R@1=0.367 R@3=0.433 MRR=0.472 | same R@1=0.933 cross R@1=0.083
+hybrid-w0.3        R@1=0.400 R@3=0.444 MRR=0.499 | same R@1=1.000 cross R@1=0.100
+hybrid-w0.1        R@1=0.422 R@3=0.467 MRR=0.527 | same R@1=1.000 cross R@1=0.133
+load=4360ms index30=1963ms thr=Some(16.0)/s q_p50=24.7ms q_p95=30.6ms rss=1956MB disk=Some(3719.0)MB
+=== bge-m3
+bm25               R@1=0.267 R@3=0.356 MRR=0.317 | same R@1=0.733 cross R@1=0.033
+bge-m3             R@1=0.978 R@3=1.000 MRR=0.989 | same R@1=1.000 cross R@1=0.967
+hybrid-w1          R@1=0.389 R@3=0.611 MRR=0.557 | same R@1=0.967 cross R@1=0.100
+hybrid-w0.3        R@1=0.411 R@3=0.656 MRR=0.578 | same R@1=1.000 cross R@1=0.117
+hybrid-w0.1        R@1=0.456 R@3=0.822 MRR=0.642 | same R@1=1.000 cross R@1=0.183
+load=3031ms index30=6550ms thr=Some(5.0)/s q_p50=71.1ms q_p95=86.2ms rss=2139MB disk=Some(3719.0)MB

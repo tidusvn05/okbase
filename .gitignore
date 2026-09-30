@@ -1,0 +1,27 @@
+# Rust
+/target/
+**/target/
+
+# okfkit runtime state
+.okfkit/
+
+# Spike caches, models, corpora and generated data (regenerable; see spikes/README.md)
+spikes/embed-bench/.fastembed_cache/
+spikes/embed-bench/.models/
+spikes/embed-bench/.embcache/
+spikes/embed-bench/.corpora/
+spikes/embed-bench/.okf-samples/
+spikes/embed-bench/e2e/
+spikes/okf-scale/bundles/
+spikes/okf-scale/runs/
+spikes/okf-scale/work/
+spikes/biz-meta/bundle-*/
+spikes/biz-meta/runs/
+spikes/biz-meta/work/
+spikes/biz-meta/data-x20/
+
+# Editors / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/
