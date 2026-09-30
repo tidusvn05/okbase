@@ -27,3 +27,6 @@ spikes/biz-meta/data-x20/
 .vscode/
 spikes/acceptance-v0.1/work/
 spikes/acceptance-v0.1/runs/
+
+# Python
+__pycache__/
