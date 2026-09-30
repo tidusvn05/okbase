@@ -304,6 +304,9 @@ name = "okfkit-standard"
 version = "0.1.0-dev"
 dependencies = [
  "okfkit-core",
+ "serde",
+ "serde_json",
+ "thiserror",
 ]
 
 [[package]]
