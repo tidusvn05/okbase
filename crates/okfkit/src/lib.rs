@@ -1,4 +1,257 @@
-//! okfkit: make markdown knowledge bundles (Open Knowledge Format) work well for AI agents.
+//! okfkit: make markdown knowledge bundles in the [Open Knowledge Format][okf]
+//! work well for AI agents.
 //!
-//! Part of [okfkit](https://github.com/okfkit/okfkit). This crate is a placeholder
-//! during v0.1 development.
+//! [`Bundle`] is the entry point for hosts (CLIs, MCP servers, applications).
+//! It is lexical and model-free, and read-only unless a write API is called.
+//! Every read takes a [`Scope`] from the host.
+//!
+//! ```no_run
+//! use okfkit::{Bundle, OpenOptions, Scope, GrepRequest};
+//!
+//! let bundle = Bundle::open("path/to/bundle".as_ref(), OpenOptions::default())?;
+//! bundle.sync()?;
+//! let scope = Scope::all();
+//! let hits = bundle.grep(&GrepRequest { pattern: "refund|đổi trả".into(), ..Default::default() }, &scope)?;
+//! println!("{}", hits.to_text(false));
+//! # Ok::<(), okfkit::Error>(())
+//! ```
+//!
+//! [okf]: https://github.com/GoogleCloudPlatform/open-knowledge-format
+
+use std::collections::BTreeSet;
+use std::path::{Path, PathBuf};
+use std::sync::{Arc, Mutex, MutexGuard};
+
+pub use okfkit_analyze as analyze;
+pub use okfkit_core as core;
+pub use okfkit_index::{IndexOptions, StateDir, SyncStats};
+pub use okfkit_lint::{Level, LintConfig, Report as LintReport};
+pub use okfkit_query::{
+    CatalogOptions, CatalogResult, Filter, GetRequest, GetResult, GrepRequest, GrepResult,
+    LinksResult, ListResult, MetaFilter, Mode, QueryRequest, QueryResult, Range, Scope, Stats,
+};
+
+/// Errors returned by [`Bundle`].
+#[derive(Debug, thiserror::Error)]
+#[non_exhaustive]
+pub enum Error {
+    /// Opening or updating the index failed.
+    #[error(transparent)]
+    Index(#[from] okfkit_index::Error),
+    /// A read failed (including "not found" and invalid arguments).
+    #[error(transparent)]
+    Query(#[from] okfkit_query::Error),
+    /// Linting failed.
+    #[error(transparent)]
+    Lint(#[from] okfkit_lint::Error),
+    /// The bundle directory does not exist.
+    #[error("bundle not found: {0} is not a directory")]
+    NotADirectory(PathBuf),
+}
+
+/// Default sets of modules.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub enum Profile {
+    /// Core only.
+    Minimal,
+    /// Core plus the data module when present (v0.2). The default.
+    #[default]
+    Standard,
+    /// Every module, including embeddings (v0.3).
+    Full,
+}
+
+/// Options for [`Bundle::open`].
+#[derive(Debug, Clone, Default)]
+pub struct OpenOptions {
+    /// Module profile.
+    pub profile: Profile,
+    /// Where the index lives.
+    pub state_dir: StateDir,
+}
+
+impl OpenOptions {
+    /// Sets the profile.
+    pub fn profile(mut self, profile: Profile) -> Self {
+        self.profile = profile;
+        self
+    }
+
+    /// Sets the state directory.
+    pub fn state_dir(mut self, state_dir: StateDir) -> Self {
+        self.state_dir = state_dir;
+        self
+    }
+}
+
+/// A capability a module provides. Tools, commands and skills are shown only when present.
+pub mod capability {
+    /// Regex search.
+    pub const GREP: &str = "read.grep";
+    /// Read documents and sections.
+    pub const GET: &str = "read.get";
+    /// Directory listings.
+    pub const LIST: &str = "read.list";
+    /// Metadata queries.
+    pub const QUERY: &str = "read.query";
+    /// Prompt-ready catalog.
+    pub const CATALOG: &str = "read.catalog";
+    /// Links and backlinks.
+    pub const LINKS: &str = "read.links";
+    /// Lint.
+    pub const LINT: &str = "maint.lint";
+}
+
+/// The capabilities available for a bundle.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+pub struct Capabilities(BTreeSet<&'static str>);
+
+impl Capabilities {
+    /// Whether a capability is present.
+    pub fn has(&self, cap: &str) -> bool {
+        self.0.contains(cap)
+    }
+
+    /// All capabilities, sorted.
+    pub fn iter(&self) -> impl Iterator<Item = &'static str> + '_ {
+        self.0.iter().copied()
+    }
+}
+
+struct Inner {
+    root: PathBuf,
+    index: Mutex<okfkit_index::Index>,
+    profile: Profile,
+}
+
+/// An open knowledge bundle. Cheap to clone and safe to share between threads.
+#[derive(Clone)]
+pub struct Bundle(Arc<Inner>);
+
+impl std::fmt::Debug for Bundle {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("Bundle")
+            .field("root", &self.0.root)
+            .field("profile", &self.0.profile)
+            .finish()
+    }
+}
+
+impl Bundle {
+    /// Opens the bundle at `dir` and its index. Call [`Bundle::sync`] to bring the index up to date.
+    pub fn open(dir: &Path, options: OpenOptions) -> Result<Self, Error> {
+        if !dir.is_dir() {
+            return Err(Error::NotADirectory(dir.to_owned()));
+        }
+        let index = okfkit_index::Index::open(
+            dir,
+            &IndexOptions {
+                state_dir: options.state_dir,
+                ..Default::default()
+            },
+        )?;
+        Ok(Bundle(Arc::new(Inner {
+            root: dir.to_owned(),
+            index: Mutex::new(index),
+            profile: options.profile,
+        })))
+    }
+
+    /// Opens the bundle with a throw-away in-memory index (for tests and one-off reads).
+    pub fn open_in_memory(dir: &Path) -> Result<Self, Error> {
+        if !dir.is_dir() {
+            return Err(Error::NotADirectory(dir.to_owned()));
+        }
+        let index = okfkit_index::Index::open_in_memory(dir)?;
+        Ok(Bundle(Arc::new(Inner {
+            root: dir.to_owned(),
+            index: Mutex::new(index),
+            profile: Profile::Standard,
+        })))
+    }
+
+    /// The bundle root.
+    pub fn root(&self) -> &Path {
+        &self.0.root
+    }
+
+    /// Where the index is stored (`None` for an in-memory index).
+    pub fn index_path(&self) -> Option<PathBuf> {
+        self.index().db_path().map(Path::to_owned)
+    }
+
+    fn index(&self) -> MutexGuard<'_, okfkit_index::Index> {
+        self.0.index.lock().unwrap_or_else(|e| e.into_inner())
+    }
+
+    /// Re-indexes changed files.
+    pub fn sync(&self) -> Result<SyncStats, Error> {
+        Ok(self.index().sync()?)
+    }
+
+    /// Capabilities of the enabled modules.
+    pub fn capabilities(&self) -> Capabilities {
+        use capability::*;
+        Capabilities(
+            [GREP, GET, LIST, QUERY, CATALOG, LINKS, LINT]
+                .into_iter()
+                .collect(),
+        )
+    }
+
+    /// A prompt-ready catalog.
+    pub fn catalog(&self, options: &CatalogOptions, scope: &Scope) -> Result<CatalogResult, Error> {
+        Ok(okfkit_query::catalog(&self.index(), options, scope)?)
+    }
+
+    /// `Full` if the visible bundle fits in about 30k tokens, else `Lexical`.
+    pub fn recommend_mode(&self, scope: &Scope) -> Result<Mode, Error> {
+        Ok(okfkit_query::recommend_mode(&self.index(), scope)?)
+    }
+
+    /// Regex search.
+    pub fn grep(&self, req: &GrepRequest, scope: &Scope) -> Result<GrepResult, Error> {
+        Ok(okfkit_query::grep(&self.index(), req, scope)?)
+    }
+
+    /// Reads a document, a section or a line range.
+    pub fn get(&self, req: &GetRequest, scope: &Scope) -> Result<GetResult, Error> {
+        Ok(okfkit_query::get(&self.index(), req, scope)?)
+    }
+
+    /// Lists a directory.
+    pub fn list(&self, dir: &str, scope: &Scope) -> Result<ListResult, Error> {
+        Ok(okfkit_query::list(&self.index(), dir, scope)?)
+    }
+
+    /// Metadata query.
+    pub fn query(&self, req: &QueryRequest, scope: &Scope) -> Result<QueryResult, Error> {
+        Ok(okfkit_query::query(&self.index(), req, scope)?)
+    }
+
+    /// Links and backlinks of a document.
+    pub fn links(&self, id: &str, scope: &Scope) -> Result<LinksResult, Error> {
+        Ok(okfkit_query::links(&self.index(), id, scope)?)
+    }
+
+    /// Statistics of the visible bundle.
+    pub fn stats(&self, scope: &Scope) -> Result<Stats, Error> {
+        Ok(okfkit_query::stats(&self.index(), scope)?)
+    }
+
+    /// Lints the files on disk (not the index).
+    pub fn lint(&self, config: &LintConfig) -> Result<LintReport, Error> {
+        Ok(okfkit_lint::lint(&self.0.root, config)?)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn bundle_is_send_sync() {
+        fn check<T: Send + Sync + Clone>() {}
+        check::<Bundle>();
+    }
+}

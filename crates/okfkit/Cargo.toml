@@ -22,3 +22,5 @@ okfkit-analyze.workspace = true
 okfkit-index.workspace = true
 okfkit-query.workspace = true
 okfkit-lint.workspace = true
+thiserror.workspace = true
+serde.workspace = true
