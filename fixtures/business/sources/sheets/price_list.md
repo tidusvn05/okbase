@@ -1,0 +1,78 @@
+---
+type: Dataset
+title: "price_list"
+description: "Price list with VND/JPY prices and status (active/discontinued) — imported from Google Sheets"
+tags: [data, sheet]
+status: stable
+lang: en
+department: Finance
+updated: 2026-09-29
+resource: data/price_list.csv
+---
+
+# price_list
+
+Price list with VND/JPY prices and status (active/discontinued). 60 rows. Source CSV: `data/price_list.csv`.
+
+| sku | product_name | category | price_vnd | price_jpy | status |
+|---|---|---|---|---|---|
+| SKU-AI001 | Hikari Air Purifier 1 | air-purifier | 15010000 | 137500 | active |
+| SKU-AI002 | Hikari Air Purifier 2 | air-purifier | 17640000 | 15400 | active |
+| SKU-AI003 | Hikari Air Purifier 3 | air-purifier | 17590000 | 32000 | active |
+| SKU-AI004 | Hikari Air Purifier 4 | air-purifier | 8720000 | 62400 | active |
+| SKU-AI005 | Hikari Air Purifier 5 | air-purifier | 17050000 | 137000 | active |
+| SKU-AI006 | Hikari Air Purifier 6 | air-purifier | 18560000 | 144200 | discontinued |
+| SKU-AI007 | Hikari Air Purifier 7 | air-purifier | 21440000 | 125400 | active |
+| SKU-AI008 | Hikari Air Purifier 8 | air-purifier | 16220000 | 136100 | active |
+| SKU-AI009 | Hikari Air Purifier 9 | air-purifier | 20300000 | 123800 | active |
+| SKU-AI010 | Hikari Air Purifier 10 | air-purifier | 18830000 | 68300 | active |
+| SKU-AI011 | Hikari Air Purifier 11 | air-purifier | 6720000 | 30700 | discontinued |
+| SKU-AI012 | Hikari Air Purifier 12 | air-purifier | 3150000 | 110100 | active |
+| SKU-RI001 | Hikari Rice Cooker 1 | rice-cooker | 6750000 | 73400 | active |
+| SKU-RI002 | Hikari Rice Cooker 2 | rice-cooker | 14750000 | 82800 | discontinued |
+| SKU-RI003 | Hikari Rice Cooker 3 | rice-cooker | 3380000 | 130600 | active |
+| SKU-RI004 | Hikari Rice Cooker 4 | rice-cooker | 2810000 | 120500 | active |
+| SKU-RI005 | Hikari Rice Cooker 5 | rice-cooker | 3020000 | 51900 | active |
+| SKU-RI006 | Hikari Rice Cooker 6 | rice-cooker | 16610000 | 63900 | active |
+| SKU-RI007 | Hikari Rice Cooker 7 | rice-cooker | 10470000 | 75500 | active |
+| SKU-RI008 | Hikari Rice Cooker 8 | rice-cooker | 19810000 | 78300 | active |
+| SKU-RI009 | Hikari Rice Cooker 9 | rice-cooker | 21600000 | 103800 | active |
+| SKU-RI010 | Hikari Rice Cooker 10 | rice-cooker | 9520000 | 129200 | active |
+| SKU-RI011 | Hikari Rice Cooker 11 | rice-cooker | 12760000 | 11500 | active |
+| SKU-RI012 | Hikari Rice Cooker 12 | rice-cooker | 6530000 | 68900 | discontinued |
+| SKU-AI001 | Hikari Air Conditioner 1 | aircon | 10300000 | 113000 | active |
+| SKU-AI002 | Hikari Air Conditioner 2 | aircon | 15420000 | 126300 | active |
+| SKU-AI003 | Hikari Air Conditioner 3 | aircon | 12630000 | 23400 | active |
+| SKU-AI004 | Hikari Air Conditioner 4 | aircon | 9200000 | 63700 | discontinued |
+| SKU-AI005 | Hikari Air Conditioner 5 | aircon | 2950000 | 104400 | active |
+| SKU-AI006 | Hikari Air Conditioner 6 | aircon | 5600000 | 41900 | active |
+| SKU-AI007 | Hikari Air Conditioner 7 | aircon | 24200000 | 140600 | active |
+| SKU-AI008 | Hikari Air Conditioner 8 | aircon | 23130000 | 77600 | active |
+| SKU-AI009 | Hikari Air Conditioner 9 | aircon | 4000000 | 56400 | active |
+| SKU-AI010 | Hikari Air Conditioner 10 | aircon | 11230000 | 66800 | active |
+| SKU-AI011 | Hikari Air Conditioner 11 | aircon | 13400000 | 96200 | active |
+| SKU-AI012 | Hikari Air Conditioner 12 | aircon | 18370000 | 110600 | active |
+| SKU-FR001 | Hikari Refrigerator 1 | fridge | 20260000 | 34100 | active |
+| SKU-FR002 | Hikari Refrigerator 2 | fridge | 10040000 | 18700 | active |
+| SKU-FR003 | Hikari Refrigerator 3 | fridge | 5850000 | 95700 | discontinued |
+| SKU-FR004 | Hikari Refrigerator 4 | fridge | 6130000 | 91300 | active |
+| SKU-FR005 | Hikari Refrigerator 5 | fridge | 16990000 | 77400 | active |
+| SKU-FR006 | Hikari Refrigerator 6 | fridge | 15320000 | 37600 | active |
+| SKU-FR007 | Hikari Refrigerator 7 | fridge | 15010000 | 26200 | discontinued |
+| SKU-FR008 | Hikari Refrigerator 8 | fridge | 19510000 | 19100 | active |
+| SKU-FR009 | Hikari Refrigerator 9 | fridge | 11320000 | 141000 | discontinued |
+| SKU-FR010 | Hikari Refrigerator 10 | fridge | 18960000 | 125600 | discontinued |
+| SKU-FR011 | Hikari Refrigerator 11 | fridge | 17560000 | 81000 | active |
+| SKU-FR012 | Hikari Refrigerator 12 | fridge | 22740000 | 89200 | active |
+| SKU-WA001 | Hikari Washing Machine 1 | washer | 24080000 | 35600 | active |
+| SKU-WA002 | Hikari Washing Machine 2 | washer | 20940000 | 94900 | active |
+| SKU-WA003 | Hikari Washing Machine 3 | washer | 15040000 | 119400 | discontinued |
+| SKU-WA004 | Hikari Washing Machine 4 | washer | 10310000 | 66400 | active |
+| SKU-WA005 | Hikari Washing Machine 5 | washer | 21840000 | 76800 | active |
+| SKU-WA006 | Hikari Washing Machine 6 | washer | 17500000 | 16600 | discontinued |
+| SKU-WA007 | Hikari Washing Machine 7 | washer | 10000000 | 59900 | active |
+| SKU-WA008 | Hikari Washing Machine 8 | washer | 18530000 | 15500 | active |
+| SKU-WA009 | Hikari Washing Machine 9 | washer | 10160000 | 108600 | active |
+| SKU-WA010 | Hikari Washing Machine 10 | washer | 17220000 | 147100 | active |
+| SKU-WA011 | Hikari Washing Machine 11 | washer | 11150000 | 29100 | active |
+| SKU-WA012 | Hikari Washing Machine 12 | washer | 23480000 | 72100 | discontinued |

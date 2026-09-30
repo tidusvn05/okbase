@@ -1,0 +1,7 @@
+Synthetic business knowledge bundle for the fictional company "Hikari Home"
+(policies, SOPs, contracts, meeting notes, product specs, FAQs, announcements,
+and three CSV sheets), in Vietnamese, English and Japanese.
+
+Generated for okfkit's biz-meta spike (spikes/biz-meta, bundle-E, scale x1) with
+the help of an LLM. All names, customers, figures and events are fictional.
+Part of okfkit; licensed under MIT OR Apache-2.0 like the rest of the repository.
