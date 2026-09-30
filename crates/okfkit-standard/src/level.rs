@@ -14,7 +14,7 @@ use std::collections::{BTreeSet, HashSet};
 use std::fmt;
 use std::path::Path;
 
-use okfkit_core::{Concept, ConceptId, Severity, Value, discover, validate};
+use okfkit_core::{Concept, ConceptId, FrontmatterState, Severity, Value, discover, validate};
 use serde::Serialize;
 
 use crate::mapping::meta;
@@ -130,7 +130,8 @@ pub fn assess(docs: &[Concept], vocab: Option<&Vocabulary>) -> Assessment {
             continue;
         }
         concepts += 1;
-        if is_meta(&doc.id) || doc.frontmatter.mapping().is_none() {
+        // Without a usable frontmatter block, L1/L2 findings would only repeat the L0 one.
+        if is_meta(&doc.id) || doc.frontmatter.state() != FrontmatterState::Valid {
             continue;
         }
         let mut dir = doc.id.dir();
@@ -354,7 +355,8 @@ fn check_l2(
     }
 }
 
-fn is_iso_date(s: &str) -> bool {
+/// Whether `s` starts with an ISO date `YYYY-MM-DD`, optionally followed by a time.
+pub fn is_iso_date(s: &str) -> bool {
     let b = s.as_bytes();
     b.len() >= 10
         && b[..10].iter().enumerate().all(|(i, c)| {

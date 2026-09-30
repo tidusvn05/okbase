@@ -13,7 +13,9 @@
 mod analyzer;
 mod detect;
 mod fold;
+pub mod tokens;
 
 pub use analyzer::{Analyzer, is_cjk};
 pub use detect::{Lang, detect_lang};
 pub use fold::fold;
+pub use tokens::estimate_tokens;

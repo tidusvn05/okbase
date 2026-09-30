@@ -1,0 +1,29 @@
+---
+source: crates/okfkit-lint/tests/fixture.rs
+expression: report.to_text()
+---
+l0/bad-yaml.md:1: error[invalid-frontmatter] frontmatter cannot be parsed: line 2 column 8: unclosed bracket '['
+l0/index.md:1: error[index-frontmatter] index.md must not have frontmatter
+l0/no-frontmatter.md:1: error[missing-frontmatter] no YAML frontmatter block (OKF requires `type`)
+l0/no-type.md:1: error[missing-type] frontmatter has no `type`
+l1/index.md:1: warning[stale-index] does not list: l1/nested/, l1/repeats-title, l1/short-description
+l1/nested/index.md:1: error[missing-index] directory `l1/nested` has no index.md (okfkit can generate one)
+l1/no-description.md:1: error[missing-description] no `description`
+l1/repeats-title.md:4: error[description-repeats-title] `description` only repeats the title
+l1/repeats-title.md:4: warning[description-too-short] `description` is only 13 characters; say what the document covers in one sentence
+l1/short-description.md:4: warning[description-too-short] `description` is only 10 characters; say what the document covers in one sentence
+l1/summary-only.md:1: error[missing-description] no `description` (found `summary`; rename it to `description`)
+l2/bad-status.md:7: error[invalid-status] `status` is "live"; expected stable, deprecated or draft
+l2/bad-updated.md:8: error[invalid-updated] `updated` is "yesterday"; expected an ISO date (YYYY-MM-DD)
+l2/contract.md:10: error[invalid-effective-range] `effective_to` (2026-01-01) is before `effective_from` (2026-05-01)
+l2/no-lang.md:1: error[missing-lang] no `lang` (for example `en`, `vi`, `ja`)
+l2/policy-no-owner.md:1: error[schema-missing-field] `owner` is required for type `Policy`
+l2/policy-no-owner.md:9: error[schema-not-allowed] `region` must be one of: VN, JP
+l2/policy-v1.md:7: error[superseded-still-stable] superseded by `l2/policy-v2` but still `status: stable`; set it to `deprecated`
+l2/supersedes-missing.md:9: error[unknown-supersedes] `supersedes` points to `l2/gone`, which does not exist
+l2/synonym-tag.md:5: error[non-canonical-tag] tag `hoàn tiền` is a synonym; use `refund`
+l2/unknown-tag.md:5: error[unknown-tag] tag `nope` is not in the vocabulary
+l3/broken-link.md:15: warning[broken-link] link to `Nowhere` does not resolve to a document
+l3/broken-link.md:15: warning[broken-link] link to `missing.md` does not resolve to a document
+log.md:1: warning[log-date-heading] log heading `Last week` is not an ISO 8601 date (YYYY-MM-DD)
+28 documents, 18 errors, 6 warnings (target L3); bundle level: below L0 (not OKF-conformant)

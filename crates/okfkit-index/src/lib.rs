@@ -18,7 +18,6 @@ pub mod chunk;
 mod error;
 pub mod schema;
 mod state;
-pub mod tokens;
 
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
@@ -33,9 +32,9 @@ use rusqlite::{Connection, OptionalExtension, Transaction, params};
 
 pub use chunk::{Chunk, chunk_body};
 pub use error::Error;
+pub use okfkit_analyze::estimate_tokens;
 pub use schema::SCHEMA_VERSION;
 pub use state::{BUNDLE_STATE_DIR, StateDir, cache_dir};
-pub use tokens::estimate_tokens;
 
 /// File name of the index database inside the state directory.
 pub const DB_FILE: &str = "index.sqlite";

@@ -79,7 +79,7 @@ impl Vocabulary {
 
     /// Parses the `terms` of a vocabulary document.
     pub fn from_concept(doc: &Concept) -> Result<Self, Error> {
-        let invalid = |message: String| Error::InvalidVocabulary {
+        let invalid = |message: String| Error::InvalidMeta {
             path: doc.path.clone(),
             message,
         };

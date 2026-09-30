@@ -1013,8 +1013,14 @@ dependencies = [
 name = "okfkit-lint"
 version = "0.1.0-dev"
 dependencies = [
+ "insta",
+ "okfkit-analyze",
  "okfkit-core",
  "okfkit-standard",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror",
 ]
 
 [[package]]

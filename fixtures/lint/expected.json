@@ -1,0 +1,122 @@
+[
+ {
+  "path": "l0/bad-yaml.md",
+  "line": 1,
+  "rule": "invalid-frontmatter"
+ },
+ {
+  "path": "l0/index.md",
+  "line": 1,
+  "rule": "index-frontmatter"
+ },
+ {
+  "path": "l0/no-frontmatter.md",
+  "line": 1,
+  "rule": "missing-frontmatter"
+ },
+ {
+  "path": "l0/no-type.md",
+  "line": 1,
+  "rule": "missing-type"
+ },
+ {
+  "path": "l1/index.md",
+  "line": 1,
+  "rule": "stale-index"
+ },
+ {
+  "path": "l1/nested/index.md",
+  "line": 1,
+  "rule": "missing-index"
+ },
+ {
+  "path": "l1/no-description.md",
+  "line": 1,
+  "rule": "missing-description"
+ },
+ {
+  "path": "l1/repeats-title.md",
+  "line": 4,
+  "rule": "description-repeats-title"
+ },
+ {
+  "path": "l1/repeats-title.md",
+  "line": 4,
+  "rule": "description-too-short"
+ },
+ {
+  "path": "l1/short-description.md",
+  "line": 4,
+  "rule": "description-too-short"
+ },
+ {
+  "path": "l1/summary-only.md",
+  "line": 1,
+  "rule": "missing-description"
+ },
+ {
+  "path": "l2/bad-status.md",
+  "line": 7,
+  "rule": "invalid-status"
+ },
+ {
+  "path": "l2/bad-updated.md",
+  "line": 8,
+  "rule": "invalid-updated"
+ },
+ {
+  "path": "l2/contract.md",
+  "line": 10,
+  "rule": "invalid-effective-range"
+ },
+ {
+  "path": "l2/no-lang.md",
+  "line": 1,
+  "rule": "missing-lang"
+ },
+ {
+  "path": "l2/policy-no-owner.md",
+  "line": 1,
+  "rule": "schema-missing-field"
+ },
+ {
+  "path": "l2/policy-no-owner.md",
+  "line": 9,
+  "rule": "schema-not-allowed"
+ },
+ {
+  "path": "l2/policy-v1.md",
+  "line": 7,
+  "rule": "superseded-still-stable"
+ },
+ {
+  "path": "l2/supersedes-missing.md",
+  "line": 9,
+  "rule": "unknown-supersedes"
+ },
+ {
+  "path": "l2/synonym-tag.md",
+  "line": 5,
+  "rule": "non-canonical-tag"
+ },
+ {
+  "path": "l2/unknown-tag.md",
+  "line": 5,
+  "rule": "unknown-tag"
+ },
+ {
+  "path": "l3/broken-link.md",
+  "line": 15,
+  "rule": "broken-link"
+ },
+ {
+  "path": "l3/broken-link.md",
+  "line": 15,
+  "rule": "broken-link"
+ },
+ {
+  "path": "log.md",
+  "line": 1,
+  "rule": "log-date-heading"
+ }
+]

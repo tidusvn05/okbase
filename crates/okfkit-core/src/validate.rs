@@ -100,7 +100,11 @@ pub fn validate(doc: &Concept) -> Vec<Issue> {
                     "invalid-frontmatter",
                     format!(
                         "frontmatter cannot be parsed: {}",
-                        fm.error().unwrap_or_default()
+                        // serde-saphyr appends a source snippet; the first line says it all.
+                        fm.error()
+                            .and_then(|e| e.lines().next())
+                            .unwrap_or_default()
+                            .trim_start_matches("error: ")
                     ),
                 ))
             }

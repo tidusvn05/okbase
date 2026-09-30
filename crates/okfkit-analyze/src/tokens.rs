@@ -5,7 +5,7 @@
 //! tokens per syllable, Japanese ≈ 0.53 tokens per character. Code and markup
 //! may deviate noticeably.
 
-use okfkit_analyze::is_cjk;
+use crate::is_cjk;
 
 const EN_PER_WORD: f64 = 1.24;
 const VI_PER_SYLLABLE: f64 = 1.28;

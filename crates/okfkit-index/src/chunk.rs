@@ -1,7 +1,7 @@
 //! Splits a markdown body into sections by H2/H3 headings (ignoring fenced code),
 //! merges small sections and splits large ones. Ported from the embed-bench spike.
 
-use crate::tokens::estimate_tokens;
+use okfkit_analyze::estimate_tokens;
 
 /// Sections below this many (estimated) tokens are merged with the next one.
 pub const MIN_TOKENS: usize = 150;
