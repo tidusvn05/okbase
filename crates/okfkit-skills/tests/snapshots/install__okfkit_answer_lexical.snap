@@ -1,0 +1,37 @@
+---
+source: crates/okfkit-skills/tests/install.rs
+expression: "skills[0].content"
+---
+---
+name: okfkit-answer
+description: Answer questions from the knowledge bundle at /srv/kb (markdown documents with metadata) using the okfkit tools. Use it for any question whose answer should come from that bundle, including listing, counting or filtering documents.
+---
+
+# Answering from the knowledge bundle
+
+The bundle at `/srv/kb` is served by okfkit through the MCP tools `kb_*`.
+
+## Steps
+
+1. **Orient.** If the bundle catalog is not already in your context, call `kb_catalog` (or `kb_list` with `dir: "."`).
+2. **Choose the tool by question type.**
+   - *List, count, "which documents", filter by type, tag, status, language, date or any field:* use `kb_query`. Use `facets` for breakdowns, `count_only` for counts and `sum_field` for totals. Do not count or add up by reading documents.
+   - *Exact strings (config keys, codes, error text, names):* use `kb_grep` with an alternation of likely spellings and synonyms (`'dmScope|dm_scope|direct message'`). Start with `files_only: true` to rank documents, then read the best ones.
+   - *Questions about meaning:* translate the key terms into the documents' language(s), then use `kb_grep` with alternation and `kb_list` to browse the relevant directory.
+3. **Read.** Use `kb_get` on the best documents. For long documents pass `section` (a heading); a truncated result lists the headings.
+4. **Verify.** Every key, value, limit, date or command you state must appear in text you have read. If the question asks several things, cover each one: details are often spread over a guide, a reference page and a FAQ. `kb_links` shows related documents.
+5. **Prefer current documents.** `status: stable` is in force, `deprecated` is superseded (see `supersedes`), `draft` is not approved yet. For "in force on a date" use `active_on`.
+6. **Answer** in the user's language, concisely. Keep keys, commands and values verbatim, and cite the document ids you used (path without `.md`).
+
+## Without the MCP tools
+
+If the `kb_*` tools are not available, run the okfkit CLI; add `--json` for structured output:
+
+```sh
+okfkit --bundle /srv/kb catalog
+okfkit --bundle /srv/kb list [DIR]
+okfkit --bundle /srv/kb grep 'term|synonym' --files-only [--path 'dir/**'] [--context 2]
+okfkit --bundle /srv/kb get ID [--section HEADING] [--lines 10-40]
+okfkit --bundle /srv/kb query [--type T] [--tag T] [--status stable] [--field KEY=VALUE] [--active-on YYYY-MM-DD] [--facet F] [--sum F] [--count-only]
+okfkit --bundle /srv/kb links ID
+```
