@@ -23,3 +23,17 @@ path = "src/main.rs"
 okfkit.workspace = true
 okfkit-mcp.workspace = true
 okfkit-skills.workspace = true
+okfkit-lint.workspace = true
+clap.workspace = true
+anyhow.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+
+[dev-dependencies]
+assert_cmd.workspace = true
+insta.workspace = true
+tempfile.workspace = true
+serde_json.workspace = true
+okfkit.workspace = true
+okfkit-mcp.workspace = true

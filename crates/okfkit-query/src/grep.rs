@@ -203,6 +203,8 @@ pub(crate) fn grep(
     truncated |= docs.len() < total_docs;
     let hint = if total_docs == 0 {
         Some("no match (try synonyms with alternation a|b, terms in the documents' language, or a shorter pattern)".into())
+    } else if truncated && req.files_only {
+        Some("list truncated, raise `limit` or narrow with `path`".into())
     } else if truncated {
         Some("output truncated, narrow with `path` or use files_only".into())
     } else {
@@ -299,10 +301,10 @@ impl GrepResult {
             "({} matching lines in {} documents{}{})",
             self.total_lines,
             self.total_docs,
-            if self.truncated {
-                "; output truncated, narrow with `path` or use files_only"
-            } else {
-                ""
+            match (self.truncated, files_only) {
+                (false, _) => "",
+                (true, true) => "; list truncated, raise `limit` or narrow with `path`",
+                (true, false) => "; output truncated, narrow with `path` or use files_only",
             },
             if self.literal {
                 "; pattern searched as a literal string (invalid regex)"

@@ -1,0 +1,9 @@
+---
+source: crates/okfkit-cli/tests/cli.rs
+expression: "acme(&[\"get\", \"metrics/revenue\", \"--section\", \"reporting cuts\"])"
+---
+# Revenue
+# Reporting cuts
+
+- **By fiscal year:** the sanctioned computation takes `year` as its sole parameter.
+- **By channel or category:** these are approved narrations, not new metrics. Join the receipt's row-level result to `orders.channel` or to `order_lines` × `products.category` client-side. Do NOT rewrite the sanctioned SQL.

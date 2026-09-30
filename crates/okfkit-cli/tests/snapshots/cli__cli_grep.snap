@@ -1,0 +1,13 @@
+---
+source: crates/okfkit-cli/tests/cli.rs
+expression: "acme(&[\"grep\", \"refund\", \"-C\", \"0\"])"
+---
+## policies/revenue-recognition — Acme Retail — Revenue Recognition Policy (FY2026) (2 matches)
+  32>: ## Refunds and cancellations
+  --
+  34>: Refunds and post-recognition cancellations are booked as contra-revenue in the period of the refund, not by retroactive adjustment to the original recognition period.
+## tables/orders — Customer Orders (2 matches)
+  34>: | `order_status` | STRING | One of `pending`, `paid`, `shipped`, `delivered`, `cancelled`, `refunded`. Revenue is recognized only when `order_status = 'delivered'` and the 30-day return window has closed. [^revenue-polic
+  --
+  46>: - The `refunded` status is terminal in this table; the refund event itself lives in `finance.refunds`, keyed on `order_id`.
+(4 matching lines in 2 documents)

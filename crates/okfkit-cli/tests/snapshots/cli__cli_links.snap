@@ -1,0 +1,10 @@
+---
+source: crates/okfkit-cli/tests/cli.rs
+expression: "acme(&[\"links\", \"metrics/revenue\"])"
+---
+outgoing (1):
+  computations/revenue-ytd
+backlinks (3):
+  metrics/gross-margin
+  metrics/index
+  policies/revenue-recognition
