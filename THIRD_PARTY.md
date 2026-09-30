@@ -17,8 +17,8 @@ lindera IPADIC dictionary (`embed-ipadic`), used for Japanese tokenization.
 
 | Path | Source | License |
 |---|---|---|
-| `fixtures/okf-official/` (planned) | Open Knowledge Format samples (Google) | Apache-2.0, see the NOTICE file in that directory |
-| `fixtures/openclaw-s/` (planned) | OpenClaw documentation | MIT, see the NOTICE file in that directory |
+| `fixtures/okf-official/` | Open Knowledge Format sample bundles (Google) | Apache-2.0, see the NOTICE file in that directory |
+| `fixtures/openclaw-s/` | OpenClaw documentation (subset) | MIT, see the NOTICE file in that directory |
 
 ## Models
 

@@ -1,0 +1,6 @@
+The files in this directory are a small, unmodified subset of the OpenClaw
+documentation (https://github.com/openclaw/openclaw, directory `docs/`,
+commit d390410b7ae26101f1c277db7ee3ec1ba073d566): `index.md` and the first
+pages of `start/`, `help/` and `gateway/`.
+
+Copyright (c) 2026 OpenClaw Foundation. Licensed under the MIT License; see LICENSE.
