@@ -455,3 +455,33 @@ fn perf_query_3k_docs() {
     assert_eq!(r.total, 18 * 20);
     assert!(took.as_millis() <= 20, "{took:?}");
 }
+
+#[test]
+fn multilingual_grep_and_catalog() {
+    let idx = indexed("multilingual");
+    let all = Scope::all();
+    let files = |p: &str| -> Vec<String> {
+        let r = grep(
+            &idx,
+            &GrepRequest {
+                pattern: p.into(),
+                files_only: true,
+                limit: 200,
+                ..Default::default()
+            },
+            &all,
+        )
+        .unwrap();
+        r.docs.into_iter().map(|d| d.id).collect()
+    };
+    // Unaccented Vietnamese finds the accented document; Japanese and English work as written.
+    assert!(files("doi tra").contains(&"knowledge/vi-return".to_owned()));
+    assert!(files("ポイント").contains(&"knowledge/ja-points".to_owned()));
+    assert!(files("rate limit").contains(&"knowledge/en-api-rate-limit".to_owned()));
+    let s = stats(&idx, &all).unwrap();
+    assert_eq!(s.docs, 100);
+    assert_eq!((s.langs["vi"], s.langs["en"], s.langs["ja"]), (33, 33, 34));
+    let cat = catalog(&idx, &CatalogOptions::default(), &all).unwrap();
+    assert_eq!(cat.mode, "flat");
+    assert_eq!(recommend_mode(&idx, &all).unwrap(), Mode::Full);
+}

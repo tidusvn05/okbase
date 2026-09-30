@@ -1,0 +1,102 @@
+# Knowledge catalog (index.md)
+
+- [vi-return] (vi) Chính sách đổi trả sản phẩm — Khách hàng được đổi hoặc trả sản phẩm trong vòng 30 ngày kể từ ngày nhận hàng.
+- [vi-warranty] (vi) Bảo hành máy lọc không khí — Tất cả máy lọc không khí Hikari được bảo hành chính hãng 24 tháng cho phần thân máy và động cơ, 6 tháng cho bộ lọc HEPA.
+- [vi-shipping-domestic] (vi) Giao hàng trong nước — Hikari Home giao hàng trên toàn lãnh thổ Việt Nam.
+- [vi-payment-installment] (vi) Mua trả góp 0% — Khách hàng có thể mua trả góp lãi suất 0% cho đơn hàng từ 3 triệu đồng khi thanh toán bằng thẻ tín dụng của 25 ngân hàng liên kết.
+- [vi-loyalty] (vi) Chương trình thành viên Hikari Club — Mỗi 10.
+- [vi-store-hours] (vi) Giờ mở cửa showroom — Showroom Hikari Home tại 12 Tràng Tiền, Hà Nội và 88 Nguyễn Huệ, Quận 1, TP.
+- [vi-leave-policy] (vi) Quy định nghỉ phép năm của nhân viên — Nhân viên chính thức có 12 ngày phép năm, cộng thêm 1 ngày cho mỗi 5 năm làm việc.
+- [vi-invoice] (vi) Xuất hóa đơn VAT — Công ty xuất hóa đơn giá trị gia tăng (VAT) điện tử cho mọi đơn hàng khi khách yêu cầu.
+- [vi-aircon-cleaning] (vi) Hướng dẫn vệ sinh máy điều hòa tại nhà — Nên vệ sinh điều hòa 3 tháng một lần để máy làm lạnh nhanh và tiết kiệm điện.
+- [vi-password-reset] (vi) Đặt lại mật khẩu tài khoản ứng dụng — Nếu quên mật khẩu tài khoản ứng dụng Hikari Home, bấm vào "Quên mật khẩu" ở màn hình đăng nhập và nhập số điện thoại đã đăng ký.
+- [en-refund] (en) Refund processing timeline — Once a returned item passes inspection at our warehouse, the refund is issued to the original payment method.
+- [en-international-shipping] (en) International shipping — We ship to Japan, Korea, Singapore, Thailand and the United States.
+- [en-api-rate-limit] (en) Partner API rate limits — The Hikari partner REST API allows 600 requests per minute per API key and a burst of 50 requests per second.
+- [en-security-incident] (en) Security incident response playbook — If you suspect a security incident such as a leaked password, phishing email or unauthorized access, report it immediately in the #security-
+- [en-remote-work] (en) Remote work policy — Employees may work from home up to three days per week after completing their probation period.
+- [en-onboarding] (en) New employee onboarding — On the first day, new hires receive a laptop, an access badge and accounts for email, chat and the HR system.
+- [en-rice-cooker-error] (en) Rice cooker error codes — Hikari rice cookers display error codes on the front panel.
+- [en-privacy-data] (en) Personal data deletion requests — Customers can ask us to delete their personal data at any time by sending a request from the app settings or emailing privacy@hikari.
+- [en-b2b-bulk] (en) Bulk orders for businesses — Companies purchasing 20 units or more of the same model qualify for bulk pricing with discounts from 8% to 15%.
+- [en-expense] (en) Travel expense reimbursement — Employees traveling for work can claim reimbursement for transport, hotel and meals.
+- [ja-aircon-filter] (ja) エアコンフィルターの交換 — ヒカリのエアコンには静電フィルターと脱臭フィルターが付いています。
+- [ja-delivery-time] (ja) お届け時間帯の指定 — 日本国内の配送では、午前中、14時から16時、16時から18時、18時から20時、19時から21時の時間帯を指定できます。
+- [ja-recycling] (ja) 家電リサイクルと古い家電の引き取り — 家電リサイクル法の対象となるエアコン、テレビ、冷蔵庫、洗濯機は、新しい製品の配送時に古い製品を引き取ることができます。
+- [ja-points] (ja) ポイントの有効期限 — ヒカリポイントの有効期限は、最後にポイントを獲得または利用した日から1年間です。
+- [ja-overtime] (ja) 残業申請の手順 — 所定労働時間を超えて勤務する場合は、事前に勤怠システムで残業申請を行い、上長の承認を得てください。
+- [ja-wifi-setup] (ja) スマート家電のWi-Fi接続設定 — ヒカリアプリを開き、「機器を追加」をタップして製品を選択します。
+- [ja-cancel-order] (ja) ご注文のキャンセル — ご注文のキャンセルは、商品の発送前であればマイページの注文履歴から無料で行えます。
+- [ja-gift-wrap] (ja) ギフトラッピングとのし — 1点につき330円でギフトラッピングを承ります。
+- [ja-earthquake] (ja) 地震発生時の対応 — 勤務中に強い地震が発生した場合は、まず机の下に隠れて身の安全を確保してください。
+- [ja-receipt-reissue] (ja) 領収書の再発行 — 領収書はご注文ごとにマイページからPDFでダウンロードできます。
+- [ja-warranty-ricecooker] (ja) 炊飯器の保証について — ヒカリの炊飯器は、お買い上げ日から1年間のメーカー保証が付いています。
+- [en-warranty-fridge] (en) Refrigerator warranty — Every Hikari refrigerator comes with a 24-month warranty covering parts and labour, and the inverter compressor is covered for 10 years.
+- [vi-warranty-aircon] (vi) Bảo hành máy điều hòa — Máy điều hòa Hikari được bảo hành 36 tháng cho toàn bộ máy và 7 năm cho máy nén Inverter, tính từ ngày lắp đặt chứ không phải ngày mua.
+- [vi-warranty-washer] (vi) Bảo hành máy giặt — Máy giặt Hikari được bảo hành 24 tháng cho toàn bộ máy và 10 năm cho động cơ Inverter truyền động trực tiếp.
+- [en-warranty-extended] (en) Hikari Care+ extended warranty — Hikari Care+ lets you extend the standard manufacturer warranty by one or two extra years on any large appliance priced above 5 million VND.
+- [en-return-display-items] (en) Returns on display and open-box items — Showroom display units and open-box products are sold at up to 40% off and carry an orange 'Trưng bày' sticker.
+- [ja-return-japan] (ja) 日本公式オンラインストアの返品 — ヒカリ日本公式オンラインストアでご購入の商品は、お届けから8日以内であれば返品を受け付けます。
+- [vi-return-defective] (vi) Đổi mới sản phẩm lỗi do nhà sản xuất — Nếu sản phẩm phát sinh lỗi kỹ thuật do nhà sản xuất trong 15 ngày đầu sử dụng, Hikari Home áp dụng chính sách 1 đổi 1 sang sản phẩm mới cùng
+- [en-return-marketplace] (en) Returns for orders placed on Shopee, Lazada and Tiki — If you bought a Hikari product from our official store on Shopee, Lazada or Tiki, the return must be requested through that marketplace, not
+- [ja-refund-japan] (ja) 日本での返金方法と時期 — 返品された商品が当社倉庫に到着し、検品が完了してから返金手続きを行います。
+- [ja-shipping-fee-japan] (ja) 日本国内の送料 — 日本国内への配送料は全国一律660円です。
+- [en-shipping-large-appliance] (en) Delivery and installation of large appliances — Refrigerators, washing machines and air conditioners are delivered in Vietnam by our own two-person installation crews rather than a parcel
+- [vi-shipping-express] (vi) Giao hàng hỏa tốc 2 giờ — Dịch vụ giao hỏa tốc trong 2 giờ áp dụng cho các quận nội thành TP.
+- [ja-overseas-japan-store] (ja) 日本ストアからの海外発送 — ヒカリ日本公式オンラインストアでは、日本国外への発送を行っておりません。
+- [en-delivery-reschedule-vn] (en) Rescheduling a delivery in Vietnam — If you will not be at home, you can reschedule a delivery in Vietnam from the order page in the app until 6 pm the day before.
+- [en-sick-leave] (en) Sick leave for Vietnam offices — Staff in our Vietnam offices who are unwell should inform their manager before 9:00 on the day of absence.
+- [ja-sick-leave-japan] (ja) 病気休暇（日本拠点） — 日本拠点の社員が病気やけがで休む場合は、始業時刻までに上長へ電話またはチャットで連絡してください。
+- [ja-maternity-leave] (ja) 産前産後休業と育児休業（日本拠点） — 日本拠点の社員は、出産予定日の6週間前から産前休業を、出産翌日から8週間の産後休業を取得できます。
+- [vi-maternity-leave-vn] (vi) Chế độ nghỉ thai sản tại Việt Nam — Nhân viên nữ làm việc tại văn phòng Việt Nam được nghỉ thai sản 6 tháng theo Luật Bảo hiểm xã hội; sinh đôi trở lên thì từ con thứ hai, mỗi
+- [vi-overtime] (vi) Làm thêm giờ tại văn phòng Việt Nam — Tại các văn phòng và showroom ở Việt Nam, làm thêm giờ phải được quản lý đồng ý trước trên ứng dụng chấm công.
+- [ja-remote-work-japan] (ja) 日本拠点のテレワーク規程 — 東京・大阪オフィスの社員は、入社から3か月経過後、週2日までテレワークを利用できます。
+- [vi-personal-leave] (vi) Nghỉ việc riêng có hưởng lương — Ngoài phép năm, nhân viên được nghỉ việc riêng mà vẫn hưởng nguyên lương trong các trường hợp: bản thân kết hôn được nghỉ 3 ngày; con đẻ, co
+- [en-annual-leave-japan] (en) Annual paid leave in Japan — Employees at the Tokyo and Osaka offices receive 10 days of paid annual leave once they have worked for six months, rising by one or two day
+- [vi-error-washer] (vi) Mã lỗi máy giặt Hikari — Khi máy giặt Hikari gặp sự cố, màn hình sẽ hiện mã lỗi.
+- [ja-error-aircon] (ja) エアコンのエラーコード一覧 — エアコンの運転ランプが点滅し、リモコンの表示部にエラーコードが出た場合は、以下をご確認ください。
+- [en-error-fridge] (en) Refrigerator error codes — Hikari refrigerators show a code on the door display when something is wrong.
+- [ja-error-purifier] (ja) 空気清浄機のエラー表示 — 空気清浄機の表示パネルに以下のコードが出た場合の対処方法です。
+- [en-points-birthday] (en) Birthday rewards for Hikari Club members — During your birthday month, Hikari Club members in Vietnam receive a voucher in the app: 100,000 VND for Silver, 300,000 VND for Gold and 50
+- [ja-tier-downgrade] (ja) 会員ランクの判定と降格 — ヒカリ会員のランクは、毎年4月1日に過去12か月のご購入金額で見直されます。
+- [vi-points-referral] (vi) Giới thiệu bạn bè nhận điểm thưởng — Mỗi thành viên Hikari Club có một mã giới thiệu riêng trong ứng dụng.
+- [en-points-reviews] (en) Earning points by writing product reviews — Hikari Club members earn 20 points for each product review posted in the app after a verified purchase, and 50 points if the review includes
+- [ja-2fa-setup] (ja) 二段階認証の設定 — アカウントを安全に保つため、二段階認証の設定をおすすめします。
+- [en-change-phone] (en) Changing the phone number on your account — To change the phone number linked to your Hikari Home account, go to Profile > Account details > Phone number.
+- [vi-account-deactivate] (vi) Tạm khóa tài khoản — Nếu muốn tạm ngừng sử dụng ứng dụng Hikari Home mà không mất dữ liệu, bạn có thể tạm khóa tài khoản trong mục Cài đặt > Tài khoản > Tạm khóa
+- [ja-password-reset-email] (ja) パスワードを忘れた場合（メールで再設定） — 日本のヒカリ公式ストアのアカウントでパスワードを忘れた場合は、ログイン画面の「パスワードをお忘れの方」から登録済みのメールアドレスを入力してください。
+- [en-social-login] (en) Signing in with Google, Apple or Zalo — You can sign in to the Hikari Home app with a Google, Apple or Zalo account instead of a password.
+- [ja-corporate-billing-japan] (ja) 法人のお客様向け請求書払い — 日本国内の法人のお客様は、請求書払い（掛け払い）をご利用いただけます。
+- [en-invoice-correction-vn] (en) Correcting a VAT e-invoice — If your Vietnamese VAT e-invoice contains a mistake such as a wrong tax code, company name or address, contact us within 5 days of receiving
+- [ja-api-auth] (ja) パートナーAPIの認証方式 — パートナーAPIへのアクセスには、OAuth 2.
+- [vi-webhook-retry] (vi) Cơ chế gửi lại webhook — Khi có sự kiện như đơn hàng mới hoặc thay đổi trạng thái giao hàng, Hikari gửi webhook dạng POST đến URL mà đối tác đã đăng ký.
+- [en-api-versioning] (en) API versioning and deprecation — The partner API is versioned in the URL path, for example /v2/orders.
+- [ja-api-sandbox] (ja) サンドボックス環境の利用 — 本番環境に接続する前に、サンドボックス環境 sandbox.
+- [vi-api-errors] (vi) Mã lỗi trả về của Partner API — Partner API trả lỗi dưới dạng JSON gồm trường code và message.
+- [en-webhook-signature] (en) Verifying webhook signatures — Every webhook we send includes an X-Hikari-Signature header so you can confirm the request really came from us.
+- [ja-payment-methods-japan] (ja) 日本でご利用いただけるお支払い方法 — 日本公式ストアでは、クレジットカード、コンビニ払い、代金引換、PayPay、Amazon Payをご利用いただけます。
+- [en-cod-vn] (en) Cash on delivery in Vietnam — Cash on delivery (COD) is available for orders in Vietnam of up to 20 million VND.
+- [ja-installment-japan] (ja) 分割払いについて（日本） — 日本公式ストアでは、クレジットカードの分割払いに加えて、ショッピングローンをご利用いただけます。
+- [ja-store-hours-japan] (ja) 東京・大阪ショールームの営業時間 — ヒカリの東京ショールーム（銀座）は10時から19時まで、大阪ショールーム（梅田）は11時から20時まで営業しています。
+- [en-service-center-hours] (en) Repair service center opening hours — Our repair service centers in Hanoi (Cau Giay), Da Nang and Ho Chi Minh City (Tan Binh) are open from 8:00 to 17:30, Monday to Saturday, and
+- [vi-hotline-hours] (vi) Thời gian hoạt động tổng đài chăm sóc khách hàng — Tổng đài chăm sóc khách hàng 1900 6868 hoạt động từ 7 giờ đến 22 giờ mỗi ngày, kể cả Chủ nhật và ngày lễ, cước gọi 1.
+- [en-purifier-filter] (en) Replacing the air purifier filter — The HEPA filter in Hikari air purifiers should be replaced every 12 months, or sooner if you live near a busy road.
+- [ja-washer-drum-cleaning] (ja) 洗濯槽のお手入れ — 洗濯槽の裏側には、目に見えない黒カビや洗剤カスがたまります。
+- [vi-fridge-cleaning] (vi) Vệ sinh và khử mùi tủ lạnh — Nên vệ sinh tủ lạnh 1 đến 2 tháng một lần để tránh mùi hôi và vi khuẩn.
+- [en-ricecooker-care] (en) Caring for the rice cooker inner pot — To make the non-stick coating of your Hikari rice cooker's inner pot last, use only the plastic rice paddle and measuring cup supplied.
+- [vi-trade-in] (vi) Thu cũ đổi mới — Chương trình thu cũ đổi mới cho phép khách hàng tại Việt Nam mang máy giặt, tủ lạnh hoặc điều hòa cũ của bất kỳ thương hiệu nào để trừ tiền
+- [en-device-offline] (en) Smart appliance shows Offline in the app — If an appliance that was set up earlier now appears as Offline in the Hikari app, first check that your router is working and the appliance
+- [vi-wifi-router-change] (vi) Kết nối lại khi đổi mạng Wi-Fi hoặc mật khẩu — Khi bạn thay modem mới, đổi tên mạng hoặc mật khẩu Wi-Fi, các thiết bị Hikari sẽ không tự kết nối lại được.
+- [vi-cancel-order-vn] (vi) Hủy đơn hàng tại Việt Nam — Khách hàng tại Việt Nam có thể hủy đơn miễn phí trong ứng dụng khi đơn còn ở trạng thái Chờ xác nhận hoặc Đang đóng gói.
+- [en-preorder-cancel] (en) Cancelling a pre-order — New models can be pre-ordered with a 10% deposit before their launch date.
+- [vi-gift-wrap-vn] (vi) Gói quà tặng tại Việt Nam — Hikari Home nhận gói quà cho đơn hàng tại Việt Nam với phí 20.
+- [vi-fire-safety] (vi) Xử lý khi có cháy tại văn phòng và showroom — Khi phát hiện cháy hoặc nghe chuông báo cháy, nhân viên hô to để cảnh báo mọi người, ngắt điện khu vực nếu an toàn và gọi 114.
+- [en-typhoon-flood] (en) Typhoon and flood days — When a typhoon or severe flooding is forecast in Vietnam, HR announces a decision by 18:00 the day before.
+- [ja-phishing-report] (ja) 不審なメールを受信したときの対応 — 取引先や社内の人を装った不審なメールを受け取った場合は、リンクをクリックしたり添付ファイルを開いたりせず、メールソフトの「フィッシング報告」ボタンで情報システム部へ報告してください。
+- [vi-lost-laptop] (vi) Làm mất laptop hoặc điện thoại công ty — Nếu làm mất hoặc bị trộm laptop, điện thoại do công ty cấp, nhân viên phải báo ngay cho bộ phận IT qua hotline nội bộ hoặc email helpdesk tr
+- [ja-offboarding] (ja) 退職時の手続き — 退職を希望する場合は、退職予定日の1か月前までに上長へ伝え、人事システムから退職届を提出してください。
+- [vi-probation] (vi) Thời gian thử việc — Nhân viên mới trải qua thời gian thử việc 60 ngày đối với vị trí chuyên môn và 30 ngày đối với nhân viên bán hàng, kho vận.
+- [ja-commute-allowance] (ja) 通勤手当の支給 — 通勤手当は、自宅から勤務先までの最も経済的な経路の定期代を、1か月あたり5万円を上限に支給します。
+- [vi-expense-advance] (vi) Tạm ứng tiền công tác — Nhân viên đi công tác từ 3 ngày trở lên có thể đề nghị tạm ứng tối đa 70% chi phí dự kiến.
+- [ja-b2b-bulk-japan] (ja) 法人向けまとめ買い（日本） — 日本国内の法人のお客様で、同一機種を10台以上ご購入の場合は、法人特別価格でお見積もりいたします。
+- [vi-privacy-marketing] (vi) Từ chối nhận tin quảng cáo — Nếu không muốn nhận tin nhắn, email hoặc cuộc gọi quảng cáo từ Hikari Home, bạn có thể tắt trong mục Cài đặt > Quyền riêng tư > Tiếp thị, ho
