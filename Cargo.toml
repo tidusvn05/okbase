@@ -31,6 +31,13 @@ okfkit-lint = { path = "crates/okfkit-lint", version = "0.1.0-dev" }
 okfkit-mcp = { path = "crates/okfkit-mcp", version = "0.1.0-dev" }
 okfkit-skills = { path = "crates/okfkit-skills", version = "0.1.0-dev" }
 okfkit = { path = "crates/okfkit", version = "0.1.0-dev" }
+thiserror = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+serde-saphyr = "1.1"
+pulldown-cmark = { version = "0.13", default-features = false }
+regex = "1"
+proptest = "1"
 
 [profile.release]
 lto = "thin"
