@@ -25,3 +25,5 @@ spikes/biz-meta/data-x20/
 *.swp
 .idea/
 .vscode/
+spikes/acceptance-v0.1/work/
+spikes/acceptance-v0.1/runs/

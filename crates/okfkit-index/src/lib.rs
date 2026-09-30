@@ -95,6 +95,8 @@ impl Index {
         let conn = Connection::open(&db_path)?;
         conn.pragma_update(None, "journal_mode", "WAL")?;
         conn.pragma_update(None, "synchronous", "NORMAL")?;
+        // Several processes (for example parallel MCP servers) may sync the same index.
+        conn.busy_timeout(std::time::Duration::from_secs(30))?;
         Index::init(conn, root, Some(db_path), &opts.vocabulary)
     }
 
