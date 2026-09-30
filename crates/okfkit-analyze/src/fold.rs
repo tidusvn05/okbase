@@ -12,6 +12,9 @@ use unicode_normalization::char::is_combining_mark;
 /// assert_eq!(okfkit_analyze::fold("ガイド"), "ガイド");
 /// ```
 pub fn fold(s: &str) -> String {
+    if s.is_ascii() {
+        return s.to_ascii_lowercase(); // NFKC and accent removal are identities on ASCII
+    }
     let folded: String = s
         .nfkc()
         .collect::<String>()

@@ -1,0 +1,22 @@
+---
+source: crates/okfkit-query/tests/read.rs
+expression: "stats(&idx, &all).unwrap()"
+---
+{
+  "docs": 9,
+  "reserved": 8,
+  "tokens": 4106,
+  "chunks": 12,
+  "types": {
+    "Attested Computation": 2,
+    "BigQuery Table": 1,
+    "Metric": 3,
+    "Policy": 2,
+    "Skill": 1
+  },
+  "langs": {
+    "(none)": 9
+  },
+  "broken_links": 0,
+  "mode": "full"
+}

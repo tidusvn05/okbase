@@ -45,6 +45,7 @@ rust-stemmers = "1.2"
 rusqlite = { version = "0.40", features = ["bundled"] }
 blake3 = { version = "1.8", default-features = false, features = ["std"] }
 tempfile = "3"
+insta = { version = "1", features = ["json"] }
 
 [profile.release]
 lto = "thin"

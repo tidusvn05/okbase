@@ -1,0 +1,7 @@
+---
+source: crates/okfkit-query/tests/read.rs
+expression: "grep(&idx, &files, &all).unwrap().to_text(true)"
+---
+policies/revenue-recognition (2 matches) — Acme Retail — Revenue Recognition Policy (FY2026)
+tables/orders (2 matches) — Customer Orders
+(4 matching lines in 2 documents)
