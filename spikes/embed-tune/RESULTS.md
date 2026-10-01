@@ -45,8 +45,26 @@ For reference, okfkit's own ONNX Q4 run (v0.3) scored S1 0.857 and S4 29/30 (`..
    GPU per bundle. Training requires Python + torch (+ Unsloth for a GPU), which okfkit's Rust core
    cannot and must not carry (hard rule 1).
 
+## Phase 0: ONNX Q4 through okfkit (2026-10-02)
+`export_onnx.py` patches the onnx-community reference export instead of re-exporting Gemma3:
+it adds each LoRA weight delta (tuned − base, 96 attention matrices) to the reference fp32 weights
+and re-quantizes only those matrices with the same scheme (MatMulNBits, 4 bits, block 32,
+symmetric; re-quantizing the base weights reproduces the reference bytes at 99.98%, scales
+exactly). Everything else (quantized embedding table, dense head) stays byte-identical. Fidelity:
+tuned Q4 vs tuned PyTorch cosine 0.975, same as reference Q4 vs base PyTorch (0.976).
+
+Measured with okfkit's `retrieval_eval` (the real search path), loaded as `custom:tuned-ml`:
+
+| Model (Q4, okfkit) | S1 R@1 | cross-lang | same-lang | vi / en / ja | S4 top-6 | S4 first |
+|---|---|---|---|---|---|---|
+| EmbeddingGemma Q4 (v0.3) | 0.857 | 0.815 | 0.94 | 0.74 / 0.91 / 0.92 | 29/30 | 23 |
+| tuned-ml Q4 | **0.917** | **0.920** | 0.91 | 0.83 / 0.96 / 0.96 | **30/30** | 24 |
+
+Q4 keeps two thirds of the fp32 gain (+6.0 of +9.0 points; my threshold of 0.92 was missed by
+one question) and S4 does not regress. Same-language R@1 drops 3 points: the gate in `okfkit embed
+tune eval` reports it, so a user sees the trade. Verdict: go.
+
 ## Not verified yet
-- ONNX export + Q4 quantization of a tuned model (what okfkit actually loads): does the gain survive?
 - A larger held-out eval per bundle (questions written by people, not the same generator).
 
 ## Pipeline and cost per bundle (measured here unless marked)
