@@ -5,8 +5,8 @@ expression: "stats(&idx, &all).unwrap()"
 {
   "docs": 9,
   "reserved": 8,
-  "tokens": 4106,
-  "chunks": 12,
+  "tokens": 6893,
+  "chunks": 16,
   "types": {
     "Attested Computation": 2,
     "BigQuery Table": 1,

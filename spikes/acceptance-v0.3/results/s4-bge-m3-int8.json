@@ -1,0 +1,15 @@
+{
+  "suite": "s4",
+  "model": "bge-m3-int8",
+  "chunks": 3230,
+  "query_ms_p50": 76.839825,
+  "query_ms_p90": 110.632456,
+  "results": {
+    "all": {
+      "n": 30,
+      "gold_in_top6": 30,
+      "gold_first": 22,
+      "misses": []
+    }
+  }
+}

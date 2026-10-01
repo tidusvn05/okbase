@@ -1,0 +1,12 @@
+model embeddinggemma-300m-q4 loaded in 2.6s
+embedding 100/100   
+100 chunks embedded in 13.2ms
+model embeddinggemma-300m-q4 loaded in 2.6s
+embedding 256/3230   embedding 512/3230   embedding 768/3230   embedding 1024/3230   embedding 1280/3230   embedding 1536/3230   embedding 1792/3230   embedding 2048/3230   embedding 2304/3230   embedding 2560/3230   embedding 2816/3230   embedding 3072/3230   embedding 3230/3230   
+3230 chunks embedded in 1231.3s
+model bge-m3-int8 loaded in 3.3s
+embedding 100/100   
+100 chunks embedded in 18.2ms
+model bge-m3-int8 loaded in 2.5s
+embedding 256/3230   embedding 512/3230   embedding 768/3230   embedding 1024/3230   embedding 1280/3230   embedding 1536/3230   embedding 1792/3230   embedding 2048/3230   embedding 2304/3230   embedding 2560/3230   embedding 2816/3230   embedding 3072/3230   embedding 3230/3230   
+3230 chunks embedded in 1734.6s

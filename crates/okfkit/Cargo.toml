@@ -37,3 +37,10 @@ embed-local = ["okfkit-embed/local"]
 embed-api = ["okfkit-embed/api"]
 ## Embed the Japanese dictionary instead of downloading it on first use.
 ja-embedded = ["okfkit-analyze/ja-embedded"]
+
+[[example]]
+name = "retrieval_eval"
+required-features = ["embed-local"]
+
+[dev-dependencies]
+serde_json.workspace = true

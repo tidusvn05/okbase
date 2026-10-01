@@ -40,7 +40,7 @@ pub use state::{BUNDLE_STATE_DIR, StateDir, cache_dir};
 pub const DB_FILE: &str = "index.sqlite";
 
 /// Identifies the analyzer; a change forces a rebuild of the full-text index.
-const ANALYZER_ID: &str = concat!("okfkit-analyze/", env!("CARGO_PKG_VERSION"), "+stem");
+const ANALYZER_ID: &str = concat!("okfkit-analyze/", env!("CARGO_PKG_VERSION"), "+stem+tok2");
 
 /// Schema version, analyzer and Japanese tokenization mode (`ipadic` or `bigram`).
 fn analyzer_identity() -> String {

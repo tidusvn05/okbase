@@ -13,11 +13,6 @@ The sanctioned computation is [`computations/revenue-ytd.md`](../computations/re
 # Reporting cuts
 
 - **By fiscal year:** the sanctioned computation takes `year` as its sole parameter.
-- **By channel or category:** these are approved narrations, not new metrics. Join the receipt's row-level result to `orders.channel` or to `order_lines` × `products.category` client-side. Do NOT rewrite the sanctioned SQL.
-
-# Trust and freshness
-
-- **Verified:** VP Finance sign-off on 2026-07-01, against the FY2026 policy.
 
 
-[truncated at ~195 tokens of 350; request a `section`. Headings: Definition | Reporting cuts | Trust and freshness]
+[truncated at ~172 tokens of 599; request a `section`. Headings: Definition | Reporting cuts | Trust and freshness]
