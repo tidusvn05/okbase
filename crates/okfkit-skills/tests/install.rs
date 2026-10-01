@@ -28,9 +28,20 @@ fn rendered_skill_snapshot() {
         capabilities: vec!["read.grep".into()],
     };
     let skills = builtin_skills(&cx);
-    assert_eq!(skills.len(), 1);
+    assert_eq!(
+        skills.iter().map(|s| s.name.as_str()).collect::<Vec<_>>(),
+        ["okfkit-answer", "okfkit-curate", "okfkit-adopt"]
+    );
     insta::assert_snapshot!("okfkit_answer_lexical", skills[0].content);
-    assert!(!skills[0].content.contains("<!--") && !skills[0].content.contains("{{"));
+    insta::assert_snapshot!("okfkit_curate", skills[1].content);
+    insta::assert_snapshot!("okfkit_adopt", skills[2].content);
+    for s in &skills {
+        assert!(
+            !s.content.contains("<!--") && !s.content.contains("{{"),
+            "{}",
+            s.name
+        );
+    }
 }
 
 #[test]

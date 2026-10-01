@@ -11,10 +11,20 @@ use std::path::{Path, PathBuf};
 use serde_json::{Value, json};
 
 /// Built-in skill templates: (name, SKILL.md template).
-pub const BUILTIN: &[(&str, &str)] = &[(
-    "okfkit-answer",
-    include_str!("../skills/okfkit-answer/SKILL.md"),
-)];
+pub const BUILTIN: &[(&str, &str)] = &[
+    (
+        "okfkit-answer",
+        include_str!("../skills/okfkit-answer/SKILL.md"),
+    ),
+    (
+        "okfkit-curate",
+        include_str!("../skills/okfkit-curate/SKILL.md"),
+    ),
+    (
+        "okfkit-adopt",
+        include_str!("../skills/okfkit-adopt/SKILL.md"),
+    ),
+];
 
 /// Where projects keep their own skills.
 pub const PROJECT_SKILLS_DIR: &str = "_meta/skills";
@@ -324,11 +334,17 @@ pub fn plan(opts: &InstallOptions) -> Result<Vec<Action>, Error> {
                 Target::User => opts.home.join(".codex/AGENTS.md"),
             };
             let existing = read_text(&agents)?;
-            let body: String = skills
+            // AGENTS.md is always in context: only the answering skill goes in full.
+            let mut body: String = skills
                 .iter()
+                .filter(|s| s.name == "okfkit-answer" || !s.name.starts_with("okfkit-"))
                 .map(|s| strip_frontmatter(&s.content))
                 .collect::<Vec<_>>()
                 .join("\n");
+            body.push_str(
+                "\nTo improve the bundle itself, start from `okfkit lint --level L2 --json` (fix descriptions, index.md, tags, status); \
+                 to convert a plain markdown folder, use `okfkit adopt DIR -v`.\n",
+            );
             actions.push(Action::Write {
                 why: "tell Codex how to use the knowledge bundle".into(),
                 content: upsert_block(&existing, &body),

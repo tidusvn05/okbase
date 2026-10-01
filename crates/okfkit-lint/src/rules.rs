@@ -81,6 +81,10 @@ pub static CATALOG: &[RuleInfo] = &[
         "stale-index",
         L1, Warning, "An index.md does not list every document or subdirectory."
     ),
+    info!(
+        "unreviewed-generated",
+        L1, Warning, "A title, description or type was filled in by a tool and not yet reviewed."
+    ),
     info!("missing-tags", L2, Error, "A concept has no `tags`."),
     info!(
         "no-vocabulary",
@@ -285,6 +289,46 @@ impl LintRule for DescriptionQuality {
                     &doc.path,
                     Some("description"),
                     format!("`description` is {} characters; keep it to one sentence (≤ {MAX_DESCRIPTION_CHARS})", d.chars().count()),
+                ));
+            }
+        }
+        out
+    }
+}
+
+/// Fields listed in `generated.fields` (written by `okfkit adopt`) without a `verified` entry (L1).
+pub struct UnreviewedGenerated;
+
+impl LintRule for UnreviewedGenerated {
+    fn name(&self) -> &'static str {
+        "unreviewed-generated"
+    }
+
+    fn check(&self, cx: &Context) -> Vec<Diagnostic> {
+        let mut out = Vec::new();
+        for doc in cx.concepts() {
+            let fm = &doc.frontmatter;
+            if fm.get("verified").is_some() {
+                continue;
+            }
+            let Some(Value::Array(fields)) = fm.get("generated").and_then(|g| g.get("fields"))
+            else {
+                continue;
+            };
+            let key: Vec<&str> = fields
+                .iter()
+                .filter_map(Value::as_str)
+                .filter(|f| ["title", "description", "type"].contains(f))
+                .collect();
+            if !key.is_empty() {
+                out.push(diag(
+                    "unreviewed-generated",
+                    &doc.path,
+                    Some(key[0]),
+                    format!(
+                        "{} filled in by a tool; review, then drop it from generated.fields",
+                        key.join(", ")
+                    ),
                 ));
             }
         }

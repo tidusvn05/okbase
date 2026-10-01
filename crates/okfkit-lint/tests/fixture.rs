@@ -158,3 +158,41 @@ fn fix_safe_creates_indexes_and_canonicalizes_tags_only() {
         Default::default()
     );
 }
+
+#[test]
+fn unreviewed_generated_fields_are_reported_until_verified() {
+    let tmp = tempfile::tempdir().unwrap();
+    let doc = "---\ntype: Guide\ntitle: Setup\ndescription: Install the tool and run the setup wizard once.\ngenerated: {by: okfkit-adopt/0.1, at: \"2026-10-01\", fields: [type, description]}\n---\nBody.\n";
+    fs::write(
+        tmp.path().join("index.md"),
+        "# Documents\n\n* [Setup](setup.md)\n",
+    )
+    .unwrap();
+    fs::write(tmp.path().join("setup.md"), doc).unwrap();
+    let r = lint(tmp.path(), &LintConfig::level(Level::L1)).unwrap();
+    let d: Vec<_> = r
+        .diagnostics
+        .iter()
+        .filter(|d| d.rule == "unreviewed-generated")
+        .collect();
+    assert_eq!(d.len(), 1);
+    assert_eq!((d[0].severity, d[0].line), (Severity::Warning, Some(2)));
+    assert!(
+        d[0].message
+            .starts_with("type, description filled in by a tool")
+    );
+    fs::write(
+        tmp.path().join("setup.md"),
+        doc.replace(
+            "---\nBody",
+            "verified: {by: \"human:an\", at: \"2026-10-02\"}\n---\nBody",
+        ),
+    )
+    .unwrap();
+    let r = lint(tmp.path(), &LintConfig::level(Level::L1)).unwrap();
+    assert!(
+        !r.diagnostics
+            .iter()
+            .any(|d| d.rule == "unreviewed-generated")
+    );
+}

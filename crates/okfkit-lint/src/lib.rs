@@ -165,6 +165,7 @@ pub fn default_rules() -> Vec<Box<dyn LintRule>> {
         Box::new(rules::General),
         Box::new(rules::DescriptionQuality),
         Box::new(rules::StaleIndex),
+        Box::new(rules::UnreviewedGenerated),
         Box::new(rules::Lifecycle),
         Box::new(rules::TypeSchemas),
         Box::new(rules::BrokenLinks),
