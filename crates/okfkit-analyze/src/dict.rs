@@ -58,6 +58,11 @@ pub fn installed() -> bool {
     dictionary_dir().is_some_and(|d| d.join(READY).is_file())
 }
 
+/// Whether this build embeds the dictionary (feature `ja-embedded`); then nothing is downloaded.
+pub fn embedded() -> bool {
+    cfg!(feature = "ja-embedded")
+}
+
 /// Whether okfkit may download the dictionary (`OKFKIT_OFFLINE` unset or `0`).
 pub fn downloads_allowed() -> bool {
     cfg!(feature = "ja-download")

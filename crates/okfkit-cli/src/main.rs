@@ -527,7 +527,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 eprintln!("Japanese dictionary ready in {}", dir.display());
             }
             let st = DictStatus {
-                installed: okfkit::analyze::dict::installed(),
+                installed: okfkit::analyze::dict::embedded() || okfkit::analyze::dict::installed(),
                 dir: okfkit::analyze::dict::dictionary_dir(),
                 downloads_allowed: okfkit::analyze::dict::downloads_allowed(),
                 source: okfkit::analyze::dict::IPADIC_URL,
@@ -537,7 +537,9 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     "Japanese dictionary (mecab-ipadic): {}
 location: {}
 {}",
-                    if st.installed {
+                    if okfkit::analyze::dict::embedded() {
+                        "embedded in this build"
+                    } else if st.installed {
                         "installed"
                     } else {
                         "not installed"
@@ -690,11 +692,25 @@ location: {}
                 .into_iter()
                 .filter(|c| !c.starts_with("data."))
                 .collect();
+            let built = okfkit::build_features();
+            let embed_status = |on: bool, enabled: bool| match (on, enabled) {
+                (false, _) => "not in this build (use okfkit-full)",
+                (true, true) => "on",
+                (true, false) => "available; off for this bundle (okfkit embed enable)",
+            };
+            let bundle_embed = okfkit::config::load(&bundle_dir)
+                .map(|c| c.embed)
+                .unwrap_or_default();
+            let local_on = matches!(bundle_embed, okfkit::config::EmbedConfig::Local { .. });
+            let api_on = matches!(bundle_embed, okfkit::config::EmbedConfig::Api { .. });
             let modules = vec![
                 Module {
                     name: "core",
                     status: "on",
-                    capabilities: caps,
+                    capabilities: caps
+                        .into_iter()
+                        .filter(|c| !c.starts_with("embed."))
+                        .collect(),
                 },
                 Module {
                     name: "data",
@@ -711,12 +727,34 @@ location: {}
                 },
                 Module {
                     name: "embed-local",
-                    status: "not in this build (planned for v0.3)",
-                    capabilities: vec![],
+                    status: embed_status(built.embed_local, local_on),
+                    capabilities: if built.embed_local && local_on {
+                        vec![okfkit::capability::EMBED_SEARCH]
+                    } else {
+                        vec![]
+                    },
                 },
                 Module {
                     name: "embed-api",
-                    status: "not in this build (planned for v0.3)",
+                    status: embed_status(built.embed_api, api_on),
+                    capabilities: if built.embed_api && api_on {
+                        vec![okfkit::capability::EMBED_SEARCH]
+                    } else {
+                        vec![]
+                    },
+                },
+                Module {
+                    name: "mcp-http",
+                    status: "on (okfkit mcp serve --http)",
+                    capabilities: vec![],
+                },
+                Module {
+                    name: "ja-dictionary",
+                    status: if built.ja_embedded {
+                        "embedded"
+                    } else {
+                        "downloaded on first use (okfkit dict status)"
+                    },
                     capabilities: vec![],
                 },
                 Module {

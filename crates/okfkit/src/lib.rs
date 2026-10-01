@@ -83,6 +83,26 @@ pub enum Error {
     NotADirectory(PathBuf),
 }
 
+/// Optional modules compiled into this build.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+pub struct BuildFeatures {
+    /// Local embedding models (ONNX Runtime).
+    pub embed_local: bool,
+    /// Embeddings through an OpenAI-compatible API.
+    pub embed_api: bool,
+    /// The Japanese dictionary is embedded (no download needed).
+    pub ja_embedded: bool,
+}
+
+/// The optional modules of this build.
+pub fn build_features() -> BuildFeatures {
+    BuildFeatures {
+        embed_local: cfg!(feature = "embed-local"),
+        embed_api: cfg!(feature = "embed-api"),
+        ja_embedded: okfkit_analyze::dict::embedded(),
+    }
+}
+
 /// Default sets of modules.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub enum Profile {
