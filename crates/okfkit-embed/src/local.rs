@@ -43,11 +43,12 @@ impl LocalEmbedder {
             Source::Fastembed => {
                 let which = match info.id {
                     "embeddinggemma-300m-q4" => EmbeddingModel::EmbeddingGemma300MQ4,
+                    "embeddinggemma-300m" => EmbeddingModel::EmbeddingGemma300M,
                     other => return Err(Error::UnknownModel(other.into())),
                 };
                 let opts = TextInitOptions::new(which)
                     .with_cache_dir(dir.join("fastembed"))
-                    .with_max_length(512)
+                    .with_max_length(info.max_length)
                     .with_intra_threads(threads)
                     .with_show_download_progress(false);
                 TextEmbedding::try_new(opts).map_err(|e| Error::Model(e.to_string()))?
@@ -68,7 +69,7 @@ impl LocalEmbedder {
                 let model = UserDefinedEmbeddingModel::new(rd("model.onnx")?, tok)
                     .with_pooling(Pooling::Cls);
                 let opts = InitOptionsUserDefined::new()
-                    .with_max_length(512)
+                    .with_max_length(info.max_length)
                     .with_intra_threads(threads);
                 TextEmbedding::try_new_from_user_defined(model, opts)
                     .map_err(|e| Error::Model(e.to_string()))?

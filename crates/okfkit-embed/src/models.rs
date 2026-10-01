@@ -65,6 +65,8 @@ pub struct ModelInfo {
     pub source: Source,
     /// Retrieval quality in spike S1 (R@1 on 300 vi/en/ja questions), for `okfkit embed models`.
     pub s1_r_at_1: f32,
+    /// Longest input in model tokens (longer inputs are truncated).
+    pub max_length: usize,
 }
 
 const MODELS: &[ModelInfo] = &[
@@ -79,6 +81,20 @@ const MODELS: &[ModelInfo] = &[
         prompting: Prompting::Gemma,
         source: Source::Fastembed,
         s1_r_at_1: 0.847,
+        max_length: 2048,
+    },
+    ModelInfo {
+        id: "embeddinggemma-300m",
+        name: "EmbeddingGemma 300M (fp32)",
+        license: "Gemma Terms of Use",
+        license_url: "https://ai.google.dev/gemma/terms",
+        requires_acceptance: true,
+        dim: 768,
+        size_mb: 1230,
+        prompting: Prompting::Gemma,
+        source: Source::Fastembed,
+        s1_r_at_1: 0.863,
+        max_length: 2048,
     },
     ModelInfo {
         id: "bge-m3-int8",
@@ -94,6 +110,7 @@ const MODELS: &[ModelInfo] = &[
             onnx: "onnx/model_int8.onnx",
         },
         s1_r_at_1: 0.780,
+        max_length: 2048,
     },
 ];
 
@@ -111,15 +128,33 @@ pub fn models_dir() -> Result<std::path::PathBuf, crate::Error> {
         })
 }
 
+/// Licenses are accepted once for all models under them (`licenses/<name>/LICENSE-ACCEPTED`).
+fn license_dir(info: &ModelInfo) -> Result<std::path::PathBuf, crate::Error> {
+    let slug: String = info
+        .license
+        .chars()
+        .map(|c| {
+            if c.is_ascii_alphanumeric() {
+                c.to_ascii_lowercase()
+            } else {
+                '-'
+            }
+        })
+        .collect();
+    Ok(models_dir()?.join("licenses").join(slug))
+}
+
 /// Whether the license of a model has been accepted (or needs no acceptance).
 pub fn license_accepted(info: &ModelInfo) -> bool {
     !info.requires_acceptance
+        || license_dir(info).is_ok_and(|d| d.join(ACCEPTED).is_file())
+        // Acceptances recorded per model by earlier builds.
         || models_dir().is_ok_and(|d| d.join(info.id).join(ACCEPTED).is_file())
 }
 
-/// Records that the user accepted the license of a model.
+/// Records that the user accepted the license of a model (for every model under that license).
 pub fn accept_license(info: &ModelInfo) -> Result<(), crate::Error> {
-    let dir = models_dir()?.join(info.id);
+    let dir = license_dir(info)?;
     std::fs::create_dir_all(&dir).map_err(|e| crate::Error::Model(e.to_string()))?;
     std::fs::write(
         dir.join(ACCEPTED),

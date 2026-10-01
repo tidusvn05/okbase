@@ -33,3 +33,6 @@ __pycache__/
 spikes/acceptance-v0.2/work/
 spikes/acceptance-v0.2/runs/
 spikes/acceptance-v0.3/work/
+spikes/embed-tune/.venv/
+spikes/embed-tune/models/
+spikes/embed-tune/work/
