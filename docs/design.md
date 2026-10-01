@@ -1,0 +1,516 @@
+# okfkit — Design
+
+> English translation of `docs/PLAN.md` (v2.1, Vietnamese), which remains the source of truth until v0.2 is released. Where the two differ, PLAN.md wins; implementation decisions made after the plan are recorded in commit messages and `spikes/acceptance-*/RESULTS.md`.
+
+> Version: 2.1 (2026-10-01) · Status: **Final for implementation** · **Open-source project** (MIT OR Apache-2.0) · Handoff: `docs/HANDOFF.md`
+> Changes since 1.0: embedding became **opt-in** (lexical by default); added the **okfkit standard** (levels L0–L3) and the **adopt** flow (plain markdown → OKF); added **Agent Skills**; **modules + profiles + extension points** design.
+> Experimental evidence: `spikes/` (see `spikes/README.md`)
+
+## 0. Summary
+
+**okfkit** helps AI agents (Claude Code, Codex, OpenCode, qobot, any MCP client) work with **a folder of markdown documents** quickly, cheaply and accurately, using the **OKF (Open Knowledge Format)**.
+
+Four main uses:
+
+| You have… | okfkit does | Command |
+|---|---|---|
+| **An existing OKF bundle** | Works immediately, no configuration, no file changes | `okfkit mcp serve` / `okfkit agent install` |
+| **A plain markdown folder** (docs, wiki, Obsidian, docs site) | Converts it to the okfkit standard: adds frontmatter, `index.md`, descriptions, tags; diff can be previewed | `okfkit adopt` |
+| **PDFs, Sheets, Drive…** | Imports them as per-section markdown and SQL datasets | `okfkit import` (module) |
+| **An agent that must use it efficiently** | Skills + instructions + MCP tools designed from measured results | `okfkit agent install` |
+
+**Simple defaults:** no model, no network, no configuration; **lexical** mode (catalog + `grep` v2 + `query` + `get`). Heavy features (embedding, import, source sync, writing, eval) are **opt-in modules**.
+
+---
+
+## 1. Evidence from spikes → decisions
+
+| # | Spike | Key result | Decision for okfkit |
+|---|---|---|---|
+| S1 | 12 embedding models, 300 questions vi/en/ja (`embed-bench`) | EmbeddingGemma Q4 is best (R@1 0.85, R@3 0.96, 188MB, ~0.5GB RAM); BM25 on cross-language questions only 3.5% | If embedding is enabled, use EmbeddingGemma Q4 (or bge-m3 int8, MIT). **Pre-retrieval for cross-language questions needs embedding** |
+| S2 | BM25 threshold | Fusing BM25 and embedding gives no benefit (0 to +1 point) | No fusion. Lexical is used for `grep` |
+| S3 | Catalog vs. tool, with the real Claude CLI | Same accuracy; the catalog must be in the system prompt (otherwise cost ×2.5) | `catalog()` is the main product; guide hosts to put the catalog in the system prompt |
+| S4 | OpenClaw docs 60k → 4.4M tokens, 9 approaches | **Lexical (G2) 100/100/93/90% ≈ embedding (D) 97/100/100/93%**; agent + Read/Grep is on par too; embedding needs fewer turns (~2 vs. ~4.5); prompting the agent to "double-check" does not help; remaining errors come from duplicated documents | **Lexical by default**; `grep` must be as strong as the CLI's Grep; embedding is opt-in to optimize speed; lint detects duplicates |
+| S5 | Metadata/tags + sheets, 151 → 3,020 documents (`biz-meta`) | Small: agent grepping frontmatter is enough. Large: `query` keeps lists complete, 30–45% cheaper. **Sheet ~10k rows: without SQL the agent gives up; with SQL 10/10, 9× cheaper** | `query` is core; `data` is a module (auto-enabled when CSV/XLSX is present); no full views are generated; catalog includes tag vocabulary and facets |
+| S6 | Chunking and indexing speed | ~3 chunks/s/8 CPUs; 4.4M tokens ≈ 64 minutes | Embedding runs in the background, cached by hash; lexical is ready immediately |
+
+**Central lesson: good bundle organization is the deciding factor.** A strong agent with only Read/Grep already does well on a bundle with `index.md`, clear `description`s and consistent metadata. So okfkit focuses on three things:
+1. **help organize well** (standard, adopt, lint);
+2. **help agents exploit that organization** (catalog, skills, tools);
+3. add heavy machinery only when needed: SQL for tabular data, embedding for speed and pre-retrieval.
+
+**Not yet measured; needs a spike before deciding:**
+- S7: lexical mode with **Codex** and small models.
+- S8: **does adopt actually improve agent accuracy** on plain markdown (before vs. after)?
+- S9: **do skills make agents use tools more correctly** (spike S5: the agent used `kb_query` on only 32/48 questions)?
+
+---
+
+## 2. okfkit standard (okfkit profile of OKF)
+
+okfkit does not create a new format. **okfkit standard = OKF v0.2 + conventions that help agents work well**, split into levels. Every level is valid OKF.
+
+| Level | Name | Requirements | Benefit (per spikes) |
+|---|---|---|---|
+| **L0** | OKF | Every `.md` (except index/log) has frontmatter with `type` | Readable by any OKF tool |
+| **L1** | Navigable | L0 + every document has `title` and **`description`** (1 sentence); **`index.md` in every folder**; stable IDs | Catalog and `index.md` are meaningful, so agents find the right file with Read/Grep or `kb_list` (S3/S4) |
+| **L2** | Structured | L1 + `tags` from a vocabulary (`_meta/vocabulary.md`), `lang`, `status` (stable/deprecated/draft) with `supersedes`, `updated`; custom fields per the type's schema | Accurate `query`, picks the current version, filterable when the bundle is large (S5) |
+| **L3** | Curated | L2 + no near-duplicate content (or linked to a canonical page); `sources`/`verified` for important documents; no broken links; nothing past `stale_after` | Reduces the remaining error class at scale: information spread over many documents (S4) |
+
+`okfkit lint --level L2` reports which level the bundle is at and what is missing. `okfkit adopt` brings plain markdown to L1 automatically, and to L2 with agent assistance.
+
+### 2.1 Recommended folder layout (not mandatory)
+
+```
+my-bundle/
+├── okfkit.toml         # optional — defaults are used if absent
+├── index.md, log.md    # OKF (generated/updated by okfkit)
+├── knowledge/…         # curated knowledge
+├── sources/…           # imports (PDF by section, web…), with provenance
+├── data/               # datasets: *.csv|*.xlsx + <name>.md (type: Dataset, auto-generated schema)
+├── _meta/
+│   ├── vocabulary.md   # tag vocabulary + vi/en/ja synonyms + facets
+│   └── types/<Type>.md # (optional) field schema per type: kind, required, allowed values
+└── .okfkit/            # (gitignored) index, cache — or placed outside the bundle (§3.1)
+```
+
+### 2.2 Frontmatter
+
+| Group | Fields |
+|---|---|
+| OKF required | `type` |
+| okfkit L1 | `title`, `description` |
+| okfkit L2 | `tags`, `lang`, `status`, `supersedes`, `updated`, `aliases`, `audience`, `effective_from`, `effective_to` |
+| OKF v0.2 (L3) | `sources[]`, `generated{by,at}`, `verified[]`, `stale_after`, `resource` |
+| Custom | Any field; types declared in `_meta/types/<Type>.md` or `okfkit.toml [fields]` |
+
+Write rule: **round-trip keeps unknown keys, key order, comments and body.** okfkit edits only the field it was asked to edit.
+
+---
+
+## 3. Usage flows
+
+### 3.1 Existing OKF bundle (no configuration, no file changes)
+
+```
+cd existing-bundle
+okfkit status                  # level L0–L3, document/token count, recommended mode, hints
+okfkit agent install --claude  # register MCP + install skills for Claude Code (or --codex)
+```
+
+- **Read-only by default:** okfkit does not write to the bundle without an explicit write command (`adopt --write`, `index --write-index-md`, `lint --fix`).
+- **The index can live outside the bundle:** `state_dir = "auto"` uses `.okfkit/` if the bundle is writable, otherwise `~/.cache/okfkit/bundles/<hash>/`. This makes read-only bundles usable (other people's repos, mounted folders).
+- Accepts non-conforming bundles: if `description` is missing, use the first sentence of the body; if `index.md` is missing, build a virtual catalog in memory. No bundle is rejected (per OKF conformance rules).
+- Also recognizes common non-OKF frontmatter: `summary` (Mintlify/OpenClaw), `excerpt`, `tags`/`categories` (Jekyll/Hugo), `sidebar_label` (Docusaurus). These fields are mapped on read; files are not modified.
+
+### 3.2 Plain markdown → okfkit standard (`okfkit adopt`)
+
+```
+okfkit adopt ./docs --plan            # report: what will be added, and where (no writes)
+okfkit adopt ./docs --out ./docs-okf  # write to a new folder (safe)
+okfkit adopt ./docs --write           # edit in place (requires a clean git tree or --force), with log.md
+okfkit adopt ./docs --level L2 --with-agent claude   # ask an agent to write missing descriptions/tags
+```
+
+| Step | Automatic (no LLM) | With agent assistance (optional) |
+|---|---|---|
+| 1. Detect | Site kind (Obsidian, Docusaurus, Hugo, Mintlify, MkDocs, plain folder); read and map existing frontmatter | — |
+| 2. `type` | Inferred from folder/file name/heading by rules (`faq/` → FAQ, `adr-*` → Decision…); default `Document` | Suggests a more accurate type |
+| 3. `title` | H1 → existing frontmatter → file name | — |
+| 4. `description` | First meaningful sentence (skipping admonitions, badges, code); marked `generated: {by: okfkit-heuristic}` | **Writes a 1-sentence description** (most important for the catalog) |
+| 5. Links | Convert wikilinks `[[x]]` and relative links to OKF form; report broken links | — |
+| 6. Structure | Generate `index.md` in every folder; `log.md`; suggest splitting overly long files (> N tokens) by H2 | Proposes a folder structure |
+| 7. L2 | `lang` (detection), `updated` (git log/mtime), tags from folders | Tags from the vocabulary, `status`/`supersedes` when multiple versions are detected |
+| 8. Report | Diff, lint before/after, L level reached | — |
+
+- The agent-assisted parts of steps 4 and 7 are done through the **`okfkit-curate` skill** (§6) or the `adopt --with-agent` command. That command calls a CLI agent through the optional `agent-bridge` module.
+- Every machine-generated value records `generated{by,at}` (OKF v0.2), so later readers know it needs verification (`verified`).
+
+### 3.3 Importing source documents (`import` module)
+
+- PDF, DOCX, HTML → `sources/<name>/<nn>-<section>.md`: split by heading or every N pages, with `resource`, `pages`, `generated`; tables become markdown tables; OCR is optional.
+- XLSX, CSV, Google Sheets → dataset (`data` module) + `data/<name>.md`.
+- Incrementally synced sources (`source-*` modules): folders, Google Drive/Sheets, Notion.
+- **Import does not modify `knowledge/`.** Distilling `sources/` into concepts is the agent's job, via the `okfkit-curate` skill (`okfkit distill --plan` lists what needs to be done).
+
+### 3.4 Agents using the bundle (daily)
+
+```
+okfkit agent install --claude | --codex | --opencode | --print
+```
+- Registers the MCP server (`okfkit mcp serve --stdio`, or HTTP for long-running use).
+- Installs **skills** (§6) into the CLI's skill folder; for CLIs without skill support, generates an equivalent `AGENTS.md` snippet.
+- Prints the catalog snippet and instructions to put in the system prompt, for users who build their own agent.
+
+---
+
+## 4. Architecture
+
+### 4.1 Principles
+1. **Small core, no heavy dependencies:** no ONNX, no network, fast builds. Everything heavy is a module.
+2. **Files are the source of truth.** The index is rebuildable and can live outside the bundle.
+3. **User-agnostic:** every read operation takes a `Scope` passed in by the host.
+4. **Output for agents:** compact, with IDs for citing sources, hints when there are no results, and a clear notice when truncated.
+5. **Extend through traits, capabilities and profiles**, not by changing the core.
+6. **Measurable:** built-in eval, and every default is tied to a spike.
+
+### 4.2 Diagram
+
+```
+   ┌────────────── Interfaces ─────────────────────────────────────────────────┐
+   │ CLI `okfkit` (+ plugin `okfkit-<x>`)   MCP (stdio/HTTP)   Rust API   Skills│
+   └──────────┬─────────────────────────────┬──────────────────┬───────────────┘
+              ▼                             ▼                  ▼
+   ┌──────────────────────── Facade `okfkit::Bundle` ───────────────────────────┐
+   │ Capability registry: which tools/commands exist depends on enabled modules │
+   └──────────┬──────────────────────────────────────────────────────────────────┘
+   ┌──────────▼──────────── CORE (always on) ──────────────────────────────────┐
+   │ core: parse/write round-trip, validate, links · standard: L0–L3, schema    │
+   │ index: metadata, tags, links, aliases, chunks, FTS (analyzer vi/en/ja)     │
+   │ read: grep v2 · get · list · query(filter/facet/sum) · catalog · stats     │
+   │ maint: lint (rule engine) · adopt (heuristic) · index.md/log.md/vocabulary │
+   └───────┬───────────────┬──────────────┬───────────────┬────────────────────┘
+   ┌───────▼─────┐ ┌───────▼──────┐ ┌─────▼───────┐ ┌─────▼──────────────────┐
+   │ data        │ │ embed-local  │ │ import-*    │ │ write · watch · eval   │
+   │ CSV/XLSX →  │ │ embed-api    │ │ pdf/docx/   │ │ source-gdrive/notion…  │
+   │ SQLite, SQL │ │ search,      │ │ html/xlsx   │ │ agent-bridge (CLI call)│
+   │ (duckdb)    │ │ retrieve     │ │             │ │ ann (usearch)          │
+   └─────────────┘ └──────────────┘ └─────────────┘ └────────────────────────┘
+        (MODULE: Cargo feature at build time + enabled/disabled by config at runtime)
+```
+
+### 4.3 Crates
+
+| Crate | Core / module | Contents |
+|---|---|---|
+| `okfkit-core` | core | Concept, Frontmatter (keeps order, unknown keys, comments), parse/write, OKF validation, links, IDs |
+| `okfkit-standard` | core | Levels L0–L3, type schemas (`_meta/types`), tag vocabulary, mapping of foreign frontmatter (summary→description…) |
+| `okfkit-analyze` | core | Analyzer trait: NFKC, Vietnamese diacritic folding, lindera (ja, default-on feature), English stemming, language detection |
+| `okfkit-index` | core | SQLite schema, incremental indexer, chunker, catalog, facets, index.md/log.md generation |
+| `okfkit-query` | core | `grep` v2, `get`, `list`, `query`, `catalog`, `stats`, `recommend_mode` |
+| `okfkit-lint` | core | Rule engine + standard rules (L0–L3); `LintRule` trait |
+| `okfkit-adopt` | core | Site detection, mapping, title/description/type heuristics, file splitting, plan/diff |
+| `okfkit-data` | `data` module | Dataset → SQLite (DuckDB as a sub-feature), `data.query` with safety limits, schema doc |
+| `okfkit-embed` | `embed-local` / `embed-api` module | Embedder trait, fastembed (EmbeddingGemma Q4 / bge-m3 int8), HTTP client; cache by hash; batching by length |
+| `okfkit-search` | module (needs embed) | Dense search, MMR, `retrieve`, semantic duplicate lint, ANN (`ann` feature) |
+| `okfkit-import` | `import-*` module | Converter trait + pdf/docx/html/xlsx/csv |
+| `okfkit-source` | `source-*` module | Source trait + fs/gdrive/gsheets/notion |
+| `okfkit-mcp` | core (stdio) / `http` module | Capability-based tool registry, rmcp; `router()` for hosts to embed |
+| `okfkit-skills` | core | Skills and instructions embedded in the binary; `agent install` for claude/codex/opencode |
+| `okfkit-bridge` | `agent-bridge` module | Calls CLI agents (via agent-core) for adopt/curate/eval |
+| `okfkit-eval` | `eval` module | Runs question sets (retrieval or agent), scores, reports cost and latency (from spikes) |
+| `okfkit` | facade | `Bundle`, `Scope`, `Capabilities`, re-exports |
+| `okfkit-cli` | binary | `okfkit`, discovers `okfkit-<x>` plugins on PATH |
+
+Release builds:
+- **`okfkit`**: core + data + mcp-http + import-csv/xlsx. No ONNX; about 15–25MB, including lindera dictionaries.
+- **`okfkit-full`**: adds embed-local, import-pdf/docx/html, source-*, eval.
+
+### 4.4 Configuration: simple defaults, extend gradually
+
+Without `okfkit.toml`, defaults are used. The fullest file only enables what is needed:
+
+```toml
+# okfkit.toml — every section is optional
+profile = "standard"            # minimal | standard | full  (default module set)
+
+[bundle]
+languages = ["vi", "en", "ja"]
+state_dir = "auto"              # auto | ".okfkit" | "~/.cache/okfkit/..."
+
+[modules]                       # overrides the profile
+data = "auto"                   # auto: enabled when *.csv/*.xlsx exist in data/
+embed = "off"                   # off | local | api
+import = ["pdf", "xlsx"]
+sources = []                    # ["gdrive", "notion"]
+write = false                   # write tools for agents
+watch = false
+
+[embed]                         # read only when modules.embed != off
+model = "embeddinggemma-300m-q4"    # | bge-m3-int8 | api:<provider>/<model>
+
+[standard]
+target_level = "L2"             # lint against this level
+vocabulary = "_meta/vocabulary.md"
+
+[tools]                         # MCP/skills: rename, hide, limit
+prefix = "kb"
+disable = []
+limits = { grep_lines = 40, get_tokens = 4000, data_rows = 100 }
+```
+
+| Profile | Modules enabled | Use when |
+|---|---|---|
+| `minimal` | Core | CI, small bundles, weak machines |
+| `standard` (default) | Core + data (auto) + import csv/xlsx | Most use with Claude Code/Codex |
+| `full` | All modules, including embed-local | Large multilingual bundles that need fast pre-retrieval; qobot-style hosts |
+
+### 4.5 Extension points
+
+| To add | How | Rebuild needed? |
+|---|---|---|
+| A new document type with its own fields | `_meta/types/<Type>.md` (schema: field, kind, required, enum) → understood by lint, query, adopt | No |
+| Tags, synonyms, facets | `_meta/vocabulary.md` | No |
+| Type-inference rules for adopt | `okfkit.toml [adopt.rules]` (glob → type/tags) | No |
+| Custom lint rules | Declarative rules (TOML: field X required when type is Y, forbidden regex…) | No |
+| New CLI commands | External plugin `okfkit-<name>` on PATH (git-style), takes `--bundle` and communicates via JSON | No |
+| Tools for agents | External MCP server (configured by the agent), or a "command" tool declared in `okfkit.toml [tools.custom]` (runs a command, JSON in/out) | No |
+| Project-specific skills | `_meta/skills/<name>/SKILL.md`, installed along by `agent install` | No |
+| Converter, Source, Embedder, Analyzer, LintRule, ToolProvider | Implement the trait in Rust, register via the registry (feature) | Yes |
+| Safe in-process hooks | WASM (extism): `on_index_doc`, `on_lint`, `on_tool_output` (later phase) | No |
+
+**Capability registry:** each module declares capabilities (`read.grep`, `data.sql`, `embed.search`, `import.pdf`…). The CLI, MCP and skills show only what is available. Example: without embed, `kb_search` does not appear, and the skill directs the agent to grep/list.
+
+### 4.6 Library API (for hosts such as qobot)
+
+```rust
+let bundle = Bundle::open(dir, OpenOptions::default()
+    .profile(Profile::Standard)
+    .embedder(shared_embedder.clone())      // optional; None = lexical
+    .state_dir(StateDir::Auto))?;
+bundle.sync(SyncMode::Incremental).await?;
+let caps = bundle.capabilities();            // which modules are available
+let scope = Scope::all().deny("memory/people/**").filter(MetaFilter::not_audience("private"));
+
+bundle.catalog(&CatalogOptions::default(), &scope)?;         // for the system prompt (+ vocabulary/facets)
+bundle.recommend_mode(&scope);                               // Full | Retrieval | Lexical
+bundle.retrieve(q, TokenBudget(3000), &scope).await?;       // only with embed
+bundle.grep(&req, &scope)?; bundle.query(&mq, &scope)?; bundle.get(&id, &sel, &scope)?;
+bundle.data()?.query(sql, Limits::default())?;               // when the data module is enabled
+bundle.lint(&LintConfig::level(Level::L2))?;
+bundle.write(ConceptWrite { .. }).await?;                    // when the write module is enabled, validate + index/log
+okfkit_mcp::router(bundle.clone(), scope_provider);          // mount into the host's axum
+bundle.watch();                                              // Stream<ChangeEvent>
+```
+
+### 4.7 Index
+
+| Table | Always present | Contents |
+|---|---|---|
+| `docs`, `doc_fields`, `doc_tags`, `aliases`, `links` | ✅ | Typed metadata, original and normalized tags, links and backlinks |
+| `chunks`, `chunks_fts` | ✅ | Chunks by H2/H3 (150–450 tokens, `title > heading` prefix), FTS via Analyzer |
+| `chunk_vecs` | embed module | f32 vectors loaded into RAM (brute force; ANN above ~100k chunks) |
+| `datasets.sqlite` | data module | One table per dataset + `_schema` |
+
+- Incremental indexing by hash. Lexical is ready immediately; embedding runs in the background, with progress, and a global hash-keyed cache (`~/.cache/okfkit/emb`).
+- While embedding is not finished, `recommend_mode()` returns `Lexical`.
+
+---
+
+## 5. Agent tools (MCP / CLI `--json`)
+
+| Tool | Module | Description (based on spikes) |
+|---|---|---|
+| `kb_catalog` | core | Catalog (≤ N tokens) + tag vocabulary and facets; hosts should put it in the system prompt instead of letting the agent call it |
+| `kb_list` | core | A folder's `index.md` |
+| `kb_grep` | core | Regex/alternation, case- and diacritic-insensitive, searches frontmatter too, `path` glob, `context`, `files_only`, `filter`; hints when empty (S4: G improved to G2) |
+| `kb_get` | core | By `section`/`lines`/`max_tokens`; reports truncation with a list of headings |
+| `kb_query` | core | Metadata filters, `active_on`, `facets`, `sum_field`, `sort`, `count_only` (S5) |
+| `kb_links` | core | Links and backlinks |
+| `data_tables`, `data_query` | data | Read-only SQL (S5: required for sheets) |
+| `kb_search` | embed | Multilingual semantic search, with `filter` |
+| `kb_write`, `kb_propose` | write | Validated writes, updates index/log (off by default) |
+
+Output is identical across MCP and `--json`. Tool names can be changed with `[tools].prefix`.
+
+---
+
+## 6. Agent Skills
+
+Skills (AgentSkills standard, `SKILL.md`) are **the cheapest way to make agents use okfkit correctly**. A skill is loaded only when needed, so it does not cost standing tokens like long instructions in the system prompt. Skills are embedded in the binary and installed with `okfkit agent install`.
+
+| Skill | When the agent uses it | Main content (per spikes) |
+|---|---|---|
+| **`okfkit-answer`** | Answering questions from the bundle | Read the catalog or `index.md` first. **List, count, filter questions: use `kb_query`** (S5). **Numbers: use `data_query`**, do not add up by hand (S5). Codes or exact strings: `kb_grep` with alternation, English terms and synonyms (S4). Meaning-based questions: `kb_search` if available, otherwise `kb_grep` + `kb_list`. Long documents: `kb_get` by `section`. Prefer `status: stable`, check `supersedes`. Multi-part questions: cover every part. **Always cite ids** |
+| **`okfkit-curate`** | Maintaining and upgrading the bundle | Run `okfkit lint --level L2`, fix in order of impact: missing or weak descriptions → index.md → vocabulary tags → status/supersedes → merge duplicate content into a canonical page. Write specific 1-sentence descriptions. Record `generated`. Do not delete content |
+| **`okfkit-adopt`** | Converting a markdown folder to the standard | Run `okfkit adopt --plan`, review, then `--out` or `--write`; write descriptions and tags for files the heuristic marked as weak; re-run lint |
+| **`okfkit-import`** | Bringing in PDFs/Sheets | `okfkit import`, check `sources/` and datasets, use `distill --plan` to create concepts with `sources[]` |
+| **`okfkit-author`** | Writing new documents | Use `okfkit new --type …` (per schema), frontmatter complete to L2, link to related pages, update the vocabulary if a tag is new |
+
+- Skills **adapt to capabilities**: the instructions for `kb_search` and `data_query` appear only when the corresponding module is enabled (generated at `agent install` time).
+- **Fallback without MCP:** skills instruct the agent to call `okfkit … --json` through the shell, so they also work in CLIs without MCP configured.
+- Projects can add their own skills in `_meta/skills/`.
+- **To measure (S9):** compare agents with and without skills on correct tool usage rate (target `kb_query` ≥ 45/48 vs. 32/48), accuracy, number of turns and cost.
+
+---
+
+## 7. CLI
+
+```
+# Use immediately
+okfkit status                         # L level, document/token count, modules, recommended mode, next-step hints
+okfkit agent install --claude|--codex|--opencode [--skills-only|--mcp-only]
+okfkit mcp serve [--stdio | --http :7331 --token …]
+
+# Read
+okfkit grep 'E2|429' [--path 'sop/**'] [-C 1] [--files-only]
+okfkit get <id> [--section …] | okfkit list [dir]
+okfkit query 'type=Policy tag:billing status!=deprecated active_on=2026-10-01' [--facets tags] [--sum contract_value]
+okfkit catalog [--max-tokens 10000]
+okfkit data tables | okfkit data sql "select …"              # data module
+okfkit search "câu hỏi" | okfkit retrieve "…" --budget 3000  # embed module
+
+# Organize
+okfkit lint [--level L2] [--fix-safe] [--format text|json|sarif]
+okfkit adopt <dir> --plan | --out <dir> | --write [--level L2 --with-agent claude]
+okfkit index [--full] [--write-index-md] [--watch]
+okfkit vocab [--suggest] | okfkit new --type <Type> <id> | okfkit validate --okf
+
+# Modules
+okfkit embed enable [--model …] | okfkit embed status
+okfkit import <file|dir> | okfkit source add|sync …
+okfkit eval run questions.json [--mode retrieval|agent --cli claude]
+okfkit modules                        # modules in the build + currently enabled
+```
+
+---
+
+## 8. Multilingual support
+
+- Core: NFKC, Vietnamese diacritic folding (grep/FTS), lindera (Japanese), English stemming.
+- Language detection (lingua) is only used for hints: Vietnamese without diacritics is only about 90% correct.
+- Multilingual tag vocabulary, including synonyms.
+- Without embedding, cross-language questions rely on the agent translating keywords itself (guided by the skill). S4 shows this is good enough with Claude.
+- With embedding, EmbeddingGemma handles cross-language matching directly, enabling pre-retrieval.
+
+---
+
+## 9. Lint (rules by level)
+
+| Level | Rules |
+|---|---|
+| L0 | Frontmatter parses; has `type` |
+| L1 | `title`/`description` present and specific enough (length, does not repeat the title); `index.md` in every folder; stable IDs |
+| L2 | Tags belong to the vocabulary (or a cross-language synonym is reported); fields have the right kinds per the type's schema; `status`/`supersedes` consistent; no multiple `stable` documents for the same topic/scope; valid `effective_*`; datasets have a schema doc |
+| L3 | Near-duplicate content (needs embed; otherwise shingle heuristics); broken links; orphans; past `stale_after`; important documents missing `sources`/`verified` |
+| General | Overly long documents (suggest splitting); imported PDFs with blank pages or broken tables |
+
+Output text/JSON/SARIF; `--fix-safe` fixes only what is safe (generate index.md, normalize tags, add `lang`).
+
+---
+
+## 10. Security
+
+- **Read-only by default**; every write operation needs an explicit command or module.
+- Path normalization, path traversal blocked.
+- SQL: `query_only`, SELECT only, timeout, row limit, no ATTACH.
+- MCP HTTP: token, binds to localhost by default; the host provides a `ScopeProvider`.
+- Output includes `id`/`resource` so hosts can mark content as *untrusted*.
+- Source secrets come from env/keyring, never from `okfkit.toml`.
+- `agent-bridge` runs only when the user invokes it, and prints the exact CLI command it will run.
+
+---
+
+## 11. Performance targets (8 CPUs, per spikes)
+
+| Operation | Target |
+|---|---|
+| `okfkit status` / first lexical index of 1k documents | ≤ 5s |
+| `grep` over 4.4M tokens | ≤ 500ms |
+| `query` over 3k documents | ≤ 20ms |
+| `data.query` aggregate over 10k rows | ≤ 50ms |
+| `search` (embed module, ≤ 20k chunks) | p50 ≤ 60ms |
+| First embedding | ≈ 3 chunks/s (EmbeddingGemma Q4), in the background |
+| `okfkit` binary (no ONNX) | ≤ 25MB |
+
+---
+
+## 12. Testing and evaluation
+
+- Golden round-trip: the official OKF bundles (acme_retail, ga4, stackoverflow, crypto_bitcoin) must have diff = 0; tests for preserving comments and unknown keys.
+- **Adopt fixtures:** OpenClaw docs (Mintlify), a sample Obsidian vault, a Docusaurus docs folder, and a "dirty" markdown folder. Check that `adopt --plan` is stable (snapshot) and that lint after adopt reaches L1.
+- Snapshots of tool output and of skills generated per capability.
+- `okfkit-eval` (from spikes): retrieval mode (R@k) and agent mode (claude/codex, scored by key facts or precomputed answers, cost, latency). Fixtures: multilingual v2 (S1), OpenClaw S/M/L (S4), business ×1/×20 (S5).
+- CI: fmt, clippy, test, deny; fast lexical eval on small fixtures.
+
+---
+
+## 13. Roadmap
+
+Estimates for 1 full-time developer.
+
+### v0.1 — Works immediately with existing bundles (2 weeks)
+- core (round-trip), standard (L0–L2, foreign frontmatter mapping), index (lexical), query (grep v2, get, list, query, catalog, stats), lint L0–L2, MCP stdio, CLI.
+- **`okfkit-answer` skill** + `agent install --claude/--codex`.
+- ✅ Criteria:
+  - round-trip of the official OKF bundles has diff = 0;
+  - reproduce S4's G2 (≥ 93% at size L) with Claude via skill + MCP;
+  - `okfkit status` runs on a read-only bundle (external state_dir).
+
+### v0.2 — Adopt + data (2 weeks)
+- `adopt` (site detection, heuristics, `--plan/--out/--write`), index.md/log.md generation, vocab, `okfkit-adopt`/`okfkit-curate` skills.
+- `data` module (CSV/XLSX → SQLite, `data.query`, schema doc).
+- **Spike S8:** plain markdown docs → adopt → compare agent accuracy before and after.
+- **Spike S9:** with skills vs. without skills.
+- ✅ Criteria: adopting the original OpenClaw docs reaches L1 with no manual edits; reproduce S5 ×20 (sheet 10/10); S8 shows adopt does not reduce (expected: improves) accuracy.
+
+### v0.3 — Embed module (opt-in) (2 weeks)
+- `embed-local` (EmbeddingGemma Q4, bge-m3 int8), `embed-api`, cache, background indexing, `search`, `retrieve`, `recommend_mode`, MCP HTTP, `router()` for hosts.
+- `okfkit-full` build.
+- ✅ Criteria: reproduce S1 v2 (R@1 ≥ 0.84); S4 retrieval ≥ 97% at size L; the default `okfkit` binary still has no ONNX.
+
+### v0.4 — Import + sources (2 weeks)
+- import-pdf/docx/html, source fs/gdrive/gsheets, `okfkit-import` skill, `distill --plan`.
+- **Spike S10:** about 20 real PDFs and 5 real sheets.
+- ✅ Criteria: the agent correctly answers lookup and aggregation questions on imported data.
+
+### v0.5 → v1.0 — Extension and stabilization (2–3 weeks)
+- `okfkit-<x>` CLI plugins, command tools, declarative lint rules, type schemas, project skills, complete eval, watch, ANN, DuckDB.
+- **Spike S7:** lexical with Codex and small models, to choose the default profile per CLI.
+- API stabilization (semver), documentation, integration examples.
+
+**About 10–11 weeks in total to v1.0.** v0.1 (week 2) is already usable daily with Claude Code/Codex on existing bundles.
+
+---
+
+## 14. Risks and open decisions
+
+| Risk / question | Mitigation |
+|---|---|
+| Lexical has only been measured with Claude Sonnet | Spike S7 (Codex, small models); profiles may differ per CLI |
+| Adopt heuristics write poor descriptions | Mark as `generated`; `okfkit-curate` skill lets the agent rewrite them; S8 measures the impact |
+| Agents do not use the skills | S9; fallback `AGENTS.md` snippet; catalog includes facets |
+| The name "OKF" is a Google spec | Product name `okfkit`; state clearly "community tool" |
+| The OKF spec changes | Core keeps unknown keys; the okfkit standard is a separate layer (`okfkit-standard`) |
+| Gemma license | Relevant only when embed-local is enabled; bge-m3 int8 (MIT) as an alternative |
+| PDF quality | Converter is a trait; S10 |
+| rmcp changes quickly | Pin minor |
+
+**Decided:** license MIT OR Apache-2.0 (§17); publish to crates.io from v0.1 (0.x releases); keep the L0–L3 level names and skill names as above (can change before v1.0).
+
+---
+
+## 15. Relationship to other projects
+
+- **qobot:** depends on the `okfkit` crate (git tag); uses `Bundle`, `catalog`, `recommend_mode`, `retrieve` (when embed is enabled), `router` with `ScopeProvider`, `write`, `watch`. qobot chooses the profile (usually `full` for a multilingual chat bot that needs speed). qobot does not access okfkit's internal index.
+- **agent-core:** used only in the `agent-bridge` module (adopt/curate/eval calling CLI agents).
+- **Claude Code / Codex / OpenCode:** via `okfkit agent install` (MCP + skills).
+
+## 16. Immediate tasks (week 1)
+
+1. `git init`, workspace, CI, license.
+2. `okfkit-core` round-trip (keeping comments, unknown keys) plus fixtures from the official OKF bundles and OpenClaw docs.
+3. `okfkit-index` lexical + `okfkit-query` (reuse the chunker and grep v2 from `spikes/embed-bench/src/bundle.rs`, and `kb_query` from `spikes/biz-meta/mcp_meta.py`).
+4. CLI `status/grep/get/list/query/catalog` + MCP stdio + a draft `okfkit-answer` skill; try it with Claude Code on the OpenClaw S fixture.
+
+---
+
+## 17. Open source
+
+| Item | Decision |
+|---|---|
+| License | **MIT OR Apache-2.0** (dual, per Rust convention); `LICENSE-MIT`, `LICENSE-APACHE` copied verbatim from the official sources |
+| Name | `okfkit` (available on crates.io and GitHub, checked 2026-10-01). README states clearly: *independent community project, not affiliated with Google*; "OKF" is a Google Cloud spec |
+| Documentation language | README, rustdoc, CLI help, CONTRIBUTING: **English**. Internal design documents (`docs/PLAN.md`, `docs/HANDOFF.md`) are currently in Vietnamese; translate to English before wide public release (v0.2). vi/ja documentation is welcome |
+| Governance | The lead maintainer decides (BDFL) until v1.0; major changes (format, public API, defaults) need a short issue/RFC in `docs/rfcs/` with data (spike/eval) |
+| Contributions | PR + review; no CLA; `Signed-off-by` (DCO) encouraged; `CONTRIBUTING.md` covers build, test, eval; Code of Conduct: Contributor Covenant 2.1 |
+| Security | `SECURITY.md`: private reports via GitHub Security Advisories; no public issues for vulnerabilities |
+| Versioning | SemVer; 0.x may break the API but must be recorded in the CHANGELOG; the **on-disk format** (okfkit frontmatter, `_meta/*`) stabilizes earlier than the API (from v0.2) |
+| Releases | Tag `vX.Y.Z` → CI builds binaries (Linux x86_64/aarch64, macOS arm64/x86_64, Windows x86_64) with cargo-dist, publishes to crates.io, CHANGELOG generated from commits (conventional commits), GitHub Release. Two editions: `okfkit` and `okfkit-full` |
+| CI | GitHub Actions: fmt, clippy `-D warnings`, test (Linux/macOS/Windows), cargo-deny (license allowlist + advisories), MSRV check, fast lexical eval on small fixtures |
+| Third-party dependencies | cargo-deny allowlist: MIT, Apache-2.0, BSD-2/3, ISC, Unicode-3.0, Zlib, MPL-2.0 (only if unmodified). Check the license of the lindera IPADIC dictionary and record it in `THIRD_PARTY.md` |
+| Models | **No models are bundled in the repo or the binary.** `okfkit embed enable` downloads the model to the user cache, prints the model's license and asks for confirmation for models with their own terms (Gemma); bge-m3 (MIT) is the option that needs no confirmation |
+| Fixture data | Google's OKF samples (Apache-2.0) and OpenClaw docs (MIT): only small subsets go into `fixtures/`, with NOTICE/attribution files; large corpora are downloaded by script, not committed |
+| Spikes | `spikes/` is committed (scripts, questions, `results/`, ~7MB); caches, models, corpora and built bundles are in `.gitignore`. Records in `results/` contain local machine paths and are synthetic or LLM-generated data; this is noted in `spikes/README.md` |
+| Telemetry | None |
+| Platform support | Linux, macOS, Windows (core); embed-local module: Linux/macOS x86_64 + arm64, Windows x86_64 (per onnxruntime) |

@@ -28,7 +28,7 @@ okfkit is an open-source Rust toolkit for knowledge bundles in the [Open Knowled
 The defaults are backed by experiments (see [`spikes/`](spikes/README.md)). One example: lexical navigation with a strong `grep` matched embedding-based retrieval on bundles from 60k to 4.4M tokens, so embeddings are optional.
 
 ## Documentation
-- Design and roadmap: [`docs/PLAN.md`](docs/PLAN.md) (Vietnamese; an English design doc will follow)
+- Design and roadmap: [`docs/design.md`](docs/design.md) (English translation of [`docs/PLAN.md`](docs/PLAN.md), Vietnamese)
 - Implementation handoff: [`docs/HANDOFF.md`](docs/HANDOFF.md)
 - Contributing: [`CONTRIBUTING.md`](CONTRIBUTING.md) · Agents: [`AGENTS.md`](AGENTS.md)
 
