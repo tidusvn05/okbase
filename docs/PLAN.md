@@ -31,6 +31,7 @@ Bốn cách dùng chính:
 | S4 | Docs OpenClaw 60k → 4.4M token, 9 cách | **Lexical (G2) 100/100/93/90% ≈ embedding (D) 97/100/100/93%**; agent + Read/Grep cũng ngang; embedding giúp ít lượt hơn (~2 so với ~4.5); nhắc "kiểm tra lại" bằng prompt không hiệu quả; lỗi còn lại do tài liệu trùng lặp | **Mặc định lexical**; `grep` phải mạnh ngang Grep của CLI; embedding là opt-in để tối ưu tốc độ; lint phát hiện trùng lặp |
 | S5 | Metadata/tag + sheet, 151 → 3.020 tài liệu (`biz-meta`) | Nhỏ: agent grep frontmatter là đủ. Lớn: `query` giữ đầy đủ list, rẻ hơn 30–45%. **Sheet ~10k dòng: không có SQL thì agent bỏ cuộc; có SQL thì 10/10, rẻ hơn 9×** | `query` thuộc lõi; `data` là module (bật tự động khi có CSV/XLSX); không sinh view đầy đủ; catalog kèm từ vựng tag và facet |
 | S6 | Chunk và tốc độ index | ~3 chunk/s/8 CPU; 4.4M token ≈ 64 phút | Embedding chạy nền, cache theo hash; lexical sẵn sàng ngay |
+| S11 | Fine-tune EmbeddingGemma bằng LoRA (cách của Unsloth) trên câu hỏi tổng hợp (`spikes/embed-tune`) | Trong miền: S1 R@1 0.853 → 0.943, khác ngôn ngữ 0.815 → 0.95; không quên miền khác; S4 bão hoà (27 → 28/30). CPU ~25 phút train, ~$3/1k cặp; mỗi lần đổi model phải embed lại cả bundle | Không đưa training vào okfkit. Ứng viên: cho phép nạp model ONNX do người dùng tự cung cấp (opt-in), **sau khi** kiểm tra ONNX/Q4 còn giữ mức cải thiện |
 
 **Bài học trung tâm: tổ chức bundle tốt là yếu tố quyết định.** Agent mạnh chỉ với Read/Grep đã làm tốt trên bundle có `index.md`, `description` rõ và metadata nhất quán. Vì vậy okfkit tập trung vào ba việc:
 1. **giúp tổ chức tốt** (chuẩn, adopt, lint);
@@ -472,6 +473,7 @@ Output text/JSON/SARIF; `--fix-safe` chỉ sửa những gì an toàn (sinh inde
 | Spec OKF thay đổi | Lõi giữ key lạ; chuẩn okfkit là lớp riêng (`okfkit-standard`) |
 | License Gemma | Chỉ liên quan khi bật embed-local; bge-m3 int8 (MIT) thay thế |
 | Chất lượng PDF | Converter là trait; S10 |
+| Model tự fine-tune: mất mức cải thiện khi lượng tử hoá Q4; câu hỏi tổng hợp khác câu hỏi thật của agent; dữ liệu nội bộ gửi lên LLM | S11: kiểm tra ONNX/Q4 trước khi làm tính năng; eval bằng câu hỏi do người viết; cache vector khoá theo hash model |
 | rmcp thay đổi nhanh | Pin minor |
 
 **Đã chốt:** license MIT OR Apache-2.0 (§17); publish crates.io từ v0.1 (bản 0.x); giữ tên mức L0–L3 và tên skill như trên (đổi được trước v1.0).

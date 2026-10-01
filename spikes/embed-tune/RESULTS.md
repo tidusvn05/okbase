@@ -49,6 +49,51 @@ For reference, okfkit's own ONNX Q4 run (v0.3) scored S1 0.857 and S4 29/30 (`..
 - ONNX export + Q4 quantization of a tuned model (what okfkit actually loads): does the gain survive?
 - A larger held-out eval per bundle (questions written by people, not the same generator).
 
+## Pipeline and cost per bundle (measured here unless marked)
+
+| Step | What | Time / cost |
+|---|---|---|
+| 1. Generate pairs | LLM writes vi/ja/en questions per doc or chunk | $3.41 for 1,080 pairs (~25 sonnet calls); wall time not recorded |
+| 2. Train LoRA | 2 epochs, ~500 pairs | CPU: 23–27 min, 6–6.5 GB RAM. T4 + Unsloth: a few minutes (not measured) |
+| 3. Merge | `merge.py` | ~10 s, ~2 GB RAM |
+| 4. ONNX export + Q4 | what okfkit loads | not done yet (estimate: minutes) |
+| 5. Re-embed the whole bundle | every vector changes with the model | S4 L (3,230 chunks): ~20 min with okfkit Q4, ~40 min fp32 PyTorch |
+| 6. Eval | held-out questions, base vs tuned | ~40 min per model here (dominated by S4 embedding) |
+
+End to end on CPU: ~1–1.5 h and $3–5 for a bundle of a few hundred docs.
+
+## When documents change
+- **Edits and new docs normally need no retraining.** The tuned model is still a general embedding
+  model; okfkit's cache re-embeds only changed chunks. Evidence: tuned-oc never saw the S1 docs and
+  still beat the base model on them (0.853 → 0.890).
+- **Retrain when** a new domain, vocabulary or language becomes a large share of the bundle, a large
+  part of the bundle is new (rule of thumb 20–30%, unmeasured), or a periodic eval drops.
+- **A retrain** = generate pairs only for new/changed docs (keep the old pairs) → train again from the
+  *base* model on all pairs (never stack on a tuned model) → export + eval → **re-embed the whole
+  bundle**. The full re-embed, not the training, is the main recurring cost.
+
+## Trade-offs
+1. Real queries come from AI agents (short, keyword-like), not the human-style questions used for
+   training and eval; real gains may be smaller.
+2. Train and eval questions come from the same LLM and may share its style; a ~50-question set written
+   by people is needed for an honest number.
+3. Step 1 sends document text to an LLM API; private bundles need a local LLM (weaker questions).
+4. Gains concentrate where the base model is weak (cross-language). On English long docs (S4) the
+   base model is already 27–29/30, and the lexical path (`kb_grep`, 90–100% in okf-scale) gains nothing.
+5. Q4 quantization may erase part of the gain (unverified; the main open risk).
+6. A tuned model is a Gemma derivative under the Gemma terms (fine for internal use). bge-m3 (MIT)
+   could be tuned the same way (not tried).
+7. Operations: model versioning and rollback (1.2 GB fp32 / ~200 MB Q4). The vector cache must key on a
+   hash of the model file rather than the model name once custom models are allowed. Training needs
+   Python/torch (ideally a GPU) outside okfkit.
+
+## Next steps (proposed, not started)
+1. Export tuned-ml to ONNX, quantize to Q4, rerun okfkit's `retrieval_eval`: does the gain survive?
+   Stop here if it does not.
+2. If it does: opt-in custom ONNX model in `okfkit.toml` (path, pooling, prompts, max length), vector
+   cache keyed by model hash.
+3. Document (or script) steps 1–6; measure Unsloth on a real GPU.
+
 ## Recommendation
 Do not add training to okfkit. If anything, add an opt-in way to load a **user-supplied ONNX
 embedding model** (path + pooling + prompts in `okfkit.toml`), and document a recipe (this folder:
