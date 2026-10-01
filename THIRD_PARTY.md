@@ -8,7 +8,15 @@ Rust crate dependencies (whose licenses are checked by `cargo deny check`, see `
 
 | Component | Used by | License | Notes |
 |---|---|---|---|
-| mecab-ipadic 2.7.0 dictionary (via `lindera-ipadic`, feature `ja` of `okfkit-analyze`) | Japanese tokenization | NAIST / ICOT Free Software notice (permissive; the notice and its NO WARRANTY section must accompany redistributions) | Downloaded at build time by the `lindera-ipadic` build script (checksum verified) and embedded in the binary. The full notice ships in the `lindera-ipadic` crate as `NOTICE.txt`; release archives must include it. |
+| mecab-ipadic 2.7.0 dictionary (feature `ja-embedded` of `okfkit-analyze`, off by default) | Japanese tokenization | NAIST / ICOT Free Software notice (permissive; the notice and its NO WARRANTY section must accompany redistributions) | Only embedded in builds with `ja-embedded`; the release archives of such builds must include the notice (shipped in the `lindera-ipadic` crate as `NOTICE.txt`). |
+
+## Downloaded at runtime
+
+| Component | When | License | Notes |
+|---|---|---|---|
+| mecab-ipadic 2.7.0 source (`https://Lindera.dev/mecab-ipadic-2.7.0-20250920.tar.gz`, md5-verified) | First time okfkit tokenizes Japanese text (default build); disable with `OKFKIT_OFFLINE=1` | NAIST / ICOT Free Software notice | Built into `<user cache>/okfkit/dict/` on the user's machine; not redistributed by okfkit. |
+
+`crates/okfkit-analyze/assets/ipadic-metadata.json` is copied from the `lindera-ipadic` crate (MIT).
 
 ## Repository data
 

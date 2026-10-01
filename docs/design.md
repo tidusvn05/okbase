@@ -514,3 +514,59 @@ Estimates for 1 full-time developer.
 | Spikes | `spikes/` is committed (scripts, questions, `results/`, ~7MB); caches, models, corpora and built bundles are in `.gitignore`. Records in `results/` contain local machine paths and are synthetic or LLM-generated data; this is noted in `spikes/README.md` |
 | Telemetry | None |
 | Platform support | Linux, macOS, Windows (core); embed-local module: Linux/macOS x86_64 + arm64, Windows x86_64 (per onnxruntime) |
+
+---
+
+## Appendix A. On-disk formats defined by okfkit
+
+These formats are part of the okfkit standard and are stable from v0.2 (maintainer decision, 2026-10-01). Both are ordinary OKF documents: the data lives in the frontmatter, the body is free prose for people.
+
+### A.1 Tag vocabulary — `_meta/vocabulary.md`
+
+```markdown
+---
+type: Vocabulary
+title: Tag vocabulary
+terms:
+  refund:                                   # canonical tag
+    synonyms: [hoàn tiền, đổi trả, 返金, returns]
+    facet: topic                            # optional dimension shown in catalog facets
+    description: Refunds, returns and exchanges.
+  shipping: [giao hàng, 配送]               # shorthand: a list of synonyms
+  hr: {}                                    # a tag without synonyms
+---
+```
+
+- Tags and synonyms are compared after normalization (trim, lowercase, runs of whitespace, `_` and `-` → `-`); the index also matches accent-insensitively.
+- A synonym may belong to one term only; conflicts make the vocabulary invalid (`invalid-vocabulary`).
+- Unknown keys inside a term are allowed. `okfkit vocab --suggest` drafts this file from the tags in use.
+
+### A.2 Type schemas — `_meta/types/<Type>.md`
+
+```markdown
+---
+type: Type Schema
+title: Policy
+applies_to: Policy          # optional; defaults to the file name
+fields:
+  owner: {type: string, required: true}
+  region: {type: string, enum: [VN, JP]}
+  effective_from: {type: date}
+  contract_value: number    # shorthand: just the type
+---
+```
+
+- Field types: `string`, `number`, `integer`, `bool`, `date` (`YYYY-MM-DD`, optionally with a time), `list`, `map`, `any`.
+- `okfkit lint --level L2` reports `schema-missing-field`, `schema-wrong-type` and `schema-not-allowed`.
+
+### A.3 Provenance of machine-made values
+
+`okfkit adopt` and `okfkit vocab --suggest` record what they wrote in OKF's `generated` field, with an extra `fields` list: `generated: {by: okfkit-adopt/0.1.0, at: "2026-10-01", fields: [type, description]}`. Lint reports listed title/description/type fields as `unreviewed-generated` until the document has a `verified` entry.
+
+## Appendix B. Decisions made after v2.1
+
+| Date | Decision | Why |
+|---|---|---|
+| 2026-10-01 | The IPADIC dictionary (~58 MB) is no longer embedded in the default build. It is downloaded on first use (md5-verified, rustls), built into the user cache, and loaded from there; `OKFKIT_OFFLINE=1` disables downloads (Japanese then falls back to character bigrams); `okfkit dict install` prepares offline machines; feature `ja-embedded` restores embedding. The index records the tokenization mode and rebuilds when it changes. | Binary target ≤ 25 MB (§11): 64 MB → ~21 MB. |
+| 2026-10-01 | Dataset reads take a `Scope` like every other read: `Bundle::data_tables(scope)` / `data_query(sql, limits, scope)` instead of `bundle.data()?.query(sql, limits)` (§4.6). | Hard rule: every read API takes a host `Scope`. |
+| 2026-10-01 | MSRV stays 1.88; `serde-saphyr` is pinned to 1.1, and okfkit double-quotes strings that YAML 1.1 parsers would read as booleans, numbers or dates. | serde-saphyr ≥ 1.2 needs Rust 1.89. |

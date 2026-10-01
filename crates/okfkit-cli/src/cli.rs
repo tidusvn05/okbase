@@ -183,6 +183,11 @@ pub enum Command {
         #[arg(long, requires = "suggest")]
         write: bool,
     },
+    /// The Japanese dictionary (downloaded on first use; install it ahead of time for offline use).
+    Dict {
+        #[command(subcommand)]
+        command: DictCmd,
+    },
     /// Read-only SQL over the bundle's spreadsheets (CSV, TSV, XLSX).
     Data {
         #[command(subcommand)]
@@ -203,6 +208,14 @@ pub enum Command {
     /// Run an `okfkit-<name>` plugin from PATH.
     #[command(external_subcommand)]
     External(Vec<String>),
+}
+
+#[derive(Debug, Subcommand)]
+pub enum DictCmd {
+    /// Show whether the dictionary is installed and where.
+    Status,
+    /// Download (checksum-verified) and build the dictionary now.
+    Install,
 }
 
 #[derive(Debug, Subcommand)]

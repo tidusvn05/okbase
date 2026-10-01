@@ -90,22 +90,51 @@ impl Analyzer {
 #[cfg(feature = "ja")]
 mod ja {
     use std::borrow::Cow;
-    use std::sync::LazyLock;
+    use std::sync::OnceLock;
 
-    use lindera::dictionary::load_dictionary;
     use lindera::mode::Mode;
     use lindera::segmenter::Segmenter;
 
-    /// The IPADIC segmenter, built once. `None` if the embedded dictionary cannot be loaded.
-    pub static SEGMENTER: LazyLock<Option<Segmenter>> = LazyLock::new(|| {
-        load_dictionary("embedded://ipadic")
-            .ok()
-            .map(|dict| Segmenter::new(Mode::Normal, dict, None))
-    });
+    /// The IPADIC segmenter, loaded on first use: embedded (feature `ja-embedded`),
+    /// else from the user cache, else downloaded (feature `ja-download`). `None`
+    /// when unavailable; callers fall back to bigrams.
+    static SEGMENTER: OnceLock<Option<Segmenter>> = OnceLock::new();
+
+    fn load() -> Option<Segmenter> {
+        #[cfg(feature = "ja-embedded")]
+        if let Ok(dict) = lindera::dictionary::load_dictionary("embedded://ipadic") {
+            return Some(Segmenter::new(Mode::Normal, dict, None));
+        }
+        let dir = match crate::dict::install() {
+            Ok(dir) => dir,
+            Err(e) => {
+                eprintln!("okfkit: {e}; Japanese text is indexed as character bigrams");
+                return None;
+            }
+        };
+        match lindera::dictionary::load_fs_dictionary(&dir) {
+            Ok(dict) => Some(Segmenter::new(Mode::Normal, dict, None)),
+            Err(e) => {
+                eprintln!(
+                    "okfkit: cannot load the Japanese dictionary from {}: {e}",
+                    dir.display()
+                );
+                None
+            }
+        }
+    }
+
+    /// Whether dictionary-based segmentation is (or will be, without a download) available.
+    pub fn ready() -> bool {
+        SEGMENTER.get().map_or_else(
+            || cfg!(feature = "ja-embedded") || crate::dict::installed(),
+            Option::is_some,
+        )
+    }
 
     /// Segments a CJK run into dictionary forms. Returns `false` if segmentation is unavailable.
     pub fn terms(run: &str, out: &mut Vec<String>) -> bool {
-        let Some(seg) = SEGMENTER.as_ref() else {
+        let Some(seg) = SEGMENTER.get_or_init(load).as_ref() else {
             return false;
         };
         let Ok(tokens) = seg.segment(Cow::Borrowed(run)) else {
@@ -125,6 +154,17 @@ mod ja {
         }
         true
     }
+}
+
+/// How Japanese/Chinese text is tokenized right now: `ipadic` (dictionary forms)
+/// or `bigram`. Part of the index's analyzer identity, so a newly installed
+/// dictionary triggers a rebuild.
+pub fn cjk_mode() -> &'static str {
+    #[cfg(feature = "ja")]
+    if ja::ready() {
+        return "ipadic";
+    }
+    "bigram"
 }
 
 fn cjk_terms(run: &str, out: &mut Vec<String>) {
@@ -169,6 +209,12 @@ mod tests {
     #[test]
     fn japanese_dictionary_forms() {
         let a = Analyzer::new();
+        if a.terms("食べた") == ["食べ", "べた"] {
+            // No dictionary (offline, OKFKIT_OFFLINE=1): bigram fallback.
+            assert_eq!(crate::cjk_mode(), "bigram");
+            return;
+        }
+        assert_eq!(crate::cjk_mode(), "ipadic");
         assert_eq!(a.terms("食べた"), ["食べる"]);
         let t = a.terms("パスワードを変更しました。");
         assert!(

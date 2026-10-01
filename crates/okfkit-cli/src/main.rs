@@ -13,7 +13,7 @@ use clap::Parser as _;
 use okfkit::{Bundle, OpenOptions, Scope, StateDir};
 use serde::Serialize;
 
-use cli::{AgentCmd, Cli, Command, DataCmd, FilterArgs, LintFormat, McpCmd};
+use cli::{AgentCmd, Cli, Command, DataCmd, DictCmd, FilterArgs, LintFormat, McpCmd};
 
 fn main() -> ExitCode {
     let cli = Cli::parse();
@@ -359,6 +359,47 @@ fn run(cli: Cli) -> Result<ExitCode> {
             } else {
                 print!("{text}");
             }
+        }
+        Command::Dict { command } => {
+            #[derive(Serialize)]
+            struct DictStatus {
+                installed: bool,
+                dir: Option<PathBuf>,
+                downloads_allowed: bool,
+                source: &'static str,
+            }
+            if matches!(command, DictCmd::Install) {
+                let dir = okfkit::analyze::dict::install()?;
+                eprintln!("Japanese dictionary ready in {}", dir.display());
+            }
+            let st = DictStatus {
+                installed: okfkit::analyze::dict::installed(),
+                dir: okfkit::analyze::dict::dictionary_dir(),
+                downloads_allowed: okfkit::analyze::dict::downloads_allowed(),
+                source: okfkit::analyze::dict::IPADIC_URL,
+            };
+            emit(json, &st, || {
+                format!(
+                    "Japanese dictionary (mecab-ipadic): {}
+location: {}
+{}",
+                    if st.installed {
+                        "installed"
+                    } else {
+                        "not installed"
+                    },
+                    st.dir
+                        .as_ref()
+                        .map_or("(no cache directory)".into(), |d| d.display().to_string()),
+                    if st.installed {
+                        String::new()
+                    } else if st.downloads_allowed {
+                        "it is downloaded the first time Japanese text is indexed (`okfkit dict install` does it now)\n".into()
+                    } else {
+                        "downloads are disabled (OKFKIT_OFFLINE); Japanese text is indexed as character bigrams\n".into()
+                    }
+                )
+            })?;
         }
         Command::Data { command } => {
             let b = open()?;

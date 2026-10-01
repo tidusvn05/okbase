@@ -42,6 +42,14 @@ pub const DB_FILE: &str = "index.sqlite";
 /// Identifies the analyzer; a change forces a rebuild of the full-text index.
 const ANALYZER_ID: &str = concat!("okfkit-analyze/", env!("CARGO_PKG_VERSION"), "+stem");
 
+/// Schema version, analyzer and Japanese tokenization mode (`ipadic` or `bigram`).
+fn analyzer_identity() -> String {
+    format!(
+        "{SCHEMA_VERSION}/{ANALYZER_ID}/{}",
+        okfkit_analyze::cjk_mode()
+    )
+}
+
 /// Options for [`Index::open`].
 #[derive(Debug, Clone)]
 pub struct IndexOptions {
@@ -124,7 +132,7 @@ impl Index {
                     Err(e)
                 }
             })?;
-        let wanted = format!("{SCHEMA_VERSION}/{ANALYZER_ID}");
+        let wanted = analyzer_identity();
         if current.as_deref() != Some(wanted.as_str()) {
             drop_all(&conn)?;
             conn.execute_batch(schema::CREATE)?;
@@ -227,7 +235,35 @@ impl Index {
         }
         resolve_wikilinks(&tx)?;
         canonicalize_tags(&tx, vocab.as_ref())?;
+        // The Japanese dictionary may have been installed while analyzing: documents
+        // indexed earlier used bigrams, so rebuild once to keep terms consistent.
+        let identity = analyzer_identity();
+        let stored: String =
+            tx.query_row("SELECT value FROM meta WHERE key = 'schema'", [], |r| {
+                r.get(0)
+            })?;
+        let rebuild = stored != identity && stats.unchanged > 0;
+        tx.execute(
+            "UPDATE meta SET value = ?1 WHERE key = 'schema'",
+            [&identity],
+        )?;
         tx.commit()?;
+        if rebuild {
+            drop_all(&self.conn)?;
+            self.conn.execute_batch(schema::CREATE)?;
+            self.conn.execute(
+                "INSERT INTO meta(key, value) VALUES ('schema', ?1)",
+                [&identity],
+            )?;
+            let again = self.sync()?;
+            return Ok(SyncStats {
+                added: again.added,
+                updated: 0,
+                removed: 0,
+                unchanged: 0,
+                skipped: again.skipped,
+            });
+        }
         stats.skipped.sort();
         Ok(stats)
     }
