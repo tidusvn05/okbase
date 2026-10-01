@@ -76,8 +76,8 @@ pub fn status(index: &Index, model: &str) -> Result<EmbedStatus, Error> {
     })
 }
 
-/// The text embedded for a chunk: `title > heading` and the chunk text (as in the spike).
-fn chunk_input(title: &str, heading: &str, text: &str) -> (String, String) {
+/// The `(title, text)` a chunk is embedded as: `title > heading` and the chunk text (as in the spike).
+pub fn chunk_input(title: &str, heading: &str, text: &str) -> (String, String) {
     let t = if heading.is_empty() {
         title.to_owned()
     } else {

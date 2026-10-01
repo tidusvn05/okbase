@@ -1,0 +1,30 @@
+[package]
+name = "okfkit-tune"
+description = "Fine-tuning data for okfkit embeddings: passage sampling, agent-written questions (standard v1), validation and splits."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+okfkit-index.workspace = true
+okfkit-query.workspace = true
+okfkit-analyze.workspace = true
+okfkit-search.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+rusqlite.workspace = true
+blake3.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

@@ -496,3 +496,67 @@ fn custom_models_add_list_remove() {
     let list = json_of(&mut cmd(&["embed", "models"]));
     assert!(!list.to_string().contains("custom:acme"));
 }
+
+#[test]
+fn tune_question_workflow() {
+    let tmp = tempfile::tempdir().unwrap();
+    let kb = tmp.path().join("kb");
+    std::fs::create_dir_all(&kb).unwrap();
+    std::fs::write(
+        kb.join("leave.md"),
+        "---\ntitle: Annual leave\ndescription: Paid leave rules.\n---\n\nEmployees at the Tokyo and Osaka offices receive ten days of paid annual leave once they have worked for six months, rising by one or two days each year up to a maximum of twenty days. Unused days carry over for one year and then expire.\n",
+    )
+    .unwrap();
+    let state = tmp.path().join("state");
+    let cmd = |args: &[&str]| {
+        let mut c = Command::cargo_bin("okfkit").unwrap();
+        c.arg("-b")
+            .arg(&kb)
+            .arg("--state-dir")
+            .arg(&state)
+            .args(args);
+        c
+    };
+    let plan = json_of(&mut cmd(&["embed", "tune", "init", "--langs", "en,vi,ja"]));
+    assert_eq!(plan["standard"], "okfkit-questions/v1");
+    assert_eq!(plan["batches"], 1);
+    let batch = json_of(&mut cmd(&["embed", "tune", "next"]));
+    assert_eq!(batch["passages"][0]["key"], "leave#0");
+    assert_eq!(batch["passages"][0]["questions"], 4);
+    // Rejected: exit code 1 and the reasons.
+    let out = cmd(&["embed", "tune", "submit", "1", "-"])
+        .write_stdin(
+            r#"{"passage": "leave#0", "kind": "cross", "lang": "en", "q": "how many days"}"#,
+        )
+        .output()
+        .unwrap();
+    assert_eq!(out.status.code(), Some(1));
+    let text = String::from_utf8_lossy(&out.stdout);
+    assert!(
+        text.contains("rejected") && text.contains("cross questions use another listed language"),
+        "{text}"
+    );
+    let good = r#"{"passage": "leave#0", "kind": "natural", "lang": "en", "q": "How much vacation do new hires in Japan get?"}
+{"passage": "leave#0", "kind": "keyword", "lang": "en", "q": "annual leave carry over"}
+{"passage": "leave#0", "kind": "cross", "lang": "vi", "q": "Ngày phép chưa dùng có được chuyển sang năm sau không?"}
+{"passage": "leave#0", "kind": "vague", "lang": "ja", "q": "休みが余ったらどうなるの"}"#;
+    let sub = json_of(cmd(&["embed", "tune", "submit", "1", "-"]).write_stdin(good));
+    assert_eq!(sub["accepted"], true);
+    // Too small to train (standard: 300 pairs), but the files are written.
+    let out = cmd(&["embed", "tune", "check"]).output().unwrap();
+    assert_eq!(out.status.code(), Some(1));
+    let text = String::from_utf8_lossy(&out.stdout);
+    assert!(
+        text.contains("only 4 training pairs") && text.contains("train.jsonl"),
+        "{text}"
+    );
+    let guide = stdout(&mut cmd(&["embed", "tune", "guide"]));
+    assert!(guide.contains("okfkit embed tune init"));
+    // The bundle itself is untouched.
+    let names: Vec<_> = std::fs::read_dir(&kb)
+        .unwrap()
+        .flatten()
+        .map(|e| e.file_name())
+        .collect();
+    assert_eq!(names, ["leave.md"]);
+}

@@ -30,11 +30,17 @@ fn rendered_skill_snapshot() {
     let skills = builtin_skills(&cx);
     assert_eq!(
         skills.iter().map(|s| s.name.as_str()).collect::<Vec<_>>(),
-        ["okfkit-answer", "okfkit-curate", "okfkit-adopt"]
+        [
+            "okfkit-answer",
+            "okfkit-curate",
+            "okfkit-adopt",
+            "okfkit-tune"
+        ]
     );
     insta::assert_snapshot!("okfkit_answer_lexical", skills[0].content);
     insta::assert_snapshot!("okfkit_curate", skills[1].content);
     insta::assert_snapshot!("okfkit_adopt", skills[2].content);
+    insta::assert_snapshot!("okfkit_tune", skills[3].content);
     for s in &skills {
         assert!(
             !s.content.contains("<!--") && !s.content.contains("{{"),

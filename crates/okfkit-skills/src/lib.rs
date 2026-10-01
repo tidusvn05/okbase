@@ -24,6 +24,10 @@ pub const BUILTIN: &[(&str, &str)] = &[
         "okfkit-adopt",
         include_str!("../skills/okfkit-adopt/SKILL.md"),
     ),
+    (
+        "okfkit-tune",
+        include_str!("../skills/okfkit-tune/SKILL.md"),
+    ),
 ];
 
 /// Where projects keep their own skills.

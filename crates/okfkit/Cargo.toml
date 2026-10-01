@@ -28,6 +28,8 @@ okfkit-data.workspace = true
 tempfile.workspace = true
 okfkit-embed.workspace = true
 okfkit-search.workspace = true
+okfkit-tune.workspace = true
+serde_json.workspace = true
 toml_edit.workspace = true
 
 [features]
@@ -43,4 +45,3 @@ name = "retrieval_eval"
 required-features = ["embed-local"]
 
 [dev-dependencies]
-serde_json.workspace = true

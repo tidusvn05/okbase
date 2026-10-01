@@ -1,0 +1,16 @@
+---
+name: okfkit-tune
+description: Fine-tune the okfkit embedding model on this bundle by writing search questions for its passages, then train, measure and switch only if it is better. Use when asked to tune or improve embeddings / semantic search, or when search in another language than the documents works poorly.
+---
+
+# Fine-tuning embeddings for this bundle
+
+okfkit drives the workflow; you write the questions. The bundle is never modified.
+
+1. **Check it is worth it.** Run `okfkit advise`; continue only if it lists a fine-tuning step.
+2. **Ask the user first:** writing questions sends passages to your model provider, and training downloads a Python environment (~1–2 GB) and takes ~25 min on a CPU.
+3. **Start:** `okfkit embed tune init` (add `--langs vi,ja,en` if the user named the languages people ask in).
+4. **Loop until nothing is left:** `okfkit embed tune next` prints a batch and its rules → write the JSONL answers exactly as specified → `okfkit embed tune submit <n> -` (pipe the JSONL). If a batch is rejected, fix every listed line and submit the whole batch again. Batches are independent: subagents may each take one with `next`.
+5. **Finish:** `okfkit embed tune check`, then `train`, `export`, `eval`. Report the eval table to the user. `okfkit embed tune activate --write` switches models only when the gate passes; never add `--force` without the user's explicit consent.
+
+Write questions the way people and agents really search: vary wording, keep each answerable from its passage alone, and never copy the title or long phrases. `okfkit embed tune guide` has the full rules.

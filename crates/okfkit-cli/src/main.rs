@@ -15,7 +15,7 @@ use serde::Serialize;
 
 use cli::{
     AgentCmd, AudienceArg, Cli, Command, DataCmd, DictCmd, EmbedCmd, FilterArgs, LintFormat,
-    McpCmd, ModelsCmd,
+    McpCmd, ModelsCmd, TuneCmd,
 };
 
 fn main() -> ExitCode {
@@ -590,6 +590,65 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     )
                 })?;
             }
+            EmbedCmd::Eval {
+                models,
+                questions,
+                limit,
+            } => {
+                let b = open()?;
+                let scope = scope()?;
+                let models = if models.is_empty() {
+                    vec![b.embedding_model().map(|m| m.split('@').next().unwrap_or(&m).to_owned()).context(
+                        "no model to measure: pass --model, or enable embeddings (okfkit embed enable)",
+                    )?]
+                } else {
+                    models
+                };
+                let (path, source) = match questions {
+                    Some(p) => (p.clone(), p.display().to_string()),
+                    None => {
+                        let human = bundle_dir.join(okfkit::tune::HUMAN_EVAL_PATH);
+                        if human.is_file() {
+                            (human, okfkit::tune::HUMAN_EVAL_PATH.to_owned())
+                        } else {
+                            let run = b.tune_run(None).context(
+                                "no questions: pass --questions, add _meta/eval/questions.jsonl, or finish a tune run",
+                            )?;
+                            let p = run.heldout_path();
+                            if !p.is_file() {
+                                bail!(
+                                    "run {} has no held-out set yet; run `okfkit embed tune check`",
+                                    run.plan().id
+                                );
+                            }
+                            (p, format!("held-out questions of {}", run.plan().id))
+                        }
+                    }
+                };
+                let mut qs = okfkit::tune::load_questions(&path)?;
+                if let Some(n) = limit {
+                    qs.truncate(n);
+                }
+                let report = okfkit::tune::eval_models(
+                    &okfkit::tune::EvalRequest {
+                        root: &bundle_dir,
+                        state_dir: state_dir.clone(),
+                        vector_cache: None,
+                        models: &models,
+                        questions: &qs,
+                        source: &source,
+                        scope: &scope,
+                    },
+                    &mut |m, d, n| eprint!("\r{m}: embedding {d}/{n} chunks   "),
+                )?;
+                eprintln!();
+                emit(json, &report, || report.to_text())?;
+            }
+            EmbedCmd::Tune { command } => {
+                if let Some(code) = tune_command(command, json, &open, &scope)? {
+                    return Ok(code);
+                }
+            }
         },
         Command::Dict { command } => {
             #[derive(Serialize)]
@@ -983,4 +1042,173 @@ fn ensure_license(info: &okfkit::ModelInfo, accept: bool) -> Result<()> {
         info.license, info.id
     );
     Ok(())
+}
+
+/// `okfkit embed tune …`; returns an exit code when the command failed softly (rejected batch).
+fn tune_command(
+    command: TuneCmd,
+    json: bool,
+    open: &dyn Fn() -> Result<Bundle>,
+    scope: &dyn Fn() -> Result<Scope>,
+) -> Result<Option<ExitCode>> {
+    match command {
+        TuneCmd::Guide => print!("{}", okfkit::tune::GUIDE),
+        TuneCmd::Init {
+            langs,
+            max_passages,
+        } => {
+            let b = open()?;
+            let scope = scope()?;
+            let langs = if langs.is_empty() {
+                b.default_tune_langs(&scope)?
+            } else {
+                langs.into_iter().map(|l| l.trim().to_lowercase()).collect()
+            };
+            let run = b.tune_init(
+                okfkit::tune::Settings {
+                    langs,
+                    max_passages,
+                    ..Default::default()
+                },
+                &scope,
+            )?;
+            let p = run.plan();
+            emit(json, p, || {
+                format!(
+                    "run {} ({}): {} passages from {} documents ({} held out for evaluation), {} batches, languages {}\n\
+                     next: okfkit embed tune next   (or read `okfkit embed tune guide` first)\n",
+                    p.id,
+                    p.standard,
+                    p.passages,
+                    p.docs,
+                    p.heldout_docs.len(),
+                    p.batches,
+                    p.settings.langs.join(", ")
+                )
+            })?;
+        }
+        TuneCmd::Next {
+            batch,
+            no_claim,
+            run,
+        } => {
+            let b = open()?;
+            let run = b.tune_run(run.as_deref())?;
+            let view = match batch {
+                Some(n) => Some(run.view(n)?),
+                None => run.next(!no_claim)?,
+            };
+            match view {
+                Some(v) => emit(json, &v, || v.to_text())?,
+                None => {
+                    let st = run.status()?;
+                    let msg = if st.answered == st.batches {
+                        "every batch is answered; next: okfkit embed tune check".to_owned()
+                    } else {
+                        format!(
+                            "no free batch: {} claimed by other agents (claims expire after 30 minutes)",
+                            st.claimed
+                        )
+                    };
+                    emit(
+                        json,
+                        &serde_json::json!({"batch": null, "next": msg}),
+                        || format!("{msg}\n"),
+                    )?;
+                }
+            }
+        }
+        TuneCmd::Submit { batch, file, run } => {
+            let b = open()?;
+            let run = b.tune_run(run.as_deref())?;
+            let text = if file.as_os_str() == "-" {
+                let mut s = String::new();
+                std::io::Read::read_to_string(&mut std::io::stdin(), &mut s)?;
+                s
+            } else {
+                std::fs::read_to_string(&file)
+                    .with_context(|| format!("reading {}", file.display()))?
+            };
+            let sub = run.submit(batch, &text, &b.human_eval_questions()?)?;
+            emit(json, &sub, || {
+                if sub.accepted {
+                    format!(
+                        "batch {} accepted: {} questions; {} batches left\nnext: {}\n",
+                        sub.batch, sub.questions, sub.remaining, sub.next
+                    )
+                } else {
+                    format!(
+                        "batch {} rejected ({} problems):\n{}\nnext: {}\n",
+                        sub.batch,
+                        sub.errors.len(),
+                        sub.errors
+                            .iter()
+                            .map(|e| format!("  - {e}"))
+                            .collect::<Vec<_>>()
+                            .join("\n"),
+                        sub.next
+                    )
+                }
+            })?;
+            if !sub.accepted {
+                return Ok(Some(ExitCode::from(1)));
+            }
+        }
+        TuneCmd::Status { run } => {
+            let b = open()?;
+            let st = b.tune_run(run.as_deref())?.status()?;
+            emit(json, &st, || tune_status_text(&st))?;
+        }
+        TuneCmd::Check { run } => {
+            let b = open()?;
+            let run = b.tune_run(run.as_deref())?;
+            let st = run.finalize()?;
+            emit(json, &st, || {
+                let mut t = tune_status_text(&st);
+                if st.answered == st.batches {
+                    t.push_str(&format!(
+                        "wrote {} and {}\n",
+                        run.train_path().display(),
+                        run.heldout_path().display()
+                    ));
+                }
+                t
+            })?;
+            if !st.ready {
+                return Ok(Some(ExitCode::from(1)));
+            }
+        }
+        TuneCmd::Runs => {
+            let b = open()?;
+            let runs = b.tune_runs()?;
+            emit(json, &runs, || {
+                runs.iter().map(|r| format!("{r}\n")).collect()
+            })?;
+        }
+    }
+    Ok(None)
+}
+
+fn tune_status_text(st: &okfkit::tune::TuneStatus) -> String {
+    let map = |m: &BTreeMap<String, usize>| {
+        m.iter()
+            .map(|(k, v)| format!("{k}={v}"))
+            .collect::<Vec<_>>()
+            .join(", ")
+    };
+    format!(
+        "run:       {} ({})\nlanguages: {}\nbatches:   {}/{} answered ({} claimed)\nquestions: {} for training, {} held out\nkinds:     {}\nwritten:   {}\nready:     {}\nnext:      {}\n",
+        st.run,
+        st.standard,
+        st.langs.join(", "),
+        st.answered,
+        st.batches,
+        st.claimed,
+        st.train_pairs,
+        st.heldout_questions,
+        map(&st.kinds),
+        map(&st.langs_written),
+        st.ready,
+        st.next
+    )
 }

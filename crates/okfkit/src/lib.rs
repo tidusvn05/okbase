@@ -21,6 +21,7 @@
 pub mod advise;
 pub mod config;
 mod embed;
+pub mod tune;
 
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
@@ -82,6 +83,9 @@ pub enum Error {
         "embeddings are off for this bundle; enable them with `okfkit embed enable` (okfkit-full build)"
     )]
     NoEmbedder,
+    /// Fine-tuning (runs, questions, evaluation) failed.
+    #[error("fine-tuning: {0}")]
+    Tune(String),
     /// The bundle directory does not exist.
     #[error("bundle not found: {0} is not a directory")]
     NotADirectory(PathBuf),

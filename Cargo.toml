@@ -34,6 +34,7 @@ okfkit-embed = { path = "crates/okfkit-embed", version = "0.1.0-dev" }
 okfkit-data = { path = "crates/okfkit-data", version = "0.1.0-dev" }
 okfkit-mcp = { path = "crates/okfkit-mcp", version = "0.1.0-dev" }
 okfkit-skills = { path = "crates/okfkit-skills", version = "0.1.0-dev" }
+okfkit-tune = { path = "crates/okfkit-tune", version = "0.1.0-dev" }
 okfkit = { path = "crates/okfkit", version = "0.1.0-dev" }
 thiserror = "2"
 serde = { version = "1", features = ["derive"] }

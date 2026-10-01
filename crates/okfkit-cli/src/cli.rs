@@ -332,6 +332,78 @@ pub enum EmbedCmd {
     Status,
     /// Embed the chunks that have no vector yet (first run downloads the model).
     Index,
+    /// Compare models on evaluation questions (document ranked first, top 3, cross-language).
+    #[command(
+        after_help = "Questions: --questions FILE, else _meta/eval/questions.jsonl (written by people), else the\nheld-out set of the newest tune run. Each line: {\"q\": \"...\", \"doc\": \"<doc id>\", \"lang\": \"vi\", \"doc_lang\": \"en\"}.\n\nExamples:\n  okfkit embed eval --model embeddinggemma-300m-q4 --model bge-m3-int8\n  okfkit embed eval --questions my-questions.jsonl --limit 50"
+    )]
+    Eval {
+        /// Model to measure (repeatable) [default: the configured model].
+        #[arg(long = "model", value_name = "ID")]
+        models: Vec<String>,
+        /// JSONL questions.
+        #[arg(long, value_name = "FILE")]
+        questions: Option<PathBuf>,
+        /// Use only the first N questions.
+        #[arg(long, value_name = "N")]
+        limit: Option<usize>,
+    },
+    /// Fine-tune the embedding model on this bundle with questions written by your agent.
+    #[command(after_help = "Run `okfkit embed tune guide` for the whole workflow.")]
+    Tune {
+        #[command(subcommand)]
+        command: TuneCmd,
+    },
+}
+
+#[derive(Debug, Subcommand)]
+pub enum TuneCmd {
+    /// Print the workflow for agents (also usable as an AGENTS.md section).
+    Guide,
+    /// Sample passages and start a run (writes only to the state dir).
+    Init {
+        /// Languages people ask in, comma-separated [default: the bundle's (≥ 5%) plus en].
+        #[arg(long, value_delimiter = ',', value_name = "LANGS")]
+        langs: Vec<String>,
+        /// Sample at most this many passages.
+        #[arg(long, default_value_t = 400)]
+        max_passages: usize,
+    },
+    /// Print the next unanswered batch and claim it for 30 minutes.
+    Next {
+        /// Show this batch instead (does not claim).
+        #[arg(long, value_name = "N")]
+        batch: Option<usize>,
+        /// Do not claim the batch.
+        #[arg(long)]
+        no_claim: bool,
+        /// Run id [default: the newest].
+        #[arg(long)]
+        run: Option<String>,
+    },
+    /// Check and store the questions for a batch (all or nothing).
+    Submit {
+        /// Batch number.
+        batch: usize,
+        /// JSONL file, or - for stdin.
+        file: PathBuf,
+        /// Run id [default: the newest].
+        #[arg(long)]
+        run: Option<String>,
+    },
+    /// Show progress and the next step.
+    Status {
+        /// Run id [default: the newest].
+        #[arg(long)]
+        run: Option<String>,
+    },
+    /// Check the run against the standard and write train.jsonl and heldout.jsonl.
+    Check {
+        /// Run id [default: the newest].
+        #[arg(long)]
+        run: Option<String>,
+    },
+    /// List runs.
+    Runs,
 }
 
 #[derive(Debug, Subcommand)]
