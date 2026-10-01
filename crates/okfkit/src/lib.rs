@@ -18,6 +18,9 @@
 //!
 //! [okf]: https://github.com/GoogleCloudPlatform/open-knowledge-format
 
+pub mod config;
+mod embed;
+
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex, MutexGuard};
@@ -28,11 +31,18 @@ pub use okfkit_data::{
     Limits as DataLimits, QueryResult as DataQueryResult, Table as DataTable,
     TablesResult as DataTables,
 };
+pub use okfkit_embed::{
+    Embedder, Error as EmbedError, ModelInfo, accept_license, find_model, license_accepted,
+    models as embedding_models,
+};
 pub use okfkit_index::{IndexOptions, StateDir, SyncStats};
 pub use okfkit_lint::{Level, LintConfig, Report as LintReport};
 pub use okfkit_query::{
     CatalogOptions, CatalogResult, Filter, GetRequest, GetResult, GrepRequest, GrepResult,
     LinksResult, ListResult, MetaFilter, Mode, QueryRequest, QueryResult, Range, Scope, Stats,
+};
+pub use okfkit_search::{
+    DEFAULT_BUDGET, EmbedStatus, Hit, RetrieveResult, SearchRequest, SearchResult,
 };
 
 /// Errors returned by [`Bundle`].
@@ -54,6 +64,20 @@ pub enum Error {
     /// The bundle has no datasets, or the data module is off.
     #[error("no datasets: the bundle has no CSV, TSV or XLSX files (or the data module is off)")]
     NoDatasets,
+    /// `okfkit.toml` is invalid.
+    #[error("config: {0}")]
+    Config(String),
+    /// Loading the embedder failed (model download, license, API key, missing build feature).
+    #[error("embeddings: {0}")]
+    Embedding(String),
+    /// Search or embedding of the index failed.
+    #[error(transparent)]
+    Search(#[from] okfkit_search::Error),
+    /// Embeddings are not enabled for this bundle.
+    #[error(
+        "embeddings are off for this bundle; enable them with `okfkit embed enable` (okfkit-full build)"
+    )]
+    NoEmbedder,
     /// The bundle directory does not exist.
     #[error("bundle not found: {0} is not a directory")]
     NotADirectory(PathBuf),
@@ -78,12 +102,34 @@ pub struct OpenOptions {
     pub profile: Profile,
     /// Where the index lives.
     pub state_dir: StateDir,
+    /// An embedder supplied by the host (shared between bundles); overrides `okfkit.toml`.
+    pub embedder: Option<std::sync::Arc<dyn Embedder>>,
+    /// Vector cache file (default `<user cache>/okfkit/emb/vectors.sqlite`).
+    pub vector_cache: Option<PathBuf>,
+}
+
+impl From<okfkit_embed::Error> for Error {
+    fn from(e: okfkit_embed::Error) -> Self {
+        Error::Embedding(e.to_string())
+    }
 }
 
 impl OpenOptions {
     /// Sets the profile.
     pub fn profile(mut self, profile: Profile) -> Self {
         self.profile = profile;
+        self
+    }
+
+    /// Uses this embedder instead of the one configured in `okfkit.toml`.
+    pub fn embedder(mut self, embedder: std::sync::Arc<dyn Embedder>) -> Self {
+        self.embedder = Some(embedder);
+        self
+    }
+
+    /// Uses this vector cache file.
+    pub fn vector_cache(mut self, path: PathBuf) -> Self {
+        self.vector_cache = Some(path);
         self
     }
 
@@ -112,6 +158,8 @@ pub mod capability {
     pub const LINT: &str = "maint.lint";
     /// Read-only SQL over datasets (module `data`).
     pub const DATA_SQL: &str = "data.sql";
+    /// Semantic search and retrieval (module `embed`).
+    pub const EMBED_SEARCH: &str = "embed.search";
 }
 
 /// The capabilities available for a bundle.
@@ -138,6 +186,7 @@ struct Inner {
     data: Option<okfkit_data::Data>,
     /// Keeps the temporary state directory of an in-memory bundle alive.
     _tmp: Option<tempfile::TempDir>,
+    embed: embed::EmbedState,
 }
 
 /// An open knowledge bundle. Cheap to clone and safe to share between threads.
@@ -174,12 +223,18 @@ impl Bundle {
                     .map(|d| okfkit_data::Data::new(dir, &d.join(okfkit_data::DB_FILE)))
             })
             .flatten();
+        let embed = embed::EmbedState::new(
+            config::load(dir)?.embed,
+            options.embedder,
+            options.vector_cache,
+        );
         Ok(Bundle(Arc::new(Inner {
             root: dir.to_owned(),
             index: Mutex::new(index),
             profile: options.profile,
             data,
             _tmp: None,
+            embed,
         })))
     }
 
@@ -212,6 +267,7 @@ impl Bundle {
             profile: Profile::Standard,
             data,
             _tmp: tmp,
+            embed: embed::EmbedState::new(config::EmbedConfig::Off, None, None),
         })))
     }
 
@@ -235,7 +291,64 @@ impl Bundle {
         if let Some(d) = &self.0.data {
             d.sync()?;
         }
+        self.0.embed.invalidate();
         Ok(stats)
+    }
+
+    /// The embedding model id, if embeddings are enabled (does not load the model).
+    pub fn embedding_model(&self) -> Option<String> {
+        self.0.embed.model_id()
+    }
+
+    /// How many chunks have vectors for the configured model.
+    pub fn embed_status(&self) -> Result<EmbedStatus, Error> {
+        let model = self.0.embed.model_id().ok_or(Error::NoEmbedder)?;
+        Ok(okfkit_search::status(&self.index(), &model)?)
+    }
+
+    /// Embeds the chunks that have no vector yet (loads the model; slow on first run).
+    /// `progress(done, total)` reports newly embedded chunks.
+    pub fn embed_sync(&self, progress: &mut dyn FnMut(usize, usize)) -> Result<EmbedStatus, Error> {
+        let embedder = self.0.embed.embedder()?;
+        let mut cache = okfkit_embed::VectorCache::open(&self.0.embed.cache_path()?)?;
+        let status =
+            okfkit_search::embed_sync(&self.index(), embedder.as_ref(), &mut cache, progress)?;
+        self.0.embed.invalidate();
+        Ok(status)
+    }
+
+    /// Semantic search over the visible chunks (module embed).
+    pub fn search(&self, req: &SearchRequest, scope: &Scope) -> Result<SearchResult, Error> {
+        let embedder = self.0.embed.embedder()?;
+        let index = self.index();
+        let store = self.0.embed.store(&index)?;
+        Ok(okfkit_search::search(
+            &index,
+            &store,
+            embedder.as_ref(),
+            req,
+            scope,
+        )?)
+    }
+
+    /// The best visible sections for `query` within `budget` tokens, for a prompt (module embed).
+    pub fn retrieve(
+        &self,
+        query: &str,
+        budget: usize,
+        scope: &Scope,
+    ) -> Result<RetrieveResult, Error> {
+        let embedder = self.0.embed.embedder()?;
+        let index = self.index();
+        let store = self.0.embed.store(&index)?;
+        Ok(okfkit_search::retrieve(
+            &index,
+            &store,
+            embedder.as_ref(),
+            query,
+            budget,
+            scope,
+        )?)
     }
 
     fn datasets(&self) -> Result<&okfkit_data::Data, Error> {
@@ -266,6 +379,7 @@ impl Bundle {
             [GREP, GET, LIST, QUERY, CATALOG, LINKS, LINT]
                 .into_iter()
                 .chain(self.0.data.as_ref().map(|_| DATA_SQL))
+                .chain(self.0.embed.enabled().then_some(EMBED_SEARCH))
                 .collect(),
         )
     }
@@ -275,9 +389,18 @@ impl Bundle {
         Ok(okfkit_query::catalog(&self.index(), options, scope)?)
     }
 
-    /// `Full` if the visible bundle fits in about 30k tokens, else `Lexical`.
+    /// `Full` if the visible bundle fits in about 30k tokens; else `Retrieval` when every chunk is embedded, else `Lexical`.
     pub fn recommend_mode(&self, scope: &Scope) -> Result<Mode, Error> {
-        Ok(okfkit_query::recommend_mode(&self.index(), scope)?)
+        let mode = okfkit_query::recommend_mode(&self.index(), scope)?;
+        // Pre-retrieval only once every chunk has a vector (PLAN §4.7).
+        if mode == Mode::Lexical
+            && self
+                .embed_status()
+                .is_ok_and(|s| s.complete() && s.chunks > 0)
+        {
+            return Ok(Mode::Retrieval);
+        }
+        Ok(mode)
     }
 
     /// Regex search.

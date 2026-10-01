@@ -26,3 +26,14 @@ thiserror.workspace = true
 serde.workspace = true
 okfkit-data.workspace = true
 tempfile.workspace = true
+okfkit-embed.workspace = true
+okfkit-search.workspace = true
+toml_edit.workspace = true
+
+[features]
+## Local embedding models (EmbeddingGemma, bge-m3) through ONNX Runtime.
+embed-local = ["okfkit-embed/local"]
+## An OpenAI-compatible embeddings API.
+embed-api = ["okfkit-embed/api"]
+## Embed the Japanese dictionary instead of downloading it on first use.
+ja-embedded = ["okfkit-analyze/ja-embedded"]

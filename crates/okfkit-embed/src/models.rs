@@ -97,6 +97,37 @@ const MODELS: &[ModelInfo] = &[
     },
 ];
 
+const ACCEPTED: &str = "LICENSE-ACCEPTED";
+
+/// `<user cache>/okfkit/models`, or `OKFKIT_MODELS_DIR`.
+pub fn models_dir() -> Result<std::path::PathBuf, crate::Error> {
+    if let Some(d) = std::env::var_os("OKFKIT_MODELS_DIR").filter(|v| !v.is_empty()) {
+        return Ok(d.into());
+    }
+    okfkit_analyze::dict::user_cache_dir()
+        .map(|c| c.join("okfkit").join("models"))
+        .ok_or_else(|| {
+            crate::Error::Model("no user cache directory (set HOME or OKFKIT_MODELS_DIR)".into())
+        })
+}
+
+/// Whether the license of a model has been accepted (or needs no acceptance).
+pub fn license_accepted(info: &ModelInfo) -> bool {
+    !info.requires_acceptance
+        || models_dir().is_ok_and(|d| d.join(info.id).join(ACCEPTED).is_file())
+}
+
+/// Records that the user accepted the license of a model.
+pub fn accept_license(info: &ModelInfo) -> Result<(), crate::Error> {
+    let dir = models_dir()?.join(info.id);
+    std::fs::create_dir_all(&dir).map_err(|e| crate::Error::Model(e.to_string()))?;
+    std::fs::write(
+        dir.join(ACCEPTED),
+        format!("{}\n{}\n", info.license, info.license_url),
+    )
+    .map_err(|e| crate::Error::Model(e.to_string()))
+}
+
 /// The supported local models; the first is the default (best in spike S1).
 pub fn models() -> &'static [ModelInfo] {
     MODELS

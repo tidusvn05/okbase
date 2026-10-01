@@ -67,8 +67,8 @@ pub struct Filter {
 }
 
 impl Filter {
-    /// Whether the filter needs tags.
-    pub(crate) fn uses_tags(&self) -> bool {
+    /// Whether the filter needs tags (tag filters require loading them).
+    pub fn uses_tags(&self) -> bool {
         !self.tags_all.is_empty() || !self.tags_any.is_empty()
     }
 }

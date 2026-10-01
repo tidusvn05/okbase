@@ -18,7 +18,7 @@ mod api;
 mod local;
 
 pub use cache::{VectorCache, embed_documents_cached};
-pub use models::{ModelInfo, find_model, models};
+pub use models::{ModelInfo, accept_license, find_model, license_accepted, models, models_dir};
 
 #[cfg(feature = "api")]
 pub use api::{ApiConfig, ApiEmbedder};
@@ -70,6 +70,12 @@ pub trait Embedder: Send + Sync {
     fn embed_queries(&self, queries: &[String]) -> Result<Vec<Vec<f32>>, Error>;
     /// Embeds documents given as `(title, text)` (with the model's document prompt). L2-normalized.
     fn embed_documents(&self, docs: &[(String, String)]) -> Result<Vec<Vec<f32>>, Error>;
+}
+
+impl std::fmt::Debug for dyn Embedder {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Embedder({})", self.model_id())
+    }
 }
 
 /// Scales `v` to unit length (no-op for the zero vector).

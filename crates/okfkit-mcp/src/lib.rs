@@ -145,6 +145,11 @@ impl KbServer {
                     .map_err(err)?;
                 Ok((r.to_text(), to_json(&r)))
             }
+            "search" => {
+                let req: okfkit::SearchRequest = from_args(args)?;
+                let r = self.bundle.search(&req, &scope).map_err(err)?;
+                Ok((r.to_text(), to_json(&r)))
+            }
             "catalog" => {
                 let r = self
                     .bundle

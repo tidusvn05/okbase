@@ -1,6 +1,6 @@
 //! Local ONNX models through fastembed.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::sync::Mutex;
 
 use fastembed::{
@@ -10,8 +10,6 @@ use fastembed::{
 
 use crate::models::{ModelInfo, Source};
 use crate::{Embedder, Error, find_model, normalize};
-
-const ACCEPTED: &str = "LICENSE-ACCEPTED";
 
 /// A local model.
 pub struct LocalEmbedder {
@@ -27,47 +25,18 @@ impl std::fmt::Debug for LocalEmbedder {
     }
 }
 
-/// `<user cache>/okfkit/models`, or `OKFKIT_MODELS_DIR`.
-pub fn models_dir() -> Result<PathBuf, Error> {
-    if let Some(d) = std::env::var_os("OKFKIT_MODELS_DIR").filter(|v| !v.is_empty()) {
-        return Ok(PathBuf::from(d));
-    }
-    okfkit_analyze::dict::user_cache_dir()
-        .map(|c| c.join("okfkit").join("models"))
-        .ok_or_else(|| {
-            Error::Model("no user cache directory (set HOME or OKFKIT_MODELS_DIR)".into())
-        })
-}
-
 impl LocalEmbedder {
-    /// Whether the license of `model` has been accepted (or needs no acceptance).
-    pub fn license_accepted(info: &ModelInfo) -> bool {
-        !info.requires_acceptance
-            || models_dir().is_ok_and(|d| d.join(info.id).join(ACCEPTED).is_file())
-    }
-
-    /// Records that the user accepted the license of `model`.
-    pub fn accept_license(info: &ModelInfo) -> Result<(), Error> {
-        let dir = models_dir()?.join(info.id);
-        std::fs::create_dir_all(&dir).map_err(|e| Error::Model(e.to_string()))?;
-        std::fs::write(
-            dir.join(ACCEPTED),
-            format!("{}\n{}\n", info.license, info.license_url),
-        )
-        .map_err(|e| Error::Model(e.to_string()))
-    }
-
     /// Loads (downloading on first use) a model. Fails if its license needs acceptance and was not accepted.
     pub fn load(model_id: &str, threads: Option<usize>) -> Result<Self, Error> {
         let info = find_model(model_id).ok_or_else(|| Error::UnknownModel(model_id.to_owned()))?;
-        if !Self::license_accepted(info) {
+        if !crate::models::license_accepted(info) {
             return Err(Error::LicenseNotAccepted {
                 model: info.id.into(),
                 license: info.license.into(),
                 url: info.license_url.into(),
             });
         }
-        let dir = models_dir()?;
+        let dir = crate::models::models_dir()?;
         let threads =
             threads.unwrap_or_else(|| std::thread::available_parallelism().map_or(4, |n| n.get()));
         let model = match info.source {

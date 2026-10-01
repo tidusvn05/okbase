@@ -169,6 +169,17 @@ pub fn all_tools(facts: &BundleFacts) -> Vec<ToolDef> {
 
     vec![
         ToolDef {
+            name: "search",
+            capability: capability::EMBED_SEARCH,
+            description: "Semantic search over all document sections (multilingual: the query may be in any language). \
+                          Returns `doc_id # heading | score | snippet`. Use kb_grep for exact strings (config keys, codes, error text)."
+                .into(),
+            input_schema: json!({"type": "object", "properties": {
+                "query": {"type": "string"}, "limit": {"type": "integer", "default": 8},
+                "filter": {"type": "object", "properties": filter_props.clone()},
+            }, "required": ["query"]}),
+        },
+        ToolDef {
             name: "catalog",
             capability: capability::CATALOG,
             description: "Catalog of the knowledge bundle: every document (id, title, one-line description) for small bundles, \

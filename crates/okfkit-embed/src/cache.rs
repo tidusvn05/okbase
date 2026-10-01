@@ -29,7 +29,11 @@ pub fn to_bytes(v: &[f32]) -> Vec<u8> {
 
 /// Inverse of [`to_bytes`].
 pub fn from_bytes(b: &[u8]) -> Vec<f32> {
-    b.as_chunks::<4>().0.iter().map(|c| f32::from_le_bytes(*c)).collect()
+    b.as_chunks::<4>()
+        .0
+        .iter()
+        .map(|c| f32::from_le_bytes(*c))
+        .collect()
 }
 
 impl VectorCache {

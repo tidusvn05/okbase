@@ -38,3 +38,11 @@ tempfile.workspace = true
 serde_json.workspace = true
 okfkit.workspace = true
 okfkit-mcp.workspace = true
+
+[features]
+## Local embedding models (ONNX Runtime): `okfkit embed`, `search`, `retrieve`, kb_search.
+embed-local = ["okfkit/embed-local"]
+## An OpenAI-compatible embeddings API.
+embed-api = ["okfkit/embed-api"]
+## Everything: the okfkit-full build (embeddings and an embedded Japanese dictionary).
+full = ["embed-local", "embed-api", "okfkit/ja-embedded"]

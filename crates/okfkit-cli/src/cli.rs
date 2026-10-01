@@ -183,6 +183,29 @@ pub enum Command {
         #[arg(long, requires = "suggest")]
         write: bool,
     },
+    /// Semantic search (needs embeddings: `okfkit embed enable`, okfkit-full build).
+    Search {
+        /// The question, in any language.
+        query: String,
+        /// Maximum hits.
+        #[arg(long, short = 'k', default_value_t = 8)]
+        limit: usize,
+        #[command(flatten)]
+        filter: FilterArgs,
+    },
+    /// The best sections for a question within a token budget, formatted for a prompt.
+    Retrieve {
+        /// The question.
+        query: String,
+        /// Token budget (estimated).
+        #[arg(long, default_value_t = 3000)]
+        budget: usize,
+    },
+    /// Embeddings for semantic search (opt-in; local models need the okfkit-full build).
+    Embed {
+        #[command(subcommand)]
+        command: EmbedCmd,
+    },
     /// The Japanese dictionary (downloaded on first use; install it ahead of time for offline use).
     Dict {
         #[command(subcommand)]
@@ -208,6 +231,43 @@ pub enum Command {
     /// Run an `okfkit-<name>` plugin from PATH.
     #[command(external_subcommand)]
     External(Vec<String>),
+}
+
+#[derive(Debug, Subcommand)]
+pub enum EmbedCmd {
+    /// List the supported local models with license, size and spike quality.
+    Models,
+    /// Turn embeddings on for this bundle (writes okfkit.toml).
+    #[command(
+        after_help = "Examples:\n  okfkit embed enable --accept-license                 # EmbeddingGemma 300M Q4 (Gemma terms)\n  okfkit embed enable --model bge-m3-int8              # MIT, no acceptance needed\n  okfkit embed enable --api-url https://api.openai.com/v1 --api-model text-embedding-3-small"
+    )]
+    Enable {
+        /// Local model id.
+        #[arg(
+            long,
+            default_value = "embeddinggemma-300m-q4",
+            conflicts_with = "api_url"
+        )]
+        model: String,
+        /// Accept the model's license (required for models with their own terms, such as Gemma).
+        #[arg(long)]
+        accept_license: bool,
+        /// Use an OpenAI-compatible API instead of a local model.
+        #[arg(long, value_name = "URL", requires = "api_model")]
+        api_url: Option<String>,
+        /// API model name.
+        #[arg(long, value_name = "NAME")]
+        api_model: Option<String>,
+        /// Environment variable holding the API key.
+        #[arg(long, value_name = "VAR", default_value = "OPENAI_API_KEY")]
+        api_key_env: String,
+    },
+    /// Turn embeddings off (writes okfkit.toml; vectors stay cached).
+    Disable,
+    /// Show the model and how many chunks are embedded.
+    Status,
+    /// Embed the chunks that have no vector yet (first run downloads the model).
+    Index,
 }
 
 #[derive(Debug, Subcommand)]

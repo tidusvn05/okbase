@@ -29,6 +29,7 @@ okfkit-index = { path = "crates/okfkit-index", version = "0.1.0-dev" }
 okfkit-query = { path = "crates/okfkit-query", version = "0.1.0-dev" }
 okfkit-lint = { path = "crates/okfkit-lint", version = "0.1.0-dev" }
 okfkit-adopt = { path = "crates/okfkit-adopt", version = "0.1.0-dev" }
+okfkit-search = { path = "crates/okfkit-search", version = "0.1.0-dev" }
 okfkit-embed = { path = "crates/okfkit-embed", version = "0.1.0-dev" }
 okfkit-data = { path = "crates/okfkit-data", version = "0.1.0-dev" }
 okfkit-mcp = { path = "crates/okfkit-mcp", version = "0.1.0-dev" }

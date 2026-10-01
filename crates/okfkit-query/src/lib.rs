@@ -77,3 +77,27 @@ pub fn recommend_mode(index: &Index, scope: &Scope) -> Result<Mode, Error> {
         .sum();
     Ok(stats::mode_for(tokens))
 }
+
+/// IDs of the concept documents visible in `scope` (and matching `filter`, if given).
+/// Used by modules such as semantic search to apply the same rules as the other reads.
+pub fn visible_ids(
+    index: &Index,
+    scope: &Scope,
+    filter: Option<&Filter>,
+) -> Result<std::collections::HashSet<String>, Error> {
+    let tags = filter.is_some_and(Filter::uses_tags);
+    let docs = docs::load(
+        index.connection(),
+        scope,
+        docs::Load {
+            reserved: false,
+            tags,
+            prefilter: filter,
+        },
+    )?;
+    let docs = match filter {
+        Some(f) => query::filter_docs(docs, f)?,
+        None => docs,
+    };
+    Ok(docs.into_iter().map(|d| d.id).collect())
+}
