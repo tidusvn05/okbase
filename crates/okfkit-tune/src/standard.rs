@@ -159,6 +159,8 @@ fn length(q: &str) -> usize {
 fn length_bounds(kind: Kind, lang: &str) -> (usize, usize) {
     match (kind, lang) {
         (Kind::Keyword, "ja") => (2, 25),
+        // Vietnamese words are counted by syllable: "bảo hành máy giặt" is 4.
+        (Kind::Keyword, "vi") => (2, 12),
         (Kind::Keyword, _) => (2, 8),
         (_, "ja") => (5, 60),
         (_, "vi") => (3, 40),
@@ -167,12 +169,14 @@ fn length_bounds(kind: Kind, lang: &str) -> (usize, usize) {
 }
 
 /// Checks the script of a question against its declared language. Lenient where detection is
-/// unreliable (short Latin-script text), strict where the script decides.
-fn lang_matches(q: &str, lang: &str) -> bool {
+/// unreliable (short Latin-script text), strict where the script decides. Vague Vietnamese
+/// questions may drop diacritics, as people often type them.
+fn lang_matches(q: &str, lang: &str, kind: Kind) -> bool {
     let vi_letters =
         okfkit_analyze::detect_lang(q) == Some(okfkit_analyze::Lang::Vi) && !has_cjk(q);
     match lang {
         "ja" => has_cjk(q),
+        "vi" if kind == Kind::Vague => !has_cjk(q),
         "vi" => vi_letters,
         "en" => !has_cjk(q) && !vi_letters,
         _ => true,
@@ -183,9 +187,11 @@ fn ngrams(words: &[&str], n: usize) -> HashSet<String> {
     words.windows(n).map(|w| w.join(" ")).collect()
 }
 
-/// Copying checks against a passage: 5 consecutive words (12 characters for CJK).
+/// Copying checks against a passage: 5 consecutive words (8 syllables for Vietnamese,
+/// 12 characters for CJK).
 pub(crate) struct CopyIndex {
-    words5: HashSet<String>,
+    run: usize,
+    words: HashSet<String>,
     chars12: HashSet<String>,
     title: String,
 }
@@ -201,11 +207,14 @@ impl CopyIndex {
             HashSet::new()
         };
         let title = normalize(&p.title);
+        let vi = p.lang == "vi";
+        let run = if vi { 8 } else { 5 };
         CopyIndex {
-            words5: ngrams(&words, 5),
+            run,
+            words: ngrams(&words, run),
             chars12,
             // Short titles are the topic itself; only longer ones count as copying.
-            title: if title.split(' ').count() >= 3
+            title: if title.split(' ').count() >= if vi { 6 } else { 3 }
                 || (has_cjk(&p.title) && title.chars().count() >= 8)
             {
                 title
@@ -215,14 +224,22 @@ impl CopyIndex {
         }
     }
 
-    fn copies(&self, q: &str) -> Option<&'static str> {
+    /// Keyword queries may name the topic (title); other kinds must not repeat it.
+    fn copies(&self, q: &str, kind: Kind) -> Option<String> {
         let n = normalize(q);
-        if !self.title.is_empty() && n.contains(&self.title) {
-            return Some("repeats the title");
+        if kind != Kind::Keyword && !self.title.is_empty() && n.contains(&self.title) {
+            return Some("repeats the title".into());
         }
         let words: Vec<&str> = n.split(' ').collect();
-        if ngrams(&words, 5).iter().any(|g| self.words5.contains(g)) {
-            return Some("copies 5+ consecutive words from the passage");
+        if ngrams(&words, self.run)
+            .iter()
+            .any(|g| self.words.contains(g))
+        {
+            return Some(format!(
+                "copies {}+ consecutive {} from the passage",
+                self.run,
+                if self.run == 5 { "words" } else { "syllables" }
+            ));
         }
         if !self.chars12.is_empty() {
             let chars: Vec<char> = n.chars().filter(|c| !c.is_whitespace()).collect();
@@ -230,7 +247,7 @@ impl CopyIndex {
                 .windows(12)
                 .any(|w| self.chars12.contains(&w.iter().collect::<String>()))
             {
-                return Some("copies 12+ consecutive characters from the passage");
+                return Some("copies 12+ consecutive characters from the passage".into());
             }
         }
         None
@@ -306,7 +323,7 @@ pub fn check_batch(
             }
             _ => {}
         }
-        if !lang_matches(&q.q, &lang) {
+        if !lang_matches(&q.q, &lang, q.kind) {
             line_errors.push(format!("the text does not look like `{lang}`"));
         }
         let (lo, hi) = length_bounds(q.kind, &lang);
@@ -315,8 +332,8 @@ pub fn check_batch(
             let unit = if has_cjk(&q.q) { "characters" } else { "words" };
             line_errors.push(format!("{len} {unit}; {} needs {lo}–{hi}", q.kind.name()));
         }
-        if let Some(why) = copy.copies(&q.q) {
-            line_errors.push(why.into());
+        if let Some(why) = copy.copies(&q.q, q.kind) {
+            line_errors.push(why);
         }
         let lower = q.q.to_lowercase();
         if lower.contains(".md") || (p.doc.contains('/') && lower.contains(&p.doc.to_lowercase())) {
@@ -387,11 +404,13 @@ pub fn prompt(settings: &Settings) -> String {
     format!(
         "Write search queries that people or AI agents would use to find each passage below. Languages: {langs}.\n\
          - Passage marked [{d}]: one of each kind: natural (in the passage's language), keyword (2-8 words, may mix\n\
-         \x20 English terms), cross (in another listed language), vague (paraphrased or vague; typos are fine).\n\
+         \x20 English terms; Vietnamese 2-12 syllables, Japanese 2-25 characters), cross (in another listed language),\n\
+         \x20 vague (paraphrased or vague; typos and Vietnamese without diacritics are fine).\n\
          - Passage marked [{c}]: one cross plus one natural, keyword or vague.\n\
          - If a passage is already in every listed language, skip cross and use the other kinds.\n\
-         - Each query must be answerable from that passage alone. Do not copy the title or 5+ consecutive words,\n\
-         \x20 and do not mention file names or ids. Natural/cross/vague: 3-30 words (Japanese: 5-60 characters).\n\
+         - Each query must be answerable from that passage alone. Do not copy 5+ consecutive words (Vietnamese: 8\n\
+         \x20 syllables), do not repeat a long title except in keyword queries, and do not mention file names or ids.\n\
+         \x20 Natural/cross/vague: 3-30 words (Vietnamese: 3-40 syllables, Japanese: 5-60 characters).\n\
          Output JSONL only, one object per line:\n\
          {{\"passage\": \"<key>\", \"kind\": \"natural|keyword|cross|vague\", \"lang\": \"<code>\", \"q\": \"...\"}}\n",
         d = settings.per_document,
@@ -499,6 +518,41 @@ not json
             errors.iter().any(|e| e.contains("no cross question here")),
             "{errors:?}"
         );
+    }
+
+    #[test]
+    fn vietnamese_counts_syllables() {
+        let mut p = passage(
+            "kb/vi-washer#0",
+            "vi",
+            false,
+            "Máy giặt báo lỗi khi lồng giặt mất cân bằng, hãy dàn đều quần áo rồi khởi động lại máy.",
+        );
+        p.title = "Bảo hành máy giặt".into();
+        let ok = r#"
+{"passage": "kb/vi-washer#0", "kind": "keyword", "lang": "vi", "q": "bảo hành máy giặt lỗi lồng giặt mất cân bằng"}
+{"passage": "kb/vi-washer#0", "kind": "cross", "lang": "en", "q": "washer shows an unbalanced drum error, what now?"}
+"#;
+        let (_, errors) = check_batch(&[p.clone()], &settings(), ok, &HashSet::new());
+        assert!(errors.is_empty(), "{errors:#?}");
+        let bad = r#"
+{"passage": "kb/vi-washer#0", "kind": "natural", "lang": "vi", "q": "lồng giặt mất cân bằng, hãy dàn đều quần áo rồi làm gì?"}
+{"passage": "kb/vi-washer#0", "kind": "cross", "lang": "en", "q": "washer shows an unbalanced drum error, what now?"}
+"#;
+        let (_, errors) = check_batch(&[p.clone()], &settings(), bad, &HashSet::new());
+        assert!(
+            errors
+                .iter()
+                .any(|e| e.contains("8+ consecutive syllables")),
+            "{errors:#?}"
+        );
+        // Vague questions may drop diacritics, as people type them.
+        let unaccented = r#"
+{"passage": "kb/vi-washer#0", "kind": "vague", "lang": "vi", "q": "may giat keu loi ko quay duoc"}
+{"passage": "kb/vi-washer#0", "kind": "cross", "lang": "ja", "q": "洗濯機のバランスエラーの直し方"}
+"#;
+        let (qs, errors) = check_batch(&[p], &settings(), unaccented, &HashSet::new());
+        assert!(errors.is_empty() && qs.len() == 2, "{errors:#?}");
     }
 
     #[test]

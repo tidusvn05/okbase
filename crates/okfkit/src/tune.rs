@@ -755,17 +755,21 @@ pub fn activate(bundle: &Bundle, run: &Run, force: bool) -> Result<String, Error
     }
     let state = bundle.state_path()?;
     let current = crate::config::load(bundle.root())?.embed;
-    let path = previous_path(&state);
-    std::fs::create_dir_all(path.parent().unwrap_or(&state))
-        .map_err(|e| Error::Tune(e.to_string()))?;
-    std::fs::write(&path, serde_json::to_string(&current).unwrap_or_default())
-        .map_err(|e| Error::Tune(format!("{}: {e}", path.display())))?;
+    let file = bundle.root().join(crate::config::CONFIG_FILE);
+    let before = std::fs::read_to_string(&file).ok();
     crate::config::write_embed(
         bundle.root(),
         &crate::config::EmbedConfig::Local {
             model: tuned.clone(),
         },
     )?;
+    let after = std::fs::read_to_string(&file).unwrap_or_default();
+    let saved = serde_json::json!({"config": current, "file_before": before, "file_after": after});
+    let path = previous_path(&state);
+    std::fs::create_dir_all(path.parent().unwrap_or(&state))
+        .map_err(|e| Error::Tune(e.to_string()))?;
+    std::fs::write(&path, saved.to_string())
+        .map_err(|e| Error::Tune(format!("{}: {e}", path.display())))?;
     Ok(tuned)
 }
 
@@ -777,9 +781,22 @@ pub fn rollback(bundle: &Bundle) -> Result<crate::config::EmbedConfig, Error> {
             "nothing to roll back: no model was activated by `okfkit embed tune activate`".into(),
         )
     })?;
-    let prev: crate::config::EmbedConfig =
+    let saved: serde_json::Value =
         serde_json::from_str(&text).map_err(|e| Error::Tune(format!("{}: {e}", path.display())))?;
-    crate::config::write_embed(bundle.root(), &prev)?;
+    let prev: crate::config::EmbedConfig = serde_json::from_value(saved["config"].clone())
+        .map_err(|e| Error::Tune(format!("{}: {e}", path.display())))?;
+    let file = bundle.root().join(crate::config::CONFIG_FILE);
+    let now = std::fs::read_to_string(&file).ok();
+    if now.as_deref() == saved["file_after"].as_str() {
+        // Untouched since activate: restore the file exactly (or remove it if it did not exist).
+        match saved["file_before"].as_str() {
+            Some(before) => std::fs::write(&file, before),
+            None => std::fs::remove_file(&file),
+        }
+        .map_err(|e| Error::Tune(format!("{}: {e}", file.display())))?;
+    } else {
+        crate::config::write_embed(bundle.root(), &prev)?;
+    }
     let _ = std::fs::remove_file(&path);
     Ok(prev)
 }

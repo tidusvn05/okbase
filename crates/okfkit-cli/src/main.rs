@@ -1179,6 +1179,19 @@ fn tune_command(
                 return Ok(Some(ExitCode::from(1)));
             }
         }
+        TuneCmd::Setup { yes } => {
+            let env = tune_env(yes)?;
+            emit(
+                json,
+                &serde_json::json!({"ready": true, "gpu": env.gpu}),
+                || {
+                    format!(
+                        "training environment ready ({})\n",
+                        if env.gpu { "CUDA GPU" } else { "CPU" }
+                    )
+                },
+            )?;
+        }
         TuneCmd::Train {
             backend,
             yes,

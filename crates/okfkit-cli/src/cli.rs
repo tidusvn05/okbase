@@ -402,6 +402,12 @@ pub enum TuneCmd {
         #[arg(long)]
         run: Option<String>,
     },
+    /// Create the private Python environment for train/export now (downloads packages).
+    Setup {
+        /// Agree to the download.
+        #[arg(long)]
+        yes: bool,
+    },
     /// Train a LoRA adapter on the run's questions (asks before downloading the Python environment).
     #[command(
         after_help = "Local: a private Python environment in the user cache (about 1 GB on CPU, 3 GB with a CUDA GPU),\ncreated on first use with uv or venv + pip; ~25 min per 500 pairs on a CPU.\nColab: writes a notebook to run on a free GPU; then `okfkit embed tune import <folder>`."

@@ -128,3 +128,27 @@ python3 gen_queries.py            # needs the S4 index from ../acceptance-v0.3 a
 .venv/bin/python train.py ml 2 && .venv/bin/python merge.py ml && .venv/bin/python evaluate.py models/tuned-ml tuned-ml
 ```
 `models/`, `work/` and `.venv/` are git-ignored.
+
+## Acceptance: the whole workflow with real agents (2026-10-02)
+
+`okfkit-full` release build on `fixtures/multilingual` (a copy; state and models in a scratch dir).
+Three Claude subagents in parallel, told only to use the CLI and `okfkit embed tune guide`:
+
+| Step | Result |
+|---|---|
+| `tune init --langs vi,ja,en` | 100 passages, 20 documents held out, 10 batches |
+| Questions (3 agents, `next`/`submit`) | all 10 batches in ~2.5 min; 13 submissions (7 accepted first time); 55–64k tokens per agent. Rejections: Japanese keyword over 25 characters (not stated in the prompt), Vietnamese 5-syllable "copies" and 9-syllable keywords (syllables counted as words), title in a keyword, Vietnamese without diacritics |
+| `tune check` | 320 training pairs, 80 held-out questions; 100 of each kind |
+| `tune setup --yes` | venv + pip (no uv on this machine): 87 s, 1.7 GB |
+| `tune train` | 320 pairs × 2 epochs on CPU: 627 s |
+| `tune export` | 20 s, installed `custom:kb-<run>` |
+| `tune eval` (70 s) | held-out R@1 0.875 → **0.925**; cross-language 0.810 → 0.810; same-language 0.898 → 0.966; general set 0.857 → 0.913*. Gate passed |
+| `activate --write` / search / `rollback --write` | okfkit.toml switched, bundle re-embedded, search used `custom:kb-<run>@<hash>`, rollback restored the file exactly (removed it: there was none) |
+
+\* Here the general set is this very bundle, so that row is not independent.
+
+Changes made from this run: Vietnamese is counted in syllables (keyword 2–12, copying from 8),
+keyword queries may name the title, vague Vietnamese may drop diacritics, and the prompt states
+the Japanese limits. Held-out cross-language did not improve on 80 questions (35 cross); the
+gain came from same-language questions, unlike S11, whose training set was larger and
+cross-language heavy.

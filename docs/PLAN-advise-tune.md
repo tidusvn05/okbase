@@ -1,6 +1,6 @@
 # Kế hoạch: `okfkit advise` và fine-tune embedding (`okfkit embed tune`)
 
-Trạng thái: **đề xuất, chưa triển khai** (2026-10-02). Bổ sung cho `PLAN.md` (§1 S11, §13, §14).
+Trạng thái: **đã triển khai phase 0–5** (2026-10-02; xem §7 về chỗ khác kế hoạch và kết quả nghiệm thu). Bổ sung cho `PLAN.md` (§1 S11, §13, §14).
 Bằng chứng: `spikes/embed-tune/RESULTS.md`.
 
 ## 0. Mục tiêu
@@ -50,7 +50,7 @@ Bằng chứng: `spikes/embed-tune/RESULTS.md`.
 
 ### 1.3 Đầu ra
 
-Gồm phần text cho người đọc và `--json` (cùng schema với tool MCP `kb_advise`, nếu thêm tool này):
+Gồm phần text cho người đọc và `--json` (không có tool MCP; xem §6):
 
 ```
 $ okfkit advise --users-lang vi,ja
@@ -65,7 +65,7 @@ Recommended path
 Not needed: data (no tables), full-context (too large)
 ```
 
-- **`advise` không ghi gì.** `--apply <bước>` chỉ chạy đúng lệnh in ra, sau khi người dùng đồng ý.
+- **`advise` không ghi gì** và chỉ in lệnh (không có `--apply`, xem §6).
 - Ngưỡng là hằng số có trích dẫn spike (như `FULL_MODE_MAX_TOKENS`), có test snapshot.
 - Mở rộng `recommend_mode()` hiện có thay vì viết song song.
 
@@ -173,7 +173,7 @@ Với 4 câu, mỗi loại một câu. Với 2 câu, luân phiên sao cho mỗi 
 - Độ dài 3–30 từ (với ja: 5–60 ký tự).
 - Không chép tiêu đề, không trùng ≥ 5 từ liên tiếp với passage, không chứa id hay tên file.
 - Không trùng hoặc gần trùng câu khác (chuẩn hoá rồi so), và không trùng câu trong bộ eval do người viết.
-- Câu phải trả lời được **chỉ từ passage đó**. Luật này chỉ nằm trong prompt; okfkit kiểm tra gián tiếp: cảnh báo nếu BM25 xếp passage đúng ngoài top-50 (nhiều khả năng câu quá chung chung).
+- Câu phải trả lời được **chỉ từ passage đó**. Luật này chỉ nằm trong prompt (cảnh báo bằng BM25 dự kiến ban đầu chưa làm).
 
 ### 3.5 Prompt ngắn (in bởi `tune next`, có phiên bản và test snapshot)
 
@@ -225,10 +225,31 @@ Các thành phần khác:
 
 ---
 
-## 6. Quyết định cần maintainer chốt
+## 6. Quyết định đã chốt (best practice, 2026-10-02)
 
-1. **Phụ thuộc Python (qua `uv`) cho train/export** trong module opt-in `embed-tune` có chấp nhận được không? Phương án khác: chỉ hỗ trợ colab, hoặc chờ native (candle).
-2. Model tự tune lưu ở **user cache** (mặc định đề xuất) hay cho phép lưu trong bundle `.okfkit/models/` để chia sẻ nhóm (file ~200 MB, điều khoản Gemma)?
-3. `advise --apply` có nên tồn tại không, hay `advise` chỉ in lệnh?
-4. Thêm tool MCP `kb_advise` hay chỉ để ở CLI?
-5. Ngôn ngữ mặc định cho `--langs` khi không khai báo: lấy theo phân bố ngôn ngữ của bundle cộng thêm `en`?
+1. **Train/export qua Python** trong module tuỳ chọn (`embed-tune`, nằm trong okfkit-full): môi trường
+   riêng trong user cache, phiên bản cố định, dùng `uv` nếu có, không thì `venv` + pip; chỉ tạo khi có
+   `--yes`. Colab là phương án dự phòng. Train native (Rust) để sau.
+2. **Model tự tune lưu trong user cache**; chia sẻ nhóm bằng `okfkit embed models add <thư mục chung>`.
+   Không lưu trong bundle.
+3. **`advise` chỉ in lệnh** (`--json` cho agent), không có `--apply`.
+4. **Không có tool MCP `kb_advise`**: đây là việc lúc thiết lập; mỗi tool thêm đều tốn token ở mọi lượt.
+5. **Ngôn ngữ mặc định** của `tune init`: các ngôn ngữ chiếm ≥ 5% bundle, cộng `en`.
+
+## 7. Triển khai và nghiệm thu
+
+| Phase | Commit | Ghi chú |
+|---|---|---|
+| 0 | `562cc27` | Export Q4 bằng cách ghi ma trận đã đổi vào graph Q4 tham chiếu (không export lại Gemma3). S1 R@1 0.857 → 0.917, khác ngôn ngữ 0.815 → 0.92, S4 29 → 30/30. Đạt |
+| 1 | `d4a52e3` | `okfkit advise` (+ `content_langs`) |
+| 2 | `8a18314` | `custom:<name>`, manifest `okfkit-model.json`, vector khoá theo `custom:<name>@<hash>` |
+| 3 | `9261958` | crate `okfkit-tune`, `tune init/next/submit/status/check/runs/guide`, `embed eval`, skill `okfkit-tune` |
+| 4–5 | `6ce5ed4` | `tune setup/train/import/export/eval/activate/rollback`, gate, bộ hồi quy chung nhúng sẵn |
+
+Khác với kế hoạch:
+- Export dùng trực tiếp trọng số đã gộp (không cần ONNX fp32 1,2 GB); lệch ~1% số byte Q4 ở các ma
+  trận đã đổi so với cách cộng delta, trong sai số lượng tử hoá.
+- Passage luôn là chunk của index (tài liệu ngắn = 1 chunk), đúng đơn vị mà search trả về.
+- Thêm `tune setup --yes` để dựng môi trường song song lúc agent viết câu hỏi.
+- Sau nghiệm thu với agent thật: tiếng Việt đếm theo âm tiết (keyword 2–12, chép ≥ 8 âm tiết), keyword
+  được nhắc tiêu đề, câu `vague` tiếng Việt được bỏ dấu; prompt ghi rõ giới hạn tiếng Nhật.

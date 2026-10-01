@@ -621,6 +621,8 @@ impl Run {
                 "only {train} training pairs (standard: at least {}); the bundle may be too small to fine-tune",
                 s.min_pairs
             )
+        } else if self.train_path().is_file() {
+            "okfkit embed tune train".into()
         } else {
             "okfkit embed tune check, then okfkit embed tune train".into()
         };

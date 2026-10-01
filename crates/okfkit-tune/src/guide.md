@@ -8,8 +8,9 @@ and only switches models when the tuned one is measurably better. The bundle is 
 1. `okfkit advise` lists fine-tuning as a step. If it does not, stop: fine-tuning will not help.
 2. Writing questions sends passages of the bundle to your model provider. Ask the user whether
    that is allowed for this bundle.
-3. Training downloads a Python environment (~1–2 GB) and takes ~25 min on a CPU for ~500
-   pairs (a few minutes on an NVIDIA GPU). Ask before `train`.
+3. Training downloads a Python environment (~1–3 GB) and takes ~25 min on a CPU for ~500
+   pairs (a few minutes on an NVIDIA GPU). Ask before `train`. Once the user agrees,
+   `okfkit embed tune setup --yes` can prepare it while you write questions.
 
 ## 1. Write the questions
 ```
