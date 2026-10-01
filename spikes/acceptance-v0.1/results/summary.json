@@ -1,0 +1,18 @@
+{
+ "O": {
+  "n": 30,
+  "correct": 28,
+  "facts": 0.962,
+  "turns": 4.6,
+  "tool_calls": 2.53,
+  "cost_usd": 0.029
+ },
+ "OS": {
+  "n": 30,
+  "correct": 27,
+  "facts": 0.962,
+  "turns": 4.77,
+  "tool_calls": 2.73,
+  "cost_usd": 0.0471
+ }
+}

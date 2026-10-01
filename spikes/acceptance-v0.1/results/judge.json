@@ -1,0 +1,362 @@
+{
+ "L-O-0": {
+  "key": "x54682310",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly, no contradictions."
+ },
+ "L-OS-0": {
+  "key": "x14933861",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated; extra graphMediaFallback detail harmless."
+ },
+ "L-O-10": {
+  "key": "x13921050",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated: preload false, default preloads."
+ },
+ "L-O-28": {
+  "key": "x98282141",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Default own correct, but doesn't explain bot-message-only behavior."
+ },
+ "L-OS-19": {
+  "key": "x73128042",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts match."
+ },
+ "L-O-18": {
+  "key": "x87354933",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 ports and base+110 both stated."
+ },
+ "L-OS-21": {
+  "key": "x35817274",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "L-O-5": {
+  "key": "x63554905",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "L-OS-2": {
+  "key": "x29833426",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "L-OS-6": {
+  "key": "x26267237",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Key and fix correct, but hedges on restart; not clearly no restart."
+ },
+ "L-O-25": {
+  "key": "x74207248",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts correct."
+ },
+ "L-OS-23": {
+  "key": "x28255019",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered."
+ },
+ "L-OS-12": {
+  "key": "x397187110",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both values correct."
+ },
+ "L-OS-11": {
+  "key": "x323924311",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts correct."
+ },
+ "L-OS-8": {
+  "key": "x53057220",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "L-O-3": {
+  "key": "x13932351",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "L-O-11": {
+  "key": "x68162592",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key, no prefix; both facts."
+ },
+ "L-O-13": {
+  "key": "x73216003",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three config facts match."
+ },
+ "L-O-27": {
+  "key": "x22227244",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China value, default all stated."
+ },
+ "L-OS-18": {
+  "key": "x42837005",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 spacing and base+110 stated."
+ },
+ "L-OS-9": {
+  "key": "x78160756",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-O-12": {
+  "key": "x93891567",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "L-O-24": {
+  "key": "x87183338",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact behavior, desktop app all stated."
+ },
+ "L-O-8": {
+  "key": "x68197349",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "L-OS-16": {
+  "key": "x319651410",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days."
+ },
+ "L-OS-22": {
+  "key": "x149292711",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing the 'no prompts/messages/keys/paths sent' fact."
+ },
+ "L-OS-4": {
+  "key": "x20712680",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "L-O-22": {
+  "key": "x99592001",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing explicit 'no prompts/messages/keys/paths sent'; adds location recording."
+ },
+ "L-OS-13": {
+  "key": "x38512702",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts match."
+ },
+ "L-O-1": {
+  "key": "x20232743",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts match."
+ },
+ "L-O-29": {
+  "key": "x42865964",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts covered."
+ },
+ "L-O-9": {
+  "key": "x72474225",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-OS-14": {
+  "key": "x24068166",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts present."
+ },
+ "L-OS-1": {
+  "key": "x79046077",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated."
+ },
+ "L-O-7": {
+  "key": "x36645408",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default and interrupt correct."
+ },
+ "L-O-23": {
+  "key": "x70654809",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered."
+ },
+ "L-O-14": {
+  "key": "x775595610",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts present."
+ },
+ "L-O-2": {
+  "key": "x276078811",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts match."
+ },
+ "L-OS-17": {
+  "key": "x66965790",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both stated."
+ },
+ "L-OS-3": {
+  "key": "x33176061",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All identifiers, no auto-send, raft CLI commands stated."
+ },
+ "L-OS-5": {
+  "key": "x48370152",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Debug log, record, and contents all matched."
+ },
+ "L-OS-10": {
+  "key": "x87592113",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload:false under lmstudio and default preload stated."
+ },
+ "L-OS-26": {
+  "key": "x49496384",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "L-O-4": {
+  "key": "x44911595",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, default terminal, side-effect warning all present."
+ },
+ "L-OS-24": {
+  "key": "x20091356",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disables requests, desktop app all stated."
+ },
+ "L-OS-20": {
+  "key": "x26019487",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true and key-sentence excerpts."
+ },
+ "L-O-21": {
+  "key": "x73944918",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https prefix, /search append, cache key all stated."
+ },
+ "L-OS-15": {
+  "key": "x45862689",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick facts, thorough synthesis."
+ },
+ "L-OS-25": {
+  "key": "x657638110",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct."
+ },
+ "L-OS-7": {
+  "key": "x610936811",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default steer; interrupt aborts and starts newest."
+ },
+ "L-O-6": {
+  "key": "x74071830",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, set true/remove, and no restart (hedged but concludes) all present."
+ },
+ "L-O-20": {
+  "key": "x59911631",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true and key-sentence excerpts stated."
+ },
+ "L-O-17": {
+  "key": "x80154382",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both stated."
+ },
+ "L-OS-29": {
+  "key": "x92637433",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, and reaction feature registration stated."
+ },
+ "L-O-16": {
+  "key": "x30322064",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "24h, 3 fires, 90 days all correct."
+ },
+ "L-O-26": {
+  "key": "x13875285",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default stated."
+ },
+ "L-OS-27": {
+  "key": "x22247286",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China URL, and intl default all present."
+ },
+ "L-O-19": {
+  "key": "x62321597",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both cdpPort key and cdpUrl warning stated."
+ },
+ "L-OS-28": {
+  "key": "x55795788",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Default own and options given, but own's meaning not stated."
+ },
+ "L-O-15": {
+  "key": "x47738019",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick facts, thorough synthesis all stated."
+ }
+}
