@@ -17,7 +17,7 @@ The bundle at `/srv/kb` is plain markdown with YAML frontmatter (OKF). You impro
 2. **Fix in this order** (most impact on answer quality first):
    1. `missing-description`, `description-too-short`, `description-repeats-title`, and generated descriptions: read the document and write **one specific sentence** saying what it covers and for whom. Mention the key terms a reader would search for. No marketing, no "This document…".
    2. `missing-index` and `stale-index`: run `okfkit --bundle /srv/kb lint --fix-safe` to create missing index.md files; for stale ones add the missing entries as `* [Title](file.md) - description`.
-   3. `missing-tags`, `unknown-tag`, `non-canonical-tag`: use tags from `_meta/vocabulary.md` (`okfkit … lint --fix-safe` replaces synonyms). Propose new vocabulary terms instead of inventing one-off tags.
+   3. `missing-tags`, `unknown-tag`, `non-canonical-tag`: use tags from `_meta/vocabulary.md` (`okfkit … lint --fix-safe` replaces synonyms). Propose new vocabulary terms instead of inventing one-off tags; without a vocabulary, start from `okfkit --bundle /srv/kb vocab --suggest` and add translations as synonyms.
    4. `missing-status`, `superseded-still-stable`, `unknown-supersedes`: the newest version is `stable` and lists the old ids in `supersedes`; old versions become `deprecated`.
    5. Near-duplicate content: keep one canonical page and link to it from the others; do not delete the others' unique content.
 3. **Edit carefully.** Change only the frontmatter keys you mean to change; keep every other key, its order and comments. Never delete content.

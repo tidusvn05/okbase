@@ -331,6 +331,35 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 eprintln!("plan only; nothing was written. Use --out DIR or --write to apply it.");
             }
         }
+        Command::Vocab { suggest, write } => {
+            if !bundle_dir.is_dir() {
+                bail!(
+                    "bundle not found: {} is not a directory",
+                    bundle_dir.display()
+                );
+            }
+            let report = okfkit_adopt::vocab::report(&bundle_dir)?;
+            if !suggest {
+                emit(json, &report, || report.to_text())?;
+                return Ok(ExitCode::SUCCESS);
+            }
+            let actor = format!("okfkit-vocab/{}", env!("CARGO_PKG_VERSION"));
+            let text = okfkit_adopt::vocab::suggest(&report, &actor, &today())?;
+            if write {
+                let path = bundle_dir.join(okfkit_adopt::vocab::VOCABULARY_PATH);
+                if path.exists() {
+                    bail!(
+                        "{} already exists; edit it instead (or delete it first)",
+                        path.display()
+                    );
+                }
+                std::fs::create_dir_all(path.parent().expect("has parent"))?;
+                std::fs::write(&path, &text)?;
+                eprintln!("wrote {}", path.display());
+            } else {
+                print!("{text}");
+            }
+        }
         Command::Data { command } => {
             let b = open()?;
             let scope = scope()?;

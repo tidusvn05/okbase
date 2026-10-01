@@ -174,6 +174,15 @@ pub enum Command {
         #[arg(long, short = 'v')]
         verbose: bool,
     },
+    /// Show tag usage against the vocabulary, or suggest a _meta/vocabulary.md.
+    Vocab {
+        /// Print a suggested _meta/vocabulary.md built from the tags in use.
+        #[arg(long)]
+        suggest: bool,
+        /// With --suggest: write it to _meta/vocabulary.md (only if that file does not exist).
+        #[arg(long, requires = "suggest")]
+        write: bool,
+    },
     /// Read-only SQL over the bundle's spreadsheets (CSV, TSV, XLSX).
     Data {
         #[command(subcommand)]

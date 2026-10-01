@@ -10,6 +10,7 @@
 //! verify.
 
 pub mod heuristics;
+pub mod vocab;
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write as _;

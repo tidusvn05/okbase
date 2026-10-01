@@ -345,3 +345,38 @@ fn adopt_plan_out_and_write_guard() {
     assert!(run(&["--write", "--force"]).status.success());
     assert!(src.join("guides/index.md").is_file());
 }
+
+#[test]
+fn vocab_report_and_suggest() {
+    let tmp = tempfile::tempdir().unwrap();
+    std::fs::write(
+        tmp.path().join("a.md"),
+        "---\ntype: T\ntags: [Refunds, shipping]\n---\nx\n",
+    )
+    .unwrap();
+    std::fs::write(
+        tmp.path().join("b.md"),
+        "---\ntype: T\ntags: [refund]\n---\nx\n",
+    )
+    .unwrap();
+    let run = |args: &[&str]| {
+        Command::cargo_bin("okfkit")
+            .unwrap()
+            .arg("-b")
+            .arg(tmp.path())
+            .arg("vocab")
+            .args(args)
+            .output()
+            .unwrap()
+    };
+    let report: Value = serde_json::from_slice(&run(&["--json"]).stdout).unwrap();
+    assert_eq!(report["tags"][0]["tag"], "refund");
+    assert_eq!(report["tags"][0]["variants"][0], "Refunds");
+    assert!(run(&["--suggest", "--write"]).status.success());
+    assert!(
+        !run(&["--suggest", "--write"]).status.success(),
+        "never overwrites"
+    );
+    let text = String::from_utf8(run(&[]).stdout).unwrap();
+    assert!(text.starts_with("2 refund (also: Refunds)\n"), "{text}");
+}
