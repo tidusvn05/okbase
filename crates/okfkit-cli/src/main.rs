@@ -14,7 +14,8 @@ use okfkit::{Bundle, OpenOptions, Scope, StateDir};
 use serde::Serialize;
 
 use cli::{
-    AgentCmd, AudienceArg, Cli, Command, DataCmd, DictCmd, EmbedCmd, FilterArgs, LintFormat, McpCmd,
+    AgentCmd, AudienceArg, Cli, Command, DataCmd, DictCmd, EmbedCmd, FilterArgs, LintFormat,
+    McpCmd, ModelsCmd,
 };
 
 fn main() -> ExitCode {
@@ -419,40 +420,67 @@ fn run(cli: Cli) -> Result<ExitCode> {
             let r = open()?.retrieve(&query, budget, &scope()?)?;
             emit(json, &r, || r.to_text())?;
         }
-        Command::Embed { command } => {
-            match command {
-                EmbedCmd::Models => {
+        Command::Embed { command } => match command {
+            EmbedCmd::Models { command } => match command.unwrap_or(ModelsCmd::List) {
+                ModelsCmd::List => {
                     #[derive(Serialize)]
                     struct Row {
-                        id: &'static str,
-                        name: &'static str,
-                        license: &'static str,
-                        license_url: &'static str,
+                        id: String,
+                        name: String,
+                        license: String,
+                        license_url: String,
                         accepted: bool,
                         size_mb: usize,
-                        s1_r_at_1: f32,
+                        s1_r_at_1: Option<f32>,
+                        custom: bool,
                     }
-                    let rows: Vec<Row> = okfkit::embedding_models()
+                    let mut rows: Vec<Row> = okfkit::embedding_models()
                         .iter()
                         .map(|m| Row {
-                            id: m.id,
-                            name: m.name,
-                            license: m.license,
-                            license_url: m.license_url,
+                            id: m.id.into(),
+                            name: m.name.into(),
+                            license: m.license.into(),
+                            license_url: m.license_url.into(),
                             accepted: okfkit::license_accepted(m),
                             size_mb: m.size_mb,
-                            s1_r_at_1: m.s1_r_at_1,
+                            s1_r_at_1: Some(m.s1_r_at_1),
+                            custom: false,
                         })
                         .collect();
+                    for c in okfkit::custom_models()? {
+                        let m = &c.manifest;
+                        let base = m.base.as_deref().and_then(okfkit::find_model);
+                        let size: u64 = std::iter::once(&m.onnx)
+                            .chain(&m.external_data)
+                            .filter_map(|f| std::fs::metadata(c.dir.join(f)).ok())
+                            .map(|md| md.len())
+                            .sum();
+                        rows.push(Row {
+                            id: format!("custom:{}", m.name),
+                            name: if m.description.is_empty() {
+                                m.name.clone()
+                            } else {
+                                m.description.clone()
+                            },
+                            license: m.license.clone(),
+                            license_url: m.license_url.clone(),
+                            accepted: base.is_none_or(okfkit::license_accepted),
+                            size_mb: (size / 1_000_000) as usize,
+                            s1_r_at_1: None,
+                            custom: true,
+                        });
+                    }
                     emit(json, &rows, || {
                         rows.iter()
                             .map(|r| {
                                 format!(
-                                    "{:<24} {:<26} ~{} MB  R@1 {:.3} (spike S1)  {}{}\n",
+                                    "{:<24} {:<26} ~{} MB  {}  {}{}\n",
                                     r.id,
                                     r.name,
                                     r.size_mb,
-                                    r.s1_r_at_1,
+                                    r.s1_r_at_1.map_or("custom".to_owned(), |q| format!(
+                                        "R@1 {q:.3} (spike S1)"
+                                    )),
                                     r.license,
                                     if r.accepted {
                                         ""
@@ -464,91 +492,105 @@ fn run(cli: Cli) -> Result<ExitCode> {
                             .collect()
                     })?;
                 }
-                EmbedCmd::Enable {
-                    model,
-                    accept_license,
-                    api_url,
-                    api_model,
-                    api_key_env,
-                } => {
-                    if !bundle_dir.is_dir() {
-                        bail!(
-                            "bundle not found: {} is not a directory",
-                            bundle_dir.display()
-                        );
-                    }
-                    let cfg = match (api_url, api_model) {
-                        (Some(base_url), Some(model)) => okfkit::config::EmbedConfig::Api {
-                            base_url,
-                            model,
-                            key_env: api_key_env,
-                        },
-                        _ => {
-                            let info = okfkit::find_model(&model).with_context(|| format!("invalid argument: unknown model {model}; see `okfkit embed models`"))?;
-                            if info.requires_acceptance && !okfkit::license_accepted(info) {
-                                if !accept_license {
-                                    bail!(
-                                        "{} is released under the {} ({}). Read them, then run again with --accept-license \
-                                     (or choose --model bge-m3-int8, MIT)",
-                                        info.name,
-                                        info.license,
-                                        info.license_url
-                                    );
-                                }
-                                okfkit::accept_license(info)?;
-                                eprintln!(
-                                    "recorded acceptance of the {} for {}",
-                                    info.license, info.id
-                                );
-                            }
-                            okfkit::config::EmbedConfig::Local { model }
-                        }
-                    };
-                    let path = okfkit::config::write_embed(&bundle_dir, &cfg)?;
+                ModelsCmd::Add { dir, name, replace } => {
+                    let c = okfkit::install_custom(&dir, name.as_deref(), replace)?;
                     eprintln!(
-                        "embeddings enabled in {}; run `okfkit embed index` to embed the bundle",
-                        path.display()
+                        "installed custom:{} in {}; use it with `okfkit embed enable --model custom:{}`",
+                        c.manifest.name,
+                        c.dir.display(),
+                        c.manifest.name
                     );
                 }
-                EmbedCmd::Disable => {
-                    let path = okfkit::config::write_embed(
-                        &bundle_dir,
-                        &okfkit::config::EmbedConfig::Off,
-                    )?;
-                    eprintln!("embeddings disabled in {}", path.display());
+                ModelsCmd::Remove { name } => {
+                    okfkit::remove_custom(&name)?;
+                    eprintln!("removed {name}");
                 }
-                EmbedCmd::Status => {
-                    let b = open()?;
-                    let st = b.embed_status()?;
-                    emit(json, &st, || {
-                        format!(
-                            "model: {}\nembedded: {}/{} chunks\n",
-                            st.model, st.embedded, st.chunks
-                        )
+                ModelsCmd::Pull { id, accept_license } => {
+                    let info = okfkit::find_model(&id).with_context(|| {
+                        format!("invalid argument: unknown model {id}; see `okfkit embed models`")
                     })?;
+                    ensure_license(info, accept_license)?;
+                    okfkit::load_local_model(&id)?;
+                    eprintln!("{id} is downloaded");
                 }
-                EmbedCmd::Index => {
-                    let b = open()?;
-                    let started = std::time::Instant::now();
-                    let st = b.embed_sync(&mut |done, total| {
-                        eprint!(
-                            "\rembedding {done}/{total} chunks ({:.1}/s)   ",
-                            done as f64 / started.elapsed().as_secs_f64().max(0.001)
-                        );
-                    })?;
-                    eprintln!();
-                    emit(json, &st, || {
-                        format!(
-                            "model: {}\nembedded: {}/{} chunks in {:.0?}\n",
-                            st.model,
-                            st.embedded,
-                            st.chunks,
-                            started.elapsed()
-                        )
-                    })?;
+            },
+            EmbedCmd::Enable {
+                model,
+                accept_license,
+                api_url,
+                api_model,
+                api_key_env,
+            } => {
+                if !bundle_dir.is_dir() {
+                    bail!(
+                        "bundle not found: {} is not a directory",
+                        bundle_dir.display()
+                    );
                 }
+                let cfg = match (api_url, api_model) {
+                    (Some(base_url), Some(model)) => okfkit::config::EmbedConfig::Api {
+                        base_url,
+                        model,
+                        key_env: api_key_env,
+                    },
+                    _ => {
+                        let info = if model.starts_with("custom:") {
+                            okfkit::find_custom(&model)?
+                                .manifest
+                                .base
+                                .as_deref()
+                                .and_then(okfkit::find_model)
+                        } else {
+                            Some(okfkit::find_model(&model).with_context(|| format!("invalid argument: unknown model {model}; see `okfkit embed models`"))?)
+                        };
+                        if let Some(info) = info {
+                            ensure_license(info, accept_license)?;
+                        }
+                        okfkit::config::EmbedConfig::Local { model }
+                    }
+                };
+                let path = okfkit::config::write_embed(&bundle_dir, &cfg)?;
+                eprintln!(
+                    "embeddings enabled in {}; run `okfkit embed index` to embed the bundle",
+                    path.display()
+                );
             }
-        }
+            EmbedCmd::Disable => {
+                let path =
+                    okfkit::config::write_embed(&bundle_dir, &okfkit::config::EmbedConfig::Off)?;
+                eprintln!("embeddings disabled in {}", path.display());
+            }
+            EmbedCmd::Status => {
+                let b = open()?;
+                let st = b.embed_status()?;
+                emit(json, &st, || {
+                    format!(
+                        "model: {}\nembedded: {}/{} chunks\n",
+                        st.model, st.embedded, st.chunks
+                    )
+                })?;
+            }
+            EmbedCmd::Index => {
+                let b = open()?;
+                let started = std::time::Instant::now();
+                let st = b.embed_sync(&mut |done, total| {
+                    eprint!(
+                        "\rembedding {done}/{total} chunks ({:.1}/s)   ",
+                        done as f64 / started.elapsed().as_secs_f64().max(0.001)
+                    );
+                })?;
+                eprintln!();
+                emit(json, &st, || {
+                    format!(
+                        "model: {}\nembedded: {}/{} chunks in {:.0?}\n",
+                        st.model,
+                        st.embedded,
+                        st.chunks,
+                        started.elapsed()
+                    )
+                })?;
+            }
+        },
         Command::Dict { command } => {
             #[derive(Serialize)]
             struct DictStatus {
@@ -919,4 +961,26 @@ fn shell_quote(s: &str) -> String {
     } else {
         format!("'{}'", s.replace('\'', "'\\''"))
     }
+}
+
+/// Fails with instructions unless the model's license is accepted (or `accept` records it now).
+fn ensure_license(info: &okfkit::ModelInfo, accept: bool) -> Result<()> {
+    if !info.requires_acceptance || okfkit::license_accepted(info) {
+        return Ok(());
+    }
+    if !accept {
+        bail!(
+            "{} is released under the {} ({}). Read them, then run again with --accept-license \
+             (or choose --model bge-m3-int8, MIT)",
+            info.name,
+            info.license,
+            info.license_url
+        );
+    }
+    okfkit::accept_license(info)?;
+    eprintln!(
+        "recorded acceptance of the {} for {}",
+        info.license, info.id
+    );
+    Ok(())
 }

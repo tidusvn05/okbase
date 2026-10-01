@@ -53,7 +53,11 @@ impl EmbedState {
         }
         match &self.config {
             EmbedConfig::Off => None,
-            EmbedConfig::Local { model } => Some(model.clone()),
+            // Custom models are stored under `custom:<name>@<hash>` (read from the manifest), so
+            // vectors of replaced weights are never reused; an uninstalled one fails on load.
+            EmbedConfig::Local { model } => {
+                Some(okfkit_embed::resolve_model_id(model).unwrap_or_else(|_| model.clone()))
+            }
             EmbedConfig::Api { model, .. } => Some(format!("api:{model}")),
         }
     }
@@ -82,6 +86,13 @@ impl EmbedState {
         *guard = Some(s.clone());
         Ok(s)
     }
+}
+
+/// Loads a local model (built-in id or `custom:<name>`), downloading a built-in one on first use.
+pub fn load_local_model(model: &str) -> Result<Arc<dyn Embedder>, Error> {
+    create(&EmbedConfig::Local {
+        model: model.to_owned(),
+    })
 }
 
 fn create(config: &EmbedConfig) -> Result<Arc<dyn Embedder>, Error> {

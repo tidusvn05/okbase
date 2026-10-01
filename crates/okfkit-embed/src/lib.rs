@@ -10,6 +10,7 @@
 //! - [`VectorCache`]: vectors keyed by model and text hash, shared between bundles.
 
 pub mod cache;
+pub mod custom;
 pub mod models;
 
 #[cfg(feature = "api")]
@@ -18,6 +19,9 @@ mod api;
 mod local;
 
 pub use cache::{VectorCache, embed_documents_cached};
+pub use custom::{
+    CustomModel, custom_models, find_custom, install_custom, remove_custom, resolve_model_id,
+};
 pub use models::{ModelInfo, accept_license, find_model, license_accepted, models, models_dir};
 
 #[cfg(feature = "api")]
@@ -31,7 +35,7 @@ pub use local::LocalEmbedder;
 pub enum Error {
     /// The model is unknown.
     #[error(
-        "unknown embedding model `{0}`; available: embeddinggemma-300m-q4, bge-m3-int8, api:<model>"
+        "unknown embedding model `{0}`; see `okfkit embed models` (built-in ids, custom:<name>, api:<model>)"
     )]
     UnknownModel(String),
     /// The model's license must be accepted before it is downloaded.

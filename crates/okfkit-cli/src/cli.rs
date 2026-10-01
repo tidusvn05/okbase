@@ -248,6 +248,39 @@ pub enum Command {
     External(Vec<String>),
 }
 
+#[derive(Debug, Subcommand)]
+pub enum ModelsCmd {
+    /// List built-in and custom models with license, size and quality (the default).
+    List,
+    /// Install a custom ONNX model from a directory with an okfkit-model.json manifest.
+    #[command(
+        after_help = "The directory holds okfkit-model.json, the ONNX file (+ external data) and tokenizer.json,\nconfig.json, special_tokens_map.json, tokenizer_config.json. `okfkit embed tune export` writes one.\n\nExamples:\n  okfkit embed models add ./acme-gemma\n  okfkit embed enable --model custom:acme-gemma"
+    )]
+    Add {
+        /// Model directory.
+        dir: PathBuf,
+        /// Install under this name instead of the manifest's.
+        #[arg(long)]
+        name: Option<String>,
+        /// Overwrite an installed model with the same name.
+        #[arg(long)]
+        replace: bool,
+    },
+    /// Delete an installed custom model.
+    Remove {
+        /// `custom:<name>` or `<name>`.
+        name: String,
+    },
+    /// Download a built-in model now (for offline use later).
+    Pull {
+        /// Model id.
+        id: String,
+        /// Accept the model's license.
+        #[arg(long)]
+        accept_license: bool,
+    },
+}
+
 /// Who will use the bundle (`advise --for`).
 #[derive(Debug, Clone, Copy, ValueEnum)]
 pub enum AudienceArg {
@@ -263,8 +296,11 @@ pub enum AudienceArg {
 
 #[derive(Debug, Subcommand)]
 pub enum EmbedCmd {
-    /// List the supported local models with license, size and spike quality.
-    Models,
+    /// Local models: list, add or remove custom ones, download built-in ones ahead of time.
+    Models {
+        #[command(subcommand)]
+        command: Option<ModelsCmd>,
+    },
     /// Turn embeddings on for this bundle (writes okfkit.toml).
     #[command(
         after_help = "Examples:\n  okfkit embed enable --accept-license                 # EmbeddingGemma 300M Q4 (Gemma terms)\n  okfkit embed enable --model bge-m3-int8              # MIT, no acceptance needed\n  okfkit embed enable --api-url https://api.openai.com/v1 --api-model text-embedding-3-small"

@@ -4,41 +4,42 @@ use std::path::Path;
 use std::sync::Mutex;
 
 use fastembed::{
-    EmbeddingModel, InitOptionsUserDefined, Pooling, TextEmbedding, TextInitOptions,
+    EmbeddingModel, InitOptionsUserDefined, OutputKey, Pooling, TextEmbedding, TextInitOptions,
     TokenizerFiles, UserDefinedEmbeddingModel,
 };
 
-use crate::models::{ModelInfo, Source};
+use crate::custom::{self, CustomModel};
+use crate::models::{ModelInfo, Prompting, Source};
 use crate::{Embedder, Error, find_model, normalize};
 
 /// A local model.
 pub struct LocalEmbedder {
-    info: &'static ModelInfo,
+    id: String,
+    prompting: Prompting,
+    info: Option<&'static ModelInfo>,
     model: Mutex<TextEmbedding>,
 }
 
 impl std::fmt::Debug for LocalEmbedder {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("LocalEmbedder")
-            .field("model", &self.info.id)
+            .field("model", &self.id)
             .finish()
     }
 }
 
 impl LocalEmbedder {
-    /// Loads (downloading on first use) a model. Fails if its license needs acceptance and was not accepted.
+    /// Loads (downloading on first use) a built-in model, or an installed `custom:<name>` model.
+    /// Fails if its license needs acceptance and was not accepted.
     pub fn load(model_id: &str, threads: Option<usize>) -> Result<Self, Error> {
-        let info = find_model(model_id).ok_or_else(|| Error::UnknownModel(model_id.to_owned()))?;
-        if !crate::models::license_accepted(info) {
-            return Err(Error::LicenseNotAccepted {
-                model: info.id.into(),
-                license: info.license.into(),
-                url: info.license_url.into(),
-            });
-        }
-        let dir = crate::models::models_dir()?;
         let threads =
             threads.unwrap_or_else(|| std::thread::available_parallelism().map_or(4, |n| n.get()));
+        if model_id.starts_with(custom::PREFIX) {
+            return Self::load_custom(&custom::find_custom(model_id)?, threads);
+        }
+        let info = find_model(model_id).ok_or_else(|| Error::UnknownModel(model_id.to_owned()))?;
+        check_license(info)?;
+        let dir = crate::models::models_dir()?;
         let model = match info.source {
             Source::Fastembed => {
                 let which = match info.id {
@@ -56,33 +57,50 @@ impl LocalEmbedder {
             Source::HuggingFace { repo, onnx } => {
                 let mdir = dir.join(info.id);
                 download_hf(repo, onnx, &mdir)?;
-                let rd = |f: &str| {
-                    std::fs::read(mdir.join(f))
-                        .map_err(|e| Error::Model(format!("{}/{f}: {e}", mdir.display())))
-                };
-                let tok = TokenizerFiles {
-                    tokenizer_file: rd("tokenizer.json")?,
-                    config_file: rd("config.json")?,
-                    special_tokens_map_file: rd("special_tokens_map.json")?,
-                    tokenizer_config_file: rd("tokenizer_config.json")?,
-                };
-                let model = UserDefinedEmbeddingModel::new(rd("model.onnx")?, tok)
-                    .with_pooling(Pooling::Cls);
-                let opts = InitOptionsUserDefined::new()
-                    .with_max_length(info.max_length)
-                    .with_intra_threads(threads);
-                TextEmbedding::try_new_from_user_defined(model, opts)
-                    .map_err(|e| Error::Model(e.to_string()))?
+                let model =
+                    UserDefinedEmbeddingModel::new(read(&mdir, "model.onnx")?, tokenizer(&mdir)?)
+                        .with_pooling(Pooling::Cls);
+                user_defined(model, info.max_length, threads)?
             }
         };
         Ok(LocalEmbedder {
-            info,
+            id: info.id.to_owned(),
+            prompting: info.prompting,
+            info: Some(info),
             model: Mutex::new(model),
         })
     }
 
-    /// The model description.
-    pub fn info(&self) -> &'static ModelInfo {
+    fn load_custom(c: &CustomModel, threads: usize) -> Result<Self, Error> {
+        let m = &c.manifest;
+        if let Some(base) = m.base.as_deref().and_then(find_model) {
+            check_license(base)?;
+        }
+        let mut model = UserDefinedEmbeddingModel::new(read(&c.dir, &m.onnx)?, tokenizer(&c.dir)?);
+        for f in &m.external_data {
+            let name = std::path::Path::new(f)
+                .file_name()
+                .map_or_else(|| f.clone(), |n| n.to_string_lossy().into_owned());
+            model = model.with_external_initializer(name, read(&c.dir, f)?);
+        }
+        model = match m.pooling {
+            custom::Pooling::Output => {
+                model.output_key = Some(OutputKey::ByName("sentence_embedding"));
+                model.with_pooling(Pooling::Mean)
+            }
+            custom::Pooling::Mean => model.with_pooling(Pooling::Mean),
+            custom::Pooling::Cls => model.with_pooling(Pooling::Cls),
+        };
+        Ok(LocalEmbedder {
+            id: c.model_id(),
+            prompting: m.prompting(),
+            info: None,
+            model: Mutex::new(user_defined(model, m.max_length, threads)?),
+        })
+    }
+
+    /// The built-in model description (`None` for custom models).
+    pub fn info(&self) -> Option<&'static ModelInfo> {
         self.info
     }
 
@@ -97,22 +115,17 @@ impl LocalEmbedder {
 
 impl Embedder for LocalEmbedder {
     fn model_id(&self) -> &str {
-        self.info.id
+        &self.id
     }
 
     fn embed_queries(&self, queries: &[String]) -> Result<Vec<Vec<f32>>, Error> {
-        self.run(
-            queries
-                .iter()
-                .map(|q| self.info.prompting.query(q))
-                .collect(),
-        )
+        self.run(queries.iter().map(|q| self.prompting.query(q)).collect())
     }
 
     fn embed_documents(&self, docs: &[(String, String)]) -> Result<Vec<Vec<f32>>, Error> {
         self.run(
             docs.iter()
-                .map(|(t, x)| self.info.prompting.document(t, x))
+                .map(|(t, x)| self.prompting.document(t, x))
                 .collect(),
         )
     }
@@ -153,4 +166,40 @@ fn download_hf(repo: &str, onnx: &str, dir: &Path) -> Result<(), Error> {
         std::fs::rename(&tmp, &target).map_err(|e| Error::Model(e.to_string()))?;
     }
     Ok(())
+}
+
+fn check_license(info: &ModelInfo) -> Result<(), Error> {
+    if crate::models::license_accepted(info) {
+        Ok(())
+    } else {
+        Err(Error::LicenseNotAccepted {
+            model: info.id.into(),
+            license: info.license.into(),
+            url: info.license_url.into(),
+        })
+    }
+}
+
+fn read(dir: &Path, f: &str) -> Result<Vec<u8>, Error> {
+    std::fs::read(dir.join(f)).map_err(|e| Error::Model(format!("{}/{f}: {e}", dir.display())))
+}
+
+fn tokenizer(dir: &Path) -> Result<TokenizerFiles, Error> {
+    Ok(TokenizerFiles {
+        tokenizer_file: read(dir, "tokenizer.json")?,
+        config_file: read(dir, "config.json")?,
+        special_tokens_map_file: read(dir, "special_tokens_map.json")?,
+        tokenizer_config_file: read(dir, "tokenizer_config.json")?,
+    })
+}
+
+fn user_defined(
+    model: UserDefinedEmbeddingModel,
+    max_length: usize,
+    threads: usize,
+) -> Result<TextEmbedding, Error> {
+    let opts = InitOptionsUserDefined::new()
+        .with_max_length(max_length)
+        .with_intra_threads(threads);
+    TextEmbedding::try_new_from_user_defined(model, opts).map_err(|e| Error::Model(e.to_string()))
 }

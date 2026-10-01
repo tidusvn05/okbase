@@ -439,3 +439,60 @@ fn advise_recommends_by_bundle() {
         "{text}"
     );
 }
+
+#[test]
+fn custom_models_add_list_remove() {
+    let tmp = tempfile::tempdir().unwrap();
+    let models = tmp.path().join("models");
+    let src = tmp.path().join("acme");
+    std::fs::create_dir_all(&src).unwrap();
+    std::fs::write(src.join("model.onnx"), b"not really onnx").unwrap();
+    for f in [
+        "tokenizer.json",
+        "config.json",
+        "special_tokens_map.json",
+        "tokenizer_config.json",
+    ] {
+        std::fs::write(src.join(f), "{}").unwrap();
+    }
+    std::fs::write(
+        src.join("okfkit-model.json"),
+        json!({"format": 1, "name": "acme", "license": "MIT", "onnx": "model.onnx",
+               "pooling": "mean", "prompting": "plain", "dim": 384, "max_length": 512})
+        .to_string(),
+    )
+    .unwrap();
+    let cmd = |args: &[&str]| {
+        let mut c = Command::cargo_bin("okfkit").unwrap();
+        c.env("OKFKIT_MODELS_DIR", &models).args(args);
+        c
+    };
+    let out = cmd(&["embed", "models", "add"]).arg(&src).output().unwrap();
+    assert!(
+        out.status.success(),
+        "{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    let list = json_of(&mut cmd(&["embed", "models"]));
+    let row = list
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|r| r["id"] == "custom:acme")
+        .expect("listed");
+    assert_eq!(row["custom"], true);
+    assert_eq!(row["accepted"], true);
+    // Installing twice needs --replace.
+    let out = cmd(&["embed", "models", "add"]).arg(&src).output().unwrap();
+    assert!(!out.status.success());
+    assert!(String::from_utf8_lossy(&out.stderr).contains("--replace"));
+    assert!(
+        cmd(&["embed", "models", "remove", "custom:acme"])
+            .output()
+            .unwrap()
+            .status
+            .success()
+    );
+    let list = json_of(&mut cmd(&["embed", "models"]));
+    assert!(!list.to_string().contains("custom:acme"));
+}

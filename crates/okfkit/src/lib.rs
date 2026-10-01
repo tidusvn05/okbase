@@ -27,6 +27,7 @@ use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex, MutexGuard};
 
 pub use advise::{Advice, AdviseOptions, Audience};
+pub use embed::load_local_model;
 pub use okfkit_analyze as analyze;
 pub use okfkit_core as core;
 pub use okfkit_data::{
@@ -34,8 +35,9 @@ pub use okfkit_data::{
     TablesResult as DataTables,
 };
 pub use okfkit_embed::{
-    Embedder, Error as EmbedError, ModelInfo, accept_license, find_model, license_accepted,
-    models as embedding_models,
+    CustomModel, Embedder, Error as EmbedError, ModelInfo, accept_license, custom_models,
+    find_custom, find_model, install_custom, license_accepted, models as embedding_models,
+    remove_custom,
 };
 pub use okfkit_index::{IndexOptions, StateDir, SyncStats};
 pub use okfkit_lint::{Level, LintConfig, Report as LintReport};

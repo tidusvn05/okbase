@@ -116,8 +116,19 @@ const MODELS: &[ModelInfo] = &[
 
 const ACCEPTED: &str = "LICENSE-ACCEPTED";
 
+#[cfg(test)]
+thread_local! {
+    /// Per-test models directory (tests must not mutate the process environment).
+    pub(crate) static MODELS_DIR_OVERRIDE: std::cell::RefCell<Option<std::path::PathBuf>> =
+        const { std::cell::RefCell::new(None) };
+}
+
 /// `<user cache>/okfkit/models`, or `OKFKIT_MODELS_DIR`.
 pub fn models_dir() -> Result<std::path::PathBuf, crate::Error> {
+    #[cfg(test)]
+    if let Some(d) = MODELS_DIR_OVERRIDE.with(|o| o.borrow().clone()) {
+        return Ok(d);
+    }
     if let Some(d) = std::env::var_os("OKFKIT_MODELS_DIR").filter(|v| !v.is_empty()) {
         return Ok(d.into());
     }
