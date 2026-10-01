@@ -1,0 +1,7 @@
+---
+source: crates/okfkit-adopt/tests/adopt.rs
+expression: p.to_text(false)
+---
+site: Plain; 31 markdown documents
+level: below L0 -> L1
+changes: 31 edited, 3 created, 0 renamed

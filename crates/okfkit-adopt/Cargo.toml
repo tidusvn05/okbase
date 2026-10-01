@@ -1,0 +1,30 @@
+[package]
+name = "okfkit-adopt"
+description = "Turn plain markdown folders (Obsidian, Docusaurus, Hugo, Mintlify, MkDocs) into okfkit/OKF bundles."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+okfkit-core.workspace = true
+okfkit-standard.workspace = true
+okfkit-analyze.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+regex.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+insta.workspace = true
+okfkit-lint.workspace = true

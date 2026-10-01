@@ -24,6 +24,7 @@ okfkit.workspace = true
 okfkit-mcp.workspace = true
 okfkit-skills.workspace = true
 okfkit-lint.workspace = true
+okfkit-adopt.workspace = true
 clap.workspace = true
 anyhow.workspace = true
 serde.workspace = true

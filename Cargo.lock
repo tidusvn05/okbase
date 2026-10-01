@@ -1267,6 +1267,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "okfkit-adopt"
+version = "0.1.0-dev"
+dependencies = [
+ "insta",
+ "okfkit-analyze",
+ "okfkit-core",
+ "okfkit-lint",
+ "okfkit-standard",
+ "regex",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror",
+]
+
+[[package]]
 name = "okfkit-analyze"
 version = "0.1.0-dev"
 dependencies = [
@@ -1285,6 +1301,7 @@ dependencies = [
  "clap",
  "insta",
  "okfkit",
+ "okfkit-adopt",
  "okfkit-lint",
  "okfkit-mcp",
  "okfkit-skills",

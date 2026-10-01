@@ -303,3 +303,45 @@ fn data_commands() {
         .unwrap();
     assert!(!hidden.status.success());
 }
+
+#[test]
+fn adopt_plan_out_and_write_guard() {
+    let tmp = tempfile::tempdir().unwrap();
+    let src = tmp.path().join("docs");
+    std::fs::create_dir_all(src.join("guides")).unwrap();
+    std::fs::write(
+        src.join("guides/setup.md"),
+        "# Setup\n\nInstall the tool and run the setup wizard once.\n",
+    )
+    .unwrap();
+    let run = |args: &[&str]| {
+        Command::cargo_bin("okfkit")
+            .unwrap()
+            .arg("adopt")
+            .arg(&src)
+            .args(args)
+            .output()
+            .unwrap()
+    };
+
+    let plan = run(&[]);
+    assert!(plan.status.success());
+    assert!(String::from_utf8_lossy(&plan.stdout).contains("level: below L0 -> L1"));
+    assert!(!src.join("index.md").exists(), "plan must not write");
+
+    let refused = run(&["--write"]);
+    assert!(!refused.status.success());
+    assert!(String::from_utf8_lossy(&refused.stderr).contains("not in a git repository"));
+
+    let out = tmp.path().join("okf");
+    assert!(run(&["--out", out.to_str().unwrap()]).status.success());
+    assert!(
+        std::fs::read_to_string(out.join("guides/setup.md"))
+            .unwrap()
+            .contains("type: Guide")
+    );
+    assert!(out.join("guides/index.md").is_file() && !src.join("guides/index.md").exists());
+
+    assert!(run(&["--write", "--force"]).status.success());
+    assert!(src.join("guides/index.md").is_file());
+}

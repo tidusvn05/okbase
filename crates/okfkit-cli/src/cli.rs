@@ -151,6 +151,29 @@ pub enum Command {
         #[arg(long, value_name = "CODE")]
         disable: Vec<String>,
     },
+    /// Turn a folder of plain markdown into an OKF bundle (fills missing frontmatter, creates index.md).
+    #[command(
+        after_help = "Examples:\n  okfkit adopt ./docs                 # show the plan, write nothing\n  okfkit adopt ./docs --out ./docs-okf\n  okfkit adopt ./docs --write --level L2"
+    )]
+    Adopt {
+        /// The folder [default: --bundle or the current directory].
+        dir: Option<PathBuf>,
+        /// Write the result to this new directory (the source is not modified).
+        #[arg(long, value_name = "DIR", conflicts_with = "write")]
+        out: Option<PathBuf>,
+        /// Edit the folder in place (needs a clean git working tree, or --force).
+        #[arg(long)]
+        write: bool,
+        /// Edit in place even if the folder is not a clean git working tree.
+        #[arg(long, requires = "write")]
+        force: bool,
+        /// Target level: L1 (titles, descriptions, index.md) or L2 (also lang, status, updated, tags).
+        #[arg(long, value_enum, default_value_t = LevelArg::L1)]
+        level: LevelArg,
+        /// List every file change.
+        #[arg(long, short = 'v')]
+        verbose: bool,
+    },
     /// Read-only SQL over the bundle's spreadsheets (CSV, TSV, XLSX).
     Data {
         #[command(subcommand)]

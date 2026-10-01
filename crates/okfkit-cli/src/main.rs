@@ -288,6 +288,49 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 ExitCode::SUCCESS
             });
         }
+        Command::Adopt {
+            dir,
+            out,
+            write,
+            force,
+            level,
+            verbose,
+        } => {
+            let dir = dir.unwrap_or_else(|| bundle_dir.clone());
+            if !dir.is_dir() {
+                bail!("bundle not found: {} is not a directory", dir.display());
+            }
+            let mut opts = okfkit_adopt::AdoptOptions::new(&today());
+            opts.level = level.into();
+            let plan = okfkit_adopt::plan(&dir, &opts)?;
+            emit(json, &plan, || plan.to_text(verbose))?;
+            if let Some(out) = out {
+                okfkit_adopt::apply_to(&dir, &plan, &out)?;
+                eprintln!("wrote the adopted bundle to {}", out.display());
+            } else if write {
+                if !force {
+                    let status = std::process::Command::new("git")
+                        .args(["status", "--porcelain", "--", "."])
+                        .current_dir(&dir)
+                        .output();
+                    match status {
+                        Ok(o) if o.status.success() && o.stdout.is_empty() => {}
+                        Ok(o) if o.status.success() => bail!(
+                            "refusing to edit in place: {} has uncommitted changes (commit them, or pass --force)",
+                            dir.display()
+                        ),
+                        _ => bail!(
+                            "refusing to edit in place: {} is not in a git repository (use --out, or pass --force)",
+                            dir.display()
+                        ),
+                    }
+                }
+                okfkit_adopt::apply_in_place(&dir, &plan)?;
+                eprintln!("updated {} files in place", plan.changes.len());
+            } else if !json {
+                eprintln!("plan only; nothing was written. Use --out DIR or --write to apply it.");
+            }
+        }
         Command::Data { command } => {
             let b = open()?;
             let scope = scope()?;
@@ -467,6 +510,22 @@ fn run(cli: Cli) -> Result<ExitCode> {
         Command::External(args) => return run_plugin(&args, cli.bundle.as_deref()),
     }
     Ok(ExitCode::SUCCESS)
+}
+
+/// Today's date (UTC) as `YYYY-MM-DD`, without a date-time dependency.
+fn today() -> String {
+    let days = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map_or(0, |d| d.as_secs() / 86_400) as i64;
+    let z = days + 719_468;
+    let era = z.div_euclid(146_097);
+    let doe = z - era * 146_097;
+    let yoe = (doe - doe / 1460 + doe / 36_524 - doe / 146_096) / 365;
+    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+    let mp = (5 * doy + 2) / 153;
+    let d = doy - (153 * mp + 2) / 5 + 1;
+    let m = if mp < 10 { mp + 3 } else { mp - 9 };
+    format!("{:04}-{m:02}-{d:02}", yoe + era * 400 + i64::from(m <= 2))
 }
 
 fn abs(p: &Path) -> PathBuf {
