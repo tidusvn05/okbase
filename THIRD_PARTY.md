@@ -8,6 +8,7 @@ Rust crate dependencies (whose licenses are checked by `cargo deny check`, see `
 
 | Component | Used by | License | Notes |
 |---|---|---|---|
+| ONNX Runtime (via `ort`, feature `local` of `okfkit-embed`; off by default) | Local embedding models | MIT | Prebuilt binaries are downloaded by the `ort` build script (rustls) and linked into builds with embed-local (such as `okfkit-full`) only. |
 | mecab-ipadic 2.7.0 dictionary (feature `ja-embedded` of `okfkit-analyze`, off by default) | Japanese tokenization | NAIST / ICOT Free Software notice (permissive; the notice and its NO WARRANTY section must accompany redistributions) | Only embedded in builds with `ja-embedded`; the release archives of such builds must include the notice (shipped in the `lindera-ipadic` crate as `NOTICE.txt`). |
 
 ## Downloaded at runtime

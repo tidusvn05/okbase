@@ -1,0 +1,36 @@
+[package]
+name = "okfkit-embed"
+description = "Opt-in embeddings for okfkit: local ONNX models (EmbeddingGemma, bge-m3) or an embeddings API, with a vector cache."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+okfkit-analyze.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+rusqlite.workspace = true
+blake3.workspace = true
+fastembed = { workspace = true, optional = true }
+ureq = { workspace = true, optional = true, features = ["json"] }
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[features]
+default = []
+## Local ONNX models through fastembed (downloads onnxruntime at build time and models at run time).
+local = ["dep:fastembed", "dep:ureq"]
+## An OpenAI-compatible embeddings API.
+api = ["dep:ureq"]

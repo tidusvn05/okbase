@@ -29,6 +29,7 @@ okfkit-index = { path = "crates/okfkit-index", version = "0.1.0-dev" }
 okfkit-query = { path = "crates/okfkit-query", version = "0.1.0-dev" }
 okfkit-lint = { path = "crates/okfkit-lint", version = "0.1.0-dev" }
 okfkit-adopt = { path = "crates/okfkit-adopt", version = "0.1.0-dev" }
+okfkit-embed = { path = "crates/okfkit-embed", version = "0.1.0-dev" }
 okfkit-data = { path = "crates/okfkit-data", version = "0.1.0-dev" }
 okfkit-mcp = { path = "crates/okfkit-mcp", version = "0.1.0-dev" }
 okfkit-skills = { path = "crates/okfkit-skills", version = "0.1.0-dev" }
@@ -55,6 +56,7 @@ clap = { version = "4.6", features = ["derive", "env", "wrap_help"] }
 anyhow = "1"
 assert_cmd = "2"
 csv = "1.3"
+fastembed = { version = "7.1", default-features = false, features = ["ort-download-binaries-rustls-tls", "hf-hub-rustls-tls"] }
 ureq = { version = "3", default-features = false, features = ["rustls"] }
 flate2 = "1"
 tar = "0.4"

@@ -5,6 +5,11 @@ all-features = true
 [advisories]
 version = 2
 yanked = "deny"
+ignore = [
+    # `paste` is a compile-time proc macro (no runtime code), unmaintained but with no known
+    # vulnerability; it comes from `tokenizers` via fastembed, only in the opt-in embed-local module.
+    { id = "RUSTSEC-2024-0436", reason = "unmaintained proc macro via tokenizers (embed-local only)" },
+]
 
 [licenses]
 version = 2
