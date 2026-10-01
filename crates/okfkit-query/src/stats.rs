@@ -95,3 +95,31 @@ pub(crate) fn mode_for(tokens: usize) -> Mode {
         Mode::Lexical
     }
 }
+
+/// Characters of a body that language detection looks at.
+const DETECT_CHARS: usize = 2_000;
+
+/// Estimated tokens of the visible concepts per language: the `lang` field when set, else
+/// detected from the start of the body (`vi`, `en`, `ja`; `other` when undetectable).
+pub(crate) fn content_langs(
+    index: &okfkit_index::Index,
+    scope: &Scope,
+) -> Result<BTreeMap<String, usize>, Error> {
+    let conn = index.connection();
+    let mut st = conn.prepare_cached("SELECT body FROM docs WHERE id = ?1")?;
+    let mut out = BTreeMap::new();
+    for d in crate::docs::load(conn, scope, crate::docs::Load::default())? {
+        let lang = match d.lang.as_deref().map(str::to_lowercase) {
+            Some(l) if !l.is_empty() => l.split(['-', '_']).next().unwrap_or("other").to_owned(),
+            _ => {
+                let body: String = st.query_row([&d.id], |r| r.get(0))?;
+                let head: String = body.chars().take(DETECT_CHARS).collect();
+                okfkit_analyze::detect_lang(&head)
+                    .map_or("other", |l| l.code())
+                    .to_owned()
+            }
+        };
+        *out.entry(lang).or_default() += d.tokens.max(1);
+    }
+    Ok(out)
+}

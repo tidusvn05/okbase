@@ -68,6 +68,14 @@ pub fn stats(index: &Index, scope: &Scope) -> Result<Stats, Error> {
     stats::stats(index, scope)
 }
 
+/// Estimated tokens of the visible concepts per language (`lang` field, else detected).
+pub fn content_langs(
+    index: &Index,
+    scope: &Scope,
+) -> Result<std::collections::BTreeMap<String, usize>, Error> {
+    stats::content_langs(index, scope)
+}
+
 /// `Full` when the visible concepts fit in about 30k tokens, else `Lexical`.
 /// (`Retrieval` needs the embed module.)
 pub fn recommend_mode(index: &Index, scope: &Scope) -> Result<Mode, Error> {

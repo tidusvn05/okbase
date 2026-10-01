@@ -392,3 +392,50 @@ fn http_off_loopback_needs_a_token() {
     assert!(!out.status.success());
     assert!(String::from_utf8_lossy(&out.stderr).contains("without a token"));
 }
+
+#[test]
+fn advise_recommends_by_bundle() {
+    let st = tempfile::tempdir().unwrap();
+    let tiers = |v: &Value| -> Vec<(String, String)> {
+        v["steps"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|s| {
+                (
+                    s["tier"].as_str().unwrap().into(),
+                    s["when"].as_str().unwrap().into(),
+                )
+            })
+            .collect()
+    };
+    // Small trilingual bundle: full context first; curation because descriptions are missing.
+    let ml = json_of(okfkit("multilingual", st.path()).args(["advise", "--for", "claude"]));
+    assert_eq!(ml["profile"]["docs"], 100);
+    assert!(ml["profile"]["langs"]["vi"].as_f64().unwrap() > 0.2, "{ml}");
+    assert_eq!(tiers(&ml)[0], ("full".into(), "now".into()));
+    let cmds = ml["steps"][0]["commands"].to_string();
+    assert!(
+        cmds.contains("agent install --claude") && cmds.contains(" -b "),
+        "{cmds}"
+    );
+    assert!(
+        ml["skipped"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|s| s["tier"] == "embed")
+    );
+    // Tables are detected.
+    let biz = json_of(okfkit("business", st.path()).args(["advise"]));
+    assert!(
+        tiers(&biz).contains(&("data".into(), "now".into())),
+        "{biz}"
+    );
+    // Text output.
+    let text = stdout(okfkit("multilingual", st.path()).args(["advise"]));
+    assert!(
+        text.starts_with("Bundle: 100 docs") && text.contains("Recommended path"),
+        "{text}"
+    );
+}

@@ -18,6 +18,7 @@
 //!
 //! [okf]: https://github.com/GoogleCloudPlatform/open-knowledge-format
 
+pub mod advise;
 pub mod config;
 mod embed;
 
@@ -25,6 +26,7 @@ use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex, MutexGuard};
 
+pub use advise::{Advice, AdviseOptions, Audience};
 pub use okfkit_analyze as analyze;
 pub use okfkit_core as core;
 pub use okfkit_data::{

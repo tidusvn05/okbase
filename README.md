@@ -11,6 +11,7 @@ okfkit is an open-source Rust toolkit for knowledge bundles in the [Open Knowled
 ```sh
 cd my-bundle                          # a folder of markdown files (OKF or not)
 okfkit status                         # size, level (L0–L3), recommended mode
+okfkit advise                         # how to use okfkit here, simplest setup first
 okfkit agent install --claude         # register the MCP server and skills (or --codex)
 ```
 

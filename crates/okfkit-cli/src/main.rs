@@ -13,7 +13,9 @@ use clap::Parser as _;
 use okfkit::{Bundle, OpenOptions, Scope, StateDir};
 use serde::Serialize;
 
-use cli::{AgentCmd, Cli, Command, DataCmd, DictCmd, EmbedCmd, FilterArgs, LintFormat, McpCmd};
+use cli::{
+    AgentCmd, AudienceArg, Cli, Command, DataCmd, DictCmd, EmbedCmd, FilterArgs, LintFormat, McpCmd,
+};
 
 fn main() -> ExitCode {
     let cli = Cli::parse();
@@ -132,6 +134,39 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     s.stats.mode
                 )
             })?;
+        }
+        Command::Advise {
+            user_langs,
+            audience,
+            private,
+        } => {
+            let b = open()?;
+            let scope = scope()?;
+            let options = okfkit::AdviseOptions {
+                user_langs,
+                audience: audience.map(|a| match a {
+                    AudienceArg::Claude => okfkit::Audience::Claude,
+                    AudienceArg::Codex => okfkit::Audience::Codex,
+                    AudienceArg::Team => okfkit::Audience::Team,
+                    AudienceArg::Host => okfkit::Audience::Host,
+                }),
+                private,
+            };
+            let mut advice = b.advise(&options, &scope)?;
+            if let Some(dir) = &cli.bundle {
+                // Commands must work from where the user is.
+                let flag = format!("okfkit -b {} ", shell_quote(&dir.display().to_string()));
+                for step in &mut advice.steps {
+                    for c in &mut step.commands {
+                        if let Some(rest) = c.strip_prefix("okfkit ") {
+                            *c = format!("{flag}{rest}");
+                        } else if let Some(i) = c.find(" okfkit ") {
+                            c.replace_range(i + 1..i + 8, &flag);
+                        }
+                    }
+                }
+            }
+            emit(json, &advice, || advice.to_text())?;
         }
         Command::Index { rebuild } => {
             if rebuild {
@@ -871,5 +906,17 @@ impl FilterArgs {
             active_on: self.active_on.clone(),
         };
         Ok((f != okfkit::Filter::default()).then_some(f))
+    }
+}
+
+/// Quotes `s` for a POSIX shell when it contains anything but safe characters.
+fn shell_quote(s: &str) -> String {
+    if !s.is_empty()
+        && s.chars()
+            .all(|c| c.is_ascii_alphanumeric() || "-_./:@%+=".contains(c))
+    {
+        s.to_owned()
+    } else {
+        format!("'{}'", s.replace('\'', "'\\''"))
     }
 }

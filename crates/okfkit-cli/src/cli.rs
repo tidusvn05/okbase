@@ -55,6 +55,21 @@ pub struct Cli {
 pub enum Command {
     /// Index the bundle and show a summary: size, types, languages, level and recommended mode.
     Status,
+    /// Recommend how to use okfkit for this bundle, from the simplest setup up (read-only).
+    #[command(
+        after_help = "Examples:\n  okfkit advise\n  okfkit advise --user-langs vi,ja --for claude\n  okfkit advise --for team --private --json"
+    )]
+    Advise {
+        /// Languages people ask in (comma-separated ISO codes) [default: the bundle's languages].
+        #[arg(long, value_delimiter = ',', value_name = "LANGS")]
+        user_langs: Vec<String>,
+        /// Who will use the bundle.
+        #[arg(long = "for", value_enum, value_name = "WHO")]
+        audience: Option<AudienceArg>,
+        /// Documents must not be sent to a cloud LLM.
+        #[arg(long)]
+        private: bool,
+    },
     /// Update the index (only changed files are re-read).
     Index {
         /// Delete the index and build it from scratch.
@@ -231,6 +246,19 @@ pub enum Command {
     /// Run an `okfkit-<name>` plugin from PATH.
     #[command(external_subcommand)]
     External(Vec<String>),
+}
+
+/// Who will use the bundle (`advise --for`).
+#[derive(Debug, Clone, Copy, ValueEnum)]
+pub enum AudienceArg {
+    /// Claude Code on this machine.
+    Claude,
+    /// OpenAI Codex CLI on this machine.
+    Codex,
+    /// A team sharing one MCP server.
+    Team,
+    /// An application embedding okfkit.
+    Host,
 }
 
 #[derive(Debug, Subcommand)]
