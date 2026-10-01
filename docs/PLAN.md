@@ -448,6 +448,9 @@ Output text/JSON/SARIF; `--fix-safe` chỉ sửa những gì an toàn (sinh inde
 - Build `okfkit-full`.
 - ✅ Tiêu chí: tái hiện S1 v2 (R@1 ≥ 0.84); retrieval của S4 ≥ 97% ở L; binary `okfkit` mặc định vẫn không có ONNX.
 
+### Đề xuất mới: `okfkit advise` + fine-tune embedding
+- Xem `PLAN-advise-tune.md` (chưa chốt thứ tự so với v0.4; phase 0 là gate kỹ thuật ONNX/Q4).
+
 ### v0.4 — Import + source (2 tuần)
 - import-pdf/docx/html, source fs/gdrive/gsheets, skill `okfkit-import`, `distill --plan`.
 - **Spike S10:** khoảng 20 PDF và 5 sheet thật.
