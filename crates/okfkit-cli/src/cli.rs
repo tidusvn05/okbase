@@ -301,10 +301,27 @@ pub enum DataCmd {
 #[derive(Debug, Subcommand)]
 pub enum McpCmd {
     /// Serve the bundle's tools over MCP.
+    #[command(
+        after_help = "Examples:\n  okfkit mcp serve                          # stdio (for claude/codex)\n  okfkit mcp serve --http                   # http://127.0.0.1:7331/mcp\n  OKFKIT_MCP_TOKEN=... okfkit mcp serve --http 0.0.0.0:7331 --allow-host kb.example.com"
+    )]
     Serve {
-        /// Use stdio (the only transport in this version).
-        #[arg(long, default_value_t = true)]
+        /// Use stdio (the default).
+        #[arg(long, conflicts_with = "http")]
         stdio: bool,
+        /// Serve streamable HTTP at this address instead of stdio.
+        #[arg(long, value_name = "ADDR", num_args = 0..=1, default_missing_value = "127.0.0.1:7331")]
+        http: Option<std::net::SocketAddr>,
+        /// Accept this Host header (repeatable; loopback hosts are always accepted).
+        #[arg(long, value_name = "HOST", requires = "http")]
+        allow_host: Vec<String>,
+        /// Environment variable holding the bearer token clients must send (required off loopback).
+        #[arg(
+            long,
+            value_name = "VAR",
+            default_value = "OKFKIT_MCP_TOKEN",
+            requires = "http"
+        )]
+        token_env: String,
         /// Tool name prefix.
         #[arg(long, default_value = "kb")]
         prefix: String,

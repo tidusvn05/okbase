@@ -380,3 +380,15 @@ fn vocab_report_and_suggest() {
     let text = String::from_utf8(run(&[]).stdout).unwrap();
     assert!(text.starts_with("2 refund (also: Refunds)\n"), "{text}");
 }
+
+#[test]
+fn http_off_loopback_needs_a_token() {
+    let st = tempfile::tempdir().unwrap();
+    let out = okfkit("okf-official/ga4", st.path())
+        .env_remove("OKFKIT_MCP_TOKEN")
+        .args(["mcp", "serve", "--http", "0.0.0.0:0"])
+        .output()
+        .unwrap();
+    assert!(!out.status.success());
+    assert!(String::from_utf8_lossy(&out.stderr).contains("without a token"));
+}

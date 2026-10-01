@@ -5,7 +5,12 @@
 //! as content, and the typed result as `structuredContent` (the same JSON as the
 //! CLI's `--json`).
 
+#[cfg(feature = "http")]
+mod http_server;
 pub mod tools;
+
+#[cfg(feature = "http")]
+pub use http_server::{HttpOptions, router, serve_http};
 
 use std::sync::Arc;
 
@@ -24,12 +29,39 @@ pub use tools::{BundleFacts, ToolDef, all_tools};
 /// Decides what each caller may see. The host implements it; okfkit only enforces the result.
 pub trait ScopeProvider: Send + Sync {
     /// The scope for the current request.
-    fn scope(&self) -> Scope;
+    fn scope(&self, request: &RequestInfo<'_>) -> Scope;
 }
 
 impl ScopeProvider for Scope {
-    fn scope(&self) -> Scope {
+    fn scope(&self, _request: &RequestInfo<'_>) -> Scope {
         self.clone()
+    }
+}
+
+impl<F: Fn(&RequestInfo<'_>) -> Scope + Send + Sync> ScopeProvider for F {
+    fn scope(&self, request: &RequestInfo<'_>) -> Scope {
+        self(request)
+    }
+}
+
+/// What okfkit knows about the caller of a tool, for [`ScopeProvider`].
+#[derive(Debug, Clone, Copy, Default)]
+pub struct RequestInfo<'a> {
+    /// HTTP request headers (MCP over HTTP); `None` over stdio.
+    pub headers: Option<&'a http::HeaderMap>,
+}
+
+impl RequestInfo<'_> {
+    /// A header value as text.
+    pub fn header(&self, name: &str) -> Option<&str> {
+        self.headers?.get(name)?.to_str().ok()
+    }
+
+    /// The token of an `Authorization: Bearer <token>` header.
+    pub fn bearer_token(&self) -> Option<&str> {
+        self.header("authorization")?
+            .strip_prefix("Bearer ")
+            .map(str::trim)
     }
 }
 
@@ -72,7 +104,7 @@ pub struct KbServer {
 impl KbServer {
     /// Builds a server for `bundle`. The tool list follows the bundle's capabilities.
     pub fn new(bundle: Bundle, scopes: Arc<dyn ScopeProvider>, options: &ServerOptions) -> Self {
-        let facts = BundleFacts::from_bundle(&bundle, &scopes.scope());
+        let facts = BundleFacts::from_bundle(&bundle, &scopes.scope(&RequestInfo::default()));
         let caps = bundle.capabilities();
         let tools = all_tools(&facts)
             .into_iter()
@@ -115,8 +147,18 @@ impl KbServer {
             .collect()
     }
 
-    /// Runs one tool call (blocking; the index is SQLite). Returns `(text, structured JSON)`.
+    /// Runs one tool call without request information (as over stdio). Blocking.
     pub fn call(&self, name: &str, args: Map<String, Value>) -> Result<(String, Value), String> {
+        self.call_as(name, args, &RequestInfo::default())
+    }
+
+    /// Runs one tool call for a request (blocking; the index is SQLite). Returns `(text, structured JSON)`.
+    pub fn call_as(
+        &self,
+        name: &str,
+        args: Map<String, Value>,
+        request: &RequestInfo<'_>,
+    ) -> Result<(String, Value), String> {
         let short = if self.prefix.is_empty() || name.starts_with("data_") {
             name
         } else {
@@ -126,7 +168,7 @@ impl KbServer {
         if !self.tools.iter().any(|t| t.name == short) {
             return Err(format!("unknown tool: {name}"));
         }
-        let scope = self.scopes.scope();
+        let scope = self.scopes.scope(request);
         let args = Value::Object(args);
         let err = |e: okfkit::Error| e.to_string();
         match short {
@@ -301,15 +343,28 @@ impl ServerHandler for KbServer {
     fn call_tool(
         &self,
         request: CallToolRequestParams,
-        _context: RequestContext<RoleServer>,
+        context: RequestContext<RoleServer>,
     ) -> impl Future<Output = Result<CallToolResponse, ErrorData>> + MaybeSendFuture + '_ {
         let server = self.clone();
+        // Over HTTP, rmcp hands us the request parts so the host can scope per caller.
+        let headers = context
+            .extensions
+            .get::<http::request::Parts>()
+            .map(|p| p.headers.clone());
         async move {
             let name = request.name.to_string();
             let args = request.arguments.unwrap_or_default();
-            let outcome = tokio::task::spawn_blocking(move || server.call(&name, args))
-                .await
-                .map_err(|e| ErrorData::internal_error(e.to_string(), None))?;
+            let outcome = tokio::task::spawn_blocking(move || {
+                server.call_as(
+                    &name,
+                    args,
+                    &RequestInfo {
+                        headers: headers.as_ref(),
+                    },
+                )
+            })
+            .await
+            .map_err(|e| ErrorData::internal_error(e.to_string(), None))?;
             let result = match outcome {
                 Ok((text, structured)) => {
                     let mut r = CallToolResult::success(vec![ContentBlock::text(text)]);

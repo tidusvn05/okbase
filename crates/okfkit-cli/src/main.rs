@@ -581,6 +581,9 @@ location: {}
             command:
                 McpCmd::Serve {
                     stdio: _,
+                    http,
+                    allow_host,
+                    token_env,
                     prefix,
                     disable,
                 },
@@ -591,7 +594,17 @@ location: {}
             let rt = tokio::runtime::Builder::new_multi_thread()
                 .enable_all()
                 .build()?;
-            rt.block_on(okfkit_mcp::serve_stdio(b, scopes, &options))?;
+            match http {
+                None => rt.block_on(okfkit_mcp::serve_stdio(b, scopes, &options))?,
+                Some(addr) => {
+                    let token = std::env::var(&token_env).ok().filter(|t| !t.is_empty());
+                    let http = okfkit_mcp::HttpOptions {
+                        token,
+                        allowed_hosts: allow_host,
+                    };
+                    rt.block_on(okfkit_mcp::serve_http(b, scopes, &options, &http, addr))?;
+                }
+            }
         }
         Command::Agent {
             command:
