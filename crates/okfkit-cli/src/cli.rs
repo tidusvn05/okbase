@@ -151,6 +151,11 @@ pub enum Command {
         #[arg(long, value_name = "CODE")]
         disable: Vec<String>,
     },
+    /// Read-only SQL over the bundle's spreadsheets (CSV, TSV, XLSX).
+    Data {
+        #[command(subcommand)]
+        command: DataCmd,
+    },
     /// MCP server.
     Mcp {
         #[command(subcommand)]
@@ -166,6 +171,26 @@ pub enum Command {
     /// Run an `okfkit-<name>` plugin from PATH.
     #[command(external_subcommand)]
     External(Vec<String>),
+}
+
+#[derive(Debug, Subcommand)]
+pub enum DataCmd {
+    /// List the dataset tables with columns and row counts.
+    Tables,
+    /// Run one read-only SELECT.
+    #[command(
+        after_help = "Example:\n  okfkit data sql \"SELECT region, SUM(revenue) FROM sales_2026 GROUP BY region\""
+    )]
+    Sql {
+        /// The query.
+        query: String,
+        /// Maximum rows returned.
+        #[arg(long, default_value_t = 100)]
+        max_rows: usize,
+        /// Time limit in seconds.
+        #[arg(long, default_value_t = 5)]
+        timeout: u64,
+    },
 }
 
 #[derive(Debug, Subcommand)]

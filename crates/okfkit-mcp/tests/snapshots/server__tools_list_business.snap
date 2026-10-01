@@ -295,6 +295,37 @@ expression: server.list()
     }
   },
   {
+    "name": "data_tables",
+    "description": "List SQL tables (imported spreadsheets: CSV, TSV, XLSX) with columns and row counts.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "data_query",
+    "description": "Run a read-only SQLite SELECT over the spreadsheet tables (inventory, price_list, sales_2026). Use aggregates (SUM, COUNT, GROUP BY) instead of reading rows. Max 100 rows returned.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "sql": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "sql"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
     "name": "kb_links",
     "description": "Links from a document to other documents, and backlinks to it. Use it to follow related documents.",
     "inputSchema": {

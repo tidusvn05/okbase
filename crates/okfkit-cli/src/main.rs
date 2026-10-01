@@ -13,7 +13,7 @@ use clap::Parser as _;
 use okfkit::{Bundle, OpenOptions, Scope, StateDir};
 use serde::Serialize;
 
-use cli::{AgentCmd, Cli, Command, FilterArgs, LintFormat, McpCmd};
+use cli::{AgentCmd, Cli, Command, DataCmd, FilterArgs, LintFormat, McpCmd};
 
 fn main() -> ExitCode {
     let cli = Cli::parse();
@@ -40,6 +40,12 @@ fn hint(e: &anyhow::Error) -> Option<&'static str> {
         Some("find ids with `okfkit list`, `okfkit catalog` or `okfkit grep PATTERN --files-only`")
     } else if msg.contains("invalid argument") {
         Some("see `okfkit help <command>` for the accepted values")
+    } else if msg.contains("SQL error") || msg.contains("query interrupted") {
+        Some(
+            "list tables and columns with `okfkit data tables`; only one SELECT (or WITH ... SELECT) is allowed",
+        )
+    } else if msg.contains("no datasets") {
+        Some("put CSV, TSV or XLSX files in the bundle (for example under data/)")
     } else if msg.contains("index database") {
         Some("the index may be corrupt; rebuild it with `okfkit index --rebuild`")
     } else {
@@ -282,6 +288,28 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 ExitCode::SUCCESS
             });
         }
+        Command::Data { command } => {
+            let b = open()?;
+            let scope = scope()?;
+            match command {
+                DataCmd::Tables => {
+                    let r = b.data_tables(&scope)?;
+                    emit(json, &r, || r.to_text())?;
+                }
+                DataCmd::Sql {
+                    query,
+                    max_rows,
+                    timeout,
+                } => {
+                    let limits = okfkit::DataLimits {
+                        max_rows,
+                        timeout: std::time::Duration::from_secs(timeout),
+                    };
+                    let r = b.data_query(&query, &limits, &scope)?;
+                    emit(json, &r, || r.to_text())?;
+                }
+            }
+        }
         Command::Mcp {
             command:
                 McpCmd::Serve {
@@ -374,9 +402,14 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 status: &'static str,
                 capabilities: Vec<&'static str>,
             }
-            let caps: Vec<&'static str> = Bundle::open_in_memory(Path::new("."))
+            let all: Vec<&'static str> = Bundle::open_in_memory(&bundle_dir)
                 .map(|b| b.capabilities().iter().collect())
                 .unwrap_or_default();
+            let data_on = all.contains(&okfkit::capability::DATA_SQL);
+            let caps: Vec<&'static str> = all
+                .into_iter()
+                .filter(|c| !c.starts_with("data."))
+                .collect();
             let modules = vec![
                 Module {
                     name: "core",
@@ -385,8 +418,16 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 },
                 Module {
                     name: "data",
-                    status: "not in this build (planned for v0.2)",
-                    capabilities: vec![],
+                    status: if data_on {
+                        "on"
+                    } else {
+                        "available; no CSV/TSV/XLSX files in this bundle"
+                    },
+                    capabilities: if data_on {
+                        vec![okfkit::capability::DATA_SQL]
+                    } else {
+                        vec![]
+                    },
                 },
                 Module {
                     name: "embed-local",

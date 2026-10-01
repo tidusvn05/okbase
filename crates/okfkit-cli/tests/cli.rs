@@ -273,3 +273,33 @@ fn mcp_serve_stdio() {
     child.kill().ok();
     child.wait().ok();
 }
+
+#[test]
+fn data_commands() {
+    let st = tempfile::tempdir().unwrap();
+    let t = json_of(okfkit("business", st.path()).args(["data", "tables"]));
+    assert_eq!(t["tables"].as_array().unwrap().len(), 3);
+    let q = json_of(okfkit("business", st.path()).args([
+        "data",
+        "sql",
+        "SELECT COUNT(*) AS n FROM sales_2026",
+    ]));
+    assert_eq!(q["rows"][0][0], 506);
+    let out = okfkit("business", st.path())
+        .args(["data", "sql", "DELETE FROM sales_2026"])
+        .output()
+        .unwrap();
+    assert_eq!(out.status.code(), Some(1));
+    assert!(String::from_utf8_lossy(&out.stderr).contains("hint: list tables"));
+    let hidden = okfkit("business", st.path())
+        .args([
+            "--deny",
+            "data/sales*",
+            "data",
+            "sql",
+            "SELECT 1 FROM sales_2026",
+        ])
+        .output()
+        .unwrap();
+    assert!(!hidden.status.success());
+}

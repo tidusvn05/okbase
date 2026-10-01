@@ -27,6 +27,8 @@ pub struct BundleFacts {
     pub types: Vec<String>,
     /// Frontmatter fields worth filtering or faceting on.
     pub fields: Vec<String>,
+    /// Dataset table names (module `data`).
+    pub tables: Vec<String>,
 }
 
 impl BundleFacts {
@@ -49,6 +51,10 @@ impl BundleFacts {
             langs,
             types: ranked(&stats.types),
             fields: frequent_fields(bundle, scope),
+            tables: bundle
+                .data_tables(scope)
+                .map(|t| t.tables.into_iter().map(|t| t.name).collect())
+                .unwrap_or_default(),
         }
     }
 }
@@ -217,6 +223,21 @@ pub fn all_tools(facts: &BundleFacts) -> Vec<ToolDef> {
                  Returns: total count, a table of matching documents (id, title, type, status, lang, updated, tags, other fields), optional facet counts and sum.{types_hint}{fields_hint}"
             ),
             input_schema: json!({"type": "object", "properties": query_props}),
+        },
+        ToolDef {
+            name: "data_tables",
+            capability: capability::DATA_SQL,
+            description: "List SQL tables (imported spreadsheets: CSV, TSV, XLSX) with columns and row counts.".into(),
+            input_schema: json!({"type": "object", "properties": {}}),
+        },
+        ToolDef {
+            name: "data_query",
+            capability: capability::DATA_SQL,
+            description: format!(
+                "Run a read-only SQLite SELECT over the spreadsheet tables{}. Use aggregates (SUM, COUNT, GROUP BY) instead of reading rows. Max 100 rows returned.",
+                if facts.tables.is_empty() { String::new() } else { format!(" ({})", facts.tables.join(", ")) }
+            ),
+            input_schema: json!({"type": "object", "properties": {"sql": {"type": "string"}}, "required": ["sql"]}),
         },
         ToolDef {
             name: "links",

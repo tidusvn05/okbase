@@ -86,8 +86,9 @@ impl KbServer {
         }
     }
 
+    /// `kb_<tool>`; `data_*` tools keep their own names.
     fn full_name(&self, name: &str) -> String {
-        if self.prefix.is_empty() {
+        if self.prefix.is_empty() || name.starts_with("data_") {
             name.to_owned()
         } else {
             format!("{}_{name}", self.prefix)
@@ -116,7 +117,7 @@ impl KbServer {
 
     /// Runs one tool call (blocking; the index is SQLite). Returns `(text, structured JSON)`.
     pub fn call(&self, name: &str, args: Map<String, Value>) -> Result<(String, Value), String> {
-        let short = if self.prefix.is_empty() {
+        let short = if self.prefix.is_empty() || name.starts_with("data_") {
             name
         } else {
             name.strip_prefix(&format!("{}_", self.prefix))
@@ -129,6 +130,21 @@ impl KbServer {
         let args = Value::Object(args);
         let err = |e: okfkit::Error| e.to_string();
         match short {
+            "data_tables" => {
+                let r = self.bundle.data_tables(&scope).map_err(err)?;
+                Ok((r.to_text(), to_json(&r)))
+            }
+            "data_query" => {
+                let sql = args
+                    .get("sql")
+                    .and_then(Value::as_str)
+                    .ok_or("missing `sql`")?;
+                let r = self
+                    .bundle
+                    .data_query(sql, &okfkit::DataLimits::default(), &scope)
+                    .map_err(err)?;
+                Ok((r.to_text(), to_json(&r)))
+            }
             "catalog" => {
                 let r = self
                     .bundle

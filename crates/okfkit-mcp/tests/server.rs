@@ -64,7 +64,9 @@ fn tools_list_snapshot() {
             "docs_list",
             "docs_grep",
             "docs_get",
-            "docs_query"
+            "docs_query",
+            "data_tables",
+            "data_query"
         ]
     );
 }
@@ -123,6 +125,8 @@ async fn json_rpc_session() {
             "kb_grep",
             "kb_get",
             "kb_query",
+            "data_tables",
+            "data_query",
             "kb_links"
         ]
     );
@@ -154,6 +158,21 @@ async fn json_rpc_session() {
             .unwrap()
             .contains("not found")
     );
+
+    send(json!({"jsonrpc": "2.0", "id": 6, "method": "tools/call", "params": {"name": "data_query", "arguments": {
+        "sql": "SELECT region, SUM(units) AS units FROM sales_2026 GROUP BY region ORDER BY region"}}}))
+    .await;
+    let d = rpc(&mut lines).await;
+    assert!(
+        d["result"]["content"][0]["text"]
+            .as_str()
+            .unwrap()
+            .starts_with("| region | units |\n| JP |"),
+        "{d}"
+    );
+    send(json!({"jsonrpc": "2.0", "id": 7, "method": "tools/call", "params": {"name": "data_query", "arguments": {"sql": "DROP TABLE sales_2026"}}}))
+    .await;
+    assert_eq!(rpc(&mut lines).await["result"]["isError"], true);
 
     send(json!({"jsonrpc": "2.0", "id": 5, "method": "tools/call", "params": {"name": "kb_grep", "arguments": {
         "pattern": "bảo hành|warranty", "files_only": true, "path": "policies/**"}}}))

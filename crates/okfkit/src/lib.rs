@@ -24,6 +24,10 @@ use std::sync::{Arc, Mutex, MutexGuard};
 
 pub use okfkit_analyze as analyze;
 pub use okfkit_core as core;
+pub use okfkit_data::{
+    Limits as DataLimits, QueryResult as DataQueryResult, Table as DataTable,
+    TablesResult as DataTables,
+};
 pub use okfkit_index::{IndexOptions, StateDir, SyncStats};
 pub use okfkit_lint::{Level, LintConfig, Report as LintReport};
 pub use okfkit_query::{
@@ -44,6 +48,12 @@ pub enum Error {
     /// Linting failed.
     #[error(transparent)]
     Lint(#[from] okfkit_lint::Error),
+    /// A dataset operation failed (including SQL errors and timeouts).
+    #[error(transparent)]
+    Data(#[from] okfkit_data::Error),
+    /// The bundle has no datasets, or the data module is off.
+    #[error("no datasets: the bundle has no CSV, TSV or XLSX files (or the data module is off)")]
+    NoDatasets,
     /// The bundle directory does not exist.
     #[error("bundle not found: {0} is not a directory")]
     NotADirectory(PathBuf),
@@ -100,6 +110,8 @@ pub mod capability {
     pub const LINKS: &str = "read.links";
     /// Lint.
     pub const LINT: &str = "maint.lint";
+    /// Read-only SQL over datasets (module `data`).
+    pub const DATA_SQL: &str = "data.sql";
 }
 
 /// The capabilities available for a bundle.
@@ -122,6 +134,10 @@ struct Inner {
     root: PathBuf,
     index: Mutex<okfkit_index::Index>,
     profile: Profile,
+    /// Dataset module, when the profile allows it and the bundle has CSV/TSV/XLSX files.
+    data: Option<okfkit_data::Data>,
+    /// Keeps the temporary state directory of an in-memory bundle alive.
+    _tmp: Option<tempfile::TempDir>,
 }
 
 /// An open knowledge bundle. Cheap to clone and safe to share between threads.
@@ -150,10 +166,20 @@ impl Bundle {
                 ..Default::default()
             },
         )?;
+        let data = (options.profile != Profile::Minimal && okfkit_data::Data::has_datasets(dir))
+            .then(|| {
+                index
+                    .db_path()
+                    .and_then(Path::parent)
+                    .map(|d| okfkit_data::Data::new(dir, &d.join(okfkit_data::DB_FILE)))
+            })
+            .flatten();
         Ok(Bundle(Arc::new(Inner {
             root: dir.to_owned(),
             index: Mutex::new(index),
             profile: options.profile,
+            data,
+            _tmp: None,
         })))
     }
 
@@ -163,10 +189,29 @@ impl Bundle {
             return Err(Error::NotADirectory(dir.to_owned()));
         }
         let index = okfkit_index::Index::open_in_memory(dir)?;
+        let (data, tmp) = if okfkit_data::Data::has_datasets(dir) {
+            let tmp = tempfile::tempdir().map_err(|e| {
+                Error::Data(okfkit_data::Error::Read {
+                    path: "temp dir".into(),
+                    message: e.to_string(),
+                })
+            })?;
+            (
+                Some(okfkit_data::Data::new(
+                    dir,
+                    &tmp.path().join(okfkit_data::DB_FILE),
+                )),
+                Some(tmp),
+            )
+        } else {
+            (None, None)
+        };
         Ok(Bundle(Arc::new(Inner {
             root: dir.to_owned(),
             index: Mutex::new(index),
             profile: Profile::Standard,
+            data,
+            _tmp: tmp,
         })))
     }
 
@@ -184,9 +229,34 @@ impl Bundle {
         self.0.index.lock().unwrap_or_else(|e| e.into_inner())
     }
 
-    /// Re-indexes changed files.
+    /// Re-indexes changed files (and re-imports changed datasets).
     pub fn sync(&self) -> Result<SyncStats, Error> {
-        Ok(self.index().sync()?)
+        let stats = self.index().sync()?;
+        if let Some(d) = &self.0.data {
+            d.sync()?;
+        }
+        Ok(stats)
+    }
+
+    fn datasets(&self) -> Result<&okfkit_data::Data, Error> {
+        self.0.data.as_ref().ok_or(Error::NoDatasets)
+    }
+
+    /// Dataset tables visible in the scope (module `data`).
+    pub fn data_tables(&self, scope: &Scope) -> Result<DataTables, Error> {
+        Ok(self.datasets()?.tables(&|p| scope.permits_path(p))?)
+    }
+
+    /// Runs one read-only SQL `SELECT` over the visible dataset tables (module `data`).
+    pub fn data_query(
+        &self,
+        sql: &str,
+        limits: &DataLimits,
+        scope: &Scope,
+    ) -> Result<DataQueryResult, Error> {
+        Ok(self
+            .datasets()?
+            .query(sql, limits, &|p| scope.permits_path(p))?)
     }
 
     /// Capabilities of the enabled modules.
@@ -195,6 +265,7 @@ impl Bundle {
         Capabilities(
             [GREP, GET, LIST, QUERY, CATALOG, LINKS, LINT]
                 .into_iter()
+                .chain(self.0.data.as_ref().map(|_| DATA_SQL))
                 .collect(),
         )
     }
