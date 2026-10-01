@@ -1,0 +1,466 @@
+{
+ "K-1": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K-3": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K-5": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K-7": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K-0": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K-4": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K-6": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K-2": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "KS-1": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "KS-3": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "KS-5": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "KS-7": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "KS-0": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "KS-4": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "KS-6": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "KS-2": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K-11": {
+  "key": "g01000",
+  "correct": true,
+  "reason": "12 months, current v2"
+ },
+ "K-47": {
+  "key": "g18919",
+  "correct": true,
+  "reason": "520 W matches"
+ },
+ "K-41": {
+  "key": "g27838",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "K-13": {
+  "key": "g36757",
+  "correct": true,
+  "reason": "2,000,000 from current v2"
+ },
+ "K-34": {
+  "key": "g45676",
+  "correct": true,
+  "reason": "Total matches exactly"
+ },
+ "K-33": {
+  "key": "g54595",
+  "correct": true,
+  "reason": "April 2026, 2,829,768,700 JPY match"
+ },
+ "K-12": {
+  "key": "g63514",
+  "correct": true,
+  "reason": "12 months, current v2"
+ },
+ "K-31": {
+  "key": "g72433",
+  "correct": true,
+  "reason": "94 matches"
+ },
+ "K-15": {
+  "key": "g81352",
+  "correct": true,
+  "reason": "6 months, current v2"
+ },
+ "K-24": {
+  "key": "g99271",
+  "correct": true,
+  "reason": "CS and Legal match"
+ },
+ "K-25": {
+  "key": "g108190",
+  "correct": true,
+  "reason": "Customer 139, 7 matches"
+ },
+ "K-43": {
+  "key": "g117109",
+  "correct": true,
+  "reason": "10 km/h matches"
+ },
+ "K-17": {
+  "key": "g06028",
+  "correct": true,
+  "reason": "12 matches expected"
+ },
+ "K-37": {
+  "key": "g14947",
+  "correct": true,
+  "reason": "53,500 matches"
+ },
+ "K-30": {
+  "key": "g23866",
+  "correct": true,
+  "reason": "47,825 matches"
+ },
+ "K-32": {
+  "key": "g32785",
+  "correct": true,
+  "reason": "47,887 matches"
+ },
+ "K-9": {
+  "key": "g41704",
+  "correct": true,
+  "reason": "14 days, current v2 doc"
+ },
+ "K-44": {
+  "key": "g59623",
+  "correct": true,
+  "reason": "30 days, correct contract"
+ },
+ "K-10": {
+  "key": "g68542",
+  "correct": true,
+  "reason": "5000 JPY from v2"
+ },
+ "K-22": {
+  "key": "g77461",
+  "correct": true,
+  "reason": "105 matches"
+ },
+ "K-40": {
+  "key": "g86380",
+  "correct": false,
+  "reason": "Cites different docs, not sop/warehouse/receiving"
+ },
+ "K-28": {
+  "key": "g95299",
+  "correct": false,
+  "reason": "Claims 126 customers; expected list has 123 distinct"
+ },
+ "K-38": {
+  "key": "g104218",
+  "correct": true,
+  "reason": "191,731 matches"
+ },
+ "K-21": {
+  "key": "g113137",
+  "correct": true,
+  "reason": "10,628,000,000 VND matches"
+ },
+ "K-42": {
+  "key": "g02056",
+  "correct": true,
+  "reason": "30 kg matches"
+ },
+ "K-35": {
+  "key": "g19975",
+  "correct": true,
+  "reason": "SKU-AI009, 406 match"
+ },
+ "K-19": {
+  "key": "g28894",
+  "correct": true,
+  "reason": "8 matches"
+ },
+ "K-8": {
+  "key": "g37813",
+  "correct": true,
+  "reason": "45 days from current v2"
+ },
+ "K-23": {
+  "key": "g46732",
+  "correct": true,
+  "reason": "230 matches"
+ },
+ "K-39": {
+  "key": "g55651",
+  "correct": true,
+  "reason": "230935 matches"
+ },
+ "K-45": {
+  "key": "g64570",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "K-16": {
+  "key": "g73489",
+  "correct": true,
+  "reason": "197 matches"
+ },
+ "K-29": {
+  "key": "g82408",
+  "correct": false,
+  "reason": "Lists only 4 of 18 drafts; says 14 others unnamed"
+ },
+ "K-36": {
+  "key": "g91327",
+  "correct": false,
+  "reason": "Gives both 191 and 198; ambiguous, expected 198 rows"
+ },
+ "K-26": {
+  "key": "g109246",
+  "correct": true,
+  "reason": "Same five categories"
+ },
+ "K-20": {
+  "key": "g118165",
+  "correct": true,
+  "reason": "Total 14 matches, though breakdown muddled"
+ },
+ "K-46": {
+  "key": "g07084",
+  "correct": true,
+  "reason": "1350 W matches"
+ },
+ "K-27": {
+  "key": "g16003",
+  "correct": true,
+  "reason": "Set CS, HR, IT, Warehouse matches"
+ },
+ "K-18": {
+  "key": "g24922",
+  "correct": true,
+  "reason": "32 matches as the main answer"
+ },
+ "K-14": {
+  "key": "g33841",
+  "correct": true,
+  "reason": "25,000 JPY from current v2"
+ },
+ "KS-11": {
+  "key": "g42760",
+  "correct": true,
+  "reason": "12 months from v2"
+ },
+ "KS-47": {
+  "key": "g51679",
+  "correct": true,
+  "reason": "520 W matches"
+ },
+ "KS-41": {
+  "key": "g69598",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "KS-13": {
+  "key": "g78517",
+  "correct": true,
+  "reason": "2,000,000 VND from v2"
+ },
+ "KS-34": {
+  "key": "g87436",
+  "correct": true,
+  "reason": "Total matches exactly"
+ },
+ "KS-33": {
+  "key": "g96355",
+  "correct": true,
+  "reason": "April 2026 and revenue match"
+ },
+ "KS-12": {
+  "key": "g105274",
+  "correct": true,
+  "reason": "12 months from v2"
+ },
+ "KS-31": {
+  "key": "g114193",
+  "correct": true,
+  "reason": "94 matches"
+ },
+ "KS-15": {
+  "key": "g03112",
+  "correct": true,
+  "reason": "6 months from v2, the current doc"
+ },
+ "KS-24": {
+  "key": "g12031",
+  "correct": true,
+  "reason": "CS and Legal match"
+ },
+ "KS-25": {
+  "key": "g29950",
+  "correct": true,
+  "reason": "Customer 139, 7 matches"
+ },
+ "KS-43": {
+  "key": "g38869",
+  "correct": true,
+  "reason": "10 km/h matches"
+ },
+ "KS-17": {
+  "key": "g47788",
+  "correct": true,
+  "reason": "12 matches"
+ },
+ "KS-37": {
+  "key": "g56707",
+  "correct": true,
+  "reason": "53500 JPY matches"
+ },
+ "KS-30": {
+  "key": "g65626",
+  "correct": true,
+  "reason": "47825 matches"
+ },
+ "KS-32": {
+  "key": "g74545",
+  "correct": true,
+  "reason": "47887 matches"
+ },
+ "KS-9": {
+  "key": "g83464",
+  "correct": false,
+  "reason": "No value given; expected 14 days"
+ },
+ "KS-44": {
+  "key": "g92383",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "KS-10": {
+  "key": "g101302",
+  "correct": true,
+  "reason": "5000 JPY from current v2"
+ },
+ "KS-22": {
+  "key": "g119221",
+  "correct": true,
+  "reason": "105 matches"
+ },
+ "KS-40": {
+  "key": "g08140",
+  "correct": true,
+  "reason": "24 hours matches"
+ },
+ "KS-28": {
+  "key": "g17059",
+  "correct": false,
+  "reason": "Gave 128 customers, expected ~120; list incomplete, not exact set"
+ },
+ "KS-38": {
+  "key": "g25978",
+  "correct": true,
+  "reason": "191731 matches"
+ },
+ "KS-21": {
+  "key": "g34897",
+  "correct": true,
+  "reason": "10,628,000,000 VND matches"
+ },
+ "KS-42": {
+  "key": "g43816",
+  "correct": true,
+  "reason": "30 kg matches"
+ },
+ "KS-35": {
+  "key": "g52735",
+  "correct": true,
+  "reason": "SKU-AI009, 406 matches"
+ },
+ "KS-19": {
+  "key": "g61654",
+  "correct": true,
+  "reason": "8 matches"
+ },
+ "KS-8": {
+  "key": "g79573",
+  "correct": true,
+  "reason": "45 days, current v2"
+ },
+ "KS-23": {
+  "key": "g88492",
+  "correct": true,
+  "reason": "230 matches"
+ },
+ "KS-39": {
+  "key": "g97411",
+  "correct": true,
+  "reason": "230935 matches"
+ },
+ "KS-45": {
+  "key": "g106330",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "KS-16": {
+  "key": "g115249",
+  "correct": true,
+  "reason": "197 matches"
+ },
+ "KS-29": {
+  "key": "g04168",
+  "correct": false,
+  "reason": "Only 4 of 18 expected; explicitly excluded 14 drafts"
+ },
+ "KS-36": {
+  "key": "g13087",
+  "correct": true,
+  "reason": "198 matches"
+ },
+ "KS-26": {
+  "key": "g22006",
+  "correct": true,
+  "reason": "Same five categories"
+ },
+ "KS-20": {
+  "key": "g39925",
+  "correct": true,
+  "reason": "14 matches"
+ },
+ "KS-46": {
+  "key": "g48844",
+  "correct": true,
+  "reason": "1350 W matches"
+ },
+ "KS-27": {
+  "key": "g57763",
+  "correct": true,
+  "reason": "CS, HR, IT, Warehouse match"
+ },
+ "KS-18": {
+  "key": "g66682",
+  "correct": true,
+  "reason": "32 matches"
+ },
+ "KS-14": {
+  "key": "g75601",
+  "correct": true,
+  "reason": "25000 JPY, current v2"
+ }
+}

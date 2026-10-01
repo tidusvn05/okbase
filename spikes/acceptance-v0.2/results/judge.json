@@ -1,0 +1,362 @@
+{
+ "L-A-16": {
+  "key": "x38240400",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three defaults stated correctly."
+ },
+ "L-R-13": {
+  "key": "x59948211",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present, no contradiction."
+ },
+ "L-A-4": {
+  "key": "x76943252",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, default terminal, side-effects warning all present."
+ },
+ "L-R-28": {
+  "key": "x11212033",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, bot messages only, other options listed."
+ },
+ "L-A-17": {
+  "key": "x87065054",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both stated."
+ },
+ "L-R-16": {
+  "key": "x33260085",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three defaults correct."
+ },
+ "L-R-21": {
+  "key": "x35224116",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "https://, /search, and cache key all stated."
+ },
+ "L-R-4": {
+  "key": "x20111047",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "L-A-2": {
+  "key": "x42263118",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Event id, 24 hours, restart persistence all stated."
+ },
+ "L-R-8": {
+  "key": "x47382909",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "/proc, boot ID/start ticks, no procps on Alpine."
+ },
+ "L-A-7": {
+  "key": "x158818010",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default steer and interrupt aborting run both correct."
+ },
+ "L-A-19": {
+  "key": "x224845211",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Correct cdpPort key and avoid shared cdpUrl."
+ },
+ "L-R-19": {
+  "key": "x21311870",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated; extra remote info harmless"
+ },
+ "L-A-29": {
+  "key": "x68964161",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly"
+ },
+ "L-R-25": {
+  "key": "x29413992",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Matches both facts"
+ },
+ "L-A-21": {
+  "key": "x18839703",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present"
+ },
+ "L-R-0": {
+  "key": "x82913914",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts including admin consent covered"
+ },
+ "L-A-27": {
+  "key": "x38188925",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, value, and default all stated"
+ },
+ "L-A-0": {
+  "key": "x39805676",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered"
+ },
+ "L-R-2": {
+  "key": "x92851377",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Bridge event id, 24h, restart persistence all stated"
+ },
+ "L-A-8": {
+  "key": "x31394238",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated"
+ },
+ "L-A-26": {
+  "key": "x64676709",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds DashScope default stated"
+ },
+ "L-R-17": {
+  "key": "x347320110",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call stated"
+ },
+ "L-A-28": {
+  "key": "x316045711",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default own, behavior, other options all correct"
+ },
+ "L-A-6": {
+  "key": "x44568700",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, set true/remove, no restart all stated"
+ },
+ "L-R-1": {
+  "key": "x73840121",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present"
+ },
+ "L-R-10": {
+  "key": "x34515382",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false under lmstudio provider; default enabled"
+ },
+ "L-A-3": {
+  "key": "x67353363",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Identifiers, no auto-send, raft check/send all present"
+ },
+ "L-R-27": {
+  "key": "x78381384",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, China value, intl default all stated"
+ },
+ "L-R-7": {
+  "key": "x72089455",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default, interrupt aborts and restarts"
+ },
+ "L-A-13": {
+  "key": "x39826496",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "dmPolicy disabled, exec deny/always, elevated disabled"
+ },
+ "L-A-1": {
+  "key": "x29599757",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present"
+ },
+ "L-A-15": {
+  "key": "x50388008",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Q&A, quick facts, thorough synthesis stated"
+ },
+ "L-A-11": {
+  "key": "x25077609",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix"
+ },
+ "L-A-9": {
+  "key": "x397617110",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated, extras not contradictory"
+ },
+ "L-R-22": {
+  "key": "x260948211",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing no prompts/messages/keys/paths sent; adds location info"
+ },
+ "L-A-20": {
+  "key": "x79251490",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated; extra detail not contradictory."
+ },
+ "L-A-12": {
+  "key": "x73266331",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both values stated correctly."
+ },
+ "L-R-15": {
+  "key": "x76059222",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-A-24": {
+  "key": "x21489453",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, standalone disabling, desktop app all stated."
+ },
+ "L-A-5": {
+  "key": "x50251974",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered."
+ },
+ "L-A-23": {
+  "key": "x83541635",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Trust domain, trusting people, separate gateways all stated."
+ },
+ "L-R-26": {
+  "key": "x71761386",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default stated."
+ },
+ "L-A-25": {
+  "key": "x58565847",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct."
+ },
+ "L-R-18": {
+  "key": "x34631758",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 ports and base+110 stated."
+ },
+ "L-R-5": {
+  "key": "x69178519",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered."
+ },
+ "L-R-9": {
+  "key": "x649404910",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "L-R-11": {
+  "key": "x120830911",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as-is, no lmstudio/ prefix."
+ },
+ "L-R-29": {
+  "key": "x23006580",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly."
+ },
+ "L-A-10": {
+  "key": "x11820141",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts present."
+ },
+ "L-A-22": {
+  "key": "x52794282",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Never states that no prompts, messages, keys or paths are sent."
+ },
+ "L-R-3": {
+  "key": "x79308663",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered."
+ },
+ "L-R-12": {
+  "key": "x34898714",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both values correct."
+ },
+ "L-R-14": {
+  "key": "x66307075",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local and omit apiKey."
+ },
+ "L-A-14": {
+  "key": "x80312746",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local and omit apiKey."
+ },
+ "L-R-23": {
+  "key": "x50613137",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered."
+ },
+ "L-R-6": {
+  "key": "x95949098",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, set true/remove, no restart."
+ },
+ "L-R-24": {
+  "key": "x15440489",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disables, use desktop app."
+ },
+ "L-R-20": {
+  "key": "x239731910",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, excerpts included."
+ },
+ "L-A-18": {
+  "key": "x943673711",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 ports and base+110."
+ }
+}
