@@ -1860,6 +1860,7 @@ dependencies = [
 name = "okfkit"
 version = "0.1.0-dev"
 dependencies = [
+ "blake3",
  "okfkit-analyze",
  "okfkit-core",
  "okfkit-data",

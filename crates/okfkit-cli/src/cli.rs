@@ -402,8 +402,88 @@ pub enum TuneCmd {
         #[arg(long)]
         run: Option<String>,
     },
+    /// Train a LoRA adapter on the run's questions (asks before downloading the Python environment).
+    #[command(
+        after_help = "Local: a private Python environment in the user cache (about 1 GB on CPU, 3 GB with a CUDA GPU),\ncreated on first use with uv or venv + pip; ~25 min per 500 pairs on a CPU.\nColab: writes a notebook to run on a free GPU; then `okfkit embed tune import <folder>`."
+    )]
+    Train {
+        /// Where to train.
+        #[arg(long, value_enum, default_value = "local")]
+        backend: TrainBackend,
+        /// Agree to create the Python environment (downloads packages).
+        #[arg(long)]
+        yes: bool,
+        /// Epochs.
+        #[arg(long, default_value_t = 2)]
+        epochs: usize,
+        /// Train even with fewer pairs than the standard asks for.
+        #[arg(long)]
+        allow_small: bool,
+        /// Run id [default: the newest].
+        #[arg(long)]
+        run: Option<String>,
+    },
+    /// Import an adapter trained elsewhere (a folder with adapter_config.json and adapter_model.safetensors).
+    Import {
+        /// Folder.
+        dir: PathBuf,
+        /// Run id [default: the newest].
+        #[arg(long)]
+        run: Option<String>,
+    },
+    /// Merge the adapter into EmbeddingGemma Q4 (ONNX) and install it as custom:<name>.
+    Export {
+        /// Model name [default: <bundle>-<run>].
+        #[arg(long)]
+        name: Option<String>,
+        /// Agree to create the Python environment (downloads packages).
+        #[arg(long)]
+        yes: bool,
+        /// Run id [default: the newest].
+        #[arg(long)]
+        run: Option<String>,
+    },
+    /// Compare the tuned model with the base model; records the gate for `activate`.
+    #[command(
+        after_help = "Questions: _meta/eval/questions.jsonl (written by people) if present, else the run's held-out set.\nThe gate passes when R@1 gains at least 2 points, cross-language R@1 does not drop, and R@1 on\nokfkit's built-in general set (vi/en/ja) drops by at most 1 point."
+    )]
+    Eval {
+        /// Run id [default: the newest].
+        #[arg(long)]
+        run: Option<String>,
+    },
+    /// Switch the bundle to the tuned model (okfkit.toml) and re-embed it.
+    Activate {
+        /// Write okfkit.toml (without it, only show what would change).
+        #[arg(long)]
+        write: bool,
+        /// Activate even though the gate did not pass (only with the user's consent).
+        #[arg(long)]
+        force: bool,
+        /// Do not re-embed now (it happens on the next `okfkit embed index`).
+        #[arg(long)]
+        no_index: bool,
+        /// Run id [default: the newest].
+        #[arg(long)]
+        run: Option<String>,
+    },
+    /// Restore the embedding setting from before the last activate.
+    Rollback {
+        /// Write okfkit.toml (without it, only show what would change).
+        #[arg(long)]
+        write: bool,
+    },
     /// List runs.
     Runs,
+}
+
+/// Where `tune train` runs.
+#[derive(Debug, Clone, Copy, ValueEnum)]
+pub enum TrainBackend {
+    /// This machine (CUDA GPU if present, else CPU).
+    Local,
+    /// A Colab notebook (free GPU).
+    Colab,
 }
 
 #[derive(Debug, Subcommand)]

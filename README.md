@@ -43,7 +43,7 @@ The defaults are backed by experiments (see [`spikes/`](spikes/README.md)). One 
 | Build | Contents | Size |
 |---|---|---|
 | `okfkit` (default) | Everything above except local embeddings; Japanese dictionary downloaded on first use (`okfkit dict install` for offline machines, `OKFKIT_OFFLINE=1` to disable) | ~23 MB |
-| `okfkit-full` (`--features full`) | Adds local embedding models (EmbeddingGemma 300M Q4, bge-m3 int8) and embeds the Japanese dictionary | ~96 MB |
+| `okfkit-full` (`--features full`) | Adds local embedding models (EmbeddingGemma 300M Q4, bge-m3 int8, your own ONNX models), fine-tuning, and embeds the Japanese dictionary | ~96 MB |
 
 Models are never bundled: `okfkit embed enable` records the choice (models with their own terms, such as Gemma, need `--accept-license`) and the first `okfkit embed index` downloads the model into the user cache.
 
@@ -53,6 +53,26 @@ okfkit embed index
 okfkit search "chính sách đổi trả"
 okfkit mcp serve --http                    # http://127.0.0.1:7331/mcp (token required off loopback)
 ```
+
+### Fine-tuning embeddings on a bundle
+
+When people ask in another language than the documents, a model tuned on the bundle helps most
+(spike S11: R@1 0.857 → 0.917, cross-language 0.815 → 0.92, after ONNX Q4 export). okfkit never
+calls an LLM: your agent writes the questions, okfkit checks them against a fixed standard,
+trains a LoRA adapter in a private Python environment (created on request), exports it as an
+ONNX model and switches only when it beats the base model. Ask your agent to "tune embeddings
+for this bundle" (skill `okfkit-tune`), or follow `okfkit embed tune guide`:
+
+```sh
+okfkit embed tune init --langs vi,ja,en     # sample passages, hold out 15% of documents
+okfkit embed tune next                      # a batch for the agent; then: okfkit embed tune submit <n> -
+okfkit embed tune check && okfkit embed tune train --yes   # or --backend colab for a free GPU
+okfkit embed tune export && okfkit embed tune eval         # base vs tuned, with a quality gate
+okfkit embed tune activate --write          # undo: okfkit embed tune rollback --write
+```
+
+Tuned models stay in your user cache (`okfkit embed models`); a model derived from EmbeddingGemma
+is under the Gemma Terms of Use.
 
 ## Documentation
 

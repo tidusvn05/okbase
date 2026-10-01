@@ -392,7 +392,7 @@ fn plan(profile: Profile, o: &AdviseOptions) -> Advice {
             ),
         );
     } else {
-        let mut why = "measure first; on its own documents a tuned model gained +6 R@1 (+10.5 cross-language) after Q4 export (S11)".to_owned();
+        let mut why = "on its own documents a tuned model gained +6 R@1 (+10.5 cross-language) after Q4 export (S11); the workflow measures it against the base model before switching".to_owned();
         if o.private {
             why.push_str(". Private bundle: question generation sends passages to your agent's LLM, so use a local model or skip");
         }
@@ -402,8 +402,8 @@ fn plan(profile: Profile, o: &AdviseOptions) -> Advice {
             title: "Fine-tune the embedding model on this bundle".into(),
             why,
             commands: needs_build(vec![
-                "okfkit embed eval --quick".into(),
-                "ask your agent: \"tune embeddings for this bundle\" (skill okfkit-tune), or: okfkit embed tune guide".into(),
+                "ask your agent: \"tune embeddings for this bundle\" (skill okfkit-tune)".into(),
+                "okfkit embed tune guide   # the steps, for agents without the skill".into(),
             ]),
         });
     }

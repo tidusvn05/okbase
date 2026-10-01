@@ -61,7 +61,7 @@ Recommended path
   2. [now]   Fix descriptions       okfkit lint --level L2   (41 docs; see skill okfkit-curate)
   3. [next]  Embeddings             users ask in vi/ja, docs are en → cross-language needs embeddings
                                     okfkit embed enable --model embeddinggemma-300m-q4
-  4. [maybe] Fine-tune              measure first: okfkit embed eval --quick
+  4. [maybe] Fine-tune              ask your agent: "tune embeddings for this bundle"
 Not needed: data (no tables), full-context (too large)
 ```
 
@@ -199,7 +199,7 @@ okfkit embed tune submit {batch} -
 | **Skill `okfkit-tune` (~30 dòng)** | Kích hoạt từ câu nói tự nhiên ("tune embedding", "tìm kiếm tiếng Việt kém") | — |
 
 Nội dung skill `okfkit-tune`:
-- Khi nào dùng; luôn chạy `okfkit advise` hoặc `okfkit embed eval --quick` trước.
+- Khi nào dùng; luôn chạy `okfkit advise` trước.
 - Hỏi người dùng trước khi gửi tài liệu cho LLM (private) và trước khi tải môi trường train.
 - Lặp `tune next` → viết JSONL → `tune submit` cho đến khi `status` báo xong; có thể dùng subagent cho các batch song song.
 - Không sửa bundle; không `--force` gate.

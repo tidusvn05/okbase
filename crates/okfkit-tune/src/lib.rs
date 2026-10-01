@@ -11,6 +11,8 @@
 
 #![forbid(unsafe_code)]
 
+#[cfg(feature = "train")]
+pub mod python;
 pub mod standard;
 
 use std::collections::{BTreeMap, HashSet};
@@ -679,6 +681,47 @@ impl Run {
     pub fn heldout_path(&self) -> PathBuf {
         self.dir.join("heldout.jsonl")
     }
+}
+
+/// A Colab notebook that trains the adapter on a GPU from `train_jsonl` and downloads it
+/// (the `colab` backend of `okfkit embed tune train`).
+pub fn colab_notebook(train_jsonl: &str, script: &str, requirements: &str) -> String {
+    let cell = |kind: &str, src: String| {
+        serde_json::json!({
+            "cell_type": kind, "metadata": {}, "source": src,
+            "outputs": if kind == "code" { serde_json::json!([]) } else { serde_json::Value::Null },
+            "execution_count": serde_json::Value::Null,
+        })
+    };
+    let pins: Vec<&str> = requirements
+        .lines()
+        .filter(|l| !l.starts_with('#') && !l.trim().is_empty())
+        .filter(|l| !l.starts_with("numpy")) // keep Colab's numpy, built for its torch
+        .collect();
+    let mut cells = vec![
+        cell("markdown", "# okfkit embed tune (GPU)\n\nRuntime → Change runtime type → T4 GPU, then Run all. \
+              The last cell downloads two files; put them in one folder and run \
+              `okfkit embed tune import <folder>`, then `okfkit embed tune export`.".into()),
+        cell("code", format!("!pip install -q unsloth==2026.9.14 {}", pins.join(" "))),
+        cell("code", format!("%%writefile okfkit_tune.py\n{script}")),
+        cell("code", format!("%%writefile train.jsonl\n{train_jsonl}")),
+        cell("code", "!python okfkit_tune.py train train.jsonl out".into()),
+        cell("code", "from google.colab import files\nfor f in ('adapter_config.json', 'adapter_model.safetensors'):\n    files.download(f'out/adapter/{f}')".into()),
+    ];
+    for c in &mut cells {
+        if c["cell_type"] == "markdown" {
+            c.as_object_mut().map(|o| {
+                o.remove("outputs");
+                o.remove("execution_count")
+            });
+        }
+    }
+    serde_json::to_string_pretty(&serde_json::json!({
+        "nbformat": 4, "nbformat_minor": 5,
+        "metadata": {"accelerator": "GPU", "kernelspec": {"name": "python3", "display_name": "Python 3"}},
+        "cells": cells,
+    }))
+    .unwrap_or_default()
 }
 
 /// The full guide for agents without the okfkit-tune skill (`okfkit embed tune guide`).

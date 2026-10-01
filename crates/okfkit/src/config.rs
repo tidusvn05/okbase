@@ -9,7 +9,8 @@ use crate::Error;
 pub const CONFIG_FILE: &str = "okfkit.toml";
 
 /// Where embeddings come from.
-#[derive(Debug, Clone, Default, PartialEq, Eq)]
+#[derive(Debug, Clone, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(tag = "kind", rename_all = "lowercase")]
 pub enum EmbedConfig {
     /// No embeddings (the default): lexical tools only.
     #[default]

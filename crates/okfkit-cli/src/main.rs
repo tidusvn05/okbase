@@ -15,7 +15,7 @@ use serde::Serialize;
 
 use cli::{
     AgentCmd, AudienceArg, Cli, Command, DataCmd, DictCmd, EmbedCmd, FilterArgs, LintFormat,
-    McpCmd, ModelsCmd, TuneCmd,
+    McpCmd, ModelsCmd, TrainBackend, TuneCmd,
 };
 
 fn main() -> ExitCode {
@@ -645,7 +645,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 emit(json, &report, || report.to_text())?;
             }
             EmbedCmd::Tune { command } => {
-                if let Some(code) = tune_command(command, json, &open, &scope)? {
+                if let Some(code) = tune_command(command, json, &state_dir, &open, &scope)? {
                     return Ok(code);
                 }
             }
@@ -1048,6 +1048,7 @@ fn ensure_license(info: &okfkit::ModelInfo, accept: bool) -> Result<()> {
 fn tune_command(
     command: TuneCmd,
     json: bool,
+    state_dir: &StateDir,
     open: &dyn Fn() -> Result<Bundle>,
     scope: &dyn Fn() -> Result<Scope>,
 ) -> Result<Option<ExitCode>> {
@@ -1178,6 +1179,161 @@ fn tune_command(
                 return Ok(Some(ExitCode::from(1)));
             }
         }
+        TuneCmd::Train {
+            backend,
+            yes,
+            epochs,
+            allow_small,
+            run,
+        } => {
+            let b = open()?;
+            let run = b.tune_run(run.as_deref())?;
+            let st = okfkit::tune::check_trainable(&run, allow_small)?;
+            match backend {
+                TrainBackend::Colab => {
+                    let nb = colab(&run)?;
+                    let msg = format!(
+                        "wrote {}\nopen it in Colab (File → Upload notebook), pick a T4 GPU and Run all; \
+                         then put the two downloaded files in a folder and run\n  okfkit embed tune import <folder>\n  okfkit embed tune export\n",
+                        nb.display()
+                    );
+                    emit(
+                        json,
+                        &serde_json::json!({"notebook": nb, "next": "okfkit embed tune import <folder>"}),
+                        || msg,
+                    )?;
+                }
+                TrainBackend::Local => {
+                    let env = tune_env(yes)?;
+                    eprintln!(
+                        "training on {} pairs ({}); this takes a while on a CPU",
+                        st.train_pairs,
+                        if env.gpu { "CUDA GPU" } else { "CPU" }
+                    );
+                    let adapter = train_local(&run, &env, epochs)?;
+                    emit(
+                        json,
+                        &serde_json::json!({"adapter": adapter, "next": "okfkit embed tune export"}),
+                        || {
+                            format!(
+                                "adapter: {}\nnext: okfkit embed tune export\n",
+                                adapter.display()
+                            )
+                        },
+                    )?;
+                }
+            }
+        }
+        TuneCmd::Import { dir, run } => {
+            let b = open()?;
+            let run = b.tune_run(run.as_deref())?;
+            let to = okfkit::tune::import_adapter(&run, &dir)?;
+            emit(
+                json,
+                &serde_json::json!({"adapter": to, "next": "okfkit embed tune export"}),
+                || {
+                    format!(
+                        "adapter imported into {}\nnext: okfkit embed tune export\n",
+                        to.display()
+                    )
+                },
+            )?;
+        }
+        TuneCmd::Export { name, yes, run } => {
+            let b = open()?;
+            let run = b.tune_run(run.as_deref())?;
+            let env = tune_env(yes)?;
+            let model = export_model(&run, &env, b.root(), name.as_deref())?;
+            let id = format!("custom:{}", model.manifest.name);
+            emit(
+                json,
+                &serde_json::json!({"model": id, "dir": model.dir, "next": "okfkit embed tune eval"}),
+                || {
+                    format!(
+                        "installed {id}\nnext: okfkit embed tune eval   (compares it with the base model on held-out questions)\n"
+                    )
+                },
+            )?;
+        }
+        TuneCmd::Eval { run } => {
+            let b = open()?;
+            let run = b.tune_run(run.as_deref())?;
+            let gate = okfkit::tune::evaluate_run(
+                b.root(),
+                state_dir.clone(),
+                &run,
+                &scope()?,
+                &mut |m, d, n| eprint!("\r{m}: embedding {d}/{n} chunks   "),
+            )?;
+            eprintln!();
+            emit(json, &gate, || {
+                format!(
+                    "{}next: {}\n",
+                    gate.to_text(),
+                    if gate.passed {
+                        "okfkit embed tune activate --write"
+                    } else {
+                        "keep the base model (or write more/better questions in a new run)"
+                    }
+                )
+            })?;
+        }
+        TuneCmd::Activate {
+            write,
+            force,
+            no_index,
+            run,
+        } => {
+            let b = open()?;
+            let run = b.tune_run(run.as_deref())?;
+            if !write {
+                let gate = okfkit::tune::recorded_gate(&run);
+                let model =
+                    okfkit::tune::exported_model(&run).unwrap_or_else(|| "(not exported)".into());
+                println!(
+                    "would set [embed] model = \"{model}\" in okfkit.toml (gate: {}); add --write to do it",
+                    gate.map_or("not evaluated".into(), |g| if g.passed {
+                        "passed".to_owned()
+                    } else {
+                        "failed".to_owned()
+                    })
+                );
+                return Ok(Some(ExitCode::from(1)));
+            }
+            let model = okfkit::tune::activate(&b, &run, force)?;
+            eprintln!(
+                "okfkit.toml: [embed] model = \"{model}\" (undo: okfkit embed tune rollback --write)"
+            );
+            if !no_index {
+                let b = open()?;
+                let st = b.embed_sync(&mut |d, n| eprint!("\rembedding {d}/{n} chunks   "))?;
+                eprintln!();
+                emit(json, &st, || {
+                    format!(
+                        "model: {}\nembedded: {}/{} chunks\n",
+                        st.model, st.embedded, st.chunks
+                    )
+                })?;
+            }
+        }
+        TuneCmd::Rollback { write } => {
+            let b = open()?;
+            if !write {
+                println!(
+                    "would restore the embedding setting saved by the last activate; add --write to do it"
+                );
+                return Ok(Some(ExitCode::from(1)));
+            }
+            let prev = okfkit::tune::rollback(&b)?;
+            let what = match &prev {
+                okfkit::config::EmbedConfig::Off => "embeddings off".to_owned(),
+                okfkit::config::EmbedConfig::Local { model } => format!("model {model}"),
+                okfkit::config::EmbedConfig::Api { model, .. } => format!("API model {model}"),
+            };
+            eprintln!(
+                "okfkit.toml restored: {what}; run `okfkit embed index` if vectors are missing"
+            );
+        }
         TuneCmd::Runs => {
             let b = open()?;
             let runs = b.tune_runs()?;
@@ -1211,4 +1367,82 @@ fn tune_status_text(st: &okfkit::tune::TuneStatus) -> String {
         st.ready,
         st.next
     )
+}
+
+#[cfg(feature = "embed-tune")]
+type TuneEnv = okfkit::tune::PyEnv;
+#[cfg(not(feature = "embed-tune"))]
+struct TuneEnv {
+    gpu: bool,
+}
+
+#[cfg(not(feature = "embed-tune"))]
+const NO_TUNE: &str =
+    "training is not in this build: use okfkit-full (cargo install okfkit-cli --features full)";
+
+/// The training environment; creates it only with `--yes` (it downloads packages).
+#[cfg(feature = "embed-tune")]
+fn tune_env(yes: bool) -> Result<TuneEnv> {
+    let mut log = |l: &str| eprintln!("  {l}");
+    if let Some(env) = okfkit::tune::python_env(false, &mut log)? {
+        return Ok(env);
+    }
+    if !yes {
+        bail!(
+            "training needs a private Python environment ({}) in the user cache; \
+             ask the user, then run again with --yes",
+            okfkit::tune::PYTHON_DOWNLOAD_HINT
+        );
+    }
+    okfkit::tune::python_env(true, &mut log)?.context("creating the Python environment")
+}
+
+#[cfg(not(feature = "embed-tune"))]
+fn tune_env(_yes: bool) -> Result<TuneEnv> {
+    bail!(NO_TUNE)
+}
+
+#[cfg(feature = "embed-tune")]
+fn train_local(run: &okfkit::tune::Run, env: &TuneEnv, epochs: usize) -> Result<PathBuf> {
+    Ok(okfkit::tune::train(run, env, epochs, &mut |l| {
+        eprintln!("  {l}")
+    })?)
+}
+
+#[cfg(not(feature = "embed-tune"))]
+fn train_local(_: &okfkit::tune::Run, env: &TuneEnv, _: usize) -> Result<PathBuf> {
+    let _ = env.gpu;
+    bail!(NO_TUNE)
+}
+
+#[cfg(feature = "embed-tune")]
+fn colab(run: &okfkit::tune::Run) -> Result<PathBuf> {
+    Ok(okfkit::tune::colab_notebook(run)?)
+}
+
+#[cfg(not(feature = "embed-tune"))]
+fn colab(_: &okfkit::tune::Run) -> Result<PathBuf> {
+    bail!(NO_TUNE)
+}
+
+#[cfg(feature = "embed-tune")]
+fn export_model(
+    run: &okfkit::tune::Run,
+    env: &TuneEnv,
+    root: &Path,
+    name: Option<&str>,
+) -> Result<okfkit::CustomModel> {
+    Ok(okfkit::tune::export(run, env, root, name, &mut |l| {
+        eprintln!("  {l}")
+    })?)
+}
+
+#[cfg(not(feature = "embed-tune"))]
+fn export_model(
+    _: &okfkit::tune::Run,
+    _: &TuneEnv,
+    _: &Path,
+    _: Option<&str>,
+) -> Result<okfkit::CustomModel> {
+    bail!(NO_TUNE)
 }

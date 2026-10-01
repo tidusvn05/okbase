@@ -26,5 +26,10 @@ serde_json.workspace = true
 rusqlite.workspace = true
 blake3.workspace = true
 
+[features]
+default = []
+## Train and export through a private Python environment (okfkit-full).
+train = []
+
 [dev-dependencies]
 tempfile.workspace = true
