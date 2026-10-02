@@ -590,11 +590,30 @@ fn agent_scenarios_many_bundles_status_uninstall_clean() {
         c
     };
     // One bundle for both agents in this project.
-    let out = stdout(&mut cmd(&a, &["agent", "install", "--claude", "--codex"]));
+    let out = stdout(&mut cmd(
+        &a,
+        &[
+            "--deny",
+            "drafts/**",
+            "agent",
+            "install",
+            "--claude",
+            "--codex",
+        ],
+    ));
     assert!(
         out.contains("Claude Code:") && out.contains("Codex:"),
         "{out}"
     );
+    // The path filter is part of the server's arguments, so the agent sees the same scope.
+    let mcp = std::fs::read_to_string(project.join(".mcp.json")).unwrap();
+    assert!(
+        mcp.contains("\"--deny\"") && mcp.contains("drafts/**"),
+        "{mcp}"
+    );
+    // AGENTS.md written for Codex is not a document of the bundle.
+    let st = json_of(&mut cmd(&project, &["status"]));
+    assert!(st.to_string().contains("\"docs\""), "{st}");
     // A second bundle with the default name is refused (nothing is overwritten)…
     let out = cmd(&b, &["agent", "install", "--claude"]).output().unwrap();
     assert!(!out.status.success());

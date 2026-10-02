@@ -1,6 +1,6 @@
 # Kế hoạch: onboarding qua agent (agent-friendly setup)
 
-Trạng thái: **đã chốt, đang triển khai** (2026-10-02). Bổ sung cho `PLAN.md` và `PLAN-advise-tune.md`.
+Trạng thái: **O0–O4 xong, O5 xong với Claude (Codex chờ)** (2026-10-02; kết quả ở §6). Bổ sung cho `PLAN.md` và `PLAN-advise-tune.md`.
 
 ## 0. Mục tiêu
 
@@ -143,3 +143,16 @@ Viết một lần, trong binary:
 3. `agent install` cấp project: agent chỉ báo trước, không cần hỏi; `--user` phải hỏi.
 4. Chưa phát hành binary (đang phát triển). Sau này mở mã nguồn và publish crates.io, nên bootstrap
    dùng `cargo install okfkit-cli` (sau khi publish) và tạm thời `cargo install --git <repo>` / `--path`.
+
+## 6. Triển khai
+
+| Phase | Commit | Ghi chú |
+|---|---|---|
+| O0 | `c07acae` | Index tự đồng bộ trước mỗi lần gọi tool (quá 2 giây); search tự embed tối đa 64 chunk mới. Codex 0.159 đọc `<project>/.codex/config.toml` cho project đã được trust (đã kiểm chứng), nên `--codex` giờ cài theo project |
+| O1–O2 | `903a1f5` | Mã lỗi, JSON lỗi, mã thoát 3/4, JSON cho lệnh ghi; `okfkit onboard` (run/ask/tell, `--goal`); `help --agent`; danh mục consent |
+| O3 | `ee9d65c` | `okfkit doctor`, kèm lượt gọi MCP thật |
+| O4 | `6167059` | README "For agents", `llms.txt`, skill `okfkit-setup`, khối AGENTS.md trỏ tới `onboard`; test giữ các bản hướng dẫn thống nhất |
+| O5 | (commit này) | S13 với Claude: 3/3 tự thiết lập, 0 lần tự thêm cờ đồng ý (`spikes/onboarding/RESULTS.md`). Sửa 3 lỗi do agent phát hiện. Codex chưa chạy |
+
+Khác với kế hoạch: trường `next` có ở lệnh thiết lập, lỗi và các lệnh `onboard/doctor/tune`. Lệnh
+đọc giữ nguyên JSON của tool MCP (luật AGENTS.md: schema `--json` = đầu ra tool MCP).

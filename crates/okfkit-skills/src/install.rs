@@ -161,13 +161,19 @@ fn shell_join(argv: &[String]) -> String {
 
 /// Arguments that start the okfkit MCP server for the bundle.
 pub fn server_args(cx: &SkillContext) -> Vec<String> {
-    vec![
-        "--bundle".into(),
-        cx.bundle.display().to_string(),
-        "mcp".into(),
-        "serve".into(),
-        "--stdio".into(),
-    ]
+    let mut args = vec!["--bundle".into(), cx.bundle.display().to_string()];
+    for g in &cx.allow {
+        args.extend(["--allow".into(), g.clone()]);
+    }
+    for g in &cx.deny {
+        args.extend(["--deny".into(), g.clone()]);
+    }
+    args.extend(["mcp".into(), "serve".into(), "--stdio".into()]);
+    // The tool names the skills mention must be the server's.
+    if cx.prefix != "kb" {
+        args.extend(["--prefix".into(), cx.prefix.clone()]);
+    }
+    args
 }
 
 fn slug(name: &str) -> String {

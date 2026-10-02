@@ -100,6 +100,10 @@ pub struct SkillContext {
     pub prefix: String,
     /// Available capabilities (`read.grep`, `data.sql`, `embed.search`, …).
     pub capabilities: Vec<String>,
+    /// Path filters the server applies (`--allow` / `--deny` globs), kept in its arguments.
+    pub allow: Vec<String>,
+    /// See `allow`.
+    pub deny: Vec<String>,
 }
 
 /// A rendered skill.
@@ -268,6 +272,8 @@ mod tests {
             bundle: "/kb".into(),
             prefix: "kb".into(),
             capabilities: caps.iter().map(|c| (*c).to_owned()).collect(),
+            allow: vec![],
+            deny: vec![],
         }
     }
 

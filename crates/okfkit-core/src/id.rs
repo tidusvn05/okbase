@@ -8,6 +8,11 @@ use crate::Error;
 /// Reserved filenames that are never concept documents (OKF §3.1).
 pub const RESERVED_FILES: [&str; 2] = ["index.md", "log.md"];
 
+/// Instruction files for agent CLIs at the bundle root (Codex, Claude Code, Gemini CLI). They
+/// tell agents how to work, they are not knowledge, and `okfkit agent install` may write them,
+/// so okfkit never indexes or lints them.
+pub const AGENT_FILES: [&str; 3] = ["AGENTS.md", "CLAUDE.md", "GEMINI.md"];
+
 /// A concept ID: the bundle-relative path of the file with `/` separators and without `.md`.
 #[derive(
     Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, serde::Serialize, serde::Deserialize,

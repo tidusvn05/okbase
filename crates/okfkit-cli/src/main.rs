@@ -37,6 +37,7 @@ fn main() -> ExitCode {
 fn run(cli: Cli) -> Result<ExitCode> {
     let json = cli.json;
     let state_arg = cli.state_dir.clone();
+    let filters = (cli.allow.clone(), cli.deny.clone());
     let bundle_dir = cli.bundle.clone().unwrap_or_else(|| PathBuf::from("."));
     let state_dir = match cli.state_dir.as_deref() {
         None | Some("auto") => StateDir::Auto,
@@ -1098,6 +1099,8 @@ location: {}
                                 bundle: PathBuf::from(&url),
                                 prefix,
                                 capabilities: vec!["remote".into()],
+                                allow: vec![],
+                                deny: vec![],
                             },
                         ),
                         None => {
@@ -1121,6 +1124,8 @@ location: {}
                                     bundle: abs(&bundle_dir),
                                     prefix,
                                     capabilities: caps,
+                                    allow: filters.0.clone(),
+                                    deny: filters.1.clone(),
                                 },
                             )
                         }

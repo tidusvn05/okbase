@@ -68,8 +68,9 @@ impl Concept {
 
 /// Lists the `.md` files of a bundle as sorted, `/`-separated relative paths.
 ///
-/// Skips hidden files and directories (such as `.git` and `.okfkit`) and does not
-/// follow symbolic links, so the walk never leaves the bundle.
+/// Skips hidden files and directories (such as `.git` and `.okfkit`) and agent instruction
+/// files at the root ([`crate::id::AGENT_FILES`]), and does not follow symbolic links, so the
+/// walk never leaves the bundle.
 pub fn discover(root: &Path) -> Result<Vec<PathBuf>, Error> {
     let mut out = Vec::new();
     let mut stack = vec![PathBuf::new()];
@@ -95,7 +96,10 @@ pub fn discover(root: &Path) -> Result<Vec<PathBuf>, Error> {
             })?;
             if ft.is_dir() {
                 stack.push(rel.join(name));
-            } else if ft.is_file() && name.ends_with(".md") {
+            } else if ft.is_file()
+                && name.ends_with(".md")
+                && !(rel.as_os_str().is_empty() && crate::id::AGENT_FILES.contains(&name))
+            {
                 out.push(rel.join(name));
             }
         }
@@ -107,6 +111,23 @@ pub fn discover(root: &Path) -> Result<Vec<PathBuf>, Error> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn discover_skips_agent_files_at_the_root() {
+        let tmp = tempfile::tempdir().unwrap();
+        for f in ["AGENTS.md", "CLAUDE.md", "a.md", "docs/AGENTS.md"] {
+            let p = tmp.path().join(f);
+            std::fs::create_dir_all(p.parent().unwrap()).unwrap();
+            std::fs::write(p, "x").unwrap();
+        }
+        let found: Vec<String> = discover(tmp.path())
+            .unwrap()
+            .iter()
+            .map(|p| p.to_string_lossy().replace('\\', "/"))
+            .collect();
+        // Only the root ones are agent instructions; a docs page named AGENTS.md is knowledge.
+        assert_eq!(found, ["a.md", "docs/AGENTS.md"]);
+    }
 
     #[test]
     fn parse_render() {

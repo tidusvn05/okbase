@@ -18,6 +18,8 @@ fn opts(agent: Agent, target: Target, home: &Path, bundle: &Path) -> InstallOpti
             bundle: bundle.to_owned(),
             prefix: "kb".into(),
             capabilities: vec!["read.grep".into(), "read.query".into()],
+            allow: vec![],
+            deny: vec![],
         },
         replace: false,
     }
@@ -29,6 +31,8 @@ fn rendered_skill_snapshot() {
         bundle: "/srv/kb".into(),
         prefix: "kb".into(),
         capabilities: vec!["read.grep".into()],
+        allow: vec![],
+        deny: vec![],
     };
     let skills = builtin_skills(&cx);
     assert_eq!(
@@ -240,6 +244,14 @@ fn two_bundles_side_by_side_and_conflicts() {
         serde_json::from_str(&fs::read_to_string(project.join(".mcp.json")).unwrap()).unwrap();
     assert_eq!(mcp["mcpServers"]["okfkit"]["args"][1], "/kb/policies");
     assert_eq!(mcp["mcpServers"]["okfkit-docs"]["args"][1], "/kb/docs");
+    // The server runs with the prefix the skill names.
+    let docs_args = mcp["mcpServers"]["okfkit-docs"]["args"].to_string();
+    assert!(docs_args.ends_with(r#""--prefix","docs"]"#), "{docs_args}");
+    assert!(
+        !mcp["mcpServers"]["okfkit"]["args"]
+            .to_string()
+            .contains("--prefix")
+    );
     let skill =
         fs::read_to_string(project.join(".claude/skills/okfkit-answer-docs/SKILL.md")).unwrap();
     assert!(
