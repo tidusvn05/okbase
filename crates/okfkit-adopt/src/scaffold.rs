@@ -163,6 +163,8 @@ pub struct NewOptions {
     pub tags: Vec<String>,
     /// Language [default: the first of `okfkit.toml` langs, else en].
     pub lang: Option<String>,
+    /// Source documents this one is distilled from (bundle-relative paths).
+    pub sources: Vec<String>,
     /// Today (`YYYY-MM-DD`).
     pub today: String,
 }
@@ -283,6 +285,17 @@ pub fn new_doc(root: &Path, o: &NewOptions) -> Result<NewDoc, Error> {
                 .join(", ")
         );
     }
+    if !o.sources.is_empty() {
+        let _ = writeln!(
+            fm,
+            "sources: [{}]",
+            o.sources
+                .iter()
+                .map(|t| yaml_str(t))
+                .collect::<Vec<_>>()
+                .join(", ")
+        );
+    }
     for f in &to_fill {
         let _ = writeln!(
             fm,
@@ -394,6 +407,7 @@ mod tests {
                 dir: None,
                 tags: vec![],
                 lang: None,
+                sources: vec!["manuals/returns.pdf".into()],
                 today: "2026-10-02".into(),
             },
         )
@@ -454,6 +468,7 @@ mod tests {
                     dir: None,
                     tags: vec![],
                     lang: None,
+                    sources: vec![],
                     today: "x".into()
                 }
             )

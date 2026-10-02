@@ -133,6 +133,9 @@ pub enum Command {
         /// Language [default: the first in okfkit.toml].
         #[arg(long)]
         lang: Option<String>,
+        /// Source document it is distilled from (repeatable; e.g. manuals/returns.pdf).
+        #[arg(long = "source", value_name = "PATH")]
+        sources: Vec<String>,
     },
     /// What kind of folder this is and which folders in it should be bundles (read-only).
     #[command(

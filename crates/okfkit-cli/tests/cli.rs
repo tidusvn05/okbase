@@ -1198,3 +1198,56 @@ fn import_reads_directly_then_writes_markdown_safely() {
     let r = json_of(&mut run(&["import", "status"]));
     assert_eq!(r["orphans"][0], "sources/wiki/returns.html.md");
 }
+
+#[test]
+fn onboard_and_doctor_on_a_folder_of_source_documents() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("home");
+    let kb = tmp.path().join("kb");
+    std::fs::create_dir_all(&home).unwrap();
+    std::fs::create_dir_all(&kb).unwrap();
+    std::fs::write(kb.join("returns.html"), "<html><body><main><h1>Returns</h1><p>Customers may return products within 30 days.</p></main></body></html>").unwrap();
+    std::fs::write(kb.join("whiteboard.png"), b"\x89PNG\r\n\x1a\n").unwrap();
+    let run = |args: &[&str]| {
+        let mut c = Command::cargo_bin("okfkit").unwrap();
+        c.env("HOME", &home)
+            .env("XDG_CONFIG_HOME", home.join(".config"))
+            .env("XDG_CACHE_HOME", home.join(".cache"))
+            .env("PATH", "/usr/bin:/bin")
+            .arg("-b")
+            .arg(&kb)
+            .arg("--state-dir")
+            .arg(tmp.path().join("st"))
+            .args(args);
+        c
+    };
+    let scan = json_of(&mut run(&["scan"]));
+    assert_eq!(scan["kind"], "non-markdown");
+    assert_eq!(scan["candidates"][0]["sources"], 2);
+    let p = json_of(&mut run(&["onboard"]));
+    assert!(p["done"].to_string().contains("2 source documents"), "{p}");
+    let ocr = p["steps"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|s| s["id"] == "ocr")
+        .expect("ocr step");
+    assert_eq!(ocr["kind"], "ask");
+    assert!(ocr["question"].as_str().unwrap().contains("model provider"));
+    // The agent transcribes the image; it becomes searchable and the step disappears.
+    let next = json_of(&mut run(&["import", "ocr-next"]));
+    assert_eq!(
+        (next["path"].as_str(), next["page"].as_u64()),
+        (Some("whiteboard.png"), Some(1))
+    );
+    stdout(
+        run(&["import", "ocr-submit", "whiteboard.png", "--page", "1", "-"])
+            .write_stdin("Sprint goal: ship the returns page by Friday.\n"),
+    );
+    let g = json_of(&mut run(&["grep", "sprint goal", "--files-only"]));
+    assert_eq!(g["docs"][0]["id"], "whiteboard.png");
+    let p = json_of(&mut run(&["onboard"]));
+    assert!(!p["steps"].to_string().contains("\"ocr\""), "{p}");
+    let d = json_of(&mut run(&["doctor"]));
+    assert!(!d["checks"].to_string().contains("have no text"), "{d}");
+}

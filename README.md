@@ -41,6 +41,7 @@ okfkit -b ./docs-okf lint --level L1
 ## What it does
 
 - **Works on existing OKF bundles** with zero configuration, read-only by default.
+- **Reads PDF, Word, PowerPoint, OpenDocument, EPUB and HTML directly** (page-cited, scans listed for an agent to transcribe), and imports them as markdown when you want to edit.
 - **Agent tools** over MCP (stdio or HTTP) and the CLI (`--json` everywhere):
   - `kb_grep`: multilingual, accent-insensitive regex search;
   - `kb_query`: metadata filters, facets and sums;
@@ -48,7 +49,7 @@ okfkit -b ./docs-okf lint --level L1
   - `kb_catalog`: a prompt-ready catalog; `kb_links`: links and backlinks;
   - `data_tables` / `data_query`: read-only SQL over the bundle's CSV/TSV/XLSX sheets;
   - `kb_search`: semantic search (opt-in embeddings).
-- **Agent Skills** (`okfkit-answer`, `okfkit-curate`, `okfkit-adopt`, `okfkit-author`, `okfkit-tune`, `okfkit-setup`) that teach agents the most effective way to use the bundle.
+- **Agent Skills** (`okfkit-answer`, `okfkit-curate`, `okfkit-adopt`, `okfkit-author`, `okfkit-import`, `okfkit-tune`, `okfkit-setup`) that teach agents the most effective way to use the bundle.
 - **Standard and lint:** quality levels L0–L3, text/JSON/SARIF output, `--fix-safe`; `okfkit vocab` for a tag vocabulary.
 - **Every read takes a `Scope`** from the host (path rules, metadata filters, per HTTP caller); okfkit never decides permissions itself.
 

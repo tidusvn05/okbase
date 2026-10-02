@@ -77,6 +77,10 @@ pub struct State {
     pub tune_started: bool,
     /// What the folder is (`okfkit scan`).
     pub scan: Option<okfkit::scan::Scan>,
+    /// Source documents read directly (PDF, Word…).
+    pub sources: usize,
+    /// Source documents with pages that have no text: (path, pages).
+    pub pending_ocr: Vec<(String, usize)>,
 }
 
 /// Goals that shorten the plan.
@@ -214,8 +218,8 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
     }
     if let Some(sc) = st.scan.as_ref().filter(|_| st.bundle_exists) {
         use okfkit::scan::FolderKind;
-        match sc.kind {
-            FolderKind::Empty => {
+        if sc.kind == FolderKind::Empty {
+            {
                 steps.push(ask(
                     "init",
                     "Start a knowledge base here",
@@ -235,28 +239,6 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
                     rules: RULES.to_vec(),
                 };
             }
-            FolderKind::NonMarkdown => {
-                let files = sc
-                    .other_documents
-                    .iter()
-                    .map(|(k, v)| format!("{v} {k}"))
-                    .collect::<Vec<_>>()
-                    .join(", ");
-                steps.push(tell(
-                    "import",
-                    "Documents need converting to markdown",
-                    "okfkit reads markdown; importing PDF, Word and HTML is planned for v0.4",
-                    format!("This folder has {files} but no markdown. Until okfkit can import them (v0.4), convert them to markdown (for example with pandoc) into a new folder, then run `okfkit -b <that folder> onboard`."),
-                ));
-                return Plan {
-                    bundle: st.bundle.clone(),
-                    summary: format!("documents without markdown ({files})"),
-                    done,
-                    steps,
-                    rules: RULES.to_vec(),
-                };
-            }
-            _ => {}
         }
         let elsewhere = match sc.recommended.map(|i| &sc.candidates[i]) {
             Some(c) if c.path != "." => Some(vec![c]),
@@ -568,6 +550,30 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
             }
             _ => {}
         }
+    }
+    if goal == Goal::Answer && st.sources > 0 {
+        done.push(format!(
+            "{} source documents (PDF, Word, PowerPoint, HTML…) are searchable as they are",
+            st.sources
+        ));
+    }
+    if goal == Goal::Answer && !st.pending_ocr.is_empty() {
+        let pages: usize = st.pending_ocr.iter().map(|(_, n)| n).sum();
+        steps.push(ask(
+            "ocr",
+            &format!("Transcribe {pages} pages that have no text"),
+            "scanned pages and images have no extractable text, so nothing on them can be found; okfkit has no OCR engine and never sends files to an OCR service",
+            format!(
+                "{} documents have {pages} scanned pages or images without text ({}). May I read those pages and transcribe them? Their content goes to my model provider; nothing in the folder changes.",
+                st.pending_ocr.len(),
+                st.pending_ocr.iter().take(3).map(|(p, _)| p.as_str()).collect::<Vec<_>>().join(", ")
+            ),
+            vec![
+                choice("yes", &["okfkit import ocr-next   (repeat until nothing is left; follow the okfkit-import skill)"]),
+                choice("no", &[]),
+            ],
+            &["okfkit's state directory only"],
+        ));
     }
     if !steps.is_empty() {
         steps.push(run(

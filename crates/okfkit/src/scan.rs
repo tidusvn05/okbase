@@ -15,7 +15,7 @@ use okfkit_core::{Concept, FrontmatterState, Profile};
 pub enum FolderKind {
     /// No markdown and no documents okfkit could import.
     Empty,
-    /// No markdown, but PDF / Word / HTML files (import is planned for v0.4).
+    /// No markdown, only source documents (PDF, Word, PowerPoint, HTML…), read directly.
     NonMarkdown,
     /// A software repository; knowledge lives in some of its folders.
     SoftwareRepo,
@@ -37,6 +37,8 @@ pub enum CandidateKind {
     Vault,
     /// Plain markdown.
     Markdown,
+    /// Source documents only (PDF, Word, PowerPoint, HTML…), read directly.
+    Sources,
 }
 
 /// A folder that could be a bundle.
@@ -50,6 +52,8 @@ pub struct Candidate {
     pub docs: usize,
     /// Documents with a valid frontmatter `type`.
     pub conformant: usize,
+    /// Source documents read directly (PDF, Word, PowerPoint, HTML…).
+    pub sources: usize,
     /// Documents that need fixing (missing or invalid frontmatter), first 20.
     pub to_fix: Vec<String>,
     /// okfkit level.
@@ -113,7 +117,6 @@ const DOC_DIRS: &[&str] = &[
 const CODE_EXTS: &[&str] = &[
     "rs", "py", "js", "ts", "tsx", "go", "java", "kt", "rb", "php", "cs", "swift", "c", "cpp",
 ];
-const OTHER_DOCS: &[&str] = &["pdf", "docx", "doc", "html", "htm", "odt", "pptx", "txt"];
 
 fn is_listing_name(p: &Path) -> bool {
     matches!(
@@ -145,11 +148,15 @@ fn measure(root: &Path, dir: &Path, reason: &str) -> Result<Option<Candidate>, E
             to_fix.push(rel.to_string_lossy().replace('\\', "/"));
         }
     }
-    if docs == 0 {
+    let sources = okfkit_core::walk(dir, okfkit_index::source_extensions())
+        .map(|v| v.len())
+        .unwrap_or(0);
+    if docs == 0 && sources == 0 {
         return Ok(None);
     }
-    let share = conformant as f64 / docs as f64;
+    let share = conformant as f64 / docs.max(1) as f64;
     let kind = match profile {
+        _ if docs == 0 => CandidateKind::Sources,
         Profile::Vault => CandidateKind::Vault,
         Profile::DocsSite(_) => CandidateKind::DocsSite,
         Profile::Okf if share >= 0.8 => CandidateKind::Okf,
@@ -170,6 +177,7 @@ fn measure(root: &Path, dir: &Path, reason: &str) -> Result<Option<Candidate>, E
         kind,
         docs,
         conformant,
+        sources,
         to_fix,
         level,
         profile: profile.name(),
@@ -220,7 +228,7 @@ pub fn scan(root: &Path) -> Result<Scan, Error> {
     let walk = |exts: &[&str]| okfkit_core::walk(root, exts).unwrap_or_default();
     let markdown = walk(&["md"]).len();
     let mut other_documents = BTreeMap::new();
-    for f in walk(OTHER_DOCS) {
+    for f in walk(okfkit_index::source_extensions()) {
         if let Some(ext) = f.extension().and_then(|e| e.to_str()) {
             *other_documents.entry(ext.to_lowercase()).or_default() += 1;
         }
@@ -287,6 +295,7 @@ pub fn scan(root: &Path) -> Result<Scan, Error> {
         CandidateKind::PartialOkf => 1,
         CandidateKind::DocsSite | CandidateKind::Vault => 2,
         CandidateKind::Markdown => 3,
+        CandidateKind::Sources => 4,
     };
     candidates.sort_by(|a, b| rank(a).cmp(&rank(b)).then(b.docs.cmp(&a.docs)));
     let recommended = match candidates.len() {
@@ -323,7 +332,7 @@ impl Scan {
     pub fn to_text(&self) -> String {
         let kind = match self.kind {
             FolderKind::Empty => "empty (no documents)",
-            FolderKind::NonMarkdown => "documents, but no markdown",
+            FolderKind::NonMarkdown => "source documents only (read directly)",
             FolderKind::SoftwareRepo => "software repository",
             FolderKind::Markdown => "markdown folder",
         };

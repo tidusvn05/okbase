@@ -214,6 +214,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
             dir,
             tags,
             lang,
+            sources,
         } => {
             if !bundle_dir.is_dir() {
                 bail!(
@@ -230,6 +231,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     dir,
                     tags,
                     lang,
+                    sources,
                     today: today(),
                 },
             )?;
@@ -297,8 +299,13 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 &bundle_dir,
                 OpenOptions::default().state_dir(state_dir.clone()),
             )?;
+            let mut sync_skipped: Vec<(String, String)> = Vec::new();
             match b.sync() {
                 Ok(st) if st.skipped.is_empty() => {
+                    checks.push(check("index", Status::Ok, "up to date", None));
+                }
+                Ok(st) if st.skipped.iter().all(|(p, _)| okfkit::is_source_path(p)) => {
+                    sync_skipped = st.skipped;
                     checks.push(check("index", Status::Ok, "up to date", None));
                 }
                 Ok(st) => checks.push(check(
@@ -438,6 +445,38 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     }
                 }
             }
+            // Source documents read directly.
+            let failed: Vec<(String, String)> = sync_skipped
+                .iter()
+                .filter(|(p, _)| okfkit::is_source_path(p))
+                .cloned()
+                .collect();
+            if !failed.is_empty() {
+                checks.push(check(
+                    "sources",
+                    Status::Warn,
+                    format!(
+                        "{} source documents cannot be read (first: {}: {})",
+                        failed.len(),
+                        failed[0].0,
+                        failed[0].1
+                    ),
+                    Some("remove the password or replace the file; `okfkit import` lists them all"),
+                ));
+            }
+            let pending = b.pending_ocr()?;
+            if !pending.is_empty() {
+                let pages: usize = pending.iter().map(|p| p.pages.len()).sum();
+                checks.push(check(
+                    "sources",
+                    Status::Warn,
+                    format!(
+                        "{pages} pages in {} documents have no text (scans or images)",
+                        pending.len()
+                    ),
+                    Some("okfkit import ocr-next (an agent transcribes them; ask the user first)"),
+                ));
+            }
             // Japanese dictionary.
             if p.langs
                 .get("ja")
@@ -558,12 +597,10 @@ fn run(cli: Cli) -> Result<ExitCode> {
             // empty folder or a folder of PDFs gets no index of its own.
             let here_is_bundle = if st.bundle_exists && goal != onboard::Goal::Remove {
                 let sc = okfkit::scan::scan(&bundle_dir)?;
-                let elsewhere = matches!(
-                    sc.kind,
-                    okfkit::scan::FolderKind::Empty | okfkit::scan::FolderKind::NonMarkdown
-                ) || sc
-                    .recommended
-                    .map_or(sc.candidates.len() > 1, |i| sc.candidates[i].path != ".");
+                let elsewhere = sc.kind == okfkit::scan::FolderKind::Empty
+                    || sc
+                        .recommended
+                        .map_or(sc.candidates.len() > 1, |i| sc.candidates[i].path != ".");
                 st.scan = Some(sc);
                 !elsewhere
             } else {
@@ -578,6 +615,16 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 };
                 st.advice = Some(b.advise(&options, &scope()?)?);
                 st.tune_started = b.tune_runs().is_ok_and(|r| !r.is_empty());
+                st.sources = st
+                    .scan
+                    .as_ref()
+                    .and_then(|sc| sc.candidates.iter().find(|c| c.path == "."))
+                    .map_or(0, |c| c.sources);
+                st.pending_ocr = b
+                    .pending_ocr()?
+                    .into_iter()
+                    .map(|p| (p.path, p.pages.len()))
+                    .collect();
                 if let Some(reg) = okfkit_skills::registry_path() {
                     for i in okfkit_skills::load_registry(&reg).unwrap_or_default() {
                         if i.source != st.bundle {

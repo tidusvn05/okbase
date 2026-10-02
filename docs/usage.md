@@ -236,10 +236,31 @@ okfkit scan          # empty? software repository? docs site? OKF, partly OKF? P
 | **OKF with a few broken files** | Lists the files to fix; nothing else changes | `okfkit adopt --only a.md --only b.md --write`, then `okfkit lint --level L1` for what needs a hand fix (invalid YAML is reported with its line) |
 | **A repository whose `knowledge/` feeds a bot** | Uses `knowledge/`; the rest of the repository is ignored | developers: `okfkit -b knowledge agent install`; the bot: see below; CI: see below |
 | **An Obsidian vault** | Profile `vault`: notes stay as they are, no `index.md` files are created | `okfkit agent install`; `adopt --write` only adds frontmatter |
-| **PDF / Word / HTML only** | Says so; import arrives in v0.4 | convert to markdown (e.g. `pandoc`) into a new folder for now |
+| **PDF / Word / PowerPoint / HTML** (alone or next to markdown) | Reads them **directly**: searchable as they are, nothing written; pages without text (scans, images) are listed | nothing to do; `okfkit import ocr-next` lets an agent transcribe scans; `okfkit import --write` makes markdown copies to edit |
 
 Several candidates (a monorepo with many `docs/` folders) → `onboard` asks which one; install
 each with its own `--name`.
+
+### Source documents (PDF, Office, HTML)
+
+okfkit converts PDF (page by page), Word (`.docx`, `.doc`), PowerPoint, OpenDocument, RTF, EPUB,
+HTML, `.txt`/`.rst`/`.adoc` and images while indexing, with
+[anydoc](https://github.com/firecrawl/anydoc), pdf-inspector and htmd: no models, no services,
+nothing written to your folder. Spreadsheets (`.csv`, `.xlsx`, `.xls`, `.ods`…) are tables for SQL
+instead (`okfkit data tables`).
+
+```sh
+okfkit import                  # what each file becomes; pages without text; files that cannot be read
+okfkit import ocr-next         # a page without text, for your agent to read and transcribe
+okfkit import ocr-submit manual.pdf --page 3 -   # the transcription (stored in okfkit's state, not your folder)
+okfkit import --write          # markdown copies in sources/ to edit or curate (re-runs keep your edits)
+okfkit new --type Policy "Returns" --description "…" --source manual.pdf   # a clean document distilled from a source
+```
+
+Ids keep the extension (`manuals/printer.pdf`) and PDF pages are marked `<!-- page N -->`, so answers
+can cite the file and the page. Multi-column PDF pages are listed because their reading order may
+be wrong. Scanned pages are never sent to an OCR service; a multimodal agent transcribes them only
+if you agree.
 
 ### Profiles
 
@@ -391,6 +412,8 @@ okfkit is read-only by default. These commands write, and only where stated:
 | `agent install` / `agent uninstall` | agent configuration, skills, AGENTS.md block (`--print` to preview); a record in `~/.config/okfkit/installs.json` |
 | `clean --yes` | deletes okfkit's own index or user cache (never documents) |
 | `init`, `new` | a new bundle skeleton; one new document plus its folder listing (never overwrites) |
+| `import --write` | markdown copies of source documents in `sources/` (never overwrites edited ones without `--force`) |
+| `import ocr-submit` | a page transcription in okfkit's state directory (not in the bundle) |
 | `embed index`, `embed models add`, `tune …` | the user cache (models, vectors, runs, Python environment) |
 
 ### Everyday commands

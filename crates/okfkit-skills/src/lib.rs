@@ -39,6 +39,10 @@ pub const BUILTIN: &[(&str, &str)] = &[
         "okfkit-author",
         include_str!("../skills/okfkit-author/SKILL.md"),
     ),
+    (
+        "okfkit-import",
+        include_str!("../skills/okfkit-import/SKILL.md"),
+    ),
 ];
 
 /// Where projects keep their own skills.

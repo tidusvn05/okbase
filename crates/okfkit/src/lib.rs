@@ -505,6 +505,11 @@ impl Bundle {
         Ok(okfkit_query::links(&self.index(), id, scope)?)
     }
 
+    /// Source documents with pages that still need a transcription (`okfkit import ocr-next`).
+    pub fn pending_ocr(&self) -> Result<Vec<okfkit_index::PendingOcr>, Error> {
+        Ok(self.index().sources_needing_ocr()?)
+    }
+
     /// Statistics of the visible bundle.
     pub fn stats(&self, scope: &Scope) -> Result<Stats, Error> {
         Ok(okfkit_query::stats(&self.index(), scope)?)
@@ -514,6 +519,11 @@ impl Bundle {
     pub fn lint(&self, config: &LintConfig) -> Result<LintReport, Error> {
         Ok(okfkit_lint::lint(&self.0.root, config)?)
     }
+}
+
+/// Whether a bundle-relative path is a source document read directly (PDF, Word, HTML…).
+pub fn is_source_path(path: &str) -> bool {
+    okfkit_index::is_source(std::path::Path::new(path))
 }
 
 #[cfg(test)]

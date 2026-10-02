@@ -1,6 +1,6 @@
 # Kế hoạch: import tài liệu (PDF, Office, HTML) — v0.4
 
-Trạng thái: **đã chốt, đang triển khai** (2026-10-02). Bằng chứng: `spikes/import-bench/RESULTS.md`
+Trạng thái: **I1–I4 xong** (2026-10-02); I5 (chạy thử với agent) ở §7. Bằng chứng: `spikes/import-bench/RESULTS.md`
 (S10-lite). Thay mục "v0.4 — Import + source" của `PLAN.md` §13 về phần chuyển đổi (connector
 Google Drive/Sheets vẫn để sau).
 
@@ -83,3 +83,12 @@ Google Drive/Sheets vẫn để sau).
 | I3 | `import --plan/--write/status`, tách tài liệu dài, chống ghi đè bản đã sửa | Chạy lại an toàn; bản trùng bị loại |
 | I4 | OCR nhờ agent; skill `okfkit-import`; tích hợp scan/onboard/doctor | Agent hoàn tất một thư mục có trang scan |
 | I5 | Chạy thử với agent thật (thư mục PDF/DOCX/HTML hỗn hợp) | Agent trả lời đúng câu hỏi từ tài liệu nguồn, trích dẫn file và trang |
+
+## 7. Triển khai
+
+| Phase | Commit | Ghi chú |
+|---|---|---|
+| I1 | `90f8603`, `d0eba82` | `okfkit-convert`. PDF dùng thẳng `pdf-inspector` từng trang (trang scan không làm mất cả tài liệu). Data đọc thêm xlsm/xlsb/xls/ods. `ttf-parser` (không còn bảo trì, phụ thuộc của pdf-inspector) được ghi nhận trong `deny.toml` |
+| I2 | `3bf8b0d` | Đọc trực tiếp trong index; bảng `sources`; ghép văn bản OCR; nhường chỗ cho bản đã import ngay trong cùng lượt đồng bộ |
+| I3 | `f9e9979` | `import` (kế hoạch), `--write` (tách > 6k token, giữ bản sửa tay, báo mồ côi), `status`, `ocr-next`/`ocr-submit` |
+| I4 | (commit này) | `scan` đếm tài liệu nguồn; `onboard` hỏi về OCR (consent); `doctor` báo file không đọc được và trang chưa có chữ; skill `okfkit-import`; `new --source`; tài liệu |
