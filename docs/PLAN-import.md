@@ -92,4 +92,5 @@ Google Drive/Sheets vẫn để sau).
 | I2 | `3bf8b0d` | Đọc trực tiếp trong index; bảng `sources`; ghép văn bản OCR; nhường chỗ cho bản đã import ngay trong cùng lượt đồng bộ |
 | I3 | `f9e9979` | `import` (kế hoạch), `--write` (tách > 6k token, giữ bản sửa tay, báo mồ côi), `status`, `ocr-next`/`ocr-submit` |
 | I4 | `7354629` | `scan` đếm tài liệu nguồn; `onboard` hỏi về OCR (consent); `doctor` báo file không đọc được và trang chưa có chữ; skill `okfkit-import`; `new --source`; tài liệu |
-| Sau I5 | (commit này) | `import ocr-next` xuất ảnh của trang scan (JPEG giữ nguyên; ảnh Flate, kể cả PNG predictor và đen trắng 1-bit, thành PNG); fax/JBIG2 thì hướng dẫn mở thẳng trang PDF. Sửa deadlock khoá index trong `ocr_next` |
+| Sau I5 | `0ea2323` | `import ocr-next` xuất ảnh của trang scan (JPEG giữ nguyên; ảnh Flate, kể cả PNG predictor và đen trắng 1-bit, thành PNG); fax/JBIG2 thì hướng dẫn mở thẳng trang PDF. Sửa deadlock khoá index trong `ocr_next` |
+| S14 | (commit này) | Benchmark `spikes/page-image-bench`: xuất ảnh nhúng nhanh hơn render (JPEG 1–3 ms so với 0.2–0.95 s; Flate 2–4×), không mất chi tiết, token ảnh như nhau. Còn thiếu CCITT G4 (đề xuất crate `fax`) |
