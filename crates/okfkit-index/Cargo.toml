@@ -24,6 +24,12 @@ serde.workspace = true
 serde_json.workspace = true
 rusqlite.workspace = true
 blake3.workspace = true
+okfkit-convert = { workspace = true, optional = true }
+
+[features]
+default = ["import"]
+## Read PDF, Word, PowerPoint, OpenDocument, RTF, EPUB and HTML directly (okfkit-convert, ~10 MB).
+import = ["dep:okfkit-convert"]
 
 [dev-dependencies]
 tempfile.workspace = true

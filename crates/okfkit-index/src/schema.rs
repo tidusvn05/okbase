@@ -1,7 +1,7 @@
 //! SQLite schema v1.
 
 /// Bumped whenever the schema or the meaning of stored data changes; a mismatch triggers a full rebuild.
-pub const SCHEMA_VERSION: i64 = 1;
+pub const SCHEMA_VERSION: i64 = 2;
 
 pub(crate) const CREATE: &str = r#"
 CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
@@ -85,4 +85,17 @@ CREATE INDEX chunks_doc ON chunks(doc_id, ord);
 
 -- Analyzed terms of `title > heading` plus the chunk text; rowid = chunks.id.
 CREATE VIRTUAL TABLE chunks_fts USING fts5(terms, tokenize = 'unicode61 remove_diacritics 0');
+
+-- Source documents read directly (PDF, Word, HTML…): conversion outcome per file.
+CREATE TABLE sources (
+    path        TEXT PRIMARY KEY,           -- bundle-relative path of the original
+    hash        TEXT NOT NULL,              -- blake3 of the original bytes
+    status      TEXT NOT NULL,              -- ok | partial (pages need OCR) | error
+    format      TEXT,
+    pages       INTEGER,
+    needs_ocr   TEXT NOT NULL DEFAULT '[]', -- JSON array of 1-based pages
+    columns     TEXT NOT NULL DEFAULT '[]', -- JSON array of multi-column pages
+    detail      TEXT,                       -- converter, or the error
+    converted   TEXT NOT NULL DEFAULT ''    -- the doc id when converted
+);
 "#;

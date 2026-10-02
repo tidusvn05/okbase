@@ -17,6 +17,7 @@
 pub mod chunk;
 mod error;
 pub mod schema;
+mod sources;
 mod state;
 
 use std::collections::HashMap;
@@ -34,6 +35,7 @@ pub use chunk::{Chunk, chunk_body};
 pub use error::Error;
 pub use okfkit_analyze::estimate_tokens;
 pub use schema::SCHEMA_VERSION;
+pub use sources::{extensions as source_extensions, is_source, load_ocr, ocr_dir};
 pub use state::{BUNDLE_STATE_DIR, StateDir, cache_dir};
 
 /// File name of the index database inside the state directory.
@@ -165,6 +167,14 @@ impl Index {
         self.db_path.as_deref()
     }
 
+    /// Forgets the stored content hash of a document so the next sync reads it again (for example
+    /// after a page transcription was added for a source).
+    pub fn invalidate(&self, id: &str) -> Result<(), Error> {
+        self.conn
+            .execute("UPDATE docs SET hash = '', size = -1 WHERE id = ?1", [id])?;
+        Ok(())
+    }
+
     /// The SQLite connection, for read queries (see `okfkit-query`).
     pub fn connection(&self) -> &Connection {
         &self.conn
@@ -173,7 +183,23 @@ impl Index {
     /// Brings the index up to date with the files on disk.
     pub fn sync(&mut self) -> Result<SyncStats, Error> {
         let mut stats = SyncStats::default();
-        let paths = discover(&self.root)?;
+        let mut paths = discover(&self.root)?;
+        // Source documents (PDF, Word…) are read directly, unless their markdown was imported.
+        let materialized: std::collections::HashSet<String> = {
+            let mut st = self.conn.prepare(
+                "SELECT json_extract(frontmatter, '$.source.path') FROM docs \
+                 WHERE path LIKE '%.md' AND json_extract(frontmatter, '$.source.path') IS NOT NULL",
+            )?;
+            st.query_map([], |r| r.get::<_, String>(0))?
+                .collect::<Result<_, _>>()?
+        };
+        if !sources::extensions().is_empty() {
+            paths.extend(
+                okfkit_core::walk(&self.root, sources::extensions())?
+                    .into_iter()
+                    .filter(|p| !materialized.contains(&p.to_string_lossy().replace('\\', "/"))),
+            );
+        }
         let known: HashMap<String, (String, i64, i64)> = {
             let mut st = self
                 .conn
@@ -187,7 +213,12 @@ impl Index {
         let mut touched = Vec::new();
         let mut seen = std::collections::HashSet::new();
         for rel in &paths {
-            let Ok(id) = ConceptId::from_path(rel) else {
+            let id = if sources::is_source(rel) {
+                ConceptId::new(rel.to_string_lossy().replace('\\', "/"))
+            } else {
+                ConceptId::from_path(rel)
+            };
+            let Ok(id) = id else {
                 continue;
             };
             let full = self.root.join(rel);
@@ -205,14 +236,27 @@ impl Index {
             }
         }
 
-        let prepared = prepare_all(&self.root, todo, self.content_index);
+        let state = self
+            .db_path
+            .as_deref()
+            .and_then(Path::parent)
+            .map(Path::to_owned);
+        let prepared = prepare_all(&self.root, todo, self.content_index, state.as_deref());
         let vocab = Vocabulary::load(&self.root, &self.vocabulary)
             .ok()
             .flatten();
         let tx = self.conn.transaction()?;
         for item in prepared {
             match item {
-                Prepared::Failed { path, reason } => stats.skipped.push((path, reason)),
+                Prepared::Failed { path, reason } => {
+                    if sources::is_source(Path::new(&path)) {
+                        tx.execute(
+                            "INSERT OR REPLACE INTO sources (path, hash, status, detail) VALUES (?1, '', 'error', ?2)",
+                            params![path, reason],
+                        )?;
+                    }
+                    stats.skipped.push((path, reason))
+                }
                 Prepared::SameContent { id, size, mtime } => {
                     touched.push(id.clone());
                     tx.execute(
@@ -237,8 +281,22 @@ impl Index {
                 [id],
             )?;
             tx.execute("DELETE FROM docs WHERE id = ?1", [id])?;
+            tx.execute("DELETE FROM sources WHERE converted = ?1", [id])?;
             stats.removed += 1;
         }
+        // Sources whose markdown was imported in this sync give way right away.
+        tx.execute(
+            "DELETE FROM chunks_fts WHERE rowid IN (SELECT c.id FROM chunks c JOIN docs d ON d.id = c.doc_id \
+             WHERE d.path NOT LIKE '%.md' AND d.path IN (SELECT json_extract(frontmatter, '$.source.path') \
+             FROM docs WHERE path LIKE '%.md' AND json_extract(frontmatter, '$.source.path') IS NOT NULL))",
+            [],
+        )?;
+        let dropped = tx.execute(
+            "DELETE FROM docs WHERE path NOT LIKE '%.md' AND path IN (SELECT json_extract(frontmatter, '$.source.path') \
+             FROM docs WHERE path LIKE '%.md' AND json_extract(frontmatter, '$.source.path') IS NOT NULL)",
+            [],
+        )?;
+        stats.removed += dropped;
         resolve_wikilinks(&tx)?;
         canonicalize_tags(&tx, vocab.as_ref())?;
         // The Japanese dictionary may have been installed while analyzing: documents
@@ -313,6 +371,8 @@ enum Prepared {
 }
 
 struct DocRow {
+    /// Conversion outcome, for a source document read directly.
+    source: Option<sources::SourceInfo>,
     is_new: bool,
     /// A listing or log file rather than a concept (see the bundle profile).
     reserved: bool,
@@ -329,6 +389,7 @@ fn prepare_all(
     root: &Path,
     todo: Vec<(PathBuf, ConceptId, i64, i64, Option<String>)>,
     content_index: bool,
+    state: Option<&Path>,
 ) -> Vec<Prepared> {
     let threads = std::thread::available_parallelism()
         .map_or(1, |n| n.get())
@@ -341,7 +402,7 @@ fn prepare_all(
             .map(|part| {
                 s.spawn(|| {
                     part.iter()
-                        .map(|t| prepare(root, t, &analyzer, content_index))
+                        .map(|t| prepare(root, t, &analyzer, content_index, state))
                         .collect::<Vec<_>>()
                 })
             })
@@ -358,9 +419,15 @@ fn prepare(
     (rel, id, size, mtime, prev_hash): &(PathBuf, ConceptId, i64, i64, Option<String>),
     analyzer: &Analyzer,
     content_index: bool,
+    state: Option<&Path>,
 ) -> Prepared {
+    let source = sources::is_source(rel);
     let fail = |reason: String| Prepared::Failed {
-        path: id.path(),
+        path: if source {
+            rel.to_string_lossy().replace('\\', "/")
+        } else {
+            id.path()
+        },
         reason,
     };
     let bytes = match std::fs::read(root.join(rel)) {
@@ -375,12 +442,23 @@ fn prepare(
             mtime: *mtime,
         };
     }
-    let Ok(text) = String::from_utf8(bytes) else {
-        return fail("not valid UTF-8".into());
-    };
-    let concept = match Concept::parse(rel, &text) {
-        Ok(c) => c,
-        Err(e) => return fail(e.to_string()),
+    let (concept, text, source_info) = if source {
+        let ocr = sources::load_ocr(state, &hash);
+        match sources::convert(rel, id, &bytes, &ocr) {
+            Ok((c, info)) => {
+                let text = c.body.clone();
+                (c, text, Some(info))
+            }
+            Err(e) => return fail(e),
+        }
+    } else {
+        let Ok(text) = String::from_utf8(bytes) else {
+            return fail("not valid UTF-8".into());
+        };
+        match Concept::parse(rel, &text) {
+            Ok(c) => (c, text, None),
+            Err(e) => return fail(e.to_string()),
+        }
     };
     let reserved = concept.is_reserved_in(content_index);
     let chunks = if reserved {
@@ -401,6 +479,7 @@ fn prepare(
             .collect()
     };
     Prepared::Doc(Box::new(DocRow {
+        source: source_info,
         reserved,
         is_new: prev_hash.is_none(),
         tokens: estimate_tokens(&text),
@@ -445,6 +524,28 @@ fn fm_state(s: FrontmatterState) -> &'static str {
 fn write_doc(tx: &Transaction, d: &DocRow) -> Result<(), Error> {
     let c = &d.concept;
     let id = c.id.as_str();
+    if let Some(info) = &d.source {
+        let status = if info.needs_ocr.is_empty() {
+            "ok"
+        } else {
+            "partial"
+        };
+        tx.execute(
+            "INSERT OR REPLACE INTO sources (path, hash, status, format, pages, needs_ocr, columns, detail, converted) \
+             VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)",
+            params![
+                c.path,
+                d.hash,
+                status,
+                info.format,
+                info.pages,
+                serde_json::to_string(&info.needs_ocr).unwrap_or_default(),
+                serde_json::to_string(&info.columns).unwrap_or_default(),
+                format!("{}{}", info.converter, if info.encoding_issues { "; broken font encodings" } else { "" }),
+                id
+            ],
+        )?;
+    }
     tx.execute(
         "DELETE FROM chunks_fts WHERE rowid IN (SELECT id FROM chunks WHERE doc_id = ?1)",
         [id],

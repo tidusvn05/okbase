@@ -2381,6 +2381,7 @@ version = "0.1.0-dev"
 dependencies = [
  "blake3",
  "okfkit-analyze",
+ "okfkit-convert",
  "okfkit-core",
  "okfkit-standard",
  "rusqlite",
