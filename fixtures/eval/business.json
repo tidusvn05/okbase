@@ -1,0 +1,1287 @@
+{
+ "suite": "business",
+ "bundle": "business",
+ "about": "spikes/biz-meta (S5) x1 runs, configs QD, Q, E: Claude Sonnet's discovery calls (Grep mapped to kb_grep) and the computed answers",
+ "cases": [
+  {
+   "id": "q0",
+   "cat": "list",
+   "lang": "vi",
+   "q": "Liệt kê các hợp đồng với Sakura Trading còn hiệu lực tại thời điểm hôm nay (30/09/2026).",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Contract"
+      ],
+      "customer": [
+       "Sakura Trading"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "contracts/sakura-trading/distribution-202410",
+     "contracts/sakura-trading/supply-202604",
+     "contracts/sakura-trading/supply-202510"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q1",
+   "cat": "list",
+   "lang": "en",
+   "q": "Which Warehouse SOPs are still in draft status?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "SOP"
+      ],
+      "status": [
+       "draft"
+      ],
+      "department": [
+       "Warehouse"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "sop/warehouse/returns-processing",
+     "sop/warehouse/labeling"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q2",
+   "cat": "list",
+   "lang": "ja",
+   "q": "日本向けの現行（有効な）ポリシーをすべて挙げてください。ドラフトや廃止版は除いてください。",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Policy"
+      ],
+      "region": [
+       "jp"
+      ],
+      "status": [
+       "stable"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "policies/jp/returns-v2",
+     "policies/jp/shipping-v2",
+     "policies/jp/warranty-air-purifier-v2",
+     "policies/jp/warranty-rice-cooker-v2",
+     "policies/jp/installment-v2",
+     "policies/jp/loyalty-v2",
+     "policies/jp/privacy-v2",
+     "policies/jp/gift-wrap-v2"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q3",
+   "cat": "list",
+   "lang": "vi",
+   "q": "Những tài liệu nào gắn tag security được cập nhật trong năm 2026?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "tags_any": [
+       "security"
+      ],
+      "updated_from": "2026-01-01",
+      "updated_to": "2026-12-31",
+      "limit": 100
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "policies/jp/privacy-v2",
+     "sop/it/access-request",
+     "sop/it/backup",
+     "sop/it/incident",
+     "sop/it/vpn",
+     "meetings/it/2026-04-23-security-review",
+     "meetings/it/2026-03-23-security-review",
+     "meetings/it/2026-02-16-security-review",
+     "meetings/hr/2026-07-04-security-review",
+     "announcements/security-training-3",
+     "announcements/security-training-4"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q4",
+   "cat": "list",
+   "lang": "en",
+   "q": "List all contracts that expire between 2026-10-01 and 2027-06-30.",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Contract"
+      ],
+      "effective_to_from": "2026-10-01",
+      "effective_to_to": "2027-06-30",
+      "sort": "effective_to"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "contracts/saigon-hotels-group/installation-202404",
+     "contracts/sakura-trading/supply-202604",
+     "contracts/osaka-office-supply/maintenance-202606",
+     "contracts/osaka-office-supply/installation-202505",
+     "contracts/acme-corp/installation-202605"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q5",
+   "cat": "list",
+   "lang": "ja",
+   "q": "販売終了（廃止）になった製品モデルの一覧を教えてください。",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "path": "products/",
+      "status": [
+       "deprecated"
+      ]
+     }
+    },
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "販売終了|廃止|discontinued|EOL",
+      "path": "products/",
+      "limit": 40
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "products/rice-cooker/hk-ri655",
+     "products/aircon/hk-ai432",
+     "products/fridge/hk-fr159",
+     "products/rice-cooker/hk-ri346",
+     "products/air-purifier/hk-ai856",
+     "products/rice-cooker/hk-ri804"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q6",
+   "cat": "list",
+   "lang": "vi",
+   "q": "Liệt kê các biên bản họp của phòng Nhân sự (HR) trong năm 2026.",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Meeting Note"
+      ],
+      "department": [
+       "HR"
+      ],
+      "limit": 100
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "meetings/hr/2026-06-08-hiring",
+     "meetings/hr/2026-06-30-hiring",
+     "meetings/hr/2026-08-08-hiring",
+     "meetings/hr/2026-06-30-budget",
+     "meetings/hr/2026-07-04-security-review"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q7",
+   "cat": "list",
+   "lang": "en",
+   "q": "Which Customer Support (CS) SOPs are written in Japanese?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "SOP"
+      ],
+      "lang": [
+       "ja"
+      ],
+      "path": "sop/"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "sop/cs/ticket-triage",
+     "sop/cs/refund-approval",
+     "sop/cs/escalation",
+     "sop/cs/chat-handling"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q8",
+   "cat": "version",
+   "lang": "vi",
+   "q": "Theo chính sách đổi trả hiện hành tại Việt Nam, được đổi trả trong bao nhiêu ngày?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "path": "policies/vn/",
+      "text": "đổi trả"
+     }
+    },
+    {
+     "tool": "kb_query",
+     "args": {
+      "path": "policies/vn/",
+      "tags_any": [
+       "return",
+       "returns",
+       "đổi trả"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "policies/vn/returns-v2"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q9",
+   "cat": "version",
+   "lang": "en",
+   "q": "Under the current return policy for Japan, how many days is the return window?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "path": "policies/jp/",
+      "text": "return"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "policies/jp/returns-v2"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q10",
+   "cat": "version",
+   "lang": "ja",
+   "q": "日本の現行の配送ポリシーでは、送料無料になる注文金額はいくらですか？",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "path": "policies/jp/",
+      "text": "配送"
+     }
+    },
+    {
+     "tool": "kb_query",
+     "args": {
+      "path": "policies/jp/",
+      "text": "shipping"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "policies/jp/shipping-v2"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q11",
+   "cat": "version",
+   "lang": "vi",
+   "q": "Theo chính sách bảo hành máy lọc không khí hiện hành tại Việt Nam, thời hạn bảo hành là bao nhiêu tháng?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "text": "bảo hành",
+      "region": [
+       "vn",
+       "VN",
+       "Vietnam"
+      ]
+     }
+    },
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "lọc không khí",
+      "path": "policies/"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "policies/vn/warranty-air-purifier-v2"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q12",
+   "cat": "version",
+   "lang": "en",
+   "q": "Under the current rice cooker warranty policy for Vietnam, how many months is the warranty?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "text": "warranty",
+      "region": [
+       "vn",
+       "VN",
+       "Vietnam"
+      ]
+     }
+    },
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "(?i)rice cooker|nồi cơm",
+      "path": "policies/",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "policies/vn/warranty-rice-cooker-v2"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q13",
+   "cat": "version",
+   "lang": "ja",
+   "q": "ベトナムの現行の分割払いポリシーでは、分割払いの最低注文金額はいくらですか？",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "path": "policies/vn/",
+      "text": "installment"
+     }
+    },
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "分割|installment|trả góp",
+      "path": "policies/vn/",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "policies/vn/installment-v2"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q14",
+   "cat": "version",
+   "lang": "vi",
+   "q": "Theo chính sách trả góp hiện hành tại Nhật Bản, đơn tối thiểu bao nhiêu để được trả góp?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "text": "trả góp",
+      "region": [
+       "jp",
+       "JP"
+      ]
+     }
+    },
+    {
+     "tool": "kb_query",
+     "args": {
+      "path": "policies/jp/",
+      "limit": 50
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "policies/jp/installment-v2"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q15",
+   "cat": "version",
+   "lang": "en",
+   "q": "Under the current loyalty points policy for Vietnam, after how many months do points expire?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "text": "loyalty",
+      "region": [
+       "vn"
+      ]
+     }
+    },
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "expir|month",
+      "path": "policies/vn/loyalty-v2.md"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "policies/vn/loyalty-v2"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q16",
+   "cat": "count",
+   "lang": "vi",
+   "q": "Có bao nhiêu hợp đồng hết hạn trong năm 2026?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Contract"
+      ],
+      "effective_to_from": "2026-01-01",
+      "effective_to_to": "2026-12-31",
+      "sort": "effective_to"
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     9
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q17",
+   "cat": "count",
+   "lang": "en",
+   "q": "How many meeting notes did the Sales department record in Q2 2026 (April–June)?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Meeting Note"
+      ],
+      "department": [
+       "Sales"
+      ],
+      "limit": 100
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     4
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q18",
+   "cat": "count",
+   "lang": "ja",
+   "q": "2026年に更新された倉庫部のSOPはいくつありますか？",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "SOP"
+      ],
+      "path": "sop/",
+      "updated_from": "2026-01-01",
+      "updated_to": "2026-12-31",
+      "limit": 100
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     4
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q19",
+   "cat": "count",
+   "lang": "vi",
+   "q": "Hiện có bao nhiêu chính sách đang có hiệu lực (stable) cho thị trường Việt Nam?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Policy"
+      ],
+      "region": [
+       "vn"
+      ],
+      "status": [
+       "stable"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     8
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q20",
+   "cat": "count",
+   "lang": "en",
+   "q": "How many documents are tagged 'privacy'?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "tags_any": [
+       "privacy"
+      ],
+      "limit": 100
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     7
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q21",
+   "cat": "count",
+   "lang": "ja",
+   "q": "ACME Corpとの現在有効な契約の契約金額の合計はいくらですか？",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Contract"
+      ],
+      "customer": [
+       "ACME Corp"
+      ],
+      "limit": 100
+     }
+    },
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Contract"
+      ],
+      "customer": [
+       "ACME Corp"
+      ],
+      "active_on": "2026-09-30",
+      "sum_field": "contract_value"
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     10628000000
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q22",
+   "cat": "count",
+   "lang": "vi",
+   "q": "Có bao nhiêu SOP đang ở trạng thái nháp (draft) trên toàn công ty?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "SOP"
+      ],
+      "status": [
+       "draft"
+      ],
+      "limit": 100
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     5
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q23",
+   "cat": "count",
+   "lang": "en",
+   "q": "How many contracts with Japanese customers are currently active?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Contract"
+      ],
+      "active_on": "2026-09-30",
+      "facets": [
+       "region",
+       "customer",
+       "status"
+      ],
+      "limit": 100
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     9
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q24",
+   "cat": "facet",
+   "lang": "vi",
+   "q": "Những phòng ban nào có tài liệu gắn tag privacy?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "tags_any": [
+       "privacy"
+      ],
+      "facets": [
+       "department",
+       "status"
+      ],
+      "limit": 100
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     "CS",
+     "Legal"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q25",
+   "cat": "facet",
+   "lang": "en",
+   "q": "Which customer has the most currently active contracts, and how many?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Contract"
+      ],
+      "active_on": "2026-09-30",
+      "facets": [
+       "customer"
+      ],
+      "limit": 100
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     "ACME Corp",
+     4
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q26",
+   "cat": "facet",
+   "lang": "ja",
+   "q": "廃止（販売終了）モデルがある製品カテゴリはどれですか？",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "path": "products/",
+      "status": [
+       "deprecated"
+      ],
+      "facets": [
+       "tags"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     "air-purifier",
+     "aircon",
+     "fridge",
+     "rice-cooker"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q27",
+   "cat": "facet",
+   "lang": "vi",
+   "q": "Những phòng ban nào đang có SOP ở trạng thái nháp?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "SOP"
+      ],
+      "status": [
+       "draft"
+      ],
+      "facets": [
+       "department"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     "HR",
+     "IT",
+     "Warehouse"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q28",
+   "cat": "facet",
+   "lang": "en",
+   "q": "Which customers have at least one contract expiring in 2026?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Contract"
+      ],
+      "effective_to_from": "2026-01-01",
+      "effective_to_to": "2026-12-31",
+      "limit": 100
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     "ACME Corp",
+     "Minh Phat JSC",
+     "Saigon Hotels Group",
+     "Tokyo Denki Retail"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q29",
+   "cat": "facet",
+   "lang": "ja",
+   "q": "新しいバージョンがドラフト（未承認）として準備中のポリシーはどれですか？",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Policy"
+      ],
+      "status": [
+       "draft"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     "policies/vn/installment-v3",
+     "policies/jp/installment-v3",
+     "policies/vn/loyalty-v3",
+     "policies/vn/gift-wrap-v3"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q30",
+   "cat": "sheet",
+   "lang": "vi",
+   "q": "Tổng số lượng tồn kho máy lọc không khí (air-purifier) ở kho HCM là bao nhiêu?",
+   "calls": [
+    {
+     "tool": "data_query",
+     "args": {
+      "sql": "select category, warehouse, sum(qty), count(*) from inventory where category like '%air%' group by 1,2"
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     2647
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q31",
+   "cat": "sheet",
+   "lang": "en",
+   "q": "How many inventory rows in the Tokyo warehouse are below their reorder level?",
+   "calls": [
+    {
+     "tool": "data_query",
+     "args": {
+      "sql": "select warehouse, count(*), sum(qty<reorder_level) from inventory group by warehouse"
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     3
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q32",
+   "cat": "sheet",
+   "lang": "ja",
+   "q": "大阪倉庫の炊飯器（rice-cooker）の在庫合計は何台ですか？",
+   "calls": [
+    {
+     "tool": "data_query",
+     "args": {
+      "sql": "select warehouse, category, sum(qty), count(*) from inventory where category like '%rice%' or warehouse like '%saka%' group by warehouse, category"
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     2249
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q33",
+   "cat": "sheet",
+   "lang": "vi",
+   "q": "Trong năm 2026, tháng nào thị trường Nhật (JP) có doanh thu cao nhất và bao nhiêu?",
+   "calls": [
+    {
+     "tool": "data_query",
+     "args": {
+      "sql": "select month, region, currency, sum(revenue) r, count(*) n from sales_2026 where region like '%JP%' or currency='JPY' group by month, region, currency order by r desc"
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     {
+      "month": "2026-06",
+      "revenue_jpy": 197006952
+     }
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q34",
+   "cat": "sheet",
+   "lang": "en",
+   "q": "What was the total VN revenue (VND) for washing machines (washer) in Q1 2026?",
+   "calls": [
+    {
+     "tool": "data_query",
+     "args": {
+      "sql": "select month, region, category, currency, sum(revenue), sum(units), count(*) from sales_2026 where category like '%wash%' group by 1,2,3,4"
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     9631306267
+    ]
+   },
+   "baseline": "fail"
+  },
+  {
+   "id": "q35",
+   "cat": "sheet",
+   "lang": "ja",
+   "q": "2026年第2四半期（4〜6月）にベトナムで最も販売台数が多かったSKUはどれで、何台ですか？",
+   "calls": [
+    {
+     "tool": "data_query",
+     "args": {
+      "sql": "select distinct month, region from sales_2026 order by 1 limit 50"
+     }
+    },
+    {
+     "tool": "data_query",
+     "args": {
+      "sql": "select sku, sum(units) u from sales_2026 where region='VN' and month between '2026-04' and '2026-06' group by sku order by u desc limit 5"
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     {
+      "sku": "SKU-AI006",
+      "units": 337
+     }
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q36",
+   "cat": "sheet",
+   "lang": "vi",
+   "q": "Có bao nhiêu sản phẩm trong bảng giá đang ở trạng thái discontinued?",
+   "calls": [
+    {
+     "tool": "data_query",
+     "args": {
+      "sql": "SELECT status, COUNT(*) FROM price_list GROUP BY status"
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     12
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q37",
+   "cat": "sheet",
+   "lang": "en",
+   "q": "What is the JPY price of SKU-AI008 in the price list?",
+   "calls": [
+    {
+     "tool": "data_query",
+     "args": {
+      "sql": "SELECT * FROM price_list WHERE sku='SKU-AI008'"
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     77600
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q38",
+   "cat": "sheet",
+   "lang": "ja",
+   "q": "全倉庫の冷蔵庫（fridge）の在庫合計は？",
+   "calls": [
+    {
+     "tool": "data_query",
+     "args": {
+      "sql": "select category, warehouse, sum(qty) from inventory group by category, warehouse having category like '%fridge%' or category like '%冷蔵%' or category like '%refrig%'"
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     9388
+    ]
+   },
+   "baseline": "fail"
+  },
+  {
+   "id": "q39",
+   "cat": "sheet",
+   "lang": "vi",
+   "q": "Tổng số lượng tồn kho của tất cả sản phẩm ở kho HN là bao nhiêu?",
+   "calls": [
+    {
+     "tool": "data_query",
+     "args": {
+      "sql": "select warehouse, sum(qty), count(*) from inventory group by warehouse"
+     }
+    }
+   ],
+   "expect": {
+    "values": [
+     12374
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q40",
+   "cat": "content",
+   "lang": "vi",
+   "q": "Theo quy trình nhận hàng nhập kho của phòng Kho vận, thời hạn kiểm tra (giờ) được quy định là bao nhiêu?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "nhận hàng|receiving|nhập kho",
+      "path": "sop/",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "sop/warehouse/receiving"
+    ]
+   },
+   "baseline": "fail"
+  },
+  {
+   "id": "q41",
+   "cat": "content",
+   "lang": "en",
+   "q": "In the Warehouse stock count SOP, what is the required count frequency (days)?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "stock count",
+      "path": "sop/",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "sop/warehouse/stock-count"
+    ]
+   },
+   "baseline": "fail"
+  },
+  {
+   "id": "q42",
+   "cat": "content",
+   "lang": "ja",
+   "q": "倉庫部の梱包の手順で、梱包の最大重量（kg）はいくつと定められていますか？",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "梱包|packing|đóng gói",
+      "path": "sop/",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "sop/warehouse/packing"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q43",
+   "cat": "content",
+   "lang": "vi",
+   "q": "Theo quy trình an toàn xe nâng của phòng Kho vận, tốc độ tối đa (km/h) được quy định là bao nhiêu?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "xe nâng|forklift",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "sop/warehouse/forklift"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q44",
+   "cat": "content",
+   "lang": "en",
+   "q": "What are the payment terms (days) in the distribution agreement with ACME Corp starting 2026-04?",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "type": [
+       "Contract"
+      ],
+      "text": "acme"
+     }
+    },
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "ngày|days",
+      "path": "contracts/acme-corp/distribution-202604.md"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "contracts/acme-corp/distribution-202604"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q45",
+   "cat": "content",
+   "lang": "ja",
+   "q": "Sakura Tradingとの2024-10開始の販売代理店契約の支払条件は何日ですか？",
+   "calls": [
+    {
+     "tool": "kb_query",
+     "args": {
+      "text": "Sakura",
+      "type": [
+       "Contract"
+      ]
+     }
+    },
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "(?i)payment|支払|net",
+      "path": "contracts/sakura-trading/distribution-202410.md"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "contracts/sakura-trading/distribution-202410"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q46",
+   "cat": "content",
+   "lang": "vi",
+   "q": "Model HK-AI659 (máy lọc không khí) có công suất bao nhiêu W?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "HK-AI659",
+      "limit": 30
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "products/air-purifier/hk-ai659"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q47",
+   "cat": "content",
+   "lang": "en",
+   "q": "What is the power rating (W) of model HK-WA436 (washing machine)?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "HK-WA436",
+      "limit": 30
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "products/washer/hk-wa436"
+    ]
+   },
+   "baseline": "pass"
+  }
+ ]
+}

@@ -1,0 +1,632 @@
+{
+ "suite": "multilingual",
+ "bundle": "multilingual",
+ "about": "spikes/embed-bench round 4 (S3), configs A-F: Claude Sonnet's grep calls (kb_grep, or Grep mapped to it) and the gold document",
+ "cases": [
+  {
+   "id": "q0",
+   "cat": "lookup",
+   "lang": "vi",
+   "q": "mua đồ ở Hikari VN về không ưng, mang ra showroom trả lại trong bao nhiêu ngày",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "đổi trả"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-return"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q1",
+   "cat": "lookup",
+   "lang": "en",
+   "q": "Items bought at over 50% off in Vietnam: can I return them or only swap the size or colour?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "50%|50 %|giảm giá|discount|sale",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-return"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q2",
+   "cat": "lookup",
+   "lang": "ja",
+   "q": "ベトナムの店舗で買った商品を返品したい。期限と持っていくものは？",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "返品|đổi trả|return",
+      "path": "index.md"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-return"
+    ]
+   },
+   "baseline": "fail"
+  },
+  {
+   "id": "q3",
+   "cat": "lookup",
+   "lang": "vi",
+   "q": "bh may loc khong khi bao lau",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "lọc không khí|máy lọc|air purifier|空気清浄機",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-warranty"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q4",
+   "cat": "lookup",
+   "lang": "en",
+   "q": "How long is the HEPA filter in the air purifier covered under warranty?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "HEPA"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-warranty"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q7",
+   "cat": "lookup",
+   "lang": "en",
+   "q": "What's the flat shipping fee for small orders within Vietnam?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "ship|vận chuyển|giao hàng|送料|配送",
+      "limit": 60
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-shipping-domestic"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q10",
+   "cat": "lookup",
+   "lang": "en",
+   "q": "Can I pay in monthly instalments in Vietnam if I don't have a credit card?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "instal|trả góp|分割",
+      "limit": 40
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-payment-installment"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q11",
+   "cat": "lookup",
+   "lang": "ja",
+   "q": "ベトナムでクレジットカードの分割払い、何カ月まで選べますか",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "分割|trả góp|installment",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-payment-installment"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q16",
+   "cat": "lookup",
+   "lang": "en",
+   "q": "Are the Hanoi and Saigon showrooms open on Sundays?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "showroom"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-store-hours"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q19",
+   "cat": "lookup",
+   "lang": "en",
+   "q": "How many extra leave days do Vietnam staff get for every 5 years of service?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "leave|nghỉ phép|年次有給|有給",
+      "limit": 40
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-leave-policy"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q20",
+   "cat": "lookup",
+   "lang": "ja",
+   "q": "ベトナム拠点の年次休暇、使い残した分はいつまで繰り越せますか",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "繰り越|carry|chuyển sang|phép năm",
+      "limit": 40
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-leave-policy"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q23",
+   "cat": "lookup",
+   "lang": "ja",
+   "q": "ベトナムで会社名義の付加価値税インボイスを発行してもらうには？",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "VAT|付加価値税|hóa đơn|インボイス",
+      "path": "index.md"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-invoice"
+    ]
+   },
+   "baseline": "fail"
+  },
+  {
+   "id": "q29",
+   "cat": "lookup",
+   "lang": "ja",
+   "q": "パスワードを忘れた。SMSで届く認証コードの有効時間は？",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "SMS"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-password-reset"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q32",
+   "cat": "lookup",
+   "lang": "ja",
+   "q": "ベトナムで代引き注文した商品を返品した場合、返金はどうやって受け取れますか",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "COD"
+     }
+    },
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "hoàn tiền"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/en-refund"
+    ]
+   },
+   "baseline": "fail"
+  },
+  {
+   "id": "q51",
+   "cat": "lookup",
+   "lang": "vi",
+   "q": "muon xoa vinh vien du lieu ca nhan va tai khoan, mat bao lau",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "xoá|xóa|delet|削除|erasure",
+      "limit": 40
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/en-privacy-data"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q56",
+   "cat": "lookup",
+   "lang": "ja",
+   "q": "法人で20台以上まとめて買うと保証が36か月に延びると聞いたのですが",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "36|法人|corporate|doanh nghiệp",
+      "limit": 60
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/en-b2b-bulk"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q67",
+   "cat": "lookup",
+   "lang": "en",
+   "q": "Japan: taking away my old washing machine when the new one is delivered — what fees apply?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "washing machine|洗濯機|recycl|リサイクル",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/ja-recycling"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q72",
+   "cat": "lookup",
+   "lang": "vi",
+   "q": "làm thêm giờ ở văn phòng Nhật tối đa bao nhiêu giờ một tháng",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "残業|overtime|làm thêm giờ",
+      "limit": 50
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/ja-overtime"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q85",
+   "cat": "lookup",
+   "lang": "en",
+   "q": "earthquake while at work — what should store staff do with customers?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "earthquake|động đất|地震",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/ja-earthquake"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q87",
+   "cat": "lookup",
+   "lang": "vi",
+   "q": "làm mất biên lai giấy mua ở Nhật, xin cấp lại được mấy lần",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "biên lai|領収書|receipt",
+      "limit": 50
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/ja-receipt-reissue"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q89",
+   "cat": "lookup",
+   "lang": "ja",
+   "q": "領収書 なくした 再発行",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "領収書"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/ja-receipt-reissue"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q90",
+   "cat": "lookup",
+   "lang": "vi",
+   "q": "nồi cơm điện bảo hành mấy năm, lòng nồi bị bong chống dính có được bảo hành không",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "nồi cơm|rice cooker|炊飯器",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/ja-warranty-ricecooker"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q91",
+   "cat": "lookup",
+   "lang": "en",
+   "q": "Is the non-stick coating of the rice cooker pot covered by warranty?",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "non-stick|nonstick|chống dính|コーティング|フッ素"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/ja-warranty-ricecooker"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q117",
+   "cat": "lookup",
+   "lang": "vi",
+   "q": "ở Nhật trả hàng mà thanh toán ở konbini thì tiền hoàn về kiểu gì",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "konbini|コンビニ|convenience",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/ja-refund-japan"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q144",
+   "cat": "lookup",
+   "lang": "vi",
+   "q": "nghi thai san o VN may thang, cong ty co ho tro them khong",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "thai sản|maternity|産休|産前",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-maternity-leave-vn"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q161",
+   "cat": "lookup",
+   "lang": "ja",
+   "q": "洗濯機にE1が出て水が入らない",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "E1"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/vi-error-washer"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q163",
+   "cat": "lookup",
+   "lang": "en",
+   "q": "air conditioner error E1",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "E1"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/ja-error-aircon"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q168",
+   "cat": "lookup",
+   "lang": "vi",
+   "q": "máy lọc không khí báo lỗi E4",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "E4"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/ja-error-purifier"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q186",
+   "cat": "lookup",
+   "lang": "vi",
+   "q": "đổi số điện thoại tài khoản mà sim cũ mất rồi",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "số điện thoại|phone number|電話番号",
+      "files_only": true
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/en-change-phone"
+    ]
+   },
+   "baseline": "pass"
+  },
+  {
+   "id": "q234",
+   "cat": "lookup",
+   "lang": "vi",
+   "q": "trung tâm sửa chữa ở Đà Nẵng có mở cửa chủ nhật không",
+   "calls": [
+    {
+     "tool": "kb_grep",
+     "args": {
+      "pattern": "Đà Nẵng"
+     }
+    }
+   ],
+   "expect": {
+    "ids": [
+     "knowledge/en-service-center-hours"
+    ]
+   },
+   "baseline": "pass"
+  }
+ ]
+}

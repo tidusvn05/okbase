@@ -419,7 +419,8 @@ Output text/JSON/SARIF; `--fix-safe` chỉ sửa những gì an toàn (sinh inde
 - Golden round-trip: bundle OKF chính thức (acme_retail, ga4, stackoverflow, crypto_bitcoin) phải có diff = 0; test giữ comment và key lạ.
 - **Fixture adopt:** docs OpenClaw (Mintlify), một vault Obsidian mẫu, một thư mục docs Docusaurus, và thư mục markdown "bẩn". Kiểm tra `adopt --plan` ổn định (snapshot) và lint sau adopt đạt L1.
 - Snapshot output tool và skill sinh ra theo capability.
-- `okfkit-eval` (từ spike): chế độ retrieval (R@k) và agent (claude/codex, chấm theo key facts hoặc đáp án tính sẵn, chi phí, độ trễ). Fixture: v2 đa ngôn ngữ (S1), OpenClaw S/M/L (S4), business ×1/×20 (S5).
+- `okfkit-eval lexical` (đã có, 2026-10-03): chạy lại tool call thật của agent trong spike S3/S5 trên `fixtures/business` và `fixtures/multilingual`, so với đáp án; vài giây, không cần model; chạy trong `cargo test`, báo lỗi khi một ca từng đạt bị trượt.
+- `okfkit-eval` (còn lại, từ spike): chế độ retrieval (R@k, hiện là `examples/retrieval_eval.rs`) và agent (claude/codex, chấm theo key facts hoặc đáp án tính sẵn, chi phí, độ trễ). Fixture: v2 đa ngôn ngữ (S1), OpenClaw S/M/L (S4), business ×1/×20 (S5).
 - CI: fmt, clippy, test, deny; eval lexical nhanh trên fixture nhỏ.
 
 ---

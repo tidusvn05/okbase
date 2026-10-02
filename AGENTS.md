@@ -36,7 +36,11 @@ cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo test --workspace
 cargo deny check
 ```
-For changes to search/grep/query/catalog/skills, also run the fast lexical eval on `fixtures/` (once `okfkit-eval` exists) and report the numbers in the PR.
+For changes to search/grep/query/catalog/data/MCP tools, also run the fast lexical eval and report the numbers in the PR:
+```
+cargo run --release -p okfkit-eval -- lexical
+```
+It replays real agents' tool calls on `fixtures/` (seconds, no model) and exits 1 on a regression; `cargo test` runs it too. A change that makes a case pass is an improvement: rebuild the baselines with `python3 fixtures/eval/mine.py`.
 
 ## Layout
 - `crates/okfkit-*` — see `docs/PLAN.md` §4.3 for responsibilities and core vs. module split.
