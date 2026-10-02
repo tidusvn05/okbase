@@ -46,3 +46,20 @@ vi/en/ja; it is the converter to use. Gaps to handle in okfkit, not in the conve
 3. **HTML**: htmd plus a main-content step (drop nav/header/footer/scripts) and a table fix for
    header-less tables; or convert HTML tables through anydoc-like logic.
 4. **Size**: ≈ 10 MB more; keep import optional (a feature, or the `okfkit-import` plugin binary).
+
+## I5 — agents on a folder of source documents (2026-10-02)
+
+After I1–I4 (`docs/PLAN-import.md`): two Claude subagents on copies of a folder with a Word
+policy, a Japanese PDF, a PowerPoint deck, a saved Confluence page, a scanned PDF and a 15-page
+paper; only the user's sentence and the binary.
+
+| | A: user allowed reading scanned pages | B: no such consent |
+|---|---|---|
+| Setup | `onboard` → `agent install` → `doctor` (MCP ok) | same |
+| Scanned page | `import ocr-next` → read the page → `import ocr-submit` (stored in state); found afterwards | asked: "May I read that page and transcribe it? Its content goes to my model provider" |
+| Answers | 3/3 with file (and page) citations, using only okfkit commands; noted the scan's text is cut off | correct, and noticed the Vietnamese and Japanese policies disagree, asking which applies |
+| Consent flags on their own | 0 | 0 |
+
+Follow-up: the agent had no PDF renderer and extracted the scan's image itself. `ocr-next` could
+hand the page image directly when a page is a single embedded image (the usual scan), so any
+multimodal agent can read it.
