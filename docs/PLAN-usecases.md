@@ -1,6 +1,6 @@
 # Kế hoạch: các tình huống thực tế (repo phần mềm, thư mục rỗng, OKF chưa chuẩn, bundle trong thư mục con…)
 
-Trạng thái: **đã chốt, đang triển khai** (2026-10-02; 4 câu hỏi ở §4 chốt theo đề xuất). Bằng chứng: chạy bản build hiện tại trên 4 thư
+Trạng thái: **đã triển khai U1–U8** (U9 = import, v0.4) (2026-10-02; 4 câu hỏi ở §4 chốt theo đề xuất). Bằng chứng: chạy bản build hiện tại trên 4 thư
 mục mẫu (§1). Liên quan: `PLAN-onboarding.md`, `docs/usage.md`.
 
 ## 0. Kết luận ngắn
@@ -142,3 +142,15 @@ với agent trên các thư mục này.
    thuần OKF không bị ảnh hưởng)
 3. Tôn trọng `.gitignore` theo mặc định? (đề xuất: có; `.okfkitignore` để thêm hoặc bớt)
 4. Thứ tự làm: U1 + U2 (an toàn) ngay, rồi U3–U6, rồi U7–U8, còn U9 theo v0.4? (đề xuất: có)
+
+## 5. Triển khai (2026-10-02)
+
+| # | Commit | Ghi chú |
+|---|---|---|
+| U1 | `11bc53a` | `.gitignore` (cả thư mục cha), `.okfkitignore`, bỏ qua thư mục phụ thuộc. Danh sách mặc định giữ hẹp (`node_modules`, `__pycache__`…); `build/`, `vendor/`, `target/` để `.gitignore` quyết định, vì có thể là thư mục tri thức thật |
+| U2, U5, U6 | `7ac51a3` | Profile `docs-site`/`vault` (nhận diện cả ở thư mục cha tới gốc repo; ghi đè bằng `okfkit.toml`); `adopt` giữ `index.md`, không tạo danh sách hay log; `adopt --only` |
+| U3, U4 | `1db3ab0` | `okfkit scan`; `onboard` chọn hoặc hỏi bundle, có luồng thư mục rỗng, PDF, "sửa N file" và metadata cho site; lệnh của `onboard` giữ `-b` |
+| U7 | `1d129c6` | `okfkit init`, `okfkit new`, skill `okfkit-author` |
+| U8 | (commit này) | `docs/usage.md`: thư mục thực tế, profile, luật bỏ qua, CI, bot |
+
+Đã kiểm chứng bằng test kịch bản (`onboard_understands_real_folders`): repo có MkDocs và `node_modules`, thư mục rỗng, OKF hỏng 1 file, repo bot có `knowledge/`.

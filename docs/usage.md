@@ -221,6 +221,84 @@ To expose the same tools over MCP inside your web server, mount
 
 ---
 
+## Real folders: where your knowledge actually is
+
+`okfkit scan` (and `okfkit onboard`, which starts with it) looks at the folder before advising:
+
+```sh
+okfkit scan          # empty? software repository? docs site? OKF, partly OKF? PDFs?
+```
+
+| Your folder | What okfkit does | You run (or your agent does) |
+|---|---|---|
+| **A software repository with `docs/`** (MkDocs, Docusaurus, Hugo, Mintlify or plain) | Uses `docs/` as the bundle, not the repository; keeps your layout; under a docs site, `index.md` stays your page (profile `docs-site`) | from the repository root: `okfkit -b docs agent install`; optionally `okfkit -b docs adopt --write` to add `title`/`description` in place (review the PR) |
+| **An empty folder** | Starts a knowledge base | `okfkit init --title "…" --langs vi,en`, then `okfkit new --type Policy "…" --description "…"` (or the `okfkit-author` skill) |
+| **OKF with a few broken files** | Lists the files to fix; nothing else changes | `okfkit adopt --only a.md --only b.md --write`, then `okfkit lint --level L1` for what needs a hand fix (invalid YAML is reported with its line) |
+| **A repository whose `knowledge/` feeds a bot** | Uses `knowledge/`; the rest of the repository is ignored | developers: `okfkit -b knowledge agent install`; the bot: see below; CI: see below |
+| **An Obsidian vault** | Profile `vault`: notes stay as they are, no `index.md` files are created | `okfkit agent install`; `adopt --write` only adds frontmatter |
+| **PDF / Word / HTML only** | Says so; import arrives in v0.4 | convert to markdown (e.g. `pandoc`) into a new folder for now |
+
+Several candidates (a monorepo with many `docs/` folders) → `onboard` asks which one; install
+each with its own `--name`.
+
+### Profiles
+
+| Profile | `index.md` is | Chosen when |
+|---|---|---|
+| `okf` | a directory listing (OKF) | default; always when the root `index.md` declares `okf_version` |
+| `docs-site` | a content page; listings are built when reading | `mkdocs.yml`, `docusaurus.config.*`, `hugo.toml`, `mint.json`/`docs.json` in the folder or a parent up to the repository root |
+| `vault` | a content page; no listing files | `.obsidian/` |
+
+Override in the bundle's `okfkit.toml`:
+
+```toml
+[bundle]
+profile = "docs-site"   # okf | docs-site | vault
+```
+
+### What okfkit never reads (or edits)
+
+Hidden files and folders, `AGENTS.md`/`CLAUDE.md`/`GEMINI.md` at the root (they are instructions
+for agents), dependency folders (`node_modules`, `__pycache__`, `site-packages`…), and anything your
+`.gitignore` ignores (including the repository's, above the bundle). Add `.okfkitignore` (same
+syntax, `!` re-includes) for the rest:
+
+```gitignore
+drafts/
+!drafts/approved.md
+```
+
+### Keep a bundle healthy in CI
+
+```yaml
+# .github/workflows/knowledge.yml
+on: pull_request
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    permissions: { security-events: write }
+    steps:
+      - uses: actions/checkout@v4
+      - run: cargo install okfkit-cli          # after publication; until then --git <repository>
+      - run: okfkit -b knowledge lint --level L1 --format sarif > okfkit.sarif || test $? -eq 4
+      - uses: github/codeql-action/upload-sarif@v3
+        with: { sarif_file: okfkit.sarif }
+```
+
+Exit code 4 means "lint found problems"; the SARIF upload shows them on the pull request.
+
+### A bot that answers from the bundle
+
+Keep the catalog in the bot's system prompt (S3) and give its model the okfkit tools:
+
+- **Rust:** the library (`okfkit::Bundle`, a `Scope` per user), see
+  [Embedding okfkit in an application](#embedding-okfkit-in-an-application).
+- **Python, Node, others:** run `OKFKIT_MCP_TOKEN=… okfkit -b knowledge mcp serve --http 127.0.0.1:7331`
+  next to the bot and connect with an MCP client library (MCP Python / TypeScript SDK) to
+  `http://127.0.0.1:7331/mcp` with `Authorization: Bearer …`; or call the CLI with `--json`
+  (`okfkit -b knowledge grep "refund" --files-only --json`) for simple cases.
+- The catalog for the prompt: `okfkit -b knowledge catalog` (or the `kb_catalog` tool) at startup.
+
 ## Usage scenarios
 
 Every situation below has one supported way to handle it. Install commands are safe to run
@@ -312,6 +390,7 @@ okfkit is read-only by default. These commands write, and only where stated:
 | `embed enable/disable`, `tune activate/rollback --write` | `okfkit.toml` (only the `[embed]` keys) |
 | `agent install` / `agent uninstall` | agent configuration, skills, AGENTS.md block (`--print` to preview); a record in `~/.config/okfkit/installs.json` |
 | `clean --yes` | deletes okfkit's own index or user cache (never documents) |
+| `init`, `new` | a new bundle skeleton; one new document plus its folder listing (never overwrites) |
 | `embed index`, `embed models add`, `tune …` | the user cache (models, vectors, runs, Python environment) |
 
 ### Everyday commands
