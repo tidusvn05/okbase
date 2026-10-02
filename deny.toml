@@ -9,6 +9,10 @@ ignore = [
     # `paste` is a compile-time proc macro (no runtime code), unmaintained but with no known
     # vulnerability; it comes from `tokenizers` via fastembed, only in the opt-in embed-local module.
     { id = "RUSTSEC-2024-0436", reason = "unmaintained proc macro via tokenizers (embed-local only)" },
+    # `ttf-parser` (font tables inside PDFs) comes from pdf-inspector via anydoc in okfkit-convert.
+    # Unmaintained, no known vulnerability, built for untrusted input; drop this when
+    # pdf-inspector moves to `skrifa`.
+    { id = "RUSTSEC-2026-0192", reason = "unmaintained font parser via pdf-inspector (import); no known vulnerability" },
 ]
 
 [licenses]
