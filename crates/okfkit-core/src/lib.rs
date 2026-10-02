@@ -19,6 +19,7 @@ mod error;
 pub mod frontmatter;
 pub mod id;
 pub mod links;
+pub mod site;
 pub mod validate;
 
 pub use concept::{Concept, DEFAULT_EXCLUDES, IGNORE_FILE, discover, walk};
@@ -26,7 +27,8 @@ pub use error::Error;
 pub use frontmatter::{Frontmatter, FrontmatterState, Mapping};
 pub use id::ConceptId;
 pub use links::{Link, LinkKind, extract_links, resolve_link, resolve_wikilink};
-pub use validate::{Issue, Severity, validate};
+pub use site::{Profile, SiteKind};
+pub use validate::{Issue, Severity, validate, validate_profile};
 
 /// A parsed YAML value. Mappings keep their source key order.
 pub type Value = serde_json::Value;

@@ -139,6 +139,8 @@ pub struct Context<'a> {
     pub unreadable: &'a [(String, String)],
     /// Settings.
     pub config: &'a LintConfig,
+    /// `index.md` files are content pages (docs-site and vault profiles).
+    pub content_index: bool,
 }
 
 impl Context<'_> {
@@ -146,7 +148,7 @@ impl Context<'_> {
     pub fn concepts(&self) -> impl Iterator<Item = &Concept> {
         self.docs
             .iter()
-            .filter(|d| !d.is_reserved() && !d.path.starts_with("_meta/"))
+            .filter(|d| !d.is_reserved_in(self.content_index) && !d.path.starts_with("_meta/"))
     }
 }
 
@@ -239,6 +241,7 @@ pub fn lint_with(
         schema_errors: &schema_errors,
         unreadable: &unreadable,
         config,
+        content_index: okfkit_core::site::profile(root).content_index(),
     };
     let mut all: Vec<Diagnostic> = rules.iter().flat_map(|r| r.check(&cx)).collect();
     let level = achieved(&all);

@@ -220,6 +220,10 @@ pub enum Command {
         /// List every file change.
         #[arg(long, short = 'v')]
         verbose: bool,
+        /// Only these documents (paths relative to the folder, or `dir/` prefixes; repeatable).
+        /// For a bundle that is mostly fine: fix just the files lint reports.
+        #[arg(long, value_name = "PATH")]
+        only: Vec<String>,
     },
     /// Show tag usage against the vocabulary, or suggest a _meta/vocabulary.md.
     Vocab {

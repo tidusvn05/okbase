@@ -18,7 +18,7 @@ use std::path::{Path, PathBuf};
 
 use okfkit_core::{Concept, ConceptId, FrontmatterState, Value, discover};
 use okfkit_standard::{
-    Assessment, Level, VOCABULARY_PATH, Vocabulary, assess, meta, normalize_tag,
+    Assessment, Level, VOCABULARY_PATH, Vocabulary, assess_profile, meta, normalize_tag,
 };
 use serde::Serialize;
 use serde_json::json;
@@ -54,6 +54,9 @@ pub struct AdoptOptions {
     pub today: String,
     /// Actor recorded in `generated.by`.
     pub actor: String,
+    /// Only change these documents (bundle-relative paths, or directory prefixes ending in `/`);
+    /// empty: every document. With a selection, no index.md or log.md is created.
+    pub only: Vec<String>,
 }
 
 impl AdoptOptions {
@@ -63,7 +66,17 @@ impl AdoptOptions {
             level: Level::L1,
             today: today.to_owned(),
             actor: format!("okfkit-adopt/{}", env!("CARGO_PKG_VERSION")),
+            only: Vec::new(),
         }
+    }
+
+    fn selected(&self, path: &str) -> bool {
+        self.only.is_empty()
+            || self
+                .only
+                .iter()
+                .map(|p| p.trim_start_matches("./"))
+                .any(|p| p == path || (p.ends_with('/') && path.starts_with(p)))
     }
 }
 
@@ -162,7 +175,20 @@ fn is_listing(doc: &Concept) -> bool {
 
 /// Computes every change needed to bring the folder at `root` to `opts.level`. Writes nothing.
 pub fn plan(root: &Path, opts: &AdoptOptions) -> Result<Plan, Error> {
-    let site = detect_site(root);
+    let mut site = detect_site(root);
+    if site == Site::Plain {
+        // Markers of the site may sit in a parent (mkdocs.yml next to docs/).
+        site = match okfkit_core::site::find_site(root) {
+            Some(okfkit_core::SiteKind::Obsidian) => Site::Obsidian,
+            Some(okfkit_core::SiteKind::Docusaurus) => Site::Docusaurus,
+            Some(okfkit_core::SiteKind::Mintlify) => Site::Mintlify,
+            Some(okfkit_core::SiteKind::Mkdocs) => Site::Mkdocs,
+            Some(okfkit_core::SiteKind::Hugo) => Site::Hugo,
+            None => Site::Plain,
+        };
+    }
+    // Sites and vaults use index.md as a content page: keep it, add no listings or log.
+    let content_index = okfkit_core::site::profile(root).content_index();
     let mut originals = Vec::new();
     let mut skipped = Vec::new();
     for rel in discover(root)? {
@@ -172,7 +198,7 @@ pub fn plan(root: &Path, opts: &AdoptOptions) -> Result<Plan, Error> {
         }
     }
     let vocab = Vocabulary::load(root, VOCABULARY_PATH).ok().flatten();
-    let level_before = assess(&originals, vocab.as_ref()).level;
+    let level_before = assess_profile(&originals, vocab.as_ref(), content_index).level;
 
     let mut taken: BTreeSet<String> = originals.iter().map(|d| d.path.clone()).collect();
     let mut changes: BTreeMap<String, Change> = BTreeMap::new();
@@ -184,7 +210,11 @@ pub fn plan(root: &Path, opts: &AdoptOptions) -> Result<Plan, Error> {
         let mut doc = original.clone();
         let mut kind = ChangeKind::Modify;
         let mut notes = Vec::new();
-        if doc.id.name() == "index" && !is_listing(&doc) {
+        if !opts.selected(&original.path) {
+            result.push(doc);
+            continue;
+        }
+        if doc.id.name() == "index" && !content_index && !is_listing(&doc) {
             let to = overview_path(doc.id.dir(), &taken);
             taken.insert(to.clone());
             let id = ConceptId::from_path(Path::new(&to))?;
@@ -202,7 +232,7 @@ pub fn plan(root: &Path, opts: &AdoptOptions) -> Result<Plan, Error> {
                 body: doc.body,
             };
         }
-        if doc.is_reserved() {
+        if doc.is_reserved_in(content_index) {
             result.push(doc);
             continue;
         }
@@ -265,7 +295,8 @@ pub fn plan(root: &Path, opts: &AdoptOptions) -> Result<Plan, Error> {
         }
     }
     let mut created_indexes = 0;
-    for dir in &dirs {
+    let listings = !content_index && opts.only.is_empty();
+    for dir in dirs.iter().filter(|_| listings) {
         let path = if dir.is_empty() {
             "index.md".to_owned()
         } else {
@@ -289,7 +320,7 @@ pub fn plan(root: &Path, opts: &AdoptOptions) -> Result<Plan, Error> {
         );
     }
 
-    if !changes.is_empty() {
+    if !changes.is_empty() && listings {
         let renamed = changes
             .values()
             .filter(|c| matches!(c.kind, ChangeKind::Rename { .. }))
@@ -333,7 +364,7 @@ pub fn plan(root: &Path, opts: &AdoptOptions) -> Result<Plan, Error> {
         );
     }
 
-    let after: Assessment = assess(&result, vocab.as_ref());
+    let after: Assessment = assess_profile(&result, vocab.as_ref(), content_index);
     let mut remaining = BTreeMap::new();
     for f in after.findings.iter().filter(|f| f.level <= opts.level) {
         *remaining.entry(f.code.to_owned()).or_insert(0) += 1;

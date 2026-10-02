@@ -55,9 +55,19 @@ static ISO_DATE: LazyLock<Regex> =
 /// `index.md` has no frontmatter, except `okf_version` in the bundle-root index.
 /// `log.md` `##` headings are ISO dates (a warning, since the spec leaves the rest as prose).
 pub fn validate(doc: &Concept) -> Vec<Issue> {
+    validate_profile(doc, false)
+}
+
+/// Like [`validate`]; with `content_index` (docs-site and vault profiles) `index.md` is checked as
+/// a concept like any other page.
+pub fn validate_profile(doc: &Concept, content_index: bool) -> Vec<Issue> {
     let fm = &doc.frontmatter;
     let mut issues = Vec::new();
-    match doc.id.name() {
+    let name = match doc.id.name() {
+        "index" if content_index => "",
+        n => n,
+    };
+    match name {
         "index" => {
             let root = doc.id.dir().is_empty();
             if fm.is_present()

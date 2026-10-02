@@ -43,10 +43,12 @@ pub const DB_FILE: &str = "index.sqlite";
 const ANALYZER_ID: &str = concat!("okfkit-analyze/", env!("CARGO_PKG_VERSION"), "+stem+tok2");
 
 /// Schema version, analyzer and Japanese tokenization mode (`ipadic` or `bigram`).
-fn analyzer_identity() -> String {
+fn analyzer_identity(content_index: bool) -> String {
+    // The profile decides whether index.md files are content: a change re-reads everything.
     format!(
-        "{SCHEMA_VERSION}/{ANALYZER_ID}/{}",
-        okfkit_analyze::cjk_mode()
+        "{SCHEMA_VERSION}/{ANALYZER_ID}/{}{}",
+        okfkit_analyze::cjk_mode(),
+        if content_index { "/content-index" } else { "" }
     )
 }
 
@@ -90,6 +92,8 @@ pub struct Index {
     root: PathBuf,
     db_path: Option<PathBuf>,
     vocabulary: String,
+    /// `index.md` files are content pages (docs-site and vault profiles).
+    content_index: bool,
 }
 
 impl Index {
@@ -132,7 +136,8 @@ impl Index {
                     Err(e)
                 }
             })?;
-        let wanted = analyzer_identity();
+        let content_index = okfkit_core::site::profile(root).content_index();
+        let wanted = analyzer_identity(content_index);
         if current.as_deref() != Some(wanted.as_str()) {
             drop_all(&conn)?;
             conn.execute_batch(schema::CREATE)?;
@@ -146,6 +151,7 @@ impl Index {
             root: root.to_owned(),
             db_path,
             vocabulary: vocabulary.to_owned(),
+            content_index,
         })
     }
 
@@ -199,7 +205,7 @@ impl Index {
             }
         }
 
-        let prepared = prepare_all(&self.root, todo);
+        let prepared = prepare_all(&self.root, todo, self.content_index);
         let vocab = Vocabulary::load(&self.root, &self.vocabulary)
             .ok()
             .flatten();
@@ -237,7 +243,7 @@ impl Index {
         canonicalize_tags(&tx, vocab.as_ref())?;
         // The Japanese dictionary may have been installed while analyzing: documents
         // indexed earlier used bigrams, so rebuild once to keep terms consistent.
-        let identity = analyzer_identity();
+        let identity = analyzer_identity(self.content_index);
         let stored: String =
             tx.query_row("SELECT value FROM meta WHERE key = 'schema'", [], |r| {
                 r.get(0)
@@ -308,6 +314,8 @@ enum Prepared {
 
 struct DocRow {
     is_new: bool,
+    /// A listing or log file rather than a concept (see the bundle profile).
+    reserved: bool,
     concept: Concept,
     hash: String,
     size: i64,
@@ -320,6 +328,7 @@ struct DocRow {
 fn prepare_all(
     root: &Path,
     todo: Vec<(PathBuf, ConceptId, i64, i64, Option<String>)>,
+    content_index: bool,
 ) -> Vec<Prepared> {
     let threads = std::thread::available_parallelism()
         .map_or(1, |n| n.get())
@@ -332,7 +341,7 @@ fn prepare_all(
             .map(|part| {
                 s.spawn(|| {
                     part.iter()
-                        .map(|t| prepare(root, t, &analyzer))
+                        .map(|t| prepare(root, t, &analyzer, content_index))
                         .collect::<Vec<_>>()
                 })
             })
@@ -348,6 +357,7 @@ fn prepare(
     root: &Path,
     (rel, id, size, mtime, prev_hash): &(PathBuf, ConceptId, i64, i64, Option<String>),
     analyzer: &Analyzer,
+    content_index: bool,
 ) -> Prepared {
     let fail = |reason: String| Prepared::Failed {
         path: id.path(),
@@ -372,7 +382,8 @@ fn prepare(
         Ok(c) => c,
         Err(e) => return fail(e.to_string()),
     };
-    let chunks = if concept.is_reserved() {
+    let reserved = concept.is_reserved_in(content_index);
+    let chunks = if reserved {
         Vec::new()
     } else {
         let title = display_title(&concept).0;
@@ -390,6 +401,7 @@ fn prepare(
             .collect()
     };
     Prepared::Doc(Box::new(DocRow {
+        reserved,
         is_new: prev_hash.is_none(),
         tokens: estimate_tokens(&text),
         concept,
@@ -461,7 +473,7 @@ fn write_doc(tx: &Transaction, d: &DocRow) -> Result<(), Error> {
             d.hash,
             d.size,
             d.mtime,
-            c.is_reserved(),
+            d.reserved,
             fm_state(fm.state()),
             m.concept_type,
             title,

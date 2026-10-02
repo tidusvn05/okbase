@@ -23,6 +23,7 @@ serde-saphyr.workspace = true
 pulldown-cmark.workspace = true
 regex.workspace = true
 ignore.workspace = true
+toml_edit.workspace = true
 
 [dev-dependencies]
 tempfile.workspace = true

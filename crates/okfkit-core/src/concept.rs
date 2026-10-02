@@ -55,6 +55,11 @@ impl Concept {
         self.id.is_reserved()
     }
 
+    /// See [`ConceptId::is_reserved_in`].
+    pub fn is_reserved_in(&self, content_index: bool) -> bool {
+        self.id.is_reserved_in(content_index)
+    }
+
     /// The `type` frontmatter value, if it is a string.
     pub fn concept_type(&self) -> Option<&str> {
         self.frontmatter.get_str("type")

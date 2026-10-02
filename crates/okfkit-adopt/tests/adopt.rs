@@ -84,6 +84,8 @@ fn plain_folder_in_place_with_l2() {
         "---\ntags: [billing]\n# keep this comment\n---\n# Hoàn tiền\n\nChính sách hoàn tiền áp dụng trong vòng 30 ngày kể từ ngày mua hàng.\n",
     );
     write(root, "notes/empty.md", "```\nonly code\n```\n");
+    // Converting the vault into plain OKF is an explicit choice.
+    write(root, "okfkit.toml", "[bundle]\nprofile = \"okf\"\n");
 
     let mut o = opts();
     o.level = Level::L2;
@@ -125,4 +127,68 @@ fn plain_folder_in_place_with_l2() {
     );
     let report = lint(root, &LintConfig::level(Level::L1)).unwrap();
     assert_eq!(report.errors, 0, "{}", report.to_text());
+}
+
+#[test]
+fn docs_sites_and_vaults_keep_their_index_pages() {
+    // A software repository: mkdocs.yml at the root, docs/ as the bundle.
+    let tmp = tempfile::tempdir().unwrap();
+    let repo = tmp.path();
+    fs::create_dir_all(repo.join(".git")).unwrap();
+    write(repo, "mkdocs.yml", "site_name: Acme\n");
+    write(
+        repo,
+        "docs/index.md",
+        "# Acme docs\n\nWelcome to Acme, the build tool for everyone.\n",
+    );
+    write(
+        repo,
+        "docs/guide/install.md",
+        "# Install\n\nRun the installer and restart the shell afterwards.\n",
+    );
+    let docs = repo.join("docs");
+    let p = plan(&docs, &opts()).unwrap();
+    assert_eq!(p.site, Site::Mkdocs, "markers in a parent directory count");
+    assert!(
+        !p.changes
+            .iter()
+            .any(|c| matches!(c.kind, ChangeKind::Rename { .. })),
+        "index.md stays"
+    );
+    assert!(
+        !p.changes
+            .iter()
+            .any(|c| matches!(c.kind, ChangeKind::Create)),
+        "no listing or log files"
+    );
+    apply_in_place(&docs, &p).unwrap();
+    let index = fs::read_to_string(docs.join("index.md")).unwrap();
+    assert!(
+        index.contains("title: Acme docs")
+            && index.ends_with("Welcome to Acme, the build tool for everyone.\n"),
+        "{index}"
+    );
+    assert!(!docs.join("guide/index.md").exists() && !docs.join("log.md").exists());
+    let report = lint(&docs, &LintConfig::level(Level::L1)).unwrap();
+    assert_eq!(report.errors, 0, "{}", report.to_text());
+    assert_eq!(report.level, Some(Level::L1));
+
+    // Only the selected documents change.
+    let vault = tmp.path().join("vault");
+    write(&vault, ".obsidian/app.json", "{}");
+    write(
+        &vault,
+        "a.md",
+        "# A\n\nAlpha notes about the first topic.\n",
+    );
+    write(
+        &vault,
+        "b.md",
+        "# B\n\nBeta notes about the second topic.\n",
+    );
+    let mut o = opts();
+    o.only = vec!["b.md".into()];
+    let p = plan(&vault, &o).unwrap();
+    let paths: Vec<&str> = p.changes.iter().map(|c| c.path.as_str()).collect();
+    assert_eq!(paths, ["b.md"]);
 }

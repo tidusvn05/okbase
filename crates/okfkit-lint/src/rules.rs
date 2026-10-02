@@ -4,9 +4,9 @@ use std::collections::{BTreeSet, HashMap, HashSet};
 
 use okfkit_core::{
     Concept, ConceptId, LinkKind, Severity as CoreSeverity, Value, resolve_link, resolve_wikilink,
-    validate,
+    validate_profile,
 };
-use okfkit_standard::{FieldProblem, Level, assess, is_iso_date};
+use okfkit_standard::{FieldProblem, Level, assess_profile, is_iso_date};
 
 use crate::{Context, Diagnostic, LintRule, RuleInfo, Severity};
 
@@ -183,7 +183,7 @@ impl LintRule for StandardLevels {
     }
 
     fn check(&self, cx: &Context) -> Vec<Diagnostic> {
-        let a = assess(cx.docs, cx.vocabulary);
+        let a = assess_profile(cx.docs, cx.vocabulary, cx.content_index);
         let mut out: Vec<Diagnostic> = cx
             .unreadable
             .iter()
@@ -229,7 +229,7 @@ impl LintRule for General {
     fn check(&self, cx: &Context) -> Vec<Diagnostic> {
         let mut out = Vec::new();
         for doc in cx.docs {
-            for issue in validate(doc)
+            for issue in validate_profile(doc, cx.content_index)
                 .into_iter()
                 .filter(|i| i.severity == CoreSeverity::Warning)
             {
@@ -237,7 +237,7 @@ impl LintRule for General {
                     out.push(diag(info.id, &doc.path, None, issue.message));
                 }
             }
-            if !doc.is_reserved() {
+            if !doc.is_reserved_in(cx.content_index) {
                 let tokens = okfkit_analyze::estimate_tokens(&doc.body);
                 if tokens > cx.config.max_doc_tokens {
                     out.push(diag(
@@ -346,7 +346,12 @@ impl LintRule for StaleIndex {
 
     fn check(&self, cx: &Context) -> Vec<Diagnostic> {
         let mut out = Vec::new();
-        for index in cx.docs.iter().filter(|d| d.id.name() == "index") {
+        // Under the docs-site and vault profiles, index.md is a content page, not a listing.
+        for index in cx
+            .docs
+            .iter()
+            .filter(|d| d.id.name() == "index" && !cx.content_index)
+        {
             let dir = index.id.dir();
             if is_meta(dir) {
                 continue;

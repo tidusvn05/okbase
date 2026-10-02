@@ -628,6 +628,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
             force,
             level,
             verbose,
+            only,
         } => {
             let dir = dir.unwrap_or_else(|| bundle_dir.clone());
             if !dir.is_dir() {
@@ -635,6 +636,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
             }
             let mut opts = okfkit_adopt::AdoptOptions::new(&today());
             opts.level = level.into();
+            opts.only = only;
             let plan = okfkit_adopt::plan(&dir, &opts)?;
             emit(json, &plan, || plan.to_text(verbose))?;
             if let Some(out) = out {

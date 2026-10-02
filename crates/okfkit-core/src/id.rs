@@ -72,6 +72,12 @@ impl ConceptId {
             .iter()
             .any(|f| f.strip_suffix(".md") == Some(self.name()))
     }
+
+    /// Like [`ConceptId::is_reserved`], but `index` is a content page when `content_index` is
+    /// set (the `docs-site` and `vault` profiles).
+    pub fn is_reserved_in(&self, content_index: bool) -> bool {
+        self.is_reserved() && !(content_index && self.name() == "index")
+    }
 }
 
 impl fmt::Display for ConceptId {

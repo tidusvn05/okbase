@@ -14,7 +14,9 @@ use std::collections::{BTreeSet, HashSet};
 use std::fmt;
 use std::path::Path;
 
-use okfkit_core::{Concept, ConceptId, FrontmatterState, Severity, Value, discover, validate};
+use okfkit_core::{
+    Concept, ConceptId, FrontmatterState, Severity, Value, discover, validate_profile,
+};
 use serde::Serialize;
 
 use crate::mapping::meta;
@@ -95,7 +97,8 @@ pub fn assess_bundle(root: &Path, vocabulary_path: &str) -> Result<Assessment, E
         Ok(v) => (v, None),
         Err(e) => (None, Some(e.to_string())),
     };
-    let mut a = assess(&docs, vocab.as_ref());
+    let content_index = okfkit_core::site::profile(root).content_index();
+    let mut a = assess_profile(&docs, vocab.as_ref(), content_index);
     if let Some(message) = vocab_error {
         a.findings.retain(|f| f.code != "no-vocabulary");
         a.findings.push(Finding {
@@ -115,18 +118,28 @@ pub fn assess_bundle(root: &Path, vocabulary_path: &str) -> Result<Assessment, E
 
 /// Assesses already-parsed documents. `vocab` is the bundle's tag vocabulary, if any.
 pub fn assess(docs: &[Concept], vocab: Option<&Vocabulary>) -> Assessment {
+    assess_profile(docs, vocab, false)
+}
+
+/// Like [`assess`]; with `content_index` (docs-site and vault profiles) `index.md` files are
+/// content pages and directories need no listing file.
+pub fn assess_profile(
+    docs: &[Concept],
+    vocab: Option<&Vocabulary>,
+    content_index: bool,
+) -> Assessment {
     let mut out = Vec::new();
     let ids: HashSet<&str> = docs.iter().map(|d| d.id.as_str()).collect();
     let mut dirs = BTreeSet::new();
     let mut concepts = 0;
     for doc in docs {
-        for issue in validate(doc)
+        for issue in validate_profile(doc, content_index)
             .into_iter()
             .filter(|i| i.severity == Severity::Error)
         {
             push(&mut out, doc, Level::L0, issue.code, issue.message);
         }
-        if doc.is_reserved() {
+        if doc.is_reserved_in(content_index) {
             continue;
         }
         concepts += 1;
@@ -146,7 +159,7 @@ pub fn assess(docs: &[Concept], vocab: Option<&Vocabulary>) -> Assessment {
         check_l1(&mut out, doc);
         check_l2(&mut out, doc, vocab, &ids);
     }
-    for dir in dirs {
+    for dir in dirs.into_iter().filter(|_| !content_index) {
         let index = if dir.is_empty() {
             "index".to_owned()
         } else {

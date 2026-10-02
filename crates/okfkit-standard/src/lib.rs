@@ -12,7 +12,7 @@ pub mod types;
 pub mod vocabulary;
 
 pub use error::Error;
-pub use level::{Assessment, Finding, Level, assess, assess_bundle, is_iso_date};
+pub use level::{Assessment, Finding, Level, assess, assess_bundle, assess_profile, is_iso_date};
 pub use mapping::{Mapped, Meta, meta};
 pub use types::{FieldProblem, FieldSpec, FieldType, TYPES_DIR, TypeSchema, load_type_schemas};
 pub use vocabulary::{Term, Vocabulary, normalize_tag};
