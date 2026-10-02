@@ -44,7 +44,8 @@ okfkit-mcp.workspace = true
 embed-local = ["okfkit/embed-local"]
 ## An OpenAI-compatible embeddings API.
 embed-api = ["okfkit/embed-api"]
-## Everything: the okfkit-full build (embeddings and an embedded Japanese dictionary).
 ## Fine-tuning (train/export through a private Python environment).
 embed-tune = ["okfkit/embed-tune"]
-full = ["embed-local", "embed-api", "embed-tune", "okfkit/ja-embedded"]
+## Everything: the okfkit-full build. Language dictionaries stay external (downloaded on first
+## use), as in the default build.
+full = ["embed-local", "embed-api", "embed-tune"]

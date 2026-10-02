@@ -59,8 +59,8 @@ The defaults are backed by experiments (see [`spikes/`](spikes/README.md)). One 
 
 | Build | Contents | Size |
 |---|---|---|
-| `okfkit` (default) | Everything above except local embeddings; Japanese dictionary downloaded on first use (`okfkit dict install` for offline machines, `OKFKIT_OFFLINE=1` to disable) | ~23 MB |
-| `okfkit-full` (`--features full`) | Adds local embedding models (EmbeddingGemma 300M Q4, bge-m3 int8, your own ONNX models), fine-tuning, and embeds the Japanese dictionary | ~96 MB |
+| `okfkit` (default) | Everything above except local embeddings; Japanese dictionary downloaded on first use (`okfkit dict install` for offline machines, `OKFKIT_OFFLINE=1` to disable) | ~34 MB |
+| `okfkit-full` (`--features full`) | Adds local embedding models (EmbeddingGemma 300M Q4, bge-m3 int8, your own ONNX models) and fine-tuning; the dictionary stays external | ~60 MB |
 
 Models are never bundled: `okfkit embed enable` records the choice (models with their own terms, such as Gemma, need `--accept-license`) and the first `okfkit embed index` downloads the model into the user cache.
 
