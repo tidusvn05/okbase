@@ -832,3 +832,60 @@ fn onboard_plan_converges() {
     assert!(g["commands"].to_string().contains("okfkit embed tune init"));
     assert!(stdout(&mut run(&["--help"])).contains("Agents: start with `okfkit onboard`"));
 }
+
+#[test]
+fn doctor_checks_the_setup_end_to_end() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("home");
+    let project = tmp.path().join("project");
+    let kb = tmp.path().join("kb");
+    for d in [&home, &project, &kb] {
+        std::fs::create_dir_all(d).unwrap();
+    }
+    std::fs::write(
+        kb.join("a.md"),
+        "---\ntitle: A\ndescription: About a.\n---\n\nText.\n",
+    )
+    .unwrap();
+    let run = |bundle: &Path, args: &[&str]| {
+        let mut c = Command::cargo_bin("okfkit").unwrap();
+        c.env("HOME", &home)
+            .env("XDG_CONFIG_HOME", home.join(".config"))
+            .env("XDG_CACHE_HOME", home.join(".cache"))
+            .current_dir(&project)
+            .arg("-b")
+            .arg(bundle)
+            .args(args);
+        c
+    };
+    stdout(&mut run(&kb, &["agent", "install", "--claude"]));
+    let r = json_of(&mut run(&kb, &["doctor"]));
+    assert_eq!(r["ok"], true, "{r}");
+    let mcp = r["checks"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|c| c["id"] == "mcp")
+        .unwrap();
+    assert_eq!(mcp["status"], "ok", "{mcp}");
+    assert!(r["checks"].to_string().contains("Claude Code"));
+    // The bundle moves: doctor fails (exit 4) and says how to fix it.
+    let moved = tmp.path().join("moved");
+    std::fs::rename(&kb, &moved).unwrap();
+    let out = run(&moved, &["doctor", "--json"]).output().unwrap();
+    assert_eq!(out.status.code(), Some(4));
+    let r: Value = serde_json::from_slice(&out.stdout).unwrap();
+    assert_eq!(r["ok"], false);
+    // This project's install still points at the old path.
+    assert!(r["checks"].to_string().contains("no longer exists"), "{r}");
+    assert!(
+        r["next"]
+            .to_string()
+            .contains("okfkit agent install --replace"),
+        "{r}"
+    );
+    let out = run(&kb, &["doctor", "--json"]).output().unwrap();
+    let r: Value = serde_json::from_slice(&out.stdout).unwrap();
+    assert_eq!(r["checks"][1]["id"], "bundle");
+    assert_eq!(r["checks"][1]["status"], "fail");
+}

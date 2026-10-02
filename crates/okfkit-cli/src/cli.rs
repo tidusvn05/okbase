@@ -76,6 +76,9 @@ pub enum Command {
         #[arg(long, value_enum, default_value = "answer")]
         goal: GoalArg,
     },
+    /// Check the whole setup (bundle, index, agents, embeddings, a real MCP round trip) with a fix
+    /// for each problem. Exits 4 when a check fails.
+    Doctor,
     /// Print help for okfkit or a command; --agent prints the contract for agents.
     Help {
         /// Command path, e.g. `embed tune`.

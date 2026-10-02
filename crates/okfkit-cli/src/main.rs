@@ -2,6 +2,7 @@
 
 mod cli;
 mod contract;
+mod doctor;
 mod onboard;
 
 use std::collections::BTreeMap;
@@ -35,6 +36,7 @@ fn main() -> ExitCode {
 
 fn run(cli: Cli) -> Result<ExitCode> {
     let json = cli.json;
+    let state_arg = cli.state_dir.clone();
     let bundle_dir = cli.bundle.clone().unwrap_or_else(|| PathBuf::from("."));
     let state_dir = match cli.state_dir.as_deref() {
         None | Some("auto") => StateDir::Auto,
@@ -106,6 +108,232 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     s.stats.mode
                 )
             })?;
+        }
+        Command::Doctor => {
+            use doctor::{Status, check};
+            let home = std::env::var_os("HOME")
+                .or_else(|| std::env::var_os("USERPROFILE"))
+                .map(PathBuf::from)
+                .unwrap_or_default();
+            let feats = okfkit::build_features();
+            let mut checks = vec![check(
+                "okfkit",
+                Status::Ok,
+                format!(
+                    "{} ({})",
+                    env!("CARGO_PKG_VERSION"),
+                    if feats.embed_local {
+                        "okfkit-full"
+                    } else {
+                        "default build"
+                    }
+                ),
+                None,
+            )];
+            if !bundle_dir.is_dir() {
+                checks.push(check(
+                    "bundle",
+                    Status::Fail,
+                    format!("{} is not a folder", bundle_dir.display()),
+                    Some("okfkit -b <folder> doctor"),
+                ));
+                let r = doctor::Report::new(checks);
+                emit(json, &r, || r.to_text())?;
+                return Ok(ExitCode::from(contract::EXIT_FINDINGS));
+            }
+            let bundle_abs = abs(&bundle_dir);
+            let b = Bundle::open(
+                &bundle_dir,
+                OpenOptions::default().state_dir(state_dir.clone()),
+            )?;
+            match b.sync() {
+                Ok(st) if st.skipped.is_empty() => {
+                    checks.push(check("index", Status::Ok, "up to date", None));
+                }
+                Ok(st) => checks.push(check(
+                    "index",
+                    Status::Warn,
+                    format!(
+                        "{} files could not be read (first: {}: {})",
+                        st.skipped.len(),
+                        st.skipped[0].0,
+                        st.skipped[0].1
+                    ),
+                    Some("okfkit lint --level L1"),
+                )),
+                Err(e) => checks.push(check(
+                    "index",
+                    Status::Fail,
+                    format!("{e}"),
+                    Some("okfkit index --rebuild"),
+                )),
+            }
+            let scope = scope()?;
+            let advice = b.advise(&okfkit::AdviseOptions::default(), &scope)?;
+            let p = &advice.profile;
+            checks.push(match p.level {
+                None => check(
+                    "level",
+                    Status::Warn,
+                    "plain markdown, not OKF yet",
+                    Some("okfkit adopt . --out <new folder> (ask the user)"),
+                ),
+                Some(l) if l < okfkit::Level::L2 => check(
+                    "level",
+                    Status::Warn,
+                    if p.missing_descriptions > 0 {
+                        format!(
+                            "level {l}; {} documents without a description",
+                            p.missing_descriptions
+                        )
+                    } else {
+                        format!("level {l} (L2 helps agents pick documents)")
+                    },
+                    Some("okfkit lint --level L2"),
+                ),
+                Some(l) => check("level", Status::Ok, format!("level {l}"), None),
+            });
+            // Agents connected to this bundle.
+            let mut prefix = "kb".to_owned();
+            let installs: Vec<okfkit_skills::Install> = okfkit_skills::registry_path()
+                .map(|r| okfkit_skills::load_registry(&r).unwrap_or_default())
+                .unwrap_or_default()
+                .into_iter()
+                .filter(|i| {
+                    // Installs for this bundle, and any install of this project (it may still
+                    // point at a bundle that moved).
+                    i.source == bundle_abs.display().to_string()
+                        || matches!(&i.target, okfkit_skills::Target::Project(d) if Some(d) == std::env::current_dir().ok().map(|c| abs(&c)).as_ref())
+                })
+                .collect();
+            for i in &installs {
+                let problems = i.check(&home);
+                if problems.is_empty() && i.source != bundle_abs.display().to_string() {
+                    // Another healthy bundle of this project (several bundles side by side).
+                    continue;
+                }
+                let place = match &i.target {
+                    okfkit_skills::Target::User => "user".to_owned(),
+                    okfkit_skills::Target::Project(d) => d.display().to_string(),
+                };
+                if problems.is_empty() {
+                    checks.push(check(
+                        "agents",
+                        Status::Ok,
+                        format!("{} ({place}) as `{}`", i.agent.label(), i.name),
+                        None,
+                    ));
+                } else {
+                    checks.push(check(
+                        "agents",
+                        Status::Fail,
+                        format!("{} ({place}): {}", i.agent.label(), problems.join("; ")),
+                        Some("okfkit agent install --replace (ask the user)"),
+                    ));
+                }
+                if let okfkit_skills::Server::Stdio { .. } = i.server
+                    && i.name != okfkit_skills::DEFAULT_NAME
+                {
+                    prefix = okfkit_skills::default_prefix(&i.name);
+                }
+            }
+            if !checks.iter().any(|c| c.id == "agents") {
+                checks.push(check(
+                    "agents",
+                    Status::Warn,
+                    "no agent is connected to this bundle",
+                    Some("okfkit agent install"),
+                ));
+            }
+            // Embeddings.
+            match (b.embedding_model(), p.embed.as_ref()) {
+                (None, _) => {
+                    checks.push(check("embed", Status::Ok, "off (lexical tools only)", None))
+                }
+                (Some(m), _) if !(feats.embed_local || feats.embed_api) => checks.push(check(
+                    "embed",
+                    Status::Fail,
+                    format!("okfkit.toml asks for {m}, but this build has no embed module"),
+                    Some("cargo install okfkit-cli --features full"),
+                )),
+                (Some(m), st) => {
+                    let base = m.split('@').next().unwrap_or(&m).to_owned();
+                    let license = okfkit::find_model(&base).or_else(|| {
+                        okfkit::find_custom(&base)
+                            .ok()
+                            .and_then(|c| c.manifest.base.as_deref().and_then(okfkit::find_model))
+                    });
+                    if let Some(info) = license.filter(|i| !okfkit::license_accepted(i)) {
+                        checks.push(check(
+                            "embed",
+                            Status::Fail,
+                            format!("{base} needs the {} accepted", info.license),
+                            Some("okfkit embed enable --accept-license (ask the user)"),
+                        ));
+                    } else if let Some(st) = st.filter(|s| s.chunks > 0 && !s.complete()) {
+                        checks.push(check(
+                            "embed",
+                            Status::Warn,
+                            format!("{base}: {}/{} chunks embedded", st.embedded, st.chunks),
+                            Some("okfkit embed index"),
+                        ));
+                    } else {
+                        checks.push(check(
+                            "embed",
+                            Status::Ok,
+                            format!("{base}, every chunk embedded"),
+                            None,
+                        ));
+                    }
+                }
+            }
+            // Japanese dictionary.
+            if p.langs
+                .get("ja")
+                .is_some_and(|s| *s >= okfkit::advise::LANG_MIN_SHARE)
+            {
+                let dict = okfkit::analyze::dict::embedded() || okfkit::analyze::dict::installed();
+                checks.push(if dict {
+                    check("dict", Status::Ok, "Japanese dictionary ready", None)
+                } else if okfkit::analyze::dict::downloads_allowed() {
+                    check(
+                        "dict",
+                        Status::Warn,
+                        "Japanese dictionary not installed yet (downloaded on first use)",
+                        Some("okfkit dict install"),
+                    )
+                } else {
+                    check(
+                        "dict",
+                        Status::Fail,
+                        "Japanese dictionary missing and downloads are off (OKFKIT_OFFLINE)",
+                        Some("okfkit dict install"),
+                    )
+                });
+            }
+            // A real MCP round trip.
+            let exe = std::env::current_exe().context("locating the okfkit binary")?;
+            checks.push(
+                match doctor::mcp_round_trip(&exe, &bundle_abs, state_arg.as_deref(), &prefix) {
+                    Ok(n) => check(
+                        "mcp",
+                        Status::Ok,
+                        format!("server starts; {n} tools; {prefix}_catalog answers"),
+                        None,
+                    ),
+                    Err(e) => check(
+                        "mcp",
+                        Status::Fail,
+                        e,
+                        Some("okfkit mcp serve --stdio (run it to see the error)"),
+                    ),
+                },
+            );
+            let r = doctor::Report::new(checks);
+            emit(json, &r, || r.to_text())?;
+            if !r.ok {
+                return Ok(ExitCode::from(contract::EXIT_FINDINGS));
+            }
         }
         Command::Help { command, agent } => {
             let mut root = <Cli as clap::CommandFactory>::command();
