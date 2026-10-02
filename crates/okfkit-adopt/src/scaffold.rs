@@ -35,6 +35,11 @@ fn io(path: &Path) -> impl FnOnce(std::io::Error) -> Error + '_ {
     }
 }
 
+/// A TOML basic string (JSON string escapes are valid TOML).
+fn toml_str(s: &str) -> String {
+    serde_json::to_string(s).unwrap_or_else(|_| format!("\"{s}\""))
+}
+
 /// A YAML scalar: plain when that is unambiguous, else double-quoted.
 fn yaml_str(s: &str) -> String {
     let plain = !s.is_empty()
@@ -119,7 +124,7 @@ pub fn init_files(root: &Path, o: &InitOptions) -> Result<Vec<(String, String)>,
                 "# okfkit settings for this bundle (https://github.com/okfkit/okfkit)\n[bundle]\nprofile = \"okf\"\n# Languages people write and ask in; used by fine-tuning and advice.\nlangs = [{}]\n",
                 langs
                     .iter()
-                    .map(|l| yaml_str(l))
+                    .map(|l| toml_str(l))
                     .collect::<Vec<_>>()
                     .join(", ")
             ),
@@ -377,6 +382,9 @@ mod tests {
         .unwrap();
         write_new(root, &files, &[]).unwrap();
         assert!(root.join("_meta/types/Policy.md").is_file());
+        let toml = std::fs::read_to_string(root.join("okfkit.toml")).unwrap();
+        assert!(toml.parse::<toml_edit::DocumentMut>().is_ok(), "{toml}");
+        assert!(toml.contains(r#"langs = ["vi", "en"]"#), "{toml}");
         let doc = new_doc(
             root,
             &NewOptions {

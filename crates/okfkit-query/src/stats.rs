@@ -108,7 +108,11 @@ pub(crate) fn content_langs(
     let conn = index.connection();
     let mut st = conn.prepare_cached("SELECT body FROM docs WHERE id = ?1")?;
     let mut out = BTreeMap::new();
-    for d in crate::docs::load(conn, scope, crate::docs::Load::default())? {
+    // _meta/ holds the vocabulary and schemas: about the bundle, not part of its content.
+    for d in crate::docs::load(conn, scope, crate::docs::Load::default())?
+        .into_iter()
+        .filter(|d| !d.id.starts_with("_meta/"))
+    {
         let lang = match d.lang.as_deref().map(str::to_lowercase) {
             Some(l) if !l.is_empty() => l.split(['-', '_']).next().unwrap_or("other").to_owned(),
             _ => {

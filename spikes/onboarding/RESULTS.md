@@ -49,3 +49,30 @@ After the fixes, `onboard` on the three folders reports the right counts and lev
 - Codex (`codex exec`) end to end.
 - The second half of the loop: answering the ASK steps (embeddings with license, curation) and
   checking the plan converges to empty.
+
+## S13b — real-world folders (2026-10-02)
+
+After U1–U8 (`docs/PLAN-usecases.md`): three Claude subagents, same protocol, on fresh copies of
+a **software repository** (Cargo.toml, MkDocs, `docs/`, `node_modules/`, `target/`), an **empty
+folder** (request in Vietnamese: start a customer-care knowledge base and write the first
+policy), and an **OKF bundle with 2 of 11 files broken**.
+
+| | repo | empty | partial |
+|---|---|---|---|
+| Understood the folder | yes: `onboard` → `-b docs`, rest of the repo ignored | yes: `init`, then `new --type Policy` | yes: named the 2 files and why |
+| Result | agents connected to `docs/`, doctor ok, no document touched | bundle at L2, policy written (owner filled, vi + en summary, tag with synonyms), lint 0 errors | agents connected, doctor ok |
+| Asked the user | add frontmatter in place? | connect agents? policy final? business details (30 days from purchase or delivery?…) | fix the 2 files in place? go to L2? |
+| Consent flags on its own | 0 | 0 | 0 |
+
+41 okfkit calls, no `--accept-license`, `--yes`, `--force`, `--replace` or `adopt --write`.
+
+Fixed after the run:
+1. `init` wrote `langs = [vi, en]` unquoted in `okfkit.toml` (invalid TOML; the agent fixed it by
+   hand). Now quoted, with a test that the file parses.
+2. Content languages counted `_meta/` (the vocabulary example has Japanese): "en 69% / ja 31%" for
+   a Vietnamese bundle. `_meta/` no longer counts (now "vi 100%").
+3. `onboard` at a repository root indexed the whole repository before pointing at `docs/`. It now
+   indexes only a folder that is the bundle.
+4. `adopt --write` refused because `agent install` had just written uncommitted files; it now only
+   requires the files it changes to be committed.
+5. `retrieve --help` now says it needs embeddings.

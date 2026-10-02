@@ -290,7 +290,8 @@ pub enum Command {
         #[command(flatten)]
         filter: FilterArgs,
     },
-    /// The best sections for a question within a token budget, formatted for a prompt.
+    /// The best sections for a question within a token budget, formatted for a prompt (needs embeddings:
+    /// `okfkit embed enable`, okfkit-full build).
     Retrieve {
         /// The question.
         query: String,

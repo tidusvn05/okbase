@@ -493,8 +493,22 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     .is_some_and(okfkit::license_accepted),
                 ..Default::default()
             };
-            if st.bundle_exists && goal != onboard::Goal::Remove {
-                st.scan = Some(okfkit::scan::scan(&bundle_dir)?);
+            // Index only a folder that is the bundle: a repository root pointing at docs/, an
+            // empty folder or a folder of PDFs gets no index of its own.
+            let here_is_bundle = if st.bundle_exists && goal != onboard::Goal::Remove {
+                let sc = okfkit::scan::scan(&bundle_dir)?;
+                let elsewhere = matches!(
+                    sc.kind,
+                    okfkit::scan::FolderKind::Empty | okfkit::scan::FolderKind::NonMarkdown
+                ) || sc
+                    .recommended
+                    .map_or(sc.candidates.len() > 1, |i| sc.candidates[i].path != ".");
+                st.scan = Some(sc);
+                !elsewhere
+            } else {
+                false
+            };
+            if here_is_bundle {
                 let b = open()?;
                 let options = okfkit::AdviseOptions {
                     user_langs,
@@ -736,14 +750,28 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 eprintln!("wrote the adopted bundle to {}", out.display());
             } else if write {
                 if !force {
+                    // Only the files adopt changes must be committed: other work in progress
+                    // (for example agent configuration okfkit just wrote) does not matter.
+                    let mut paths: Vec<String> = Vec::new();
+                    for c in &plan.changes {
+                        paths.push(c.path.clone());
+                        if let okfkit_adopt::ChangeKind::Rename { from } = &c.kind {
+                            paths.push(from.clone());
+                        }
+                    }
                     let status = std::process::Command::new("git")
-                        .args(["status", "--porcelain", "--", "."])
+                        .args(["status", "--porcelain", "--"])
+                        .args(if paths.is_empty() {
+                            vec![".".to_owned()]
+                        } else {
+                            paths
+                        })
                         .current_dir(&dir)
                         .output();
                     match status {
                         Ok(o) if o.status.success() && o.stdout.is_empty() => {}
                         Ok(o) if o.status.success() => bail!(
-                            "refusing to edit in place: {} has uncommitted changes (commit them, or pass --force)",
+                            "refusing to edit in place: files adopt would change in {} have uncommitted changes (commit them, or pass --force)",
                             dir.display()
                         ),
                         _ => bail!(
