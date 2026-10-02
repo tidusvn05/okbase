@@ -744,8 +744,13 @@ location: {}
                 }
             }
         }
-        Command::Agent {
-            command:
+        Command::Agent { command } => {
+            let home = std::env::var_os("HOME")
+                .or_else(|| std::env::var_os("USERPROFILE"))
+                .map(PathBuf::from)
+                .context("cannot find the home directory (set HOME)")?;
+            let registry = okfkit_skills::registry_path();
+            match command {
                 AgentCmd::Install {
                     claude,
                     codex,
@@ -754,64 +759,357 @@ location: {}
                     print,
                     name,
                     prefix,
-                },
-        } => {
-            if claude == codex {
-                bail!("invalid argument: choose exactly one of --claude or --codex");
-            }
-            if !bundle_dir.is_dir() {
-                bail!(
-                    "bundle not found: {} is not a directory",
-                    bundle_dir.display()
-                );
-            }
-            let home = std::env::var_os("HOME")
-                .or_else(|| std::env::var_os("USERPROFILE"))
-                .map(PathBuf::from)
-                .context("cannot find the home directory (set HOME)")?;
-            let project = abs(&project.unwrap_or_else(|| PathBuf::from(".")));
-            let caps = Bundle::open_in_memory(&bundle_dir)?
-                .capabilities()
-                .iter()
-                .map(str::to_owned)
-                .collect();
-            let opts = okfkit_skills::InstallOptions {
-                agent: if claude {
-                    okfkit_skills::Agent::Claude
-                } else {
-                    okfkit_skills::Agent::Codex
-                },
-                target: if user {
-                    okfkit_skills::Target::User
-                } else {
-                    okfkit_skills::Target::Project(project)
-                },
-                home,
-                command: std::env::current_exe().context("locating the okfkit binary")?,
-                server_name: name,
-                skill: okfkit_skills::SkillContext {
-                    bundle: abs(&bundle_dir),
-                    prefix,
-                    capabilities: caps,
-                },
-            };
-            let actions = okfkit_skills::plan(&opts)?;
-            if print {
-                for a in &actions {
-                    println!("{a}");
-                }
-            } else {
-                okfkit_skills::apply(&actions)?;
-                for a in &actions {
-                    match a {
-                        okfkit_skills::Action::Write { path, why, .. } => {
-                            println!("{why}: wrote {}", path.display())
+                    url,
+                    token_env,
+                    replace,
+                } => {
+                    let agents = chosen_agents(claude, codex, &home)?;
+                    let target = if user {
+                        okfkit_skills::Target::User
+                    } else {
+                        okfkit_skills::Target::Project(abs(
+                            &project.unwrap_or_else(|| PathBuf::from("."))
+                        ))
+                    };
+                    let prefix = prefix.unwrap_or_else(|| okfkit_skills::default_prefix(&name));
+                    let (server, skill) = match url {
+                        Some(url) => (
+                            okfkit_skills::Server::Http {
+                                url: url.clone(),
+                                token_env,
+                            },
+                            okfkit_skills::SkillContext {
+                                bundle: PathBuf::from(&url),
+                                prefix,
+                                capabilities: vec!["remote".into()],
+                            },
+                        ),
+                        None => {
+                            if !bundle_dir.is_dir() {
+                                bail!(
+                                    "bundle not found: {} is not a directory",
+                                    bundle_dir.display()
+                                );
+                            }
+                            let caps = Bundle::open_in_memory(&bundle_dir)?
+                                .capabilities()
+                                .iter()
+                                .map(str::to_owned)
+                                .collect();
+                            (
+                                okfkit_skills::Server::Stdio {
+                                    command: std::env::current_exe()
+                                        .context("locating the okfkit binary")?,
+                                },
+                                okfkit_skills::SkillContext {
+                                    bundle: abs(&bundle_dir),
+                                    prefix,
+                                    capabilities: caps,
+                                },
+                            )
                         }
-                        okfkit_skills::Action::Run { why, .. } => println!("{why}: done"),
+                    };
+                    // Plan every agent first, so a conflict leaves nothing half-installed.
+                    let mut plans = Vec::new();
+                    for agent in agents {
+                        let opts = okfkit_skills::InstallOptions {
+                            agent,
+                            target: target.clone(),
+                            home: home.clone(),
+                            server: server.clone(),
+                            server_name: name.clone(),
+                            skill: skill.clone(),
+                            replace,
+                        };
+                        let actions = okfkit_skills::plan(&opts)?;
+                        plans.push((opts, actions));
+                    }
+                    for (opts, actions) in &plans {
+                        if print {
+                            for a in actions {
+                                println!("{a}");
+                            }
+                            continue;
+                        }
+                        okfkit_skills::apply(actions)?;
+                        if let Some(reg) = &registry {
+                            okfkit_skills::record_install(reg, okfkit_skills::Install::of(opts)?)?;
+                        }
+                        println!("{}:", opts.agent.label());
+                        for a in actions {
+                            println!("  {}", a.summary());
+                        }
+                    }
+                    if !print {
+                        println!(
+                            "Restart the agent to pick up the MCP server and skills (tools {}_*). Undo: okfkit agent uninstall{}",
+                            skill.prefix,
+                            if name == okfkit_skills::DEFAULT_NAME {
+                                String::new()
+                            } else {
+                                format!(" --name {name}")
+                            }
+                        );
                     }
                 }
-                println!("Restart the agent to pick up the MCP server and skills.");
+                AgentCmd::Uninstall {
+                    claude,
+                    codex,
+                    user,
+                    project,
+                    name,
+                    all,
+                    print,
+                } => {
+                    let recorded = match &registry {
+                        Some(r) => okfkit_skills::load_registry(r)?,
+                        None => Vec::new(),
+                    };
+                    let todo: Vec<(
+                        okfkit_skills::Agent,
+                        okfkit_skills::Target,
+                        String,
+                        Option<Vec<String>>,
+                    )> = if all {
+                        recorded
+                            .iter()
+                            .map(|i| {
+                                (
+                                    i.agent,
+                                    i.target.clone(),
+                                    i.name.clone(),
+                                    Some(i.skills.clone()),
+                                )
+                            })
+                            .collect()
+                    } else {
+                        let target = if user {
+                            okfkit_skills::Target::User
+                        } else {
+                            okfkit_skills::Target::Project(abs(
+                                &project.unwrap_or_else(|| PathBuf::from("."))
+                            ))
+                        };
+                        let agents = if claude || codex {
+                            [
+                                (claude, okfkit_skills::Agent::Claude),
+                                (codex, okfkit_skills::Agent::Codex),
+                            ]
+                            .into_iter()
+                            .filter_map(|(on, a)| on.then_some(a))
+                            .collect()
+                        } else {
+                            vec![okfkit_skills::Agent::Claude, okfkit_skills::Agent::Codex]
+                        };
+                        agents
+                            .into_iter()
+                            .map(|a| {
+                                let skills = recorded
+                                    .iter()
+                                    .find(|i| i.agent == a && i.target == target && i.name == name)
+                                    .map(|i| i.skills.clone());
+                                (a, target.clone(), name.clone(), skills)
+                            })
+                            .collect()
+                    };
+                    let mut changed = 0;
+                    for (agent, target, name, skills) in todo {
+                        let actions =
+                            okfkit_skills::plan_uninstall(&okfkit_skills::UninstallOptions {
+                                agent,
+                                target: target.clone(),
+                                home: home.clone(),
+                                server_name: name.clone(),
+                                skills,
+                            })?;
+                        if print {
+                            for a in &actions {
+                                println!("{a}");
+                            }
+                            continue;
+                        }
+                        okfkit_skills::apply(&actions)?;
+                        if let Some(r) = &registry {
+                            okfkit_skills::forget_install(r, agent, &target, &name)?;
+                        }
+                        if !actions.is_empty() {
+                            changed += 1;
+                            println!("{} ({name}):", agent.label());
+                            for a in &actions {
+                                println!("  {}", a.summary());
+                            }
+                        }
+                    }
+                    if !print {
+                        if changed == 0 {
+                            println!(
+                                "nothing to remove (see `okfkit agent status` for recorded installs)"
+                            );
+                        } else {
+                            println!(
+                                "Restart the agent. okfkit's index and cache stay; remove them with `okfkit clean`."
+                            );
+                        }
+                    }
+                }
+                AgentCmd::Status => {
+                    let recorded = match &registry {
+                        Some(r) => okfkit_skills::load_registry(r)?,
+                        None => Vec::new(),
+                    };
+                    #[derive(Serialize)]
+                    struct Row<'a> {
+                        #[serde(flatten)]
+                        install: &'a okfkit_skills::Install,
+                        problems: Vec<String>,
+                    }
+                    let rows: Vec<Row<'_>> = recorded
+                        .iter()
+                        .map(|i| Row {
+                            install: i,
+                            problems: i.check(&home),
+                        })
+                        .collect();
+                    emit(json, &rows, || {
+                        if rows.is_empty() {
+                            return "no installs recorded (okfkit agent install records them)\n"
+                                .into();
+                        }
+                        let mut out = String::new();
+                        for r in &rows {
+                            let i = r.install;
+                            let place = match &i.target {
+                                okfkit_skills::Target::User => "user".to_owned(),
+                                okfkit_skills::Target::Project(d) => d.display().to_string(),
+                            };
+                            out.push_str(&format!(
+                                "{} {:<12} {} → {}  [{}]\n",
+                                if r.problems.is_empty() {
+                                    "ok  "
+                                } else {
+                                    "FAIL"
+                                },
+                                i.agent.label(),
+                                place,
+                                i.source,
+                                i.name
+                            ));
+                            for p in &r.problems {
+                                out.push_str(&format!("       - {p}\n"));
+                            }
+                        }
+                        if rows.iter().any(|r| !r.problems.is_empty()) {
+                            out.push_str("fix: run `okfkit agent install` again from the bundle (add --replace if asked), or `okfkit agent uninstall` with the same --name/--user/--project\n");
+                        }
+                        out
+                    })?;
+                }
             }
+        }
+        Command::Clean {
+            index,
+            cache,
+            all,
+            yes,
+        } => {
+            let (index, cache) = (index || all, cache || all);
+            let mut targets: Vec<(String, PathBuf)> = Vec::new();
+            // Where this bundle's index may be, without creating anything.
+            if bundle_dir.is_dir() {
+                let mut dirs = Vec::new();
+                match &state_dir {
+                    StateDir::Path(p) => {
+                        if p.join("index.sqlite").is_file() {
+                            dirs.push(p.clone());
+                        }
+                    }
+                    StateDir::Cache => dirs.extend(okfkit::bundle_cache_dir(&bundle_dir).ok()),
+                    _ => {
+                        dirs.push(bundle_dir.join(okfkit::BUNDLE_STATE_DIR));
+                        dirs.extend(okfkit::bundle_cache_dir(&bundle_dir).ok());
+                    }
+                }
+                for d in dirs.into_iter().filter(|d| d.is_dir()) {
+                    targets.push((format!("index of {}", abs(&bundle_dir).display()), d));
+                }
+            }
+            let cache_root = okfkit::analyze::dict::user_cache_dir().map(|c| c.join("okfkit"));
+            if let Some(c) = cache_root.as_ref().filter(|c| c.is_dir()) {
+                targets.push((
+                    "user cache (models, vectors, dictionary, training environment, indexes of bundles kept there)".into(),
+                    c.clone(),
+                ));
+            }
+            #[derive(Serialize)]
+            struct Item {
+                what: String,
+                path: PathBuf,
+                bytes: u64,
+                selected: bool,
+                deleted: bool,
+            }
+            let mut items: Vec<Item> = targets
+                .into_iter()
+                .map(|(what, path)| {
+                    let selected = if what.starts_with("index") {
+                        index
+                    } else {
+                        cache
+                    };
+                    Item {
+                        bytes: dir_size(&path),
+                        what,
+                        path,
+                        selected,
+                        deleted: false,
+                    }
+                })
+                .collect();
+            if yes {
+                for it in items.iter_mut().filter(|i| i.selected) {
+                    std::fs::remove_dir_all(&it.path)
+                        .with_context(|| format!("deleting {}", it.path.display()))?;
+                    it.deleted = true;
+                }
+            }
+            emit(json, &items, || {
+                let mut out = String::new();
+                if items.is_empty() {
+                    out.push_str("nothing to clean\n");
+                }
+                for it in &items {
+                    out.push_str(&format!(
+                        "{} {:>9}  {}\n           {}\n",
+                        if it.deleted {
+                            "deleted"
+                        } else if it.selected {
+                            "would delete"
+                        } else {
+                            "kept   "
+                        },
+                        human_size(it.bytes),
+                        it.what,
+                        it.path.display()
+                    ));
+                }
+                let overrides: Vec<&str> =
+                    ["OKFKIT_MODELS_DIR", "OKFKIT_EMB_CACHE", "OKFKIT_DICT_DIR"]
+                        .into_iter()
+                        .filter(|v| std::env::var_os(v).is_some_and(|x| !x.is_empty()))
+                        .collect();
+                if !overrides.is_empty() {
+                    out.push_str(&format!(
+                        "not covered (set elsewhere by {}): delete those directories yourself\n",
+                        overrides.join(", ")
+                    ));
+                }
+                if !yes && items.iter().any(|i| i.selected) {
+                    out.push_str("run again with --yes to delete\n");
+                } else if !yes {
+                    out.push_str("choose --index, --cache or --all, then add --yes to delete\n");
+                }
+                out
+            })?;
         }
         Command::Modules => {
             #[derive(Serialize)]
@@ -1458,4 +1756,63 @@ fn export_model(
     _: Option<&str>,
 ) -> Result<okfkit::CustomModel> {
     bail!(NO_TUNE)
+}
+
+/// The agents to install for: the flags, else every agent found on this machine.
+fn chosen_agents(claude: bool, codex: bool, home: &Path) -> Result<Vec<okfkit_skills::Agent>> {
+    use okfkit_skills::Agent;
+    if claude || codex {
+        return Ok([(claude, Agent::Claude), (codex, Agent::Codex)]
+            .into_iter()
+            .filter_map(|(on, a)| on.then_some(a))
+            .collect());
+    }
+    let found = |program: &str, dir: &str| on_path(program) || home.join(dir).is_dir();
+    let agents: Vec<Agent> = [
+        (found("claude", ".claude"), Agent::Claude),
+        (found("codex", ".codex"), Agent::Codex),
+    ]
+    .into_iter()
+    .filter_map(|(on, a)| on.then_some(a))
+    .collect();
+    if agents.is_empty() {
+        bail!(
+            "no agent found (claude or codex on PATH, ~/.claude or ~/.codex); pass --claude or --codex"
+        );
+    }
+    Ok(agents)
+}
+
+fn on_path(program: &str) -> bool {
+    std::env::var_os("PATH").is_some_and(|p| {
+        std::env::split_paths(&p).any(|d| {
+            let f = d.join(program);
+            f.is_file() || f.with_extension("exe").is_file()
+        })
+    })
+}
+
+fn dir_size(path: &Path) -> u64 {
+    let Ok(entries) = std::fs::read_dir(path) else {
+        return 0;
+    };
+    entries
+        .flatten()
+        .map(|e| match e.file_type() {
+            Ok(t) if t.is_dir() => dir_size(&e.path()),
+            Ok(t) if t.is_file() => e.metadata().map_or(0, |m| m.len()),
+            _ => 0,
+        })
+        .sum()
+}
+
+fn human_size(bytes: u64) -> String {
+    let b = bytes as f64;
+    if b >= 1e9 {
+        format!("{:.1} GB", b / 1e9)
+    } else if b >= 1e6 {
+        format!("{:.0} MB", b / 1e6)
+    } else {
+        format!("{:.0} KB", b / 1e3)
+    }
 }

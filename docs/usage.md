@@ -53,7 +53,7 @@ fastest and cheapest way to answer correctly, up to about 30k tokens.
 okfkit status                         # size, languages, level, recommended mode (Full)
 okfkit lint --level L1                # fix errors: missing titles, broken links, invalid YAML
 okfkit catalog                        # one line per document: put it in the system prompt
-okfkit agent install --claude         # or --codex: MCP tools + skills, for when it grows
+okfkit agent install                  # MCP tools + skills for Claude Code and/or Codex (whichever is installed)
 ```
 
 - Point the agent at the folder ("read the files in `knowledge/`") or paste the documents into
@@ -75,10 +75,15 @@ questions on bundles up to 4.4M tokens in the okf-scale spike, with no model at 
 ### 1. Connect the agent
 
 ```sh
-okfkit agent install --claude         # this project: .mcp.json + .claude/skills
-okfkit agent install --codex          # Codex: ~/.codex/config.toml + an AGENTS.md block
-okfkit agent install --claude --print # show the changes first
+okfkit agent install                  # every agent found (claude/codex on PATH, ~/.claude, ~/.codex)
+okfkit agent install --claude         # only Claude Code: .mcp.json + .claude/skills in this project
+okfkit agent install --codex          # only Codex: ~/.codex/config.toml + an AGENTS.md block
+okfkit agent install --print          # show the changes first
 ```
+
+Why one command per agent product: each keeps its configuration in a different place and
+format, and okfkit writes the right one. See [Usage scenarios](#usage-scenarios) for several
+bundles, several projects, a shared server, and removing everything again.
 
 The agent gets these tools (also available on the CLI with `--json`):
 
@@ -173,7 +178,15 @@ okfkit mcp serve --http --deny 'internal/**'          # hide part of the bundle
 ```
 
 Off loopback a bearer token is required; clients send `Authorization: Bearer <token>`. Run one
-server per audience, with `--allow`/`--deny` deciding what that audience can read.
+server per audience, with `--allow`/`--deny` deciding what that audience can read. Each member
+connects their agent without a local copy of the bundle:
+
+```sh
+export KB_TOKEN=…                                       # from the server's admin
+okfkit agent install --url https://kb.example.com/mcp --token-env KB_TOKEN
+```
+
+The token stays in the environment variable; the agent configuration only names it.
 
 ### Embedding okfkit in an application
 
@@ -193,6 +206,47 @@ let hits = bundle.grep(&GrepRequest { pattern: "refund|đổi trả".into(), ..D
 To expose the same tools over MCP inside your web server, mount
 `okfkit_mcp::router(bundle, scope_provider, &ServerOptions, &HttpOptions)` (axum) and implement
 `ScopeProvider` to map each request (its headers) to a `Scope`.
+
+---
+
+## Usage scenarios
+
+Every situation below has one supported way to handle it. Install commands are safe to run
+again (they converge on the same files), and `--print` shows any change before it is made.
+
+### Agents and projects
+
+| Scenario | Do this | Notes |
+|---|---|---|
+| One project, one bundle | `okfkit -b ./kb agent install` | Installs for every agent found; `--claude` / `--codex` to pick |
+| Claude Code and Codex on the same project | `okfkit -b ./kb agent install` (or both flags) | One command, both agents |
+| One bundle in every project (a personal or company knowledge base) | `okfkit -b ~/kb agent install --claude --user` | Claude Code: user scope. Codex reads MCP servers per user anyway; `--user` puts its instructions in `~/.codex/AGENTS.md` instead of the project's |
+| Several bundles in one project (e.g. policies + API docs) | first: `okfkit -b ./policies agent install`; next: `okfkit -b ./docs agent install --name okfkit-docs` | Each bundle gets its own server, tools (`kb_*`, `docs_*`), skills (`okfkit-answer`, `okfkit-answer-docs`) and AGENTS.md block |
+| Several projects, each with its own bundle, using Codex | in each project: `okfkit agent install --codex --name okfkit-<project>` | Codex keeps MCP servers per user, so two projects cannot share the name `okfkit`. okfkit refuses to overwrite a name that serves another bundle and says which `--name` to use |
+| Point an existing name at another bundle | `okfkit -b ./new agent install --replace` | Explicit, never silent |
+| A team on one shared server | admin: `okfkit mcp serve --http …`; members: `okfkit agent install --url https://kb.example.com/mcp --token-env KB_TOKEN` | Members need no copy of the bundle; only the answering skill is installed |
+| An application (chatbot, internal tool) | the library (`okfkit::Bundle`) or `okfkit_mcp::router()` | The application decides each user's `Scope` |
+| CI: keep the bundle healthy | `okfkit lint --level L2 --format sarif` | Exits 1 on errors; no agent needed |
+
+### Changes over time
+
+| Scenario | Do this |
+|---|---|
+| Documents edited or added | nothing: indexes and vectors update incrementally on the next read |
+| The bundle or the okfkit binary moved, or okfkit was upgraded to another path | `okfkit agent status` reports it (`FAIL … no longer exists`); run `okfkit agent install` again from the new place (`--replace` if asked) |
+| Check what is installed where | `okfkit agent status` (`--json` for scripts) |
+| Offline or air-gapped machine | `okfkit dict install` and `okfkit embed models pull <id>` while online; then `OKFKIT_OFFLINE=1` |
+| The folder is read-only (a mounted share) | nothing: the index goes to the user cache automatically (`--state-dir cache` to force it) |
+
+### Trying okfkit, then stopping
+
+| Goal | Do this | What stays |
+|---|---|---|
+| Stop using it for one project | `okfkit agent uninstall` (add `--name` for a second bundle) | Removes only okfkit's MCP entry, skills and AGENTS.md block; files that held nothing else are deleted |
+| Turn off semantic search only | `okfkit embed disable` | Vectors stay cached; `embed enable` brings them back instantly |
+| Undo a fine-tuned model | `okfkit embed tune rollback --write` | The previous `okfkit.toml`, byte for byte |
+| Free disk space | `okfkit clean` (shows sizes) → `okfkit clean --index --yes` / `--all --yes` | Documents are never touched; everything deleted is rebuilt or re-downloaded on demand |
+| Remove okfkit completely | `okfkit agent uninstall --all`, `okfkit clean --all --yes`, then `cargo uninstall okfkit-cli` | Nothing; `~/.config/okfkit/installs.json` is empty and can be deleted |
 
 ---
 
@@ -219,7 +273,8 @@ okfkit is read-only by default. These commands write, and only where stated:
 | `adopt --out DIR` / `adopt --write` | a new folder / the folder in place (clean git tree required) |
 | `lint --fix-safe`, `vocab --suggest --write` | missing `index.md` files, `_meta/vocabulary.md` |
 | `embed enable/disable`, `tune activate/rollback --write` | `okfkit.toml` (only the `[embed]` keys) |
-| `agent install` | agent configuration and skills (`--print` to preview) |
+| `agent install` / `agent uninstall` | agent configuration, skills, AGENTS.md block (`--print` to preview); a record in `~/.config/okfkit/installs.json` |
+| `clean --yes` | deletes okfkit's own index or user cache (never documents) |
 | `embed index`, `embed models add`, `tune …` | the user cache (models, vectors, runs, Python environment) |
 
 ### Everyday commands

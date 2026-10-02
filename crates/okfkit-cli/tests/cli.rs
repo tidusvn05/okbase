@@ -560,3 +560,103 @@ fn tune_question_workflow() {
         .collect();
     assert_eq!(names, ["leave.md"]);
 }
+
+#[test]
+fn agent_scenarios_many_bundles_status_uninstall_clean() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("home");
+    let project = tmp.path().join("project");
+    let (a, b) = (tmp.path().join("policies"), tmp.path().join("docs"));
+    for d in [&home, &project, &a, &b] {
+        std::fs::create_dir_all(d).unwrap();
+    }
+    std::fs::create_dir_all(home.join(".codex")).unwrap();
+    for (d, t) in [(&a, "Refund policy"), (&b, "API guide")] {
+        std::fs::write(
+            d.join("x.md"),
+            format!("---\ntitle: {t}\ndescription: About {t}.\n---\n\nText.\n"),
+        )
+        .unwrap();
+    }
+    let cmd = |bundle: &Path, args: &[&str]| {
+        let mut c = Command::cargo_bin("okfkit").unwrap();
+        c.env("HOME", &home)
+            .env("XDG_CONFIG_HOME", home.join(".config"))
+            .env("XDG_CACHE_HOME", home.join(".cache"))
+            .current_dir(&project)
+            .arg("-b")
+            .arg(bundle)
+            .args(args);
+        c
+    };
+    // One bundle for both agents in this project.
+    let out = stdout(&mut cmd(&a, &["agent", "install", "--claude", "--codex"]));
+    assert!(
+        out.contains("Claude Code:") && out.contains("Codex:"),
+        "{out}"
+    );
+    // A second bundle with the default name is refused (nothing is overwritten)…
+    let out = cmd(&b, &["agent", "install", "--claude"]).output().unwrap();
+    assert!(!out.status.success());
+    assert!(String::from_utf8_lossy(&out.stderr).contains("--name"));
+    // …and installs next to the first under its own name and tools.
+    let out = stdout(&mut cmd(
+        &b,
+        &[
+            "agent",
+            "install",
+            "--claude",
+            "--codex",
+            "--name",
+            "okfkit-docs",
+        ],
+    ));
+    assert!(out.contains("tools docs_*"), "{out}");
+    let status = json_of(&mut cmd(&a, &["agent", "status"]));
+    assert_eq!(status.as_array().unwrap().len(), 4, "{status}");
+    assert!(
+        status
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|r| r["problems"].as_array().unwrap().is_empty()),
+        "{status}"
+    );
+    // Remove the second bundle only.
+    stdout(&mut cmd(
+        &b,
+        &["agent", "uninstall", "--name", "okfkit-docs"],
+    ));
+    assert!(!project.join(".claude/skills/okfkit-answer-docs").exists());
+    assert!(
+        project
+            .join(".claude/skills/okfkit-answer/SKILL.md")
+            .is_file()
+    );
+    let agents = std::fs::read_to_string(project.join("AGENTS.md")).unwrap();
+    assert!(
+        !agents.contains("okfkit-docs") && agents.contains("okfkit:begin"),
+        "{agents}"
+    );
+    // The bundle moves: status says so.
+    std::fs::rename(&a, tmp.path().join("moved")).unwrap();
+    let text = stdout(&mut cmd(&b, &["agent", "status"]));
+    assert!(
+        text.contains("FAIL") && text.contains("no longer exists"),
+        "{text}"
+    );
+    // Stop using okfkit: every install goes, other config stays.
+    stdout(&mut cmd(&b, &["agent", "uninstall", "--all"]));
+    assert!(!project.join(".mcp.json").exists() && !project.join("AGENTS.md").exists());
+    assert!(!project.join(".claude/skills/okfkit-answer").exists());
+    assert!(stdout(&mut cmd(&b, &["agent", "status"])).contains("no installs recorded"));
+    // Clean: shows first, deletes with --yes, never touches documents.
+    stdout(&mut cmd(&b, &["status"]));
+    let dry = stdout(&mut cmd(&b, &["clean", "--index"]));
+    assert!(
+        dry.contains("would delete") && b.join(".okfkit").is_dir(),
+        "{dry}"
+    );
+    stdout(&mut cmd(&b, &["clean", "--index", "--yes"]));
+    assert!(!b.join(".okfkit").exists() && b.join("x.md").is_file());
+}

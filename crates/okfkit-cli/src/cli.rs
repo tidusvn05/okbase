@@ -243,6 +243,26 @@ pub enum Command {
     },
     /// List modules and their capabilities.
     Modules,
+    /// Delete okfkit's own data: this bundle's index, or the user cache (models, vectors,
+    /// dictionary, training environment). Never touches documents. Shows what it would delete
+    /// unless --yes.
+    #[command(
+        after_help = "Examples:\n  okfkit clean                 # show this bundle's index and the user cache, with sizes\n  okfkit clean --index --yes   # delete this bundle's index (rebuilt on next use)\n  okfkit clean --all --yes     # also models, vectors, dictionary, training environment, tune runs"
+    )]
+    Clean {
+        /// This bundle's index (and its tune runs).
+        #[arg(long)]
+        index: bool,
+        /// The whole okfkit user cache.
+        #[arg(long)]
+        cache: bool,
+        /// Both.
+        #[arg(long)]
+        all: bool,
+        /// Delete (without it, only show).
+        #[arg(long)]
+        yes: bool,
+    },
     /// Run an `okfkit-<name>` plugin from PATH.
     #[command(external_subcommand)]
     External(Vec<String>),
@@ -555,9 +575,9 @@ pub enum McpCmd {
 
 #[derive(Debug, Subcommand)]
 pub enum AgentCmd {
-    /// Register the MCP server and install the okfkit skills.
+    /// Register the MCP server and install the okfkit skills (Claude Code and/or Codex).
     #[command(
-        after_help = "Examples:\n  okfkit -b ./kb agent install --claude          # this project (.mcp.json, .claude/skills)\n  okfkit -b ./kb agent install --claude --user   # all projects\n  okfkit -b ./kb agent install --codex --print   # show the changes only"
+        after_help = "Without --claude/--codex, installs for every agent found (claude/codex on PATH or ~/.claude, ~/.codex).\n\nExamples:\n  okfkit -b ./kb agent install                    # this project, every agent found\n  okfkit -b ./kb agent install --claude --user    # Claude Code, all projects\n  okfkit -b ./docs agent install --name okfkit-docs   # a second bundle next to the first (tools docs_*)\n  okfkit agent install --url https://kb.example.com/mcp --token-env KB_TOKEN   # a shared team server\n  okfkit -b ./kb agent install --print            # show the changes only"
     )]
     Install {
         /// Claude Code.
@@ -575,13 +595,51 @@ pub enum AgentCmd {
         /// Print the changes instead of making them.
         #[arg(long)]
         print: bool,
+        /// MCP server name; use a different one per bundle (e.g. okfkit-docs).
+        #[arg(long, default_value = "okfkit")]
+        name: String,
+        /// Tool name prefix [default: kb for the default name, else derived from --name].
+        #[arg(long)]
+        prefix: Option<String>,
+        /// Connect to a shared okfkit server (`okfkit mcp serve --http`) instead of a local bundle.
+        #[arg(long, value_name = "URL")]
+        url: Option<String>,
+        /// Environment variable holding the shared server's bearer token (with --url).
+        #[arg(long, value_name = "VAR", requires = "url")]
+        token_env: Option<String>,
+        /// Overwrite a server with the same name that serves another bundle.
+        #[arg(long)]
+        replace: bool,
+    },
+    /// Remove what `agent install` added (MCP server, skills, AGENTS.md block); keeps everything else.
+    #[command(
+        after_help = "Examples:\n  okfkit agent uninstall                  # this project, every agent with an okfkit install\n  okfkit agent uninstall --name okfkit-docs\n  okfkit agent uninstall --claude --user\n  okfkit agent uninstall --all            # every recorded install (see `okfkit agent status`)"
+    )]
+    Uninstall {
+        /// Claude Code.
+        #[arg(long)]
+        claude: bool,
+        /// OpenAI Codex CLI.
+        #[arg(long)]
+        codex: bool,
+        /// The user-level install instead of the project's.
+        #[arg(long)]
+        user: bool,
+        /// Project directory [default: current directory].
+        #[arg(long, value_name = "DIR")]
+        project: Option<PathBuf>,
         /// MCP server name.
         #[arg(long, default_value = "okfkit")]
         name: String,
-        /// Tool name prefix used in the skill.
-        #[arg(long, default_value = "kb")]
-        prefix: String,
+        /// Every recorded install, in every project.
+        #[arg(long, conflicts_with_all = ["claude", "codex", "user", "project"])]
+        all: bool,
+        /// Print the changes instead of making them.
+        #[arg(long)]
+        print: bool,
     },
+    /// List recorded installs and check that they still work (bundle, binary, configuration).
+    Status,
 }
 
 /// Metadata filters shared by `grep` and `query`.

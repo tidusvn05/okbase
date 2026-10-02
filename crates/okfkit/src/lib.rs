@@ -40,7 +40,9 @@ pub use okfkit_embed::{
     find_custom, find_model, install_custom, license_accepted, models as embedding_models,
     remove_custom,
 };
-pub use okfkit_index::{IndexOptions, StateDir, SyncStats};
+pub use okfkit_index::{
+    BUNDLE_STATE_DIR, IndexOptions, StateDir, SyncStats, cache_dir as bundle_cache_dir,
+};
 pub use okfkit_lint::{Level, LintConfig, Report as LintReport};
 pub use okfkit_query::{
     CatalogOptions, CatalogResult, Filter, GetRequest, GetResult, GrepRequest, GrepResult,

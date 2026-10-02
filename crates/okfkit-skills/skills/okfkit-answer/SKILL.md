@@ -27,6 +27,7 @@ The bundle at `{{bundle}}` is served by okfkit through the MCP tools `{{p}}_*`.
 5. **Prefer current documents.** `status: stable` is in force, `deprecated` is superseded (see `supersedes`), `draft` is not approved yet. For "in force on a date" use `active_on`.
 6. **Answer** in the user's language, concisely. Keep keys, commands and values verbatim, and cite the document ids you used (path without `.md`).
 
+<!-- if !remote -->
 ## Without the MCP tools
 
 If the `{{p}}_*` tools are not available, run the okfkit CLI; add `--json` for structured output:
@@ -39,3 +40,4 @@ okfkit --bundle {{bundle}} get ID [--section HEADING] [--lines 10-40]
 okfkit --bundle {{bundle}} query [--type T] [--tag T] [--status stable] [--field KEY=VALUE] [--active-on YYYY-MM-DD] [--facet F] [--sum F] [--count-only]
 okfkit --bundle {{bundle}} links ID
 ```
+<!-- end -->

@@ -206,14 +206,15 @@ fn plan(profile: Profile, o: &AdviseOptions) -> Advice {
         Some(Audience::Team) => vec![
             "OKFKIT_MCP_TOKEN=<secret> okfkit mcp serve --http 0.0.0.0:7331 --allow-host <host>"
                 .to_owned(),
+            "each member: okfkit agent install --url https://<host>/mcp --token-env <VAR>"
+                .to_owned(),
         ],
         Some(Audience::Host) => vec![
             "use okfkit::Bundle in-process, or mount okfkit_mcp::router() (MCP over HTTP)"
                 .to_owned(),
         ],
         None => vec![
-            "okfkit agent install --claude".to_owned(),
-            "okfkit agent install --codex".to_owned(),
+            "okfkit agent install   # Claude Code and/or Codex, whichever is installed".to_owned(),
         ],
     };
     if fits {
