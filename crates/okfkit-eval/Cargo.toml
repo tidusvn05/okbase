@@ -18,7 +18,7 @@ workspace = true
 
 [dependencies]
 okfkit.workspace = true
-okfkit-mcp = { workspace = true, default-features = false }
+okfkit-mcp.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true
