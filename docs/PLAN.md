@@ -458,6 +458,7 @@ Output text/JSON/SARIF; `--fix-safe` chỉ sửa những gì an toàn (sinh inde
 - Xem `PLAN-onboarding.md`: `okfkit onboard`, hợp đồng máy (JSON, mã lỗi, mã thoát), danh mục consent, `doctor`, bootstrap cho agent; kèm sửa index trong phiên MCP (P0).
 
 ### v0.4 — Import + source (2 tuần)
+- **Phần chuyển đổi:** xem `PLAN-import.md` (anydoc + htmd, đọc trực tiếp và chuyển hẳn, OCR nhờ agent).
 - import-pdf/docx/html, source fs/gdrive/gsheets, skill `okfkit-import`, `distill --plan`.
 - **Spike S10:** khoảng 20 PDF và 5 sheet thật.
 - ✅ Tiêu chí: agent trả lời đúng câu tra cứu và tổng hợp trên dữ liệu import.
