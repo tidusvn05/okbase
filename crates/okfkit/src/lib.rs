@@ -217,7 +217,14 @@ struct Inner {
     /// Keeps the temporary state directory of an in-memory bundle alive.
     _tmp: Option<tempfile::TempDir>,
     embed: embed::EmbedState,
+    /// When the index was last synced (for [`Bundle::refresh`]).
+    last_sync: Mutex<Option<std::time::Instant>>,
 }
+
+/// How stale the index may get in a long-running server before a tool call re-syncs it.
+pub const REFRESH_INTERVAL: std::time::Duration = std::time::Duration::from_secs(2);
+/// Search embeds up to this many new or changed chunks on the fly; more needs `embed index`.
+pub const AUTO_EMBED_MAX: usize = 64;
 
 /// An open knowledge bundle. Cheap to clone and safe to share between threads.
 #[derive(Clone)]
@@ -265,6 +272,7 @@ impl Bundle {
             data,
             _tmp: None,
             embed,
+            last_sync: Mutex::new(None),
         })))
     }
 
@@ -298,6 +306,7 @@ impl Bundle {
             data,
             _tmp: tmp,
             embed: embed::EmbedState::new(config::EmbedConfig::Off, None, None),
+            last_sync: Mutex::new(None),
         })))
     }
 
@@ -322,7 +331,37 @@ impl Bundle {
             d.sync()?;
         }
         self.0.embed.invalidate();
+        *self.0.last_sync.lock().unwrap_or_else(|e| e.into_inner()) =
+            Some(std::time::Instant::now());
         Ok(stats)
+    }
+
+    /// Syncs if the last sync is older than `max_age` (servers call this before every tool call,
+    /// so documents edited during a session are seen). Returns whether anything changed.
+    pub fn refresh(&self, max_age: std::time::Duration) -> Result<bool, Error> {
+        let fresh = self
+            .0
+            .last_sync
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .is_some_and(|t| t.elapsed() < max_age);
+        if fresh {
+            return Ok(false);
+        }
+        let st = self.sync()?;
+        Ok(st.added + st.updated + st.removed > 0)
+    }
+
+    /// Embeds a few missing chunks (new or edited documents) before a search.
+    fn top_up_vectors(&self) -> Result<(), Error> {
+        let Ok(st) = self.embed_status() else {
+            return Ok(());
+        };
+        let missing = st.chunks.saturating_sub(st.embedded);
+        if missing > 0 && missing <= AUTO_EMBED_MAX {
+            self.embed_sync(&mut |_, _| {})?;
+        }
+        Ok(())
     }
 
     /// The embedding model id, if embeddings are enabled (does not load the model).
@@ -350,6 +389,7 @@ impl Bundle {
     /// Semantic search over the visible chunks (module embed).
     pub fn search(&self, req: &SearchRequest, scope: &Scope) -> Result<SearchResult, Error> {
         let embedder = self.0.embed.embedder()?;
+        self.top_up_vectors()?;
         let index = self.index();
         let store = self.0.embed.store(&index)?;
         Ok(okfkit_search::search(
@@ -369,6 +409,7 @@ impl Bundle {
         scope: &Scope,
     ) -> Result<RetrieveResult, Error> {
         let embedder = self.0.embed.embedder()?;
+        self.top_up_vectors()?;
         let index = self.index();
         let store = self.0.embed.store(&index)?;
         Ok(okfkit_search::retrieve(

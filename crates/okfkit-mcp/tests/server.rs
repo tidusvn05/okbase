@@ -186,3 +186,38 @@ async fn json_rpc_session() {
         "{g}"
     );
 }
+
+#[test]
+fn edits_during_a_session_are_seen() {
+    let tmp = tempfile::tempdir().unwrap();
+    let kb = tmp.path().join("kb");
+    std::fs::create_dir_all(&kb).unwrap();
+    std::fs::write(
+        kb.join("a.md"),
+        "---\ntitle: A\ndescription: First.\n---\n\nApples.\n",
+    )
+    .unwrap();
+    let b = Bundle::open(
+        &kb,
+        okfkit::OpenOptions::default().state_dir(okfkit::StateDir::Path(tmp.path().join("state"))),
+    )
+    .unwrap();
+    b.sync().unwrap();
+    let server = KbServer::new(b, Arc::new(Scope::all()), &ServerOptions::default());
+    let grep = |p: &str| {
+        let args = json!({"pattern": p, "files_only": true});
+        server
+            .call("kb_grep", args.as_object().unwrap().clone())
+            .unwrap()
+            .1
+    };
+    assert_eq!(grep("zebra")["total_docs"], 0);
+    // An agent (or an editor) changes the bundle mid-session.
+    std::fs::write(
+        kb.join("b.md"),
+        "---\ntitle: B\ndescription: Second.\n---\n\nZebras.\n",
+    )
+    .unwrap();
+    std::thread::sleep(okfkit::REFRESH_INTERVAL + std::time::Duration::from_millis(100));
+    assert_eq!(grep("zebra")["total_docs"], 1);
+}

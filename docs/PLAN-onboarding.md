@@ -1,6 +1,6 @@
 # Kế hoạch: onboarding qua agent (agent-friendly setup)
 
-Trạng thái: **đề xuất, chưa triển khai** (2026-10-02). Bổ sung cho `PLAN.md` và `PLAN-advise-tune.md`.
+Trạng thái: **đã chốt, đang triển khai** (2026-10-02). Bổ sung cho `PLAN.md` và `PLAN-advise-tune.md`.
 
 ## 0. Mục tiêu
 
@@ -136,9 +136,10 @@ Viết một lần, trong binary:
 
 Ước tính: O0 khoảng 1 ngày; O1–O3 khoảng 1 tuần; O4–O5 khoảng 3–4 ngày.
 
-## 5. Quyết định cần chốt
+## 5. Quyết định (đã chốt 2026-10-02)
 
-1. Đặt tên điểm vào là `okfkit onboard` (đề xuất) hay `okfkit setup` / `okfkit init`?
-2. Mã thoát 3/4 thay đổi hành vi hiện tại: `lint` có lỗi đang thoát mã 1, sẽ thành 4. CI nào kiểm tra "khác 0" vẫn chạy đúng; script kiểm tra đúng `== 1` sẽ phải sửa. Có chấp nhận trước v1.0 không? (đề xuất: có)
-3. `agent install` có cần hỏi người dùng không khi đó là cấu hình của project? Đề xuất: không, nhưng phải báo trước; `--user` thì hỏi.
-4. Có phát hành binary (GitHub Releases + script cài) trước O4 không? Nếu không, bootstrap phải dùng `cargo install`, chậm và cần Rust.
+1. Điểm vào: **`okfkit onboard`**.
+2. Mã thoát 3 (cần đồng ý) và 4 (có phát hiện) được áp dụng trước v1.0; `lint` có lỗi chuyển từ 1 sang 4.
+3. `agent install` cấp project: agent chỉ báo trước, không cần hỏi; `--user` phải hỏi.
+4. Chưa phát hành binary (đang phát triển). Sau này mở mã nguồn và publish crates.io, nên bootstrap
+   dùng `cargo install okfkit-cli` (sau khi publish) và tạm thời `cargo install --git <repo>` / `--path`.

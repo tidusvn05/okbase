@@ -168,6 +168,11 @@ impl KbServer {
         if !self.tools.iter().any(|t| t.name == short) {
             return Err(format!("unknown tool: {name}"));
         }
+        // Documents may change during a session (an agent curating the bundle, an editor):
+        // re-sync cheaply when the last sync is a little old.
+        self.bundle
+            .refresh(okfkit::REFRESH_INTERVAL)
+            .map_err(|e| format!("updating the index: {e}"))?;
         let scope = self.scopes.scope(request);
         let args = Value::Object(args);
         let err = |e: okfkit::Error| e.to_string();

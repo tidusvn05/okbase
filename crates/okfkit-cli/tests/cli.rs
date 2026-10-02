@@ -220,7 +220,7 @@ fn agent_install_print_and_apply() {
     );
     run(&["--codex"]);
     assert!(
-        std::fs::read_to_string(home.join(".codex/config.toml"))
+        std::fs::read_to_string(project.join(".codex/config.toml"))
             .unwrap()
             .contains("[mcp_servers.okfkit]")
     );

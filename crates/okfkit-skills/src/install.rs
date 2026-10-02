@@ -295,8 +295,32 @@ fn codex_entry_json(item: &toml_edit::Item) -> Value {
     v
 }
 
-fn codex_config(home: &Path) -> Result<(PathBuf, toml_edit::DocumentMut), Error> {
-    let path = home.join(".codex/config.toml");
+/// Codex reads MCP servers from `<project>/.codex/config.toml` (trusted projects only) and
+/// `~/.codex/config.toml` (every project).
+pub fn codex_config_path(target: &Target, home: &Path) -> PathBuf {
+    match target {
+        Target::Project(dir) => dir.join(".codex/config.toml"),
+        Target::User => home.join(".codex/config.toml"),
+    }
+}
+
+/// Whether Codex trusts `project` (it ignores a project's `.codex/config.toml` otherwise).
+pub fn codex_trusts(project: &Path, home: &Path) -> bool {
+    let Ok(text) = std::fs::read_to_string(home.join(".codex/config.toml")) else {
+        return false;
+    };
+    let Ok(doc) = text.parse::<toml_edit::DocumentMut>() else {
+        return false;
+    };
+    let key = project.display().to_string();
+    doc.get("projects")
+        .and_then(|p| p.get(&key))
+        .and_then(|p| p.get("trust_level"))
+        .and_then(|t| t.as_str())
+        == Some("trusted")
+}
+
+fn codex_config(path: PathBuf) -> Result<(PathBuf, toml_edit::DocumentMut), Error> {
     let doc = read_text(&path)?
         .parse()
         .map_err(|e: toml_edit::TomlError| Error::Config {
@@ -414,7 +438,7 @@ pub fn plan(opts: &InstallOptions) -> Result<Vec<Action>, Error> {
             });
         }
         (Agent::Codex, target) => {
-            let (path, mut doc) = codex_config(&opts.home)?;
+            let (path, mut doc) = codex_config(codex_config_path(target, &opts.home))?;
             let existing = doc
                 .get("mcp_servers")
                 .and_then(|s| s.get(&opts.server_name))
@@ -451,8 +475,13 @@ pub fn plan(opts: &InstallOptions) -> Result<Vec<Action>, Error> {
             servers.insert(&opts.server_name, toml_edit::Item::Table(server));
             actions.push(Action::Write {
                 why: format!(
-                    "register the `{}` MCP server for Codex (Codex reads MCP servers from your user configuration)",
-                    opts.server_name
+                    "register the `{}` MCP server for Codex{}",
+                    opts.server_name,
+                    if matches!(target, Target::Project(_)) {
+                        " in this project (Codex reads it once you trust the project)"
+                    } else {
+                        " for your user"
+                    }
                 ),
                 content: doc.to_string(),
                 path,
@@ -563,17 +592,32 @@ pub fn plan_uninstall(opts: &UninstallOptions) -> Result<Vec<Action>, Error> {
             }
         }
         (Agent::Codex, target) => {
-            let (path, mut doc) = codex_config(&opts.home)?;
+            let (path, mut doc) = codex_config(codex_config_path(target, &opts.home))?;
             let removed = doc
                 .get_mut("mcp_servers")
                 .and_then(|s| s.as_table_like_mut())
                 .and_then(|t| t.remove(name))
                 .is_some();
             if removed {
-                actions.push(Action::Write {
-                    why: format!("unregister the `{name}` MCP server for Codex"),
-                    content: doc.to_string(),
-                    path,
+                let empty_table = doc
+                    .get("mcp_servers")
+                    .and_then(|s| s.as_table_like())
+                    .is_some_and(|t| t.is_empty());
+                if empty_table {
+                    doc.remove("mcp_servers");
+                }
+                let rest = doc.to_string();
+                actions.push(if matches!(target, Target::Project(_)) && rest.trim().is_empty() {
+                    Action::Remove {
+                        path,
+                        why: format!("unregister the `{name}` MCP server for Codex (the file held nothing else)"),
+                    }
+                } else {
+                    Action::Write {
+                        why: format!("unregister the `{name}` MCP server for Codex"),
+                        content: rest,
+                        path,
+                    }
                 });
             }
             let agents = agents_path(target, &opts.home);
@@ -714,11 +758,15 @@ impl Install {
                 .ok()
                 .and_then(|v| v.get("mcpServers")?.get(&self.name).cloned()),
             (Agent::Claude, Target::User) => claude_user_entry(home, &self.name),
-            (Agent::Codex, _) => codex_config(home).ok().and_then(|(_, d)| {
-                d.get("mcp_servers")
-                    .and_then(|s| s.get(&self.name))
-                    .map(codex_entry_json)
-            }),
+            (Agent::Codex, t) => {
+                codex_config(codex_config_path(t, home))
+                    .ok()
+                    .and_then(|(_, d)| {
+                        d.get("mcp_servers")
+                            .and_then(|s| s.get(&self.name))
+                            .map(codex_entry_json)
+                    })
+            }
         };
         match entry {
             None => out.push(format!(

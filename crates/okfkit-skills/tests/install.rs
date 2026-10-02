@@ -151,7 +151,8 @@ fn codex_install_preserves_config_and_agents_md() {
     fs::create_dir_all(&project).unwrap();
     let config =
         "# my settings\nmodel = \"gpt-5\"\n\n[mcp_servers.other]\ncommand = \"x\" # keep me\n";
-    fs::write(home.join(".codex/config.toml"), config).unwrap();
+    fs::create_dir_all(project.join(".codex")).unwrap();
+    fs::write(project.join(".codex/config.toml"), config).unwrap();
     fs::write(project.join("AGENTS.md"), "# Rules\n\nBe nice.\n").unwrap();
 
     let o = opts(
@@ -161,7 +162,7 @@ fn codex_install_preserves_config_and_agents_md() {
         Path::new("/kb"),
     );
     apply(&plan(&o).unwrap()).unwrap();
-    let written = fs::read_to_string(home.join(".codex/config.toml")).unwrap();
+    let written = fs::read_to_string(project.join(".codex/config.toml")).unwrap();
     assert!(written.starts_with(config), "{written}");
     assert!(written.contains("[mcp_servers.okfkit]\ncommand = \"/usr/local/bin/okfkit\"\nargs = [\"--bundle\", \"/kb\", \"mcp\", \"serve\", \"--stdio\"]\n"), "{written}");
     let agents = fs::read_to_string(project.join("AGENTS.md")).unwrap();
@@ -177,7 +178,7 @@ fn codex_install_preserves_config_and_agents_md() {
         agents
     );
     assert_eq!(
-        fs::read_to_string(home.join(".codex/config.toml")).unwrap(),
+        fs::read_to_string(project.join(".codex/config.toml")).unwrap(),
         written
     );
 }
@@ -318,7 +319,8 @@ fn uninstall_removes_only_okfkit() {
 
     // Codex: config comments and other servers survive; AGENTS.md is restored.
     let config = "# mine\n[mcp_servers.other]\ncommand = \"x\"\n";
-    fs::write(home.join(".codex/config.toml"), config).unwrap();
+    fs::create_dir_all(project.join(".codex")).unwrap();
+    fs::write(project.join(".codex/config.toml"), config).unwrap();
     fs::write(project.join("AGENTS.md"), "# Rules\n").unwrap();
     let c = opts(
         Agent::Codex,
@@ -336,7 +338,7 @@ fn uninstall_removes_only_okfkit() {
     )
     .unwrap();
     assert_eq!(
-        fs::read_to_string(home.join(".codex/config.toml")).unwrap(),
+        fs::read_to_string(project.join(".codex/config.toml")).unwrap(),
         config
     );
     assert_eq!(
@@ -346,8 +348,8 @@ fn uninstall_removes_only_okfkit() {
 }
 
 #[test]
-fn codex_projects_do_not_steal_each_other() {
-    // Codex keeps MCP servers per user: a second project's bundle must not take over silently.
+fn codex_projects_are_independent_but_user_names_are_shared() {
+    // Project installs go to <project>/.codex/config.toml: two projects, two bundles, same name.
     let tmp = tempfile::tempdir().unwrap();
     let home = tmp.path().join("home");
     let (p1, p2) = (tmp.path().join("p1"), tmp.path().join("p2"));
@@ -356,7 +358,49 @@ fn codex_projects_do_not_steal_each_other() {
     apply(
         &plan(&opts(
             Agent::Codex,
-            Target::Project(p1),
+            Target::Project(p1.clone()),
+            &home,
+            Path::new("/kb/one"),
+        ))
+        .unwrap(),
+    )
+    .unwrap();
+    apply(
+        &plan(&opts(
+            Agent::Codex,
+            Target::Project(p2.clone()),
+            &home,
+            Path::new("/kb/two"),
+        ))
+        .unwrap(),
+    )
+    .unwrap();
+    assert!(
+        fs::read_to_string(p1.join(".codex/config.toml"))
+            .unwrap()
+            .contains("/kb/one")
+    );
+    assert!(
+        fs::read_to_string(p2.join(".codex/config.toml"))
+            .unwrap()
+            .contains("/kb/two")
+    );
+    assert!(!codex_trusts(&p1, &home));
+    fs::create_dir_all(home.join(".codex")).unwrap();
+    fs::write(
+        home.join(".codex/config.toml"),
+        format!(
+            "[projects.\"{}\"]\ntrust_level = \"trusted\"\n",
+            p1.display()
+        ),
+    )
+    .unwrap();
+    assert!(codex_trusts(&p1, &home));
+    // User installs share one file: a second bundle needs its own name.
+    apply(
+        &plan(&opts(
+            Agent::Codex,
+            Target::User,
             &home,
             Path::new("/kb/one"),
         ))
@@ -365,27 +409,32 @@ fn codex_projects_do_not_steal_each_other() {
     .unwrap();
     let err = plan(&opts(
         Agent::Codex,
-        Target::Project(p2.clone()),
+        Target::User,
         &home,
         Path::new("/kb/two"),
     ))
     .unwrap_err();
     assert!(matches!(err, Error::Conflict { .. }));
     let o = named(
-        opts(
-            Agent::Codex,
-            Target::Project(p2.clone()),
-            &home,
-            Path::new("/kb/two"),
-        ),
+        opts(Agent::Codex, Target::User, &home, Path::new("/kb/two")),
         "okfkit-two",
     );
     apply(&plan(&o).unwrap()).unwrap();
-    let agents = fs::read_to_string(p2.join("AGENTS.md")).unwrap();
+    let agents = fs::read_to_string(home.join(".codex/AGENTS.md")).unwrap();
     assert!(
         agents.contains("<!-- okfkit:begin okfkit-two") && agents.contains("`two_*`"),
         "{agents}"
     );
+    // Uninstalling a project leaves no empty .codex/config.toml behind.
+    let un = UninstallOptions {
+        agent: Agent::Codex,
+        target: Target::Project(p2.clone()),
+        home: home.clone(),
+        server_name: "okfkit".into(),
+        skills: None,
+    };
+    apply(&plan_uninstall(&un).unwrap()).unwrap();
+    assert!(!p2.join(".codex/config.toml").exists() && !p2.join("AGENTS.md").exists());
 }
 
 #[test]
@@ -425,7 +474,7 @@ fn shared_server_install() {
     let mut c = o.clone();
     c.agent = Agent::Codex;
     apply(&plan(&c).unwrap()).unwrap();
-    let cfg = fs::read_to_string(home.join(".codex/config.toml")).unwrap();
+    let cfg = fs::read_to_string(project.join(".codex/config.toml")).unwrap();
     assert!(
         cfg.contains("url = \"https://kb.example.com/mcp\"")
             && cfg.contains("bearer_token_env_var = \"KB_TOKEN\""),

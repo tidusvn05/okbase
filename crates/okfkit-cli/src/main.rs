@@ -839,6 +839,15 @@ location: {}
                         for a in actions {
                             println!("  {}", a.summary());
                         }
+                        if let (okfkit_skills::Agent::Codex, okfkit_skills::Target::Project(dir)) =
+                            (opts.agent, &opts.target)
+                            && !okfkit_skills::codex_trusts(dir, &home)
+                        {
+                            println!(
+                                "  note: Codex reads {} only for trusted projects; trust this project when Codex asks (or install with --user)",
+                                dir.join(".codex/config.toml").display()
+                            );
+                        }
                     }
                     if !print {
                         println!(

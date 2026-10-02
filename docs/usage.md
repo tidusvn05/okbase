@@ -220,13 +220,38 @@ again (they converge on the same files), and `--print` shows any change before i
 |---|---|---|
 | One project, one bundle | `okfkit -b ./kb agent install` | Installs for every agent found; `--claude` / `--codex` to pick |
 | Claude Code and Codex on the same project | `okfkit -b ./kb agent install` (or both flags) | One command, both agents |
-| One bundle in every project (a personal or company knowledge base) | `okfkit -b ~/kb agent install --claude --user` | Claude Code: user scope. Codex reads MCP servers per user anyway; `--user` puts its instructions in `~/.codex/AGENTS.md` instead of the project's |
+| One bundle in every project (a personal or company knowledge base) | `okfkit -b ~/kb agent install --user` | Claude Code and Codex user configuration; skills and instructions in `~/.claude/skills`, `~/.codex/AGENTS.md` |
 | Several bundles in one project (e.g. policies + API docs) | first: `okfkit -b ./policies agent install`; next: `okfkit -b ./docs agent install --name okfkit-docs` | Each bundle gets its own server, tools (`kb_*`, `docs_*`), skills (`okfkit-answer`, `okfkit-answer-docs`) and AGENTS.md block |
-| Several projects, each with its own bundle, using Codex | in each project: `okfkit agent install --codex --name okfkit-<project>` | Codex keeps MCP servers per user, so two projects cannot share the name `okfkit`. okfkit refuses to overwrite a name that serves another bundle and says which `--name` to use |
+| Several projects, each with its own bundle | in each project: `okfkit -b <its bundle> agent install` | Each project has its own configuration (Codex: trust the project when asked). Only `--user` installs share one namespace: there, give each bundle its own `--name`; okfkit refuses to overwrite a name that serves another bundle |
 | Point an existing name at another bundle | `okfkit -b ./new agent install --replace` | Explicit, never silent |
 | A team on one shared server | admin: `okfkit mcp serve --http …`; members: `okfkit agent install --url https://kb.example.com/mcp --token-env KB_TOKEN` | Members need no copy of the bundle; only the answering skill is installed |
 | An application (chatbot, internal tool) | the library (`okfkit::Bundle`) or `okfkit_mcp::router()` | The application decides each user's `Scope` |
 | CI: keep the bundle healthy | `okfkit lint --level L2 --format sarif` | Exits 1 on errors; no agent needed |
+
+### Where `agent install` writes, and how long the server runs
+
+| | Default (this project only) | `--user` (every project) |
+|---|---|---|
+| Claude Code: MCP server | `<project>/.mcp.json` (can be committed; Claude Code asks once to approve it) | `claude mcp add --scope user` (`~/.claude.json`) |
+| Claude Code: skills | `<project>/.claude/skills/` | `~/.claude/skills/` |
+| Codex: MCP server | `<project>/.codex/config.toml`, read once the project is trusted in Codex (it asks on first run; okfkit does not trust it for you) | `~/.codex/config.toml` |
+| Codex: instructions | `<project>/AGENTS.md` (an okfkit block) | `~/.codex/AGENTS.md` |
+
+**Local server (stdio), the default: its lifetime follows the agent.** The agent starts
+`okfkit --bundle <path> mcp serve --stdio` when a session starts and it exits when the session
+ends; there is nothing to start or stop by hand.
+- Several sessions or projects at once: one small process per session, each serving its own bundle.
+  Sessions on the same bundle share its index safely (SQLite WAL).
+- Documents edited during a session (by you or by the agent) are picked up on the next tool call
+  (the index re-syncs when it is older than 2 s; search embeds up to 64 new chunks on the fly).
+- With embeddings, each process loads the model on its first `kb_search` (~0.5 GB for
+  EmbeddingGemma Q4): N parallel sessions use N times that memory. Many sessions on one large
+  bundle are better served by one shared server.
+
+**Shared server (HTTP): you run it.** `okfkit mcp serve --http …` is a long-running process: start it
+by hand, or as a systemd / launchd service or a container; Ctrl-C (SIGINT) stops it gracefully.
+One process serves every client, and the model is loaded once. Agents only connect to it
+(`agent install --url`).
 
 ### Changes over time
 
