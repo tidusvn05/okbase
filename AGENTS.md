@@ -7,6 +7,11 @@ okfkit is an open-source (MIT OR Apache-2.0) Rust toolkit that helps AI agents w
 - `docs/HANDOFF.md` — task order for v0.1, acceptance criteria, reusable spike code, hard rules.
 - `spikes/README.md` — the experiments behind every default. Do not change a default without new eval data.
 
+## Product conventions
+`docs/conventions/end-user-and-agent-friendly-tools.md` applies to every user-facing change: evidence
+before defaults, the simplest-first ladder, agents as first-class users (`onboard`, `doctor`, the machine
+contract, exit codes 3/4), the consent catalog, safety and reversibility, the full lifecycle.
+
 ## Hard rules
 1. Core stays lexical and model-free. Embeddings (ONNX/fastembed) live only in the opt-in `embed-*` modules/features.
 2. Read-only by default. Never write to a bundle unless the user passed an explicit write flag or enabled the `write` module.
