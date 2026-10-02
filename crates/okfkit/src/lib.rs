@@ -21,6 +21,8 @@
 pub mod advise;
 pub mod config;
 mod embed;
+#[cfg(feature = "import")]
+pub mod import;
 pub mod scan;
 pub mod tune;
 

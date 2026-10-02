@@ -76,6 +76,23 @@ pub enum Command {
         #[arg(long, value_enum, default_value = "answer")]
         goal: GoalArg,
     },
+    /// Source documents (PDF, Word, PowerPoint, HTML…): plan, or write markdown with provenance.
+    #[command(
+        after_help = "Sources are already searchable as they are (read directly while indexing). Import when you want\nmarkdown to edit or curate.\n\nExamples:\n  okfkit import                 # plan: what each file becomes, pages needing OCR (writes nothing)\n  okfkit import --write         # markdown in sources/ (re-runs update only unedited files)\n  okfkit import ocr-next        # the next page without text, for an agent to transcribe\n  okfkit import ocr-submit manuals/a.pdf --page 3 -   # the transcription, on stdin"
+    )]
+    Import {
+        #[command(subcommand)]
+        command: Option<ImportCmd>,
+        /// Write the markdown (without it, only show the plan).
+        #[arg(long)]
+        write: bool,
+        /// Folder for the markdown, inside the bundle.
+        #[arg(long, default_value = "sources")]
+        out: String,
+        /// Also overwrite imported markdown that was edited by hand.
+        #[arg(long, requires = "write")]
+        force: bool,
+    },
     /// Start a knowledge base in an empty folder: index.md, tag vocabulary, type schemas, log, okfkit.toml.
     #[command(
         after_help = "Examples:\n  okfkit init --title \"Support knowledge\" --langs vi,en\n  okfkit -b ./kb init --title \"HR policies\" --types Policy,FAQ"
@@ -381,6 +398,24 @@ pub enum ModelsCmd {
         /// Accept the model's license.
         #[arg(long)]
         accept_license: bool,
+    },
+}
+
+#[derive(Debug, Subcommand)]
+pub enum ImportCmd {
+    /// What changed since the last import: updates, hand edits, orphans, pages needing OCR.
+    Status,
+    /// The next source page without text, for an agent to transcribe.
+    OcrNext,
+    /// Store the transcription of one page (state dir; the bundle is not changed).
+    OcrSubmit {
+        /// Source file (bundle-relative).
+        path: String,
+        /// 1-based page.
+        #[arg(long)]
+        page: u32,
+        /// Markdown file, or - for stdin.
+        file: PathBuf,
     },
 }
 

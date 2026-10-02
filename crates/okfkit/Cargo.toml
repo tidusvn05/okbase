@@ -29,11 +29,15 @@ tempfile.workspace = true
 okfkit-embed.workspace = true
 okfkit-search.workspace = true
 okfkit-tune.workspace = true
+okfkit-convert = { workspace = true, optional = true }
 blake3.workspace = true
 serde_json.workspace = true
 toml_edit.workspace = true
 
 [features]
+default = ["import"]
+## Read and import PDF, Word, PowerPoint, OpenDocument, RTF, EPUB and HTML (okfkit-convert, ~10 MB).
+import = ["okfkit-index/import", "dep:okfkit-convert"]
 ## Local embedding models (EmbeddingGemma, bge-m3) through ONNX Runtime.
 embed-local = ["okfkit-embed/local"]
 ## An OpenAI-compatible embeddings API.

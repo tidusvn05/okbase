@@ -1095,3 +1095,106 @@ fn onboard_understands_real_folders() {
         "{paths}"
     );
 }
+
+#[test]
+fn import_reads_directly_then_writes_markdown_safely() {
+    let tmp = tempfile::tempdir().unwrap();
+    let kb = tmp.path().join("kb");
+    std::fs::create_dir_all(kb.join("wiki")).unwrap();
+    let page = |body: &str| {
+        format!(
+            "<html><head><title>Returns</title></head><body><nav>Home</nav><main><h1>Returns</h1><p>{body}</p></main></body></html>"
+        )
+    };
+    std::fs::write(
+        kb.join("wiki/returns.html"),
+        page("Customers may return products within 30 days."),
+    )
+    .unwrap();
+    std::fs::write(
+        kb.join("hours.txt"),
+        "Office hours\nMonday to Friday, 9 to 18.\n",
+    )
+    .unwrap();
+    let st = tmp.path().join("st");
+    let run = |args: &[&str]| {
+        let mut c = Command::cargo_bin("okfkit").unwrap();
+        c.arg("-b").arg(&kb).arg("--state-dir").arg(&st).args(args);
+        c
+    };
+    // Searchable as they are; nothing written.
+    let g = json_of(&mut run(&["grep", "30 days", "--files-only"]));
+    assert_eq!(g["docs"][0]["id"], "wiki/returns.html", "{g}");
+    let plan = json_of(&mut run(&["import"]));
+    assert_eq!(plan["written"], false);
+    assert!(!kb.join("sources").exists());
+    // Write, then a second run changes nothing.
+    let w = json_of(&mut run(&["import", "--write"]));
+    assert!(
+        w["items"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|i| i["action"] == "new"),
+        "{w}"
+    );
+    let md = std::fs::read_to_string(kb.join("sources/wiki/returns.html.md")).unwrap();
+    assert!(
+        md.contains("\"path\":\"wiki/returns.html\"") && md.contains("# Returns"),
+        "{md}"
+    );
+    assert!(!md.contains("Home"));
+    let again = json_of(&mut run(&["import", "--write"]));
+    assert!(
+        again["items"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|i| i["action"] == "unchanged"),
+        "{again}"
+    );
+    // The imported markdown replaces the direct reading (no duplicate).
+    let g = json_of(&mut run(&["grep", "30 days", "--files-only"]));
+    assert_eq!(g["total_docs"], 1);
+    assert_eq!(g["docs"][0]["id"], "sources/wiki/returns.html");
+    // The source changes: unedited markdown is updated; edited markdown is kept unless --force.
+    std::fs::write(
+        kb.join("wiki/returns.html"),
+        page("Customers may return products within 60 days."),
+    )
+    .unwrap();
+    std::fs::write(
+        kb.join("sources/hours.txt.md"),
+        std::fs::read_to_string(kb.join("sources/hours.txt.md")).unwrap() + "Edited by hand.\n",
+    )
+    .unwrap();
+    std::fs::write(kb.join("hours.txt"), "Office hours\nMonday to Saturday.\n").unwrap();
+    let out = run(&["import", "--write", "--json"]).output().unwrap();
+    assert_eq!(out.status.code(), Some(4), "a conflict is a finding");
+    let r: Value = serde_json::from_slice(&out.stdout).unwrap();
+    let action = |src: &str| {
+        r["items"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|i| i["source"] == src)
+            .unwrap()["action"]
+            .clone()
+    };
+    assert_eq!(action("wiki/returns.html"), "update");
+    assert_eq!(action("hours.txt"), "edited");
+    assert!(
+        std::fs::read_to_string(kb.join("sources/wiki/returns.html.md"))
+            .unwrap()
+            .contains("60 days")
+    );
+    assert!(
+        std::fs::read_to_string(kb.join("sources/hours.txt.md"))
+            .unwrap()
+            .contains("Edited by hand.")
+    );
+    // A deleted source leaves an orphan that the plan reports.
+    std::fs::remove_file(kb.join("wiki/returns.html")).unwrap();
+    let r = json_of(&mut run(&["import", "status"]));
+    assert_eq!(r["orphans"][0], "sources/wiki/returns.html.md");
+}

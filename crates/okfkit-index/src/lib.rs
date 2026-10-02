@@ -87,6 +87,17 @@ pub struct SyncStats {
     pub skipped: Vec<(String, String)>,
 }
 
+/// A source document with pages that have no text yet.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct PendingOcr {
+    /// Bundle-relative path of the source.
+    pub path: String,
+    /// 1-based pages still needing a transcription.
+    pub pages: Vec<u32>,
+    /// Pages in the document, when known.
+    pub page_count: Option<u32>,
+}
+
 /// An open index for one bundle.
 #[derive(Debug)]
 pub struct Index {
@@ -165,6 +176,22 @@ impl Index {
     /// Path of the database file, or `None` for an in-memory index.
     pub fn db_path(&self) -> Option<&Path> {
         self.db_path.as_deref()
+    }
+
+    /// Source documents with pages that still need a transcription.
+    pub fn sources_needing_ocr(&self) -> Result<Vec<PendingOcr>, Error> {
+        let mut st = self.conn.prepare(
+            "SELECT path, needs_ocr, pages FROM sources WHERE status = 'partial' ORDER BY path",
+        )?;
+        let rows = st.query_map([], |r| {
+            let pages: String = r.get(1)?;
+            Ok(PendingOcr {
+                path: r.get(0)?,
+                pages: serde_json::from_str(&pages).unwrap_or_default(),
+                page_count: r.get(2)?,
+            })
+        })?;
+        Ok(rows.collect::<Result<_, _>>()?)
     }
 
     /// Forgets the stored content hash of a document so the next sync reads it again (for example

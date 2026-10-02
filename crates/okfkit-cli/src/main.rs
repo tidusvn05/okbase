@@ -18,7 +18,7 @@ use serde::Serialize;
 
 use cli::{
     AgentCmd, AudienceArg, Cli, Command, DataCmd, DictCmd, EmbedCmd, FilterArgs, GoalArg,
-    LintFormat, McpCmd, ModelsCmd, TrainBackend, TuneCmd,
+    ImportCmd, LintFormat, McpCmd, ModelsCmd, TrainBackend, TuneCmd,
 };
 
 fn main() -> ExitCode {
@@ -109,6 +109,67 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     s.stats.mode
                 )
             })?;
+        }
+        Command::Import {
+            command,
+            write,
+            out,
+            force,
+        } => {
+            let b = open()?;
+            let scope = scope()?;
+            match command {
+                None | Some(ImportCmd::Status) => {
+                    let r = b.import(&out, write, force, &scope)?;
+                    emit(json, &r, || r.to_text())?;
+                    if r.items.iter().any(|i| i.action == "edited" && !force) && write {
+                        return Ok(ExitCode::from(contract::EXIT_FINDINGS));
+                    }
+                }
+                Some(ImportCmd::OcrNext) => match b.ocr_next(&scope)? {
+                    Some((path, page, pages)) => {
+                        let submit = format!("okfkit import ocr-submit {path} --page {page} -");
+                        let v = serde_json::json!({
+                            "path": path, "page": page, "pages": pages,
+                            "instructions": "Read this page of the file (it has no extractable text: scanned or an image) and transcribe it as markdown in its original language: headings, lists, tables, every number. Write only what is on the page. Ask the user first if the document may be sent to your model provider.",
+                            "next": [submit],
+                        });
+                        emit(json, &v, || {
+                            format!(
+                                "transcribe page {page}{} of {path}\n{}\nthen: {submit}   (the markdown on stdin)\n",
+                                pages.map_or(String::new(), |n| format!(" of {n}")),
+                                v["instructions"].as_str().unwrap_or_default()
+                            )
+                        })?;
+                    }
+                    None => done(
+                        json,
+                        serde_json::json!({"page": null}),
+                        "no page needs a transcription".into(),
+                        &[],
+                    )?,
+                },
+                Some(ImportCmd::OcrSubmit { path, page, file }) => {
+                    let text = if file.as_os_str() == "-" {
+                        let mut s = String::new();
+                        std::io::Read::read_to_string(&mut std::io::stdin(), &mut s)?;
+                        s
+                    } else {
+                        std::fs::read_to_string(&file)
+                            .with_context(|| format!("reading {}", file.display()))?
+                    };
+                    if text.trim().is_empty() {
+                        bail!("invalid argument: the transcription is empty");
+                    }
+                    let stored = b.ocr_submit(&path, page, &text)?;
+                    done(
+                        json,
+                        serde_json::json!({"stored": stored, "path": path, "page": page}),
+                        format!("page {page} of {path} transcribed; it is searchable now"),
+                        &["okfkit import ocr-next"],
+                    )?;
+                }
+            }
         }
         Command::Init {
             title,
@@ -1713,20 +1774,9 @@ location: {}
     Ok(ExitCode::SUCCESS)
 }
 
-/// Today's date (UTC) as `YYYY-MM-DD`, without a date-time dependency.
+/// Today's date (UTC) as `YYYY-MM-DD`.
 fn today() -> String {
-    let days = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .map_or(0, |d| d.as_secs() / 86_400) as i64;
-    let z = days + 719_468;
-    let era = z.div_euclid(146_097);
-    let doe = z - era * 146_097;
-    let yoe = (doe - doe / 1460 + doe / 36_524 - doe / 146_096) / 365;
-    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
-    let mp = (5 * doy + 2) / 153;
-    let d = doy - (153 * mp + 2) / 5 + 1;
-    let m = if mp < 10 { mp + 3 } else { mp - 9 };
-    format!("{:04}-{m:02}-{d:02}", yoe + era * 400 + i64::from(m <= 2))
+    okfkit::import::today()
 }
 
 fn abs(p: &Path) -> PathBuf {
