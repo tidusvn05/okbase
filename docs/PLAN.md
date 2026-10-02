@@ -202,7 +202,7 @@ okfkit agent install --claude | --codex | --opencode | --print
 | `okfkit-cli` | binary | `okfkit`, tự tìm plugin `okfkit-<x>` trong PATH |
 
 Các bản build phát hành:
-- **`okfkit`**: lõi + data + mcp-http + import-csv/xlsx. Không có ONNX; khoảng 15–25MB, gồm từ điển lindera.
+- **`okfkit`**: lõi + data + mcp-http + import (PDF, Office, HTML; CSV/XLSX qua data). Không có ONNX; khoảng 34MB (2026-10-03). Từ điển tiếng Nhật tải về khi dùng lần đầu.
 - **`okfkit-full`**: thêm embed-local, import-pdf/docx/html, source-*, eval.
 
 ### 4.4 Cấu hình: mặc định đơn giản, mở rộng dần
@@ -410,7 +410,7 @@ Output text/JSON/SARIF; `--fix-safe` chỉ sửa những gì an toàn (sinh inde
 | `data.query` aggregate 10k dòng | ≤ 50ms |
 | `search` (module embed, ≤ 20k chunk) | p50 ≤ 60ms |
 | Embed lần đầu | ≈ 3 chunk/s (EmbeddingGemma Q4), chạy nền |
-| Binary `okfkit` (không ONNX) | ≤ 25MB |
+| Binary `okfkit` (không ONNX) | ≤ 100MB (nâng từ 25MB ngày 2026-10-03; hiện ~34MB) |
 
 ---
 

@@ -203,7 +203,7 @@ okfkit agent install --claude | --codex | --opencode | --print
 | `okfkit-cli` | binary | `okfkit`, discovers `okfkit-<x>` plugins on PATH |
 
 Release builds:
-- **`okfkit`**: core + data + mcp-http + import-csv/xlsx. No ONNX; about 15–25MB, including lindera dictionaries.
+- **`okfkit`**: core + data + mcp-http + import (PDF, Office, HTML; CSV/XLSX through data). No ONNX; about 34MB (2026-10-03). The Japanese dictionary is downloaded on first use.
 - **`okfkit-full`**: adds embed-local, import-pdf/docx/html, source-*, eval.
 
 ### 4.4 Configuration: simple defaults, extend gradually
@@ -411,7 +411,7 @@ Output text/JSON/SARIF; `--fix-safe` fixes only what is safe (generate index.md,
 | `data.query` aggregate over 10k rows | ≤ 50ms |
 | `search` (embed module, ≤ 20k chunks) | p50 ≤ 60ms |
 | First embedding | ≈ 3 chunks/s (EmbeddingGemma Q4), in the background |
-| `okfkit` binary (no ONNX) | ≤ 25MB |
+| `okfkit` binary (no ONNX) | ≤ 100MB (raised from 25MB on 2026-10-03; currently ~34MB) |
 
 ---
 
@@ -582,3 +582,4 @@ fields:
 | 2026-10-01 | `estimate_tokens` is a linear model fitted against the EmbeddingGemma tokenizer (words, Vietnamese syllables, CJK, punctuation, digits, line breaks) instead of the spike's per-word rates. | The per-word rates undercounted code-heavy text by ~30%; chunks exceeded the 512-token model limit (v0.3 S4 eval). |
 | 2026-10-01 | MSRV stays 1.88; `serde-saphyr` is pinned to 1.1, and okfkit double-quotes strings that YAML 1.1 parsers would read as booleans, numbers or dates. | serde-saphyr ≥ 1.2 needs Rust 1.89. |
 | 2026-10-02 | MSRV raised to 1.89 to use `serde-saphyr` 1.3 (maintenance and YAML 1.1 string fixes). okfkit keeps double-quoting strings that YAML 1.1 parsers would misread. | Maintainer decision; replaces the 2026-10-01 pin. |
+| 2026-10-03 | The size target for the default `okfkit` binary (no ONNX) is ≤ 100 MB instead of ≤ 25 MB. Document import (anydoc, about 10 MB) stays in the default build; the binary is ~34 MB. | Maintainer decision: import out of the box is worth the size. |
