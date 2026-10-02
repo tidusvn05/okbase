@@ -246,7 +246,10 @@ fn from_args<T: serde::de::DeserializeOwned>(v: Value) -> Result<T, String> {
 }
 
 /// Keys of `kb_query` other than the documented ones are treated as field filters
-/// (`{"region": ["VN"]}` → `fields.region`), as in the biz-meta spike's tool.
+/// (`{"region": ["VN"]}` → `fields.region`), as in the biz-meta spike's tool. `<field>_from` and
+/// `<field>_to` are range ends (`effective_to_from` → `ranges.effective_to.from`), like
+/// `updated_from`/`updated_to`: agents write them that way, and as field filters they would
+/// silently match nothing.
 fn move_unknown_to_fields(args: Value) -> Value {
     const KNOWN: [&str; 20] = [
         "type",
@@ -280,6 +283,21 @@ fn move_unknown_to_fields(args: Value) -> Value {
         .collect();
     for key in unknown {
         let v = map.remove(&key).expect("present");
+        let end = [("_from", "from"), ("_to", "to")]
+            .into_iter()
+            .find_map(|(suffix, end)| Some((key.strip_suffix(suffix)?, end)));
+        if let (Some((field, end)), Some(bound)) = (end, scalar_text(&v))
+            && !field.is_empty()
+        {
+            let ranges = map.entry("ranges").or_insert_with(|| json!({}));
+            if let Some(r) = ranges.as_object_mut() {
+                let range = r.entry(field).or_insert_with(|| json!({}));
+                if let Some(range) = range.as_object_mut() {
+                    range.insert(end.to_owned(), Value::String(bound));
+                }
+            }
+            continue;
+        }
         let values: Vec<Value> = match v {
             Value::Array(items) => items,
             Value::Null => continue,
@@ -300,6 +318,15 @@ fn move_unknown_to_fields(args: Value) -> Value {
         }
     }
     Value::Object(map)
+}
+
+/// A string or number as text (range bounds); `None` for other values.
+fn scalar_text(v: &Value) -> Option<String> {
+    match v {
+        Value::String(s) => Some(s.clone()),
+        Value::Number(n) => Some(n.to_string()),
+        _ => None,
+    }
 }
 
 fn links_text(r: &okfkit::LinksResult) -> String {
@@ -400,4 +427,20 @@ pub async fn serve_stdio(
         .await
         .map_err(|e| Error::Serve(e.to_string()))?;
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use serde_json::json;
+
+    #[test]
+    fn field_from_and_to_become_a_range() {
+        let args = json!({"type": ["Contract"], "effective_to_from": "2026-10-01",
+            "effective_to_to": "2027-06-30", "region": "VN"});
+        assert_eq!(
+            super::move_unknown_to_fields(args),
+            json!({"type": ["Contract"], "fields": {"region": ["VN"]},
+                "ranges": {"effective_to": {"from": "2026-10-01", "to": "2027-06-30"}}})
+        );
+    }
 }
