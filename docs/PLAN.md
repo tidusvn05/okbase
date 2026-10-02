@@ -451,6 +451,9 @@ Output text/JSON/SARIF; `--fix-safe` chỉ sửa những gì an toàn (sinh inde
 ### Đề xuất mới: `okfkit advise` + fine-tune embedding
 - Xem `PLAN-advise-tune.md` (chưa chốt thứ tự so với v0.4; phase 0 là gate kỹ thuật ONNX/Q4).
 
+### Đề xuất mới: các tình huống thực tế
+- Xem `PLAN-usecases.md`: repo phần mềm có `docs/`, thư mục rỗng, OKF chưa chuẩn, bundle trong thư mục con; bộ quét thư mục, luật bỏ qua, `adopt` an toàn với site docs, profile `docs-site`.
+
 ### Đề xuất mới: onboarding qua agent
 - Xem `PLAN-onboarding.md`: `okfkit onboard`, hợp đồng máy (JSON, mã lỗi, mã thoát), danh mục consent, `doctor`, bootstrap cho agent; kèm sửa index trong phiên MCP (P0).
 
