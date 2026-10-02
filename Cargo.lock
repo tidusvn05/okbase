@@ -2321,7 +2321,10 @@ name = "okfkit-convert"
 version = "0.1.0-dev"
 dependencies = [
  "anydoc",
+ "crc32fast",
+ "flate2",
  "htmd",
+ "lopdf",
  "markup5ever_rcdom",
  "pdf-inspector",
  "serde",

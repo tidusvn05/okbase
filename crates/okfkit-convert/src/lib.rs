@@ -11,6 +11,9 @@
 #![forbid(unsafe_code)]
 
 mod html;
+mod page_image;
+
+pub use page_image::{PageImage, page_image};
 
 use std::path::Path;
 

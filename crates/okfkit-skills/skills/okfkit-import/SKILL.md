@@ -9,8 +9,8 @@ okfkit reads PDF, Word, PowerPoint, OpenDocument, RTF, EPUB, HTML and text files
 
 1. **See what is there:** `okfkit --bundle {{bundle}} import` lists every source, what it would become and the pages without text. It writes nothing.
 2. **Pages without text** (scans, photos, images): okfkit has no OCR and never sends files to an OCR service. Ask the user once whether those pages may be sent to your model provider. If yes, loop:
-   - `okfkit --bundle {{bundle}} import ocr-next` names a file and page;
-   - read that page yourself (open the PDF page or the image);
+   - `okfkit --bundle {{bundle}} import ocr-next` names a file and page and, for scans, gives an `image` of the page (in okfkit's state directory);
+   - open that image (or the PDF page when no image is given);
    - transcribe it as markdown in its original language: headings, lists, tables, every number, only what is on the page;
    - `okfkit --bundle {{bundle}} import ocr-submit <file> --page <n> -` with the markdown on stdin.
 3. **Multi-column pages** (listed by `import`) may have their lines interleaved: check them against the original before relying on them.

@@ -91,4 +91,5 @@ Google Drive/Sheets vẫn để sau).
 | I1 | `90f8603`, `d0eba82` | `okfkit-convert`. PDF dùng thẳng `pdf-inspector` từng trang (trang scan không làm mất cả tài liệu). Data đọc thêm xlsm/xlsb/xls/ods. `ttf-parser` (không còn bảo trì, phụ thuộc của pdf-inspector) được ghi nhận trong `deny.toml` |
 | I2 | `3bf8b0d` | Đọc trực tiếp trong index; bảng `sources`; ghép văn bản OCR; nhường chỗ cho bản đã import ngay trong cùng lượt đồng bộ |
 | I3 | `f9e9979` | `import` (kế hoạch), `--write` (tách > 6k token, giữ bản sửa tay, báo mồ côi), `status`, `ocr-next`/`ocr-submit` |
-| I4 | (commit này) | `scan` đếm tài liệu nguồn; `onboard` hỏi về OCR (consent); `doctor` báo file không đọc được và trang chưa có chữ; skill `okfkit-import`; `new --source`; tài liệu |
+| I4 | `7354629` | `scan` đếm tài liệu nguồn; `onboard` hỏi về OCR (consent); `doctor` báo file không đọc được và trang chưa có chữ; skill `okfkit-import`; `new --source`; tài liệu |
+| Sau I5 | (commit này) | `import ocr-next` xuất ảnh của trang scan (JPEG giữ nguyên; ảnh Flate, kể cả PNG predictor và đen trắng 1-bit, thành PNG); fax/JBIG2 thì hướng dẫn mở thẳng trang PDF. Sửa deadlock khoá index trong `ocr_next` |

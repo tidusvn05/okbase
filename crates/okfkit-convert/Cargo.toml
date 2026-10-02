@@ -20,6 +20,9 @@ anydoc.workspace = true
 pdf-inspector.workspace = true
 htmd.workspace = true
 markup5ever_rcdom.workspace = true
+lopdf.workspace = true
+flate2.workspace = true
+crc32fast.workspace = true
 serde.workspace = true
 thiserror.workspace = true
 

@@ -1251,3 +1251,46 @@ fn onboard_and_doctor_on_a_folder_of_source_documents() {
     let d = json_of(&mut run(&["doctor"]));
     assert!(!d["checks"].to_string().contains("have no text"), "{d}");
 }
+
+#[test]
+fn ocr_next_exports_the_scanned_page_image() {
+    // tests/data/scanned.pdf: one page holding only an image (made by
+    // spikes/import-bench/make_samples.py; synthetic text).
+    let tmp = tempfile::tempdir().unwrap();
+    let kb = tmp.path().join("kb");
+    std::fs::create_dir_all(&kb).unwrap();
+    std::fs::copy(
+        Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/data/scanned.pdf"),
+        kb.join("scan.pdf"),
+    )
+    .unwrap();
+    let mut c = Command::cargo_bin("okfkit").unwrap();
+    c.arg("-b")
+        .arg(&kb)
+        .arg("--state-dir")
+        .arg(tmp.path().join("st"))
+        .args(["import", "ocr-next"])
+        // A regression: this used to deadlock on the index lock.
+        .timeout(std::time::Duration::from_secs(60));
+    let t = json_of(&mut c);
+    assert_eq!(
+        (t["path"].as_str(), t["page"].as_u64()),
+        (Some("scan.pdf"), Some(1))
+    );
+    let image = std::path::PathBuf::from(t["image"].as_str().expect("an image path"));
+    let bytes = std::fs::read(&image).unwrap();
+    assert!(
+        bytes.starts_with(b"\x89PNG") || bytes.starts_with(&[0xFF, 0xD8]),
+        "png or jpeg"
+    );
+    assert!(
+        t["instructions"]
+            .as_str()
+            .unwrap()
+            .contains("Open the image")
+    );
+    assert!(
+        !kb.join(image.file_name().unwrap()).exists(),
+        "nothing written into the bundle"
+    );
+}

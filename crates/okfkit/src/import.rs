@@ -41,6 +41,20 @@ pub struct Item {
     pub detail: Option<String>,
 }
 
+/// A page to transcribe.
+#[derive(Debug, Clone, Serialize)]
+pub struct OcrTask {
+    /// Source file (bundle-relative).
+    pub path: String,
+    /// 1-based page.
+    pub page: u32,
+    /// Pages in the file, when known.
+    pub pages: Option<u32>,
+    /// An image of the page to read (exported from the PDF, or the image file itself); `None`
+    /// when the page cannot be exported (fax or JBIG2 scans): open the PDF page instead.
+    pub image: Option<PathBuf>,
+}
+
 /// The import plan (or what was done).
 #[derive(Debug, Clone, Serialize)]
 pub struct Report {
@@ -322,15 +336,49 @@ impl Bundle {
         })
     }
 
-    /// The next source page that needs a transcription: (source path, page, pages in the file).
-    pub fn ocr_next(&self, scope: &Scope) -> Result<Option<(String, u32, Option<u32>)>, Error> {
-        for p in self.index().sources_needing_ocr()? {
+    /// The next source page that needs a transcription. For a scanned PDF page the page image is
+    /// written next to the transcriptions (state dir) so any agent that reads images can work
+    /// from it; for an image file, the file itself.
+    pub fn ocr_next(&self, scope: &Scope) -> Result<Option<OcrTask>, Error> {
+        // Collect first: the index lock must not be held across the loop (state_path locks it).
+        let pending = self.index().sources_needing_ocr()?;
+        for p in pending {
             if !scope.permits_path(&p.path) {
                 continue;
             }
-            if let Some(page) = p.pages.first() {
-                return Ok(Some((p.path.clone(), *page, p.page_count)));
-            }
+            let Some(&page) = p.pages.first() else {
+                continue;
+            };
+            let full = self.root().join(&p.path);
+            let ext = full
+                .extension()
+                .and_then(|e| e.to_str())
+                .unwrap_or("")
+                .to_ascii_lowercase();
+            let image = if matches!(ext.as_str(), "png" | "jpg" | "jpeg") {
+                Some(full.canonicalize().unwrap_or(full))
+            } else if ext == "pdf" {
+                let bytes =
+                    std::fs::read(&full).map_err(|e| Error::Io(format!("{}: {e}", p.path)))?;
+                match (okfkit_convert::page_image(&bytes, page), self.state_path()) {
+                    (Some(img), Ok(state)) => {
+                        let dir = okfkit_index::ocr_dir(&state, &hash(&bytes));
+                        std::fs::create_dir_all(&dir).map_err(|e| Error::Io(e.to_string()))?;
+                        let file = dir.join(format!("page-{page}.{}", img.ext));
+                        std::fs::write(&file, &img.bytes).map_err(|e| Error::Io(e.to_string()))?;
+                        Some(file)
+                    }
+                    _ => None,
+                }
+            } else {
+                None
+            };
+            return Ok(Some(OcrTask {
+                path: p.path.clone(),
+                page,
+                pages: p.page_count,
+                image,
+            }));
         }
         Ok(None)
     }

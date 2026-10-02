@@ -127,18 +127,34 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     }
                 }
                 Some(ImportCmd::OcrNext) => match b.ocr_next(&scope)? {
-                    Some((path, page, pages)) => {
-                        let submit = format!("okfkit import ocr-submit {path} --page {page} -");
-                        let v = serde_json::json!({
-                            "path": path, "page": page, "pages": pages,
-                            "instructions": "Read this page of the file (it has no extractable text: scanned or an image) and transcribe it as markdown in its original language: headings, lists, tables, every number. Write only what is on the page. Ask the user first if the document may be sent to your model provider.",
-                            "next": [submit],
-                        });
+                    Some(t) => {
+                        let submit =
+                            format!("okfkit import ocr-submit {} --page {} -", t.path, t.page);
+                        let read = match &t.image {
+                            Some(img) => format!(
+                                "Open the image {} (page {} of {})",
+                                img.display(),
+                                t.page,
+                                t.path
+                            ),
+                            None => format!(
+                                "Open page {} of {} (its image could not be extracted)",
+                                t.page, t.path
+                            ),
+                        };
+                        let instructions = format!(
+                            "{read} and transcribe it as markdown in its original language: headings, lists, tables, every number. \
+                             Write only what is on the page. Ask the user first if the document may be sent to your model provider."
+                        );
+                        let mut v = serde_json::to_value(&t)?;
+                        v["instructions"] = serde_json::json!(instructions);
+                        v["next"] = serde_json::json!([submit]);
                         emit(json, &v, || {
                             format!(
-                                "transcribe page {page}{} of {path}\n{}\nthen: {submit}   (the markdown on stdin)\n",
-                                pages.map_or(String::new(), |n| format!(" of {n}")),
-                                v["instructions"].as_str().unwrap_or_default()
+                                "transcribe page {}{} of {}\n{instructions}\nthen: {submit}   (the markdown on stdin)\n",
+                                t.page,
+                                t.pages.map_or(String::new(), |n| format!(" of {n}")),
+                                t.path
                             )
                         })?;
                     }
