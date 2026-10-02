@@ -21,6 +21,7 @@
 pub mod advise;
 pub mod config;
 mod embed;
+pub mod scan;
 pub mod tune;
 
 use std::collections::BTreeSet;
@@ -85,6 +86,9 @@ pub enum Error {
         "embeddings are off for this bundle; enable them with `okfkit embed enable` (okfkit-full build)"
     )]
     NoEmbedder,
+    /// Reading the folder failed.
+    #[error("{0}")]
+    Io(String),
     /// Fine-tuning (runs, questions, evaluation) failed.
     #[error("fine-tuning: {0}")]
     Tune(String),

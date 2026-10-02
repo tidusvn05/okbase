@@ -110,6 +110,10 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 )
             })?;
         }
+        Command::Scan => {
+            let sc = okfkit::scan::scan(&bundle_dir)?;
+            emit(json, &sc, || sc.to_text())?;
+        }
         Command::Doctor => {
             use doctor::{Status, check};
             let home = std::env::var_os("HOME")
@@ -405,6 +409,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 ..Default::default()
             };
             if st.bundle_exists && goal != onboard::Goal::Remove {
+                st.scan = Some(okfkit::scan::scan(&bundle_dir)?);
                 let b = open()?;
                 let options = okfkit::AdviseOptions {
                     user_langs,
@@ -429,7 +434,16 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     }
                 }
             }
-            let plan = onboard::plan(&st, goal);
+            let mut plan = onboard::plan(&st, goal);
+            if let Some(dir) = &cli.bundle {
+                // The plan's commands run from where the agent is, not from the bundle.
+                for step in &mut plan.steps {
+                    with_bundle_flag(&mut step.commands, dir);
+                    for o in &mut step.options {
+                        with_bundle_flag(&mut o.commands, dir);
+                    }
+                }
+            }
             emit(json, &plan, || plan.to_text())?;
         }
         Command::Advise {
@@ -447,15 +461,8 @@ fn run(cli: Cli) -> Result<ExitCode> {
             let mut advice = b.advise(&options, &scope)?;
             if let Some(dir) = &cli.bundle {
                 // Commands must work from where the user is.
-                let flag = format!("okfkit -b {} ", shell_quote(&dir.display().to_string()));
                 for step in &mut advice.steps {
-                    for c in &mut step.commands {
-                        if let Some(rest) = c.strip_prefix("okfkit ") {
-                            *c = format!("{flag}{rest}");
-                        } else if let Some(i) = c.find(" okfkit ") {
-                            c.replace_range(i + 1..i + 8, &flag);
-                        }
-                    }
+                    with_bundle_flag(&mut step.commands, dir);
                 }
             }
             emit(json, &advice, || advice.to_text())?;
@@ -2261,4 +2268,19 @@ fn done(json: bool, mut value: serde_json::Value, text: String, next: &[&str]) -
         }
         t
     })
+}
+
+/// Adds `-b <dir>` to every `okfkit …` command (unless it already names a bundle).
+fn with_bundle_flag(commands: &mut [String], dir: &Path) {
+    let flag = format!("okfkit -b {} ", shell_quote(&dir.display().to_string()));
+    for c in commands {
+        if c.starts_with("okfkit -b ") || c.contains(" okfkit -b ") {
+            continue;
+        }
+        if let Some(rest) = c.strip_prefix("okfkit ") {
+            *c = format!("{flag}{rest}");
+        } else if let Some(i) = c.find(" okfkit ") {
+            c.replace_range(i + 1..i + 8, &flag);
+        }
+    }
 }

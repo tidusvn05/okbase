@@ -75,6 +75,8 @@ pub struct State {
     pub gemma_accepted: bool,
     /// The bundle has a tune run.
     pub tune_started: bool,
+    /// What the folder is (`okfkit scan`).
+    pub scan: Option<okfkit::scan::Scan>,
 }
 
 /// Goals that shorten the plan.
@@ -210,6 +212,115 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
             rules: RULES.to_vec(),
         };
     }
+    if let Some(sc) = st.scan.as_ref().filter(|_| st.bundle_exists) {
+        use okfkit::scan::FolderKind;
+        match sc.kind {
+            FolderKind::Empty => {
+                steps.push(ask(
+                    "init",
+                    "Start a knowledge base here",
+                    "the folder is empty: okfkit needs markdown documents to work with",
+                    "This folder is empty. Shall I start a knowledge base here? Tell me what it is about, who will use it, and which languages people ask in; if you already have documents elsewhere (markdown, PDF, Word), tell me where.".into(),
+                    vec![
+                        choice("yes", &["okfkit init --title \"<what it is about>\" --langs <vi,en,…>", "okfkit new --type <Type> \"<title>\"   (or follow the okfkit-author skill)", "okfkit onboard"]),
+                        choice("my documents are elsewhere", &["okfkit -b <that folder> onboard"]),
+                    ],
+                    &["index.md, _meta/ and okfkit.toml in this folder"],
+                ));
+                return Plan {
+                    bundle: st.bundle.clone(),
+                    summary: "empty folder".into(),
+                    done,
+                    steps,
+                    rules: RULES.to_vec(),
+                };
+            }
+            FolderKind::NonMarkdown => {
+                let files = sc
+                    .other_documents
+                    .iter()
+                    .map(|(k, v)| format!("{v} {k}"))
+                    .collect::<Vec<_>>()
+                    .join(", ");
+                steps.push(tell(
+                    "import",
+                    "Documents need converting to markdown",
+                    "okfkit reads markdown; importing PDF, Word and HTML is planned for v0.4",
+                    format!("This folder has {files} but no markdown. Until okfkit can import them (v0.4), convert them to markdown (for example with pandoc) into a new folder, then run `okfkit -b <that folder> onboard`."),
+                ));
+                return Plan {
+                    bundle: st.bundle.clone(),
+                    summary: format!("documents without markdown ({files})"),
+                    done,
+                    steps,
+                    rules: RULES.to_vec(),
+                };
+            }
+            _ => {}
+        }
+        let elsewhere = match sc.recommended.map(|i| &sc.candidates[i]) {
+            Some(c) if c.path != "." => Some(vec![c]),
+            None if sc.candidates.len() > 1 => Some(sc.candidates.iter().collect()),
+            _ => None,
+        };
+        if let Some(cands) = elsewhere {
+            let describe = |c: &okfkit::scan::Candidate| {
+                format!(
+                    "{} ({} docs, {:?}, level {})",
+                    c.path,
+                    c.docs,
+                    c.kind,
+                    c.level.map_or("below L0".into(), |l| l.to_string())
+                )
+            };
+            if let [c] = cands.as_slice() {
+                steps.push(run(
+                    "bundle",
+                    &format!("Use {} as the knowledge bundle", c.path),
+                    &format!(
+                        "{}; the rest of the folder ({}) is not knowledge",
+                        describe(c),
+                        sc.signals.join(", ")
+                    ),
+                    &[&format!("okfkit -b {} onboard", c.path)],
+                    &[],
+                ));
+            } else {
+                steps.push(ask(
+                    "bundle",
+                    "Choose the knowledge folder",
+                    "several folders could be the bundle",
+                    format!(
+                        "Which folder should agents answer from? {}",
+                        cands
+                            .iter()
+                            .map(|c| describe(c))
+                            .collect::<Vec<_>>()
+                            .join("; ")
+                    ),
+                    cands
+                        .iter()
+                        .map(|c| Choice {
+                            answer: c.path.clone(),
+                            commands: vec![format!("okfkit -b {} onboard", c.path)],
+                        })
+                        .collect(),
+                    &[],
+                ));
+            }
+            return Plan {
+                bundle: st.bundle.clone(),
+                summary: format!("{:?} folder; the bundle is a subfolder", sc.kind).to_lowercase(),
+                done,
+                steps,
+                rules: RULES.to_vec(),
+            };
+        }
+    }
+    let here = st
+        .scan
+        .as_ref()
+        .and_then(|sc| sc.candidates.iter().find(|c| c.path == "."));
     let Some(advice) = st.advice.as_ref().filter(|_| st.bundle_exists) else {
         steps.push(ask(
             "bundle",
@@ -302,6 +413,55 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
 
     for s in &advice.steps {
         match s.tier {
+            Tier::Curate
+                if here.is_some_and(|c| !c.to_fix.is_empty() && c.conformant * 5 >= c.docs) =>
+            {
+                // Mostly OKF: fix the few files in place.
+                let c = here.expect("checked");
+                let only: Vec<String> = c.to_fix.iter().map(|f| format!("--only {f}")).collect();
+                steps.push(ask(
+                    "fix",
+                    &format!("Fix {} of {} documents", c.docs - c.conformant, c.docs),
+                    &format!("{} of {} documents already have OKF frontmatter; the rest block the level", c.conformant, c.docs),
+                    format!(
+                        "{} documents need frontmatter fixes ({}{}). May I fix them in place? (review with git diff)",
+                        c.docs - c.conformant,
+                        c.to_fix.iter().take(5).cloned().collect::<Vec<_>>().join(", "),
+                        if c.to_fix.len() > 5 { ", …" } else { "" }
+                    ),
+                    vec![
+                        Choice {
+                            answer: "yes".into(),
+                            commands: vec![
+                                format!("okfkit adopt {} --write", only.join(" ")),
+                                "okfkit lint --level L1 --json   (fix what remains by hand: invalid YAML is reported with its line)".into(),
+                            ],
+                        },
+                        choice("no", &[]),
+                    ],
+                    &["the listed documents"],
+                ));
+            }
+            Tier::Curate
+                if here.is_some_and(|c| {
+                    matches!(
+                        c.kind,
+                        okfkit::scan::CandidateKind::DocsSite | okfkit::scan::CandidateKind::Vault
+                    )
+                }) && p.level.is_none() =>
+            {
+                steps.push(ask(
+                    "metadata",
+                    "Add titles and descriptions (optional)",
+                    "the documents also build a site or a vault; okfkit already works on them as they are, and descriptions help agents pick the right page",
+                    "okfkit can use these documents as they are. Shall I also add a title and a one-line description to the frontmatter of each page, in place? The site keeps working (index.md is kept); review with git diff.".into(),
+                    vec![
+                        choice("yes", &["okfkit adopt --write", "follow the okfkit-curate skill to rewrite the generated descriptions"]),
+                        choice("no, use them as they are", &[]),
+                    ],
+                    &["frontmatter of the documents"],
+                ));
+            }
             Tier::Curate => {
                 let adopt = p.level.is_none();
                 steps.push(ask(

@@ -820,7 +820,11 @@ fn onboard_plan_converges() {
     std::fs::create_dir_all(home.join(".claude")).unwrap();
     let p = json_of(&mut run(&["onboard"]));
     assert_eq!(p["steps"][0]["kind"], "run");
-    assert_eq!(p["steps"][0]["commands"][0], "okfkit agent install");
+    let cmd0 = p["steps"][0]["commands"][0].as_str().unwrap();
+    assert!(
+        cmd0.starts_with("okfkit -b ") && cmd0.ends_with(" agent install"),
+        "{cmd0}"
+    );
     // Do it; the step is done next time.
     stdout(&mut run(&["agent", "install"]));
     let p = json_of(&mut run(&["onboard"]));
@@ -945,5 +949,112 @@ fn agent_instructions_agree_everywhere() {
     assert!(
         llms.starts_with("# okfkit\n\n> "),
         "llms.txt format: title, then a summary quote"
+    );
+}
+
+#[test]
+fn onboard_understands_real_folders() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("home");
+    std::fs::create_dir_all(&home).unwrap();
+    let write = |rel: &str, text: &str| {
+        let p = tmp.path().join(rel);
+        std::fs::create_dir_all(p.parent().unwrap()).unwrap();
+        std::fs::write(p, text).unwrap();
+    };
+    let okf = "---\ntype: Guide\ntitle: T\ndescription: About t.\n---\n# T\n";
+    // A software repository with MkDocs docs and installed dependencies.
+    write("repo/Cargo.toml", "[package]\nname = \"x\"\n");
+    write("repo/README.md", "# X\n");
+    write("repo/mkdocs.yml", "site_name: X\n");
+    write("repo/node_modules/dep/README.md", "# dep\n");
+    write(
+        "repo/docs/index.md",
+        "# X docs\n\nWelcome to the X documentation, start here.\n",
+    );
+    write(
+        "repo/docs/guide/install.md",
+        "# Install\n\nRun the installer and restart your shell.\n",
+    );
+    // An empty folder; a mostly-OKF bundle with one broken file; a bot repository.
+    std::fs::create_dir_all(tmp.path().join("empty")).unwrap();
+    for i in 0..5 {
+        write(&format!("partial/p{i}.md"), okf);
+    }
+    write("partial/loose.md", "# Loose\n\nNo frontmatter.\n");
+    write("bot/.git/HEAD", "ref\n");
+    write("bot/app/main.py", "print(1)\n");
+    write("bot/README.md", "# Bot\n");
+    for i in 0..5 {
+        write(&format!("bot/knowledge/k{i}.md"), okf);
+    }
+    let plan = |dir: &str, extra: &[&str]| -> Value {
+        let mut c = Command::cargo_bin("okfkit").unwrap();
+        c.env("HOME", &home)
+            .env("XDG_CONFIG_HOME", home.join(".config"))
+            .env("XDG_CACHE_HOME", home.join(".cache"))
+            .env("PATH", "/usr/bin:/bin")
+            .current_dir(tmp.path().join(dir))
+            .args(extra)
+            .args([
+                "--state-dir",
+                tmp.path()
+                    .join(format!("st-{}", dir.replace('/', "-")))
+                    .to_str()
+                    .unwrap(),
+            ])
+            .arg("onboard");
+        json_of(&mut c)
+    };
+    let ids = |v: &Value| -> Vec<String> {
+        v["steps"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|s| s["id"].as_str().unwrap().to_owned())
+            .collect()
+    };
+    // Repository root: go to docs/, nothing else.
+    let p = plan("repo", &[]);
+    assert_eq!(ids(&p), ["bundle"], "{p}");
+    assert_eq!(p["steps"][0]["commands"][0], "okfkit -b docs onboard");
+    // From the root with -b docs: every command keeps -b docs; the site is used as is or annotated in place.
+    let p = plan("repo", &["-b", "docs"]);
+    assert!(ids(&p).contains(&"metadata".to_owned()), "{p}");
+    let meta = p["steps"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|s| s["id"] == "metadata")
+        .unwrap();
+    assert_eq!(
+        meta["options"][0]["commands"][0],
+        "okfkit -b docs adopt --write"
+    );
+    // Empty folder: start a knowledge base.
+    assert_eq!(ids(&plan("empty", &[])), ["init"]);
+    // Mostly OKF: fix the one file in place.
+    let p = plan("partial", &[]);
+    let fix = p["steps"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|s| s["id"] == "fix")
+        .expect("fix step");
+    assert_eq!(
+        fix["options"][0]["commands"][0],
+        "okfkit adopt --only loose.md --write"
+    );
+    // Bot repository: the bundle is knowledge/.
+    let p = plan("bot", &[]);
+    assert_eq!(p["steps"][0]["commands"][0], "okfkit -b knowledge onboard");
+    // adopt on the docs site keeps index.md and touches no dependency.
+    let mut c = Command::cargo_bin("okfkit").unwrap();
+    c.current_dir(tmp.path().join("repo")).args(["adopt", "."]);
+    let a = json_of(&mut c);
+    let paths = a["changes"].to_string();
+    assert!(
+        !paths.contains("node_modules") && !paths.contains("overview.md"),
+        "{paths}"
     );
 }
