@@ -76,6 +76,7 @@ is under the Gemma Terms of Use.
 
 ## Documentation
 
+- Usage for small, medium and large projects (matches `okfkit advise`): [`docs/usage.md`](docs/usage.md)
 - Design: [`docs/design.md`](docs/design.md) (English translation of [`docs/PLAN.md`](docs/PLAN.md), Vietnamese)
 - Implementation handoff: [`docs/HANDOFF.md`](docs/HANDOFF.md); acceptance results: `spikes/acceptance-v0.1/`, `-v0.2/`, `-v0.3/`
 - Contributing: [`CONTRIBUTING.md`](CONTRIBUTING.md) · Agents: [`AGENTS.md`](AGENTS.md)
