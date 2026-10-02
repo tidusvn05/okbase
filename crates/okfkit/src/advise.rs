@@ -178,6 +178,11 @@ fn main_langs(p: &Profile) -> Vec<String> {
         .collect()
 }
 
+/// The advice for a measured profile (what [`Bundle::advise`] returns after measuring).
+pub fn plan_for(profile: Profile, o: &AdviseOptions) -> Advice {
+    plan(profile, o)
+}
+
 fn plan(profile: Profile, o: &AdviseOptions) -> Advice {
     let mut steps = Vec::new();
     let mut skipped = Vec::new();

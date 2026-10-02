@@ -6,14 +6,17 @@ use clap::{Args, Parser, Subcommand, ValueEnum};
 
 /// Make markdown knowledge bundles (Open Knowledge Format) work well for AI agents.
 ///
+/// Agents: start with `okfkit onboard` (a setup plan) and `okfkit help --agent` (the contract).
+///
 /// Read commands index the bundle incrementally first; no setup is needed.
-/// Every read command accepts --json (the same JSON as the MCP tools).
+/// Every command accepts --json (read commands: the same JSON as the MCP tools).
 #[derive(Debug, Parser)]
 #[command(
     name = "okfkit",
     version,
     propagate_version = true,
-    max_term_width = 100
+    max_term_width = 100,
+    disable_help_subcommand = true
 )]
 pub struct Cli {
     /// Bundle directory [default: current directory].
@@ -55,6 +58,32 @@ pub struct Cli {
 pub enum Command {
     /// Index the bundle and show a summary: size, types, languages, level and recommended mode.
     Status,
+    /// The setup plan for agents: what is done, what to run next, and what to ask the user (read-only).
+    #[command(
+        after_help = "Agents: run it, do the first step, run it again; stop at every ASK and wait for the user.\n\nExamples:\n  okfkit onboard\n  okfkit -b ./kb onboard --user-langs vi,ja --json\n  okfkit onboard --goal remove"
+    )]
+    Onboard {
+        /// Languages people ask in (comma-separated ISO codes) [default: the bundle's languages].
+        #[arg(long, value_delimiter = ',', value_name = "LANGS")]
+        user_langs: Vec<String>,
+        /// Who will use the bundle.
+        #[arg(long = "for", value_enum, value_name = "WHO")]
+        audience: Option<AudienceArg>,
+        /// Documents must not be sent to a cloud LLM.
+        #[arg(long)]
+        private: bool,
+        /// What to set up.
+        #[arg(long, value_enum, default_value = "answer")]
+        goal: GoalArg,
+    },
+    /// Print help for okfkit or a command; --agent prints the contract for agents.
+    Help {
+        /// Command path, e.g. `embed tune`.
+        command: Vec<String>,
+        /// The agent contract: JSON, exit codes, error codes, consent rules, main commands.
+        #[arg(long)]
+        agent: bool,
+    },
     /// Recommend how to use okfkit for this bundle, from the simplest setup up (read-only).
     #[command(
         after_help = "Examples:\n  okfkit advise\n  okfkit advise --user-langs vi,ja --for claude\n  okfkit advise --for team --private --json"
@@ -299,6 +328,17 @@ pub enum ModelsCmd {
         #[arg(long)]
         accept_license: bool,
     },
+}
+
+/// What `onboard` sets up.
+#[derive(Debug, Clone, Copy, ValueEnum)]
+pub enum GoalArg {
+    /// Agents answer from the bundle (everything advise recommends).
+    Answer,
+    /// Only organize the bundle.
+    Curate,
+    /// Remove okfkit from this machine.
+    Remove,
 }
 
 /// Who will use the bundle (`advise --for`).

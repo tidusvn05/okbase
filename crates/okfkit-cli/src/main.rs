@@ -1,6 +1,8 @@
 //! The `okfkit` command-line interface.
 
 mod cli;
+mod contract;
+mod onboard;
 
 use std::collections::BTreeMap;
 use std::io::Write as _;
@@ -14,51 +16,20 @@ use okfkit::{Bundle, OpenOptions, Scope, StateDir};
 use serde::Serialize;
 
 use cli::{
-    AgentCmd, AudienceArg, Cli, Command, DataCmd, DictCmd, EmbedCmd, FilterArgs, LintFormat,
-    McpCmd, ModelsCmd, TrainBackend, TuneCmd,
+    AgentCmd, AudienceArg, Cli, Command, DataCmd, DictCmd, EmbedCmd, FilterArgs, GoalArg,
+    LintFormat, McpCmd, ModelsCmd, TrainBackend, TuneCmd,
 };
 
 fn main() -> ExitCode {
     let cli = Cli::parse();
+    let json = cli.json;
     match run(cli) {
         Ok(code) => code,
         Err(e) => {
-            eprintln!("error: {e:#}");
-            if let Some(hint) = hint(&e) {
-                eprintln!("hint: {hint}");
-            }
-            ExitCode::from(1)
+            let r = contract::classify(&e);
+            contract::print_error(&r, json);
+            ExitCode::from(r.exit)
         }
-    }
-}
-
-/// A suggestion for common failures.
-fn hint(e: &anyhow::Error) -> Option<&'static str> {
-    let msg = format!("{e:#}");
-    if msg.contains("bundle not found") {
-        Some(
-            "pass --bundle <DIR> (or set OKFKIT_BUNDLE), or run okfkit inside the bundle directory",
-        )
-    } else if msg.contains("not found:") {
-        Some("find ids with `okfkit list`, `okfkit catalog` or `okfkit grep PATTERN --files-only`")
-    } else if msg.contains("invalid argument") {
-        Some("see `okfkit help <command>` for the accepted values")
-    } else if msg.contains("SQL error") || msg.contains("query interrupted") {
-        Some(
-            "list tables and columns with `okfkit data tables`; only one SELECT (or WITH ... SELECT) is allowed",
-        )
-    } else if msg.contains("no datasets") {
-        Some("put CSV, TSV or XLSX files in the bundle (for example under data/)")
-    } else if msg.contains("embeddings are off") || msg.contains("not available in this build") {
-        Some(
-            "semantic search needs the okfkit-full build and `okfkit embed enable`; the lexical tools (grep, query, get) work without it",
-        )
-    } else if msg.contains("no embeddings for") {
-        Some("run `okfkit embed index` first")
-    } else if msg.contains("index database") {
-        Some("the index may be corrupt; rebuild it with `okfkit index --rebuild`")
-    } else {
-        None
     }
 }
 
@@ -136,6 +107,102 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 )
             })?;
         }
+        Command::Help { command, agent } => {
+            let mut root = <Cli as clap::CommandFactory>::command();
+            if agent {
+                let mut cmds = Vec::new();
+                fn walk(c: &clap::Command, prefix: &str, out: &mut Vec<(String, String)>) {
+                    for sub in c.get_subcommands() {
+                        let name = format!("{prefix}{}", sub.get_name());
+                        if sub.has_subcommands() && sub.get_name() != "help" {
+                            walk(sub, &format!("{name} "), out);
+                        } else if sub.get_name() != "help" {
+                            out.push((
+                                name,
+                                sub.get_about().map(|a| a.to_string()).unwrap_or_default(),
+                            ));
+                        }
+                    }
+                }
+                walk(&root, "", &mut cmds);
+                let text = contract::agent_guide(&cmds);
+                let v = serde_json::json!({
+                    "guide": text,
+                    "exit_codes": {"0": "success", "1": "error", "2": "usage", "3": "consent required", "4": "findings"},
+                    "error_codes": contract::CODES.iter().map(|(c, e, w)| serde_json::json!({"code": c, "exit": e, "meaning": w})).collect::<Vec<_>>(),
+                    "consent": contract::CONSENT.iter().map(|(a, f, t)| serde_json::json!({"action": a, "flag": f, "tell": t})).collect::<Vec<_>>(),
+                    "commands": cmds.iter().map(|(n, a)| serde_json::json!({"command": format!("okfkit {n}"), "about": a})).collect::<Vec<_>>(),
+                    "next": ["okfkit onboard"],
+                });
+                emit(json, &v, || text.clone())?;
+            } else {
+                root.build();
+                let mut cmd = &mut root;
+                for name in &command {
+                    cmd = cmd.find_subcommand_mut(name).with_context(|| {
+                        format!("invalid argument: unknown command `{}`", command.join(" "))
+                    })?;
+                }
+                cmd.print_long_help()?;
+            }
+        }
+        Command::Onboard {
+            user_langs,
+            audience,
+            private,
+            goal,
+        } => {
+            let home = std::env::var_os("HOME")
+                .or_else(|| std::env::var_os("USERPROFILE"))
+                .map(PathBuf::from)
+                .unwrap_or_default();
+            let goal = match goal {
+                GoalArg::Answer => onboard::Goal::Answer,
+                GoalArg::Curate => onboard::Goal::Curate,
+                GoalArg::Remove => onboard::Goal::Remove,
+            };
+            let feats = okfkit::build_features();
+            let mut st = onboard::State {
+                version: env!("CARGO_PKG_VERSION").into(),
+                full_build: feats.embed_local,
+                bundle_exists: bundle_dir.is_dir(),
+                bundle: abs(&bundle_dir).display().to_string(),
+                agents_found: detect_agents(&home)
+                    .into_iter()
+                    .map(|a| a.label())
+                    .collect(),
+                gemma_accepted: okfkit::find_model("embeddinggemma-300m-q4")
+                    .is_some_and(okfkit::license_accepted),
+                ..Default::default()
+            };
+            if st.bundle_exists && goal != onboard::Goal::Remove {
+                let b = open()?;
+                let options = okfkit::AdviseOptions {
+                    user_langs,
+                    audience: audience.map(audience_of),
+                    private,
+                };
+                st.advice = Some(b.advise(&options, &scope()?)?);
+                st.tune_started = b.tune_runs().is_ok_and(|r| !r.is_empty());
+                if let Some(reg) = okfkit_skills::registry_path() {
+                    for i in okfkit_skills::load_registry(&reg).unwrap_or_default() {
+                        if i.source != st.bundle {
+                            continue;
+                        }
+                        let problems = i.check(&home);
+                        if problems.is_empty() {
+                            if !st.installed_for.contains(&i.agent.label()) {
+                                st.installed_for.push(i.agent.label());
+                            }
+                        } else {
+                            st.install_problems.extend(problems);
+                        }
+                    }
+                }
+            }
+            let plan = onboard::plan(&st, goal);
+            emit(json, &plan, || plan.to_text())?;
+        }
         Command::Advise {
             user_langs,
             audience,
@@ -145,12 +212,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
             let scope = scope()?;
             let options = okfkit::AdviseOptions {
                 user_langs,
-                audience: audience.map(|a| match a {
-                    AudienceArg::Claude => okfkit::Audience::Claude,
-                    AudienceArg::Codex => okfkit::Audience::Codex,
-                    AudienceArg::Team => okfkit::Audience::Team,
-                    AudienceArg::Host => okfkit::Audience::Host,
-                }),
+                audience: audience.map(audience_of),
                 private,
             };
             let mut advice = b.advise(&options, &scope)?;
@@ -325,7 +387,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 }
             }
             return Ok(if report.errors > 0 {
-                ExitCode::from(1)
+                ExitCode::from(contract::EXIT_FINDINGS)
             } else {
                 ExitCode::SUCCESS
             });
@@ -397,7 +459,12 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 }
                 std::fs::create_dir_all(path.parent().expect("has parent"))?;
                 std::fs::write(&path, &text)?;
-                eprintln!("wrote {}", path.display());
+                done(
+                    json,
+                    serde_json::json!({"wrote": path}),
+                    format!("wrote {}", path.display()),
+                    &["okfkit lint --level L2"],
+                )?;
             } else {
                 print!("{text}");
             }
@@ -494,16 +561,22 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 }
                 ModelsCmd::Add { dir, name, replace } => {
                     let c = okfkit::install_custom(&dir, name.as_deref(), replace)?;
-                    eprintln!(
-                        "installed custom:{} in {}; use it with `okfkit embed enable --model custom:{}`",
-                        c.manifest.name,
-                        c.dir.display(),
-                        c.manifest.name
-                    );
+                    let id = format!("custom:{}", c.manifest.name);
+                    done(
+                        json,
+                        serde_json::json!({"model": id, "dir": c.dir}),
+                        format!("installed {id} in {}", c.dir.display()),
+                        &[&format!("okfkit embed enable --model {id}")],
+                    )?;
                 }
                 ModelsCmd::Remove { name } => {
                     okfkit::remove_custom(&name)?;
-                    eprintln!("removed {name}");
+                    done(
+                        json,
+                        serde_json::json!({"removed": name}),
+                        format!("removed {name}"),
+                        &["okfkit embed models"],
+                    )?;
                 }
                 ModelsCmd::Pull { id, accept_license } => {
                     let info = okfkit::find_model(&id).with_context(|| {
@@ -511,7 +584,12 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     })?;
                     ensure_license(info, accept_license)?;
                     okfkit::load_local_model(&id)?;
-                    eprintln!("{id} is downloaded");
+                    done(
+                        json,
+                        serde_json::json!({"model": id, "downloaded": true}),
+                        format!("{id} is downloaded"),
+                        &[&format!("okfkit embed enable --model {id}")],
+                    )?;
                 }
             },
             EmbedCmd::Enable {
@@ -550,15 +628,25 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     }
                 };
                 let path = okfkit::config::write_embed(&bundle_dir, &cfg)?;
-                eprintln!(
-                    "embeddings enabled in {}; run `okfkit embed index` to embed the bundle",
-                    path.display()
-                );
+                done(
+                    json,
+                    serde_json::json!({"config": path, "embed": cfg}),
+                    format!("embeddings enabled in {}", path.display()),
+                    &["okfkit embed index"],
+                )?;
             }
             EmbedCmd::Disable => {
                 let path =
                     okfkit::config::write_embed(&bundle_dir, &okfkit::config::EmbedConfig::Off)?;
-                eprintln!("embeddings disabled in {}", path.display());
+                done(
+                    json,
+                    serde_json::json!({"config": path, "embed": okfkit::config::EmbedConfig::Off}),
+                    format!(
+                        "embeddings disabled in {} (vectors stay cached)",
+                        path.display()
+                    ),
+                    &[],
+                )?;
             }
             EmbedCmd::Status => {
                 let b = open()?;
@@ -824,42 +912,73 @@ location: {}
                         let actions = okfkit_skills::plan(&opts)?;
                         plans.push((opts, actions));
                     }
+                    let (mut changes, mut notes) = (Vec::new(), Vec::new());
                     for (opts, actions) in &plans {
-                        if print {
+                        if print && !json {
                             for a in actions {
                                 println!("{a}");
                             }
                             continue;
                         }
-                        okfkit_skills::apply(actions)?;
-                        if let Some(reg) = &registry {
-                            okfkit_skills::record_install(reg, okfkit_skills::Install::of(opts)?)?;
+                        if !print {
+                            okfkit_skills::apply(actions)?;
+                            if let Some(reg) = &registry {
+                                okfkit_skills::record_install(
+                                    reg,
+                                    okfkit_skills::Install::of(opts)?,
+                                )?;
+                            }
                         }
-                        println!("{}:", opts.agent.label());
-                        for a in actions {
-                            println!("  {}", a.summary());
-                        }
+                        changes.extend(actions.iter().map(|a| change_json(opts.agent, a)));
                         if let (okfkit_skills::Agent::Codex, okfkit_skills::Target::Project(dir)) =
                             (opts.agent, &opts.target)
                             && !okfkit_skills::codex_trusts(dir, &home)
                         {
-                            println!(
-                                "  note: Codex reads {} only for trusted projects; trust this project when Codex asks (or install with --user)",
+                            notes.push(format!(
+                                "Codex reads {} only for trusted projects; trust this project when Codex asks (or install with --user)",
                                 dir.join(".codex/config.toml").display()
-                            );
+                            ));
                         }
                     }
-                    if !print {
-                        println!(
-                            "Restart the agent to pick up the MCP server and skills (tools {}_*). Undo: okfkit agent uninstall{}",
-                            skill.prefix,
-                            if name == okfkit_skills::DEFAULT_NAME {
-                                String::new()
-                            } else {
-                                format!(" --name {name}")
-                            }
-                        );
+                    if print && !json {
+                        return Ok(ExitCode::SUCCESS);
                     }
+                    let undo = format!(
+                        "okfkit agent uninstall{}",
+                        if name == okfkit_skills::DEFAULT_NAME {
+                            String::new()
+                        } else {
+                            format!(" --name {name}")
+                        }
+                    );
+                    notes.push(format!(
+                        "Restart the agent session to load the MCP server and skills (tools {}_*).",
+                        skill.prefix
+                    ));
+                    let out = serde_json::json!({
+                        "applied": !print,
+                        "changes": changes,
+                        "notes": notes,
+                        "tools_prefix": skill.prefix,
+                        "next": ["okfkit doctor", undo],
+                    });
+                    emit(json, &out, || {
+                        let mut t = String::new();
+                        let mut last = "";
+                        for c in &changes {
+                            let agent = c["agent"].as_str().unwrap_or("");
+                            if agent != last {
+                                t.push_str(&format!("{agent}:\n"));
+                                last = agent;
+                            }
+                            t.push_str(&format!("  {}\n", c["summary"].as_str().unwrap_or("")));
+                        }
+                        for n in &notes {
+                            t.push_str(&format!("note: {n}\n"));
+                        }
+                        t.push_str(&format!("undo: {undo}\n"));
+                        t
+                    })?;
                 }
                 AgentCmd::Uninstall {
                     claude,
@@ -921,7 +1040,7 @@ location: {}
                             })
                             .collect()
                     };
-                    let mut changed = 0;
+                    let mut changes = Vec::new();
                     for (agent, target, name, skills) in todo {
                         let actions =
                             okfkit_skills::plan_uninstall(&okfkit_skills::UninstallOptions {
@@ -931,35 +1050,44 @@ location: {}
                                 server_name: name.clone(),
                                 skills,
                             })?;
-                        if print {
+                        if print && !json {
                             for a in &actions {
                                 println!("{a}");
                             }
                             continue;
                         }
-                        okfkit_skills::apply(&actions)?;
-                        if let Some(r) = &registry {
-                            okfkit_skills::forget_install(r, agent, &target, &name)?;
-                        }
-                        if !actions.is_empty() {
-                            changed += 1;
-                            println!("{} ({name}):", agent.label());
-                            for a in &actions {
-                                println!("  {}", a.summary());
+                        if !print {
+                            okfkit_skills::apply(&actions)?;
+                            if let Some(r) = &registry {
+                                okfkit_skills::forget_install(r, agent, &target, &name)?;
                             }
                         }
+                        changes.extend(actions.iter().map(|a| change_json(agent, a)));
                     }
-                    if !print {
-                        if changed == 0 {
-                            println!(
-                                "nothing to remove (see `okfkit agent status` for recorded installs)"
-                            );
-                        } else {
-                            println!(
-                                "Restart the agent. okfkit's index and cache stay; remove them with `okfkit clean`."
-                            );
+                    if print && !json {
+                        return Ok(ExitCode::SUCCESS);
+                    }
+                    let out = serde_json::json!({
+                        "applied": !print,
+                        "changes": changes,
+                        "notes": if changes.is_empty() { vec![] } else { vec!["Restart the agent session. okfkit's index and cache stay; remove them with `okfkit clean`."] },
+                        "next": if changes.is_empty() { vec!["okfkit agent status"] } else { vec!["okfkit clean"] },
+                    });
+                    emit(json, &out, || {
+                        if changes.is_empty() {
+                            return "nothing to remove (see `okfkit agent status` for recorded installs)\n".into();
                         }
-                    }
+                        let mut t = String::new();
+                        for c in &changes {
+                            t.push_str(&format!(
+                                "{}: {}\n",
+                                c["agent"].as_str().unwrap_or(""),
+                                c["summary"].as_str().unwrap_or("")
+                            ));
+                        }
+                        t.push_str("Restart the agent session. okfkit's index and cache stay; remove them with `okfkit clean`.\n");
+                        t
+                    })?;
                 }
                 AgentCmd::Status => {
                     let recorded = match &registry {
@@ -1335,13 +1463,20 @@ fn ensure_license(info: &okfkit::ModelInfo, accept: bool) -> Result<()> {
         return Ok(());
     }
     if !accept {
-        bail!(
-            "{} is released under the {} ({}). Read them, then run again with --accept-license \
-             (or choose --model bge-m3-int8, MIT)",
-            info.name,
-            info.license,
-            info.license_url
-        );
+        return Err(contract::Consent {
+            code: "license_required",
+            message: format!("{} needs its license accepted", info.id),
+            question: format!(
+                "{} is released under the {} ({}); about {} MB is downloaded once. Do you accept the license? (MIT alternative: bge-m3-int8, ~570 MB, weaker on cross-language questions)",
+                info.name, info.license, info.license_url, info.size_mb
+            ),
+            flag: "--accept-license",
+            next: vec![
+                format!("okfkit embed enable --model {} --accept-license", info.id),
+                "okfkit embed enable --model bge-m3-int8".into(),
+            ],
+        }
+        .into());
     }
     okfkit::accept_license(info)?;
     eprintln!(
@@ -1459,7 +1594,7 @@ fn tune_command(
                 }
             })?;
             if !sub.accepted {
-                return Ok(Some(ExitCode::from(1)));
+                return Ok(Some(ExitCode::from(contract::EXIT_FINDINGS)));
             }
         }
         TuneCmd::Status { run } => {
@@ -1483,7 +1618,7 @@ fn tune_command(
                 t
             })?;
             if !st.ready {
-                return Ok(Some(ExitCode::from(1)));
+                return Ok(Some(ExitCode::from(contract::EXIT_FINDINGS)));
             }
         }
         TuneCmd::Setup { yes } => {
@@ -1597,6 +1732,9 @@ fn tune_command(
                     }
                 )
             })?;
+            if !gate.passed {
+                return Ok(Some(ExitCode::from(contract::EXIT_FINDINGS)));
+            }
         }
         TuneCmd::Activate {
             write,
@@ -1610,15 +1748,24 @@ fn tune_command(
                 let gate = okfkit::tune::recorded_gate(&run);
                 let model =
                     okfkit::tune::exported_model(&run).unwrap_or_else(|| "(not exported)".into());
-                println!(
-                    "would set [embed] model = \"{model}\" in okfkit.toml (gate: {}); add --write to do it",
-                    gate.map_or("not evaluated".into(), |g| if g.passed {
-                        "passed".to_owned()
-                    } else {
-                        "failed".to_owned()
-                    })
-                );
-                return Ok(Some(ExitCode::from(1)));
+                let gate = gate.map_or("not evaluated".to_owned(), |g| {
+                    format!(
+                        "{}: R@1 {:.3} -> {:.3}",
+                        if g.passed { "passed" } else { "failed" },
+                        g.r_at_1.0,
+                        g.r_at_1.1
+                    )
+                });
+                return Err(contract::Consent {
+                    code: "consent_required",
+                    message: format!("activating {model} changes okfkit.toml and re-embeds the bundle"),
+                    question: format!(
+                        "Switch this bundle's search to the tuned model {model} (gate {gate})? It can be undone with rollback."
+                    ),
+                    flag: "--write",
+                    next: vec!["okfkit embed tune activate --write".into()],
+                }
+                .into());
             }
             let model = okfkit::tune::activate(&b, &run, force)?;
             eprintln!(
@@ -1639,10 +1786,14 @@ fn tune_command(
         TuneCmd::Rollback { write } => {
             let b = open()?;
             if !write {
-                println!(
-                    "would restore the embedding setting saved by the last activate; add --write to do it"
-                );
-                return Ok(Some(ExitCode::from(1)));
+                return Err(contract::Consent {
+                    code: "consent_required",
+                    message: "rollback changes okfkit.toml".into(),
+                    question: "Restore the embedding setting from before the last activate?".into(),
+                    flag: "--write",
+                    next: vec!["okfkit embed tune rollback --write".into()],
+                }
+                .into());
             }
             let prev = okfkit::tune::rollback(&b)?;
             let what = match &prev {
@@ -1708,11 +1859,17 @@ fn tune_env(yes: bool) -> Result<TuneEnv> {
         return Ok(env);
     }
     if !yes {
-        bail!(
-            "training needs a private Python environment ({}) in the user cache; \
-             ask the user, then run again with --yes",
-            okfkit::tune::PYTHON_DOWNLOAD_HINT
-        );
+        return Err(contract::Consent {
+            code: "consent_required",
+            message: "training needs a private Python environment in the user cache".into(),
+            question: format!(
+                "Fine-tuning needs a private Python environment ({}) in your user cache. Download and create it?",
+                okfkit::tune::PYTHON_DOWNLOAD_HINT
+            ),
+            flag: "--yes",
+            next: vec!["okfkit embed tune setup --yes".into()],
+        }
+        .into());
     }
     okfkit::tune::python_env(true, &mut log)?.context("creating the Python environment")
 }
@@ -1767,6 +1924,28 @@ fn export_model(
     bail!(NO_TUNE)
 }
 
+fn audience_of(a: AudienceArg) -> okfkit::Audience {
+    match a {
+        AudienceArg::Claude => okfkit::Audience::Claude,
+        AudienceArg::Codex => okfkit::Audience::Codex,
+        AudienceArg::Team => okfkit::Audience::Team,
+        AudienceArg::Host => okfkit::Audience::Host,
+    }
+}
+
+/// Agent CLIs on this machine (on PATH, or their configuration directory exists).
+fn detect_agents(home: &Path) -> Vec<okfkit_skills::Agent> {
+    use okfkit_skills::Agent;
+    let found = |program: &str, dir: &str| on_path(program) || home.join(dir).is_dir();
+    [
+        (found("claude", ".claude"), Agent::Claude),
+        (found("codex", ".codex"), Agent::Codex),
+    ]
+    .into_iter()
+    .filter_map(|(on, a)| on.then_some(a))
+    .collect()
+}
+
 /// The agents to install for: the flags, else every agent found on this machine.
 fn chosen_agents(claude: bool, codex: bool, home: &Path) -> Result<Vec<okfkit_skills::Agent>> {
     use okfkit_skills::Agent;
@@ -1776,14 +1955,7 @@ fn chosen_agents(claude: bool, codex: bool, home: &Path) -> Result<Vec<okfkit_sk
             .filter_map(|(on, a)| on.then_some(a))
             .collect());
     }
-    let found = |program: &str, dir: &str| on_path(program) || home.join(dir).is_dir();
-    let agents: Vec<Agent> = [
-        (found("claude", ".claude"), Agent::Claude),
-        (found("codex", ".codex"), Agent::Codex),
-    ]
-    .into_iter()
-    .filter_map(|(on, a)| on.then_some(a))
-    .collect();
+    let agents = detect_agents(home);
     if agents.is_empty() {
         bail!(
             "no agent found (claude or codex on PATH, ~/.claude or ~/.codex); pass --claude or --codex"
@@ -1824,4 +1996,34 @@ fn human_size(bytes: u64) -> String {
     } else {
         format!("{:.0} KB", b / 1e3)
     }
+}
+
+/// One planned or applied change, for `--json`.
+fn change_json(agent: okfkit_skills::Agent, a: &okfkit_skills::Action) -> serde_json::Value {
+    let (action, target, why) = match a {
+        okfkit_skills::Action::Write { path, why, .. } => {
+            ("write", path.display().to_string(), why)
+        }
+        okfkit_skills::Action::Remove { path, why } => ("remove", path.display().to_string(), why),
+        okfkit_skills::Action::Run { argv, why } => ("run", argv.join(" "), why),
+    };
+    serde_json::json!({
+        "agent": agent.label(),
+        "action": action,
+        "target": target,
+        "why": why,
+        "summary": a.summary(),
+    })
+}
+
+/// Reports a finished write command: `{…, "next": […]}` with --json, else a line and the next steps.
+fn done(json: bool, mut value: serde_json::Value, text: String, next: &[&str]) -> Result<()> {
+    value["next"] = serde_json::json!(next);
+    emit(json, &value, || {
+        let mut t = format!("{text}\n");
+        for n in next {
+            t.push_str(&format!("next: {n}\n"));
+        }
+        t
+    })
 }

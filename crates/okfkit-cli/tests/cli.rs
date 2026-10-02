@@ -130,7 +130,7 @@ fn lint_exit_codes_and_formats() {
         .args(["lint", "--level", "L3"])
         .output()
         .unwrap();
-    assert_eq!(out.status.code(), Some(1));
+    assert_eq!(out.status.code(), Some(4));
     let sarif: Value = serde_json::from_slice(
         &okfkit("lint", st.path())
             .args(["lint", "--format", "sarif"])
@@ -530,7 +530,7 @@ fn tune_question_workflow() {
         )
         .output()
         .unwrap();
-    assert_eq!(out.status.code(), Some(1));
+    assert_eq!(out.status.code(), Some(4));
     let text = String::from_utf8_lossy(&out.stdout);
     assert!(
         text.contains("rejected") && text.contains("cross questions use another listed language"),
@@ -544,7 +544,7 @@ fn tune_question_workflow() {
     assert_eq!(sub["accepted"], true);
     // Too small to train (standard: 300 pairs), but the files are written.
     let out = cmd(&["embed", "tune", "check"]).output().unwrap();
-    assert_eq!(out.status.code(), Some(1));
+    assert_eq!(out.status.code(), Some(4));
     let text = String::from_utf8_lossy(&out.stdout);
     assert!(
         text.contains("only 4 training pairs") && text.contains("train.jsonl"),
@@ -659,4 +659,176 @@ fn agent_scenarios_many_bundles_status_uninstall_clean() {
     );
     stdout(&mut cmd(&b, &["clean", "--index", "--yes"]));
     assert!(!b.join(".okfkit").exists() && b.join("x.md").is_file());
+}
+
+#[test]
+fn machine_contract_errors_consent_and_no_prompts() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("home");
+    std::fs::create_dir_all(&home).unwrap();
+    let run = |args: &[&str]| {
+        let mut c = Command::cargo_bin("okfkit").unwrap();
+        c.env("HOME", &home)
+            .env("XDG_CONFIG_HOME", home.join(".config"))
+            .env("XDG_CACHE_HOME", home.join(".cache"))
+            .env("OKFKIT_MODELS_DIR", home.join("models"))
+            .args(args)
+            // Agents cannot answer prompts: every command must finish with stdin closed.
+            .write_stdin("")
+            .timeout(std::time::Duration::from_secs(60));
+        c.output().unwrap()
+    };
+    // Errors are JSON on stdout with a stable code.
+    let out = run(&["-b", "/definitely/missing", "status", "--json"]);
+    assert_eq!(out.status.code(), Some(1));
+    let e: Value = serde_json::from_slice(&out.stdout).unwrap();
+    assert_eq!(e["error"]["code"], "bundle_not_found");
+    assert!(e["error"]["hint"].as_str().unwrap().contains("--bundle"));
+    // A license is the user's decision: exit 3 with the question to ask.
+    let kb = tmp.path().join("kb");
+    std::fs::create_dir_all(&kb).unwrap();
+    let kb_s = kb.to_str().unwrap();
+    let out = run(&[
+        "-b",
+        kb_s,
+        "--state-dir",
+        tmp.path().join("st").to_str().unwrap(),
+        "embed",
+        "enable",
+        "--json",
+    ]);
+    assert_eq!(out.status.code(), Some(3));
+    let e: Value = serde_json::from_slice(&out.stdout).unwrap();
+    assert_eq!(e["error"]["code"], "license_required");
+    assert_eq!(e["error"]["flag"], "--accept-license");
+    assert!(
+        e["error"]["question"]
+            .as_str()
+            .unwrap()
+            .contains("Gemma Terms of Use")
+    );
+    assert!(
+        !kb.join("okfkit.toml").exists(),
+        "nothing written without consent"
+    );
+    // Text mode tells people the same.
+    let out = run(&[
+        "-b",
+        kb_s,
+        "--state-dir",
+        tmp.path().join("st").to_str().unwrap(),
+        "embed",
+        "enable",
+    ]);
+    assert!(String::from_utf8_lossy(&out.stderr).contains("ask the user:"));
+    // Write commands report changes and next steps.
+    let out = run(&[
+        "-b",
+        kb_s,
+        "embed",
+        "enable",
+        "--model",
+        "bge-m3-int8",
+        "--json",
+    ]);
+    let v: Value = serde_json::from_slice(&out.stdout).unwrap();
+    assert_eq!(v["next"][0], "okfkit embed index");
+    // A sweep of commands with stdin closed: none waits for input.
+    let st = tmp.path().join("st2");
+    let st = st.to_str().unwrap();
+    for args in [
+        vec!["status"],
+        vec!["advise"],
+        vec!["lint"],
+        vec!["catalog"],
+        vec!["agent", "status"],
+        vec!["agent", "uninstall"],
+        vec!["clean"],
+        vec!["embed", "models"],
+        vec!["embed", "tune", "guide"],
+        vec!["embed", "tune", "status"],
+        vec!["embed", "tune", "activate"],
+        vec!["embed", "tune", "rollback"],
+    ] {
+        let mut full = vec!["-b", kb_s, "--state-dir", st];
+        full.extend(args.iter().copied());
+        let out = run(&full);
+        assert!(out.status.code().is_some(), "{args:?} did not finish");
+    }
+}
+
+#[test]
+fn onboard_plan_converges() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("home");
+    let project = tmp.path().join("project");
+    std::fs::create_dir_all(&home).unwrap();
+    std::fs::create_dir_all(&project).unwrap();
+    let run = |args: &[&str]| {
+        let mut c = Command::cargo_bin("okfkit").unwrap();
+        c.env("HOME", &home)
+            .env("XDG_CONFIG_HOME", home.join(".config"))
+            .env("XDG_CACHE_HOME", home.join(".cache"))
+            .env("PATH", "/usr/bin:/bin")
+            .current_dir(&project)
+            .arg("-b")
+            .arg(fixture("okf-official/acme_retail"))
+            .arg("--state-dir")
+            .arg(tmp.path().join("st"))
+            .args(args);
+        c
+    };
+    let ids = |v: &Value| -> Vec<String> {
+        v["steps"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|s| s["id"].as_str().unwrap().to_owned())
+            .collect()
+    };
+    // No agent on this machine: the plan says so.
+    let p = json_of(&mut run(&["onboard"]));
+    assert_eq!(p["steps"][0]["id"], "agents");
+    assert_eq!(p["steps"][0]["kind"], "tell");
+    assert!(
+        p["rules"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|r| r.as_str().unwrap().contains("--accept-license"))
+    );
+    // Claude Code appears: connect it (a run step: project config needs no consent).
+    std::fs::create_dir_all(home.join(".claude")).unwrap();
+    let p = json_of(&mut run(&["onboard"]));
+    assert_eq!(p["steps"][0]["kind"], "run");
+    assert_eq!(p["steps"][0]["commands"][0], "okfkit agent install");
+    // Do it; the step is done next time.
+    stdout(&mut run(&["agent", "install"]));
+    let p = json_of(&mut run(&["onboard"]));
+    assert!(!ids(&p).contains(&"agents".to_owned()), "{p}");
+    assert!(
+        p["done"].to_string().contains("connected: Claude Code"),
+        "{p}"
+    );
+    // Removing is a plan too, with consent.
+    let r = json_of(&mut run(&["onboard", "--goal", "remove"]));
+    assert_eq!(ids(&r), ["remove-agents", "remove-data", "remove-binary"]);
+    assert_eq!(r["steps"][0]["kind"], "ask");
+    // The agent contract.
+    let g = json_of(&mut run(&["help", "--agent"]));
+    assert!(
+        g["guide"]
+            .as_str()
+            .unwrap()
+            .starts_with("# okfkit for agents")
+    );
+    assert!(
+        g["error_codes"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|c| c["code"] == "license_required" && c["exit"] == 3)
+    );
+    assert!(g["commands"].to_string().contains("okfkit embed tune init"));
+    assert!(stdout(&mut run(&["--help"])).contains("Agents: start with `okfkit onboard`"));
 }
