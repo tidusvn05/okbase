@@ -429,7 +429,7 @@ Output text/JSON/SARIF; `--fix-safe` fixes only what is safe (generate index.md,
 
 **Status (2026-10-03).**
 - v0.1, v0.2 and v0.3 are done and accepted: see `spikes/acceptance-v0.*`.
-  - S9 (skills) is inconclusive: agents never invoked the skills.
+  - S9 (skills): agents never invoked the skills. S15 shows that the same rules work when sent as MCP server instructions (46/48 without prompt hints).
 - Later plans are implemented: `PLAN-advise-tune.md`, `PLAN-usecases.md`, `PLAN-onboarding.md` (Codex not run yet) and `PLAN-import.md`.
   - From the import plan, the Google Drive/Sheets connectors, `distill` and S10 on real documents remain.
 - `okfkit-eval lexical` runs in `cargo test`.

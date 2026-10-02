@@ -434,7 +434,7 @@ Output text/JSON/SARIF; `--fix-safe` chỉ sửa những gì an toàn (sinh inde
 | Mốc | Trạng thái | Bằng chứng |
 |---|---|---|
 | v0.1 | ✅ Xong. G2 tái hiện 28/30 (93%) | `spikes/acceptance-v0.1` |
-| v0.2 | ✅ Xong. S5 ×20: 44–45/48, sheet 9–10/10; S8 đạt (adopt không làm giảm). **S9 chưa kết luận** (agent không gọi skill) | `spikes/acceptance-v0.2` |
+| v0.2 | ✅ Xong. S5 ×20: 44–45/48, sheet 9–10/10; S8 đạt (adopt không làm giảm). S9: agent không gọi skill; **S15** cho thấy instructions của MCP server thay được (46/48 không cần gợi ý) | `spikes/acceptance-v0.2` |
 | v0.3 | ✅ Xong. S1 R@1 0.857; S4 top-6: 29/30 (Gemma), 30/30 (bge-m3) | `spikes/acceptance-v0.3` |
 | advise + fine-tune | ✅ Xong (phase 0–5). Agent làm hết quy trình; Q4 giữ được mức cải thiện | `PLAN-advise-tune.md`, `spikes/embed-tune` |
 | Tình huống thực tế | ✅ Xong (U1–U8) | `PLAN-usecases.md`, S13b |
@@ -493,7 +493,7 @@ Output text/JSON/SARIF; `--fix-safe` chỉ sửa những gì an toàn (sinh inde
 |---|---|
 | Lexical chỉ mới đo với Claude Sonnet | Spike S7 (Codex, model nhỏ); profile có thể khác nhau theo CLI |
 | Adopt heuristic viết description kém | Đánh dấu `generated`; skill `okfkit-curate` cho agent viết lại; S8 đo tác động |
-| Skill không được agent dùng | S9; fallback đoạn `AGENTS.md`; catalog kèm facet |
+| Skill không được agent dùng | Đã đo (S9, S15): agent không gọi skill, nhưng quy tắc gửi qua instructions của MCP server thì được làm theo. Skill giữ cho trường hợp không có MCP và cho việc biên tập |
 | Tên "OKF" là spec của Google | Tên sản phẩm `okfkit`; ghi rõ "tool cộng đồng" |
 | Spec OKF thay đổi | Lõi giữ key lạ; chuẩn okfkit là lớp riêng (`okfkit-standard`) |
 | License Gemma | Chỉ liên quan khi bật embed-local; bge-m3 int8 (MIT) thay thế |

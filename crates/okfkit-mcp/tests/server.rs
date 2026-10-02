@@ -28,6 +28,10 @@ fn tools_list_snapshot() {
         &ServerOptions::default(),
     );
     insta::assert_json_snapshot!("tools_list_business", server.list());
+    // The path differs per machine; the rules are the prompt under test.
+    let instructions = server.instructions();
+    let rules = instructions.split_once('\n').unwrap().1;
+    insta::assert_snapshot!("instructions_business", rules);
     let english = KbServer::new(
         bundle("openclaw-s"),
         Arc::new(Scope::all()),

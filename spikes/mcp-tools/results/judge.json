@@ -1,0 +1,698 @@
+{
+ "K1-1": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K1-3": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K1-5": {
+  "correct": false,
+  "reason": "missing=['products/air-purifier/hk-ai1425-1999', 'products/air-purifier/hk-ai2031-2549', 'products/air-purifier/hk-ai3280-1575', 'products/air-purifier/hk-ai4357-1560', 'products/air-purifier/hk-ai4801-669', 'products/air-purifier/hk-ai5093-1315', 'products/air-purifier/hk-ai5192-2598', 'products/air-purifier/hk-ai6163-1963', 'products/air-purifier/hk-ai6201-350', 'products/air-purifier/hk-ai8100-906', 'products/air-purifier/hk-ai8347-1114', 'products/air-purifier/hk-ai9080-1721', 'products/air-purifier/hk-ai9497-2031', 'products/aircon/hk-ai1239-396', 'products/aircon/hk-ai1441-67', 'products/aircon/hk-ai1917-1877', 'products/aircon/hk-ai2804-158', 'products/aircon/hk-ai2811-2431', 'products/aircon/hk-ai3218-2518', 'products/aircon/hk-ai4996-81', 'products/aircon/hk-ai5953-653', 'products/aircon/hk-ai6101-2552', 'products/aircon/hk-ai6209-91', 'products/aircon/hk-ai6930-976', 'products/aircon/hk-ai8418-2289', 'products/aircon/hk-ai9020-513', 'products/aircon/hk-ai9559-2191', 'products/aircon/hk-ai9746-1350', 'products/fridge/hk-fr1336-305', 'products/fridge/hk-fr1879-2479', 'products/fridge/hk-fr3365-83', 'products/fridge/hk-fr5008-2836', 'products/fridge/hk-fr5184-1210', 'products/fridge/hk-fr5394-624', 'products/fridge/hk-fr6295-2543', 'products/fridge/hk-fr7236-2239', 'products/fridge/hk-fr7427-944', 'products/fridge/hk-fr7595-1704', 'products/fridge/hk-fr7885-811', 'products/fridge/hk-fr8090-1710', 'products/fridge/hk-fr8713-2480', 'products/fridge/hk-fr8789-1619', 'products/rice-cooker/hk-ri1132-487', 'products/rice-cooker/hk-ri2706-634', 'products/rice-cooker/hk-ri2958-959', 'products/rice-cooker/hk-ri3308-1525', 'products/rice-cooker/hk-ri3986-2782', 'products/rice-cooker/hk-ri4128-1482', 'products/rice-cooker/hk-ri4539-1729', 'products/rice-cooker/hk-ri6169-2235', 'products/rice-cooker/hk-ri7446-1804', 'products/rice-cooker/hk-ri8106-1011', 'products/rice-cooker/hk-ri9287-1952', 'products/washer/hk-wa1250-2546', 'products/washer/hk-wa2564-1740', 'products/washer/hk-wa2645-2735', 'products/washer/hk-wa3622-2356', 'products/washer/hk-wa4212-190', 'products/washer/hk-wa4427-1522', 'products/washer/hk-wa4537-1154', 'products/washer/hk-wa5055-298', 'products/washer/hk-wa5712-2592', 'products/washer/hk-wa5717-2363', 'products/washer/hk-wa5751-913', 'products/washer/hk-wa6544-2607', 'products/washer/hk-wa7184-273', 'products/washer/hk-wa7732-2278', 'products/washer/hk-wa7796-1144', 'products/washer/hk-wa7968-614', 'products/washer/hk-wa8238-2432', 'products/washer/hk-wa8743-2272'] extra=[]"
+ },
+ "K1-7": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K1-0": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K1-4": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K1-6": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K1-2": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K0-1": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K0-3": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K0-5": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K0-7": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K0-0": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K0-4": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K0-6": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K0-2": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "I1-1": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "I1-3": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "I1-5": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "I1-7": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "I1-0": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "I1-4": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "I1-6": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "I1-2": {
+  "correct": true,
+  "reason": "missing=[] extra=[]"
+ },
+ "K1-11": {
+  "key": "g01000",
+  "correct": true,
+  "reason": "12 months, current v2 document"
+ },
+ "K1-47": {
+  "key": "g18919",
+  "correct": true,
+  "reason": "520 W matches"
+ },
+ "K1-41": {
+  "key": "g27838",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "K1-13": {
+  "key": "g36757",
+  "correct": true,
+  "reason": "2,000,000 from current v2"
+ },
+ "K1-34": {
+  "key": "g45676",
+  "correct": true,
+  "reason": "Total matches exactly"
+ },
+ "K1-33": {
+  "key": "g54595",
+  "correct": true,
+  "reason": "April 2026 and revenue match"
+ },
+ "K1-12": {
+  "key": "g63514",
+  "correct": true,
+  "reason": "12 months, current v2"
+ },
+ "K1-31": {
+  "key": "g72433",
+  "correct": true,
+  "reason": "94 matches"
+ },
+ "K1-15": {
+  "key": "g81352",
+  "correct": true,
+  "reason": "6 months from current v2"
+ },
+ "K1-24": {
+  "key": "g99271",
+  "correct": true,
+  "reason": "CS and Legal match"
+ },
+ "K1-25": {
+  "key": "g108190",
+  "correct": true,
+  "reason": "Customer 139 with 7 matches"
+ },
+ "K1-43": {
+  "key": "g117109",
+  "correct": true,
+  "reason": "10 km/h from main SOP; branch note extra"
+ },
+ "K1-17": {
+  "key": "g06028",
+  "correct": true,
+  "reason": "12 matches expected"
+ },
+ "K1-37": {
+  "key": "g14947",
+  "correct": true,
+  "reason": "53500 matches"
+ },
+ "K1-30": {
+  "key": "g23866",
+  "correct": true,
+  "reason": "47825 matches"
+ },
+ "K1-32": {
+  "key": "g32785",
+  "correct": true,
+  "reason": "47887 matches"
+ },
+ "K1-9": {
+  "key": "g41704",
+  "correct": true,
+  "reason": "14 days, current v2"
+ },
+ "K1-44": {
+  "key": "g59623",
+  "correct": true,
+  "reason": "30 days, correct doc"
+ },
+ "K1-10": {
+  "key": "g68542",
+  "correct": true,
+  "reason": "5000 JPY from v2"
+ },
+ "K1-22": {
+  "key": "g77461",
+  "correct": true,
+  "reason": "105 matches"
+ },
+ "K1-40": {
+  "key": "g86380",
+  "correct": true,
+  "reason": "24 hours matches; doc id is a branch variant but value correct"
+ },
+ "K1-28": {
+  "key": "g95299",
+  "correct": false,
+  "reason": "Says 127 customers; expected list has 123 entries"
+ },
+ "K1-38": {
+  "key": "g104218",
+  "correct": true,
+  "reason": "191731 matches"
+ },
+ "K1-21": {
+  "key": "g113137",
+  "correct": true,
+  "reason": "10,628,000,000 VND matches"
+ },
+ "K1-42": {
+  "key": "g02056",
+  "correct": true,
+  "reason": "30 kg, correct doc"
+ },
+ "K1-35": {
+  "key": "g19975",
+  "correct": true,
+  "reason": "SKU-AI009, 406 match"
+ },
+ "K1-19": {
+  "key": "g28894",
+  "correct": true,
+  "reason": "8 matches"
+ },
+ "K1-8": {
+  "key": "g37813",
+  "correct": true,
+  "reason": "45 days from current v2"
+ },
+ "K1-23": {
+  "key": "g46732",
+  "correct": true,
+  "reason": "230 matches"
+ },
+ "K1-39": {
+  "key": "g55651",
+  "correct": true,
+  "reason": "230935 matches"
+ },
+ "K1-45": {
+  "key": "g64570",
+  "correct": true,
+  "reason": "30 days, correct doc"
+ },
+ "K1-16": {
+  "key": "g73489",
+  "correct": true,
+  "reason": "197 matches"
+ },
+ "K1-29": {
+  "key": "g82408",
+  "correct": false,
+  "reason": "Gave only 4; expected 18 draft policies"
+ },
+ "K1-36": {
+  "key": "g91327",
+  "correct": true,
+  "reason": "198 matches (rows); SKU count extra but primary 198"
+ },
+ "K1-26": {
+  "key": "g109246",
+  "correct": true,
+  "reason": "Same five categories"
+ },
+ "K1-20": {
+  "key": "g118165",
+  "correct": true,
+  "reason": "14 matches"
+ },
+ "K1-46": {
+  "key": "g07084",
+  "correct": true,
+  "reason": "1350 W matches"
+ },
+ "K1-27": {
+  "key": "g16003",
+  "correct": true,
+  "reason": "Set CS, HR, IT, Warehouse matches"
+ },
+ "K1-18": {
+  "key": "g24922",
+  "correct": true,
+  "reason": "32 matches"
+ },
+ "K1-14": {
+  "key": "g33841",
+  "correct": true,
+  "reason": "25000 JPY from current v2 doc"
+ },
+ "K0-11": {
+  "key": "g42760",
+  "correct": true,
+  "reason": "12 months from current v2"
+ },
+ "K0-47": {
+  "key": "g51679",
+  "correct": true,
+  "reason": "520 W matches"
+ },
+ "K0-41": {
+  "key": "g69598",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "K0-13": {
+  "key": "g78517",
+  "correct": true,
+  "reason": "2,000,000 VND from v2"
+ },
+ "K0-34": {
+  "key": "g87436",
+  "correct": true,
+  "reason": "Total 253,703,896,956 matches"
+ },
+ "K0-33": {
+  "key": "g96355",
+  "correct": true,
+  "reason": "April 2026, 2,829,768,700 JPY matches"
+ },
+ "K0-12": {
+  "key": "g105274",
+  "correct": true,
+  "reason": "12 months from current v2"
+ },
+ "K0-31": {
+  "key": "g114193",
+  "correct": true,
+  "reason": "94 matches"
+ },
+ "K0-15": {
+  "key": "g03112",
+  "correct": true,
+  "reason": "v2 current, 6 months matches"
+ },
+ "K0-24": {
+  "key": "g12031",
+  "correct": true,
+  "reason": "CS and Legal match"
+ },
+ "K0-25": {
+  "key": "g29950",
+  "correct": true,
+  "reason": "Customer 139, 7 matches"
+ },
+ "K0-43": {
+  "key": "g38869",
+  "correct": true,
+  "reason": "10 km/h from forklift SOP matches"
+ },
+ "K0-17": {
+  "key": "g47788",
+  "correct": true,
+  "reason": "12 matches"
+ },
+ "K0-37": {
+  "key": "g56707",
+  "correct": true,
+  "reason": "53500 JPY matches"
+ },
+ "K0-30": {
+  "key": "g65626",
+  "correct": true,
+  "reason": "47825 matches"
+ },
+ "K0-32": {
+  "key": "g74545",
+  "correct": true,
+  "reason": "47887 matches"
+ },
+ "K0-9": {
+  "key": "g83464",
+  "correct": true,
+  "reason": "14 days from v2 matches"
+ },
+ "K0-44": {
+  "key": "g92383",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "K0-10": {
+  "key": "g101302",
+  "correct": true,
+  "reason": "5000 JPY from v2 matches"
+ },
+ "K0-22": {
+  "key": "g119221",
+  "correct": true,
+  "reason": "105 matches"
+ },
+ "K0-40": {
+  "key": "g08140",
+  "correct": true,
+  "reason": "24 matches expected"
+ },
+ "K0-28": {
+  "key": "g17059",
+  "correct": false,
+  "reason": "Gave 128 customers, only partial list; expected 122 named set"
+ },
+ "K0-38": {
+  "key": "g25978",
+  "correct": true,
+  "reason": "191731 matches"
+ },
+ "K0-21": {
+  "key": "g34897",
+  "correct": true,
+  "reason": "10,628,000,000 VND matches"
+ },
+ "K0-42": {
+  "key": "g43816",
+  "correct": true,
+  "reason": "30 kg for standard SOP matches"
+ },
+ "K0-35": {
+  "key": "g52735",
+  "correct": true,
+  "reason": "SKU-AI009, 406 matches"
+ },
+ "K0-19": {
+  "key": "g61654",
+  "correct": true,
+  "reason": "8 matches"
+ },
+ "K0-8": {
+  "key": "g79573",
+  "correct": true,
+  "reason": "45 days from current v2"
+ },
+ "K0-23": {
+  "key": "g88492",
+  "correct": true,
+  "reason": "230 matches"
+ },
+ "K0-39": {
+  "key": "g97411",
+  "correct": true,
+  "reason": "230935 matches"
+ },
+ "K0-45": {
+  "key": "g106330",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "K0-16": {
+  "key": "g115249",
+  "correct": true,
+  "reason": "197 matches"
+ },
+ "K0-29": {
+  "key": "g04168",
+  "correct": false,
+  "reason": "Lists only 4 of 18 expected draft policies"
+ },
+ "K0-36": {
+  "key": "g13087",
+  "correct": true,
+  "reason": "198 matches"
+ },
+ "K0-26": {
+  "key": "g22006",
+  "correct": true,
+  "reason": "Same five categories"
+ },
+ "K0-20": {
+  "key": "g39925",
+  "correct": true,
+  "reason": "14 matches"
+ },
+ "K0-46": {
+  "key": "g48844",
+  "correct": true,
+  "reason": "1350 W matches"
+ },
+ "K0-27": {
+  "key": "g57763",
+  "correct": true,
+  "reason": "CS, HR, IT, Warehouse match"
+ },
+ "K0-18": {
+  "key": "g66682",
+  "correct": true,
+  "reason": "32 matches"
+ },
+ "K0-14": {
+  "key": "g75601",
+  "correct": true,
+  "reason": "25000 JPY from v2 current"
+ },
+ "I1-11": {
+  "key": "g84520",
+  "correct": true,
+  "reason": "12 months from v2 current"
+ },
+ "I1-47": {
+  "key": "g93439",
+  "correct": true,
+  "reason": "520 W matches"
+ },
+ "I1-41": {
+  "key": "g102358",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "I1-13": {
+  "key": "g111277",
+  "correct": true,
+  "reason": "2,000,000 VND from v2 current"
+ },
+ "I1-34": {
+  "key": "g09196",
+  "correct": true,
+  "reason": "Total matches 253703896956"
+ },
+ "I1-33": {
+  "key": "g18115",
+  "correct": true,
+  "reason": "April 2026, 2829768700 JPY matches"
+ },
+ "I1-12": {
+  "key": "g27034",
+  "correct": true,
+  "reason": "Current v2 gives 12 months"
+ },
+ "I1-31": {
+  "key": "g35953",
+  "correct": true,
+  "reason": "94 matches"
+ },
+ "I1-15": {
+  "key": "g44872",
+  "correct": true,
+  "reason": "Current v2 gives 6 months"
+ },
+ "I1-24": {
+  "key": "g53791",
+  "correct": true,
+  "reason": "CS and Legal match"
+ },
+ "I1-25": {
+  "key": "g62710",
+  "correct": true,
+  "reason": "Customer 139 with 7 matches"
+ },
+ "I1-43": {
+  "key": "g71629",
+  "correct": true,
+  "reason": "10 km/h from the forklift SOP"
+ },
+ "I1-17": {
+  "key": "g89548",
+  "correct": true,
+  "reason": "12 matches"
+ },
+ "I1-37": {
+  "key": "g98467",
+  "correct": true,
+  "reason": "53500 JPY matches"
+ },
+ "I1-30": {
+  "key": "g107386",
+  "correct": true,
+  "reason": "47825 matches"
+ },
+ "I1-32": {
+  "key": "g116305",
+  "correct": true,
+  "reason": "47887 matches"
+ },
+ "I1-9": {
+  "key": "g05224",
+  "correct": true,
+  "reason": "14 days matches current v2"
+ },
+ "I1-44": {
+  "key": "g14143",
+  "correct": true,
+  "reason": "30 days matches"
+ },
+ "I1-10": {
+  "key": "g23062",
+  "correct": true,
+  "reason": "5000 JPY matches v2"
+ },
+ "I1-22": {
+  "key": "g31981",
+  "correct": true,
+  "reason": "105 matches"
+ },
+ "I1-40": {
+  "key": "g49900",
+  "correct": true,
+  "reason": "24 hours matches"
+ },
+ "I1-28": {
+  "key": "g58819",
+  "correct": false,
+  "reason": "Says 128 but lists 4+124; expected set has 4+... mismatch count; ACME-containing set differs"
+ },
+ "I1-38": {
+  "key": "g67738",
+  "correct": true,
+  "reason": "191731 matches"
+ },
+ "I1-21": {
+  "key": "g76657",
+  "correct": true,
+  "reason": "10,628,000,000 VND matches"
+ },
+ "I1-42": {
+  "key": "g85576",
+  "correct": true,
+  "reason": "30 kg matches company-wide SOP"
+ },
+ "I1-35": {
+  "key": "g94495",
+  "correct": true,
+  "reason": "SKU-AI009, 406 matches"
+ },
+ "I1-19": {
+  "key": "g103414",
+  "correct": true,
+  "reason": "8 matches"
+ },
+ "I1-8": {
+  "key": "g112333",
+  "correct": true,
+  "reason": "45 days matches v2"
+ },
+ "I1-23": {
+  "key": "g01252",
+  "correct": true,
+  "reason": "Gives 230 as primary answer"
+ },
+ "I1-39": {
+  "key": "g19171",
+  "correct": true,
+  "reason": "230,935 matches"
+ },
+ "I1-45": {
+  "key": "g28090",
+  "correct": true,
+  "reason": "30 days, correct document"
+ },
+ "I1-16": {
+  "key": "g37009",
+  "correct": true,
+  "reason": "197 matches"
+ },
+ "I1-29": {
+  "key": "g45928",
+  "correct": false,
+  "reason": "Lists only 4 of 18 draft policies"
+ },
+ "I1-36": {
+  "key": "g54847",
+  "correct": true,
+  "reason": "198 given as row count, matches expected"
+ },
+ "I1-26": {
+  "key": "g63766",
+  "correct": true,
+  "reason": "Same five categories"
+ },
+ "I1-20": {
+  "key": "g72685",
+  "correct": true,
+  "reason": "14 matches"
+ },
+ "I1-46": {
+  "key": "g81604",
+  "correct": true,
+  "reason": "1350 W matches"
+ },
+ "I1-27": {
+  "key": "g99523",
+  "correct": true,
+  "reason": "CS, HR, IT, Warehouse match"
+ },
+ "I1-18": {
+  "key": "g108442",
+  "correct": true,
+  "reason": "32 matches"
+ },
+ "I1-14": {
+  "key": "g117361",
+  "correct": true,
+  "reason": "25,000 from current v2 doc"
+ }
+}

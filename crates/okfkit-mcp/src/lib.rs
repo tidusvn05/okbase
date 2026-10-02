@@ -351,17 +351,66 @@ fn links_text(r: &okfkit::LinksResult) -> String {
     out
 }
 
+impl KbServer {
+    /// How to answer from the bundle: the rules of the `okfkit-answer` skill, sent with the
+    /// server so every agent gets them (agents rarely invoke skills: spike S9).
+    pub fn instructions(&self) -> String {
+        let has = |name: &str| self.tools.iter().any(|t| t.name == name);
+        let p = &self.prefix;
+        let tool = |name: &str| self.full_name(name);
+        let mut out = format!(
+            "Tools for the markdown knowledge bundle at {}.\n",
+            self.bundle.root().display()
+        );
+        if has("catalog") {
+            out.push_str(&format!(
+                "- Orient with {} (or {}) unless the catalog is in your context.\n",
+                tool("catalog"),
+                tool("list")
+            ));
+        }
+        if has("query") {
+            out.push_str(&format!(
+                "- List, count, \"which documents\", filters by type, tag, status, date or field: {p}_query \
+                 (facets, count_only, sum_field). Do not count or add up by reading documents.\n"
+            ));
+        }
+        if has("data_query") {
+            out.push_str(
+                "- Numbers in spreadsheets: data_tables, then data_query with SQL aggregates. \
+                 Never add numbers up yourself.\n",
+            );
+        }
+        if has("grep") {
+            out.push_str(&format!(
+                "- Exact terms (keys, codes, names): {p}_grep with an alternation of spellings, synonyms and \
+                 the documents' languages; files_only first.\n"
+            ));
+        }
+        if has("search") {
+            out.push_str(&format!("- Questions about meaning: {p}_search.\n"));
+        }
+        if has("get") {
+            out.push_str(&format!(
+                "- Read with {p}_get (section for long documents). "
+            ));
+        } else {
+            out.push_str("- ");
+        }
+        out.push_str(
+            "status: stable is in force, deprecated is superseded, draft is not approved; \
+             active_on for \"in force on a date\".\n\
+             - State only values you have read, cover every part of the question, and cite document ids.",
+        );
+        out
+    }
+}
+
 impl ServerHandler for KbServer {
     fn get_info(&self) -> ServerConfig {
         ServerConfig::new(ServerCapabilities::builder().enable_tools().build())
             .with_server_info(Implementation::new("okfkit", env!("CARGO_PKG_VERSION")))
-            .with_instructions(format!(
-                "Tools for the markdown knowledge bundle at {}. Start from {p}_catalog (or {p}_list), \
-                 use {p}_query to list/count/filter by metadata, {p}_grep for exact terms, and {p}_get to read. \
-                 Cite document ids in answers.",
-                self.bundle.root().display(),
-                p = self.prefix
-            ))
+            .with_instructions(self.instructions())
     }
 
     fn list_tools(

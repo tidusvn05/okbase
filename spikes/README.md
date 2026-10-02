@@ -25,6 +25,7 @@ ID theo `docs/PLAN.md` §1. Ngày là ngày chạy.
 | S13 | 2026-10-02 | `onboarding` | Agent tự cài okfkit chỉ từ một câu? | Claude 3/3 hoàn tất (35–51 s, ~50k token); tự thêm cờ consent 0 lần. **Codex chưa chạy** | `docs/PLAN-onboarding.md` |
 | S13b | 2026-10-02 | `onboarding` | Thư mục thực tế: repo phần mềm, thư mục rỗng, bundle hỏng một phần | 3/3 hiểu đúng thư mục và hỏi đúng chỗ. Agent tìm ra 5 lỗi, đã sửa | `docs/PLAN-usecases.md` |
 | S14 | 2026-10-02 | `page-image-bench` | Đưa trang scan cho agent: xuất ảnh nhúng hay render trang? | **Xuất ảnh nhúng**: JPEG 1–3 ms (render 0.2–0.95 s); Flate không mất chi tiết và nhanh hơn render 2–4×. Token ảnh như nhau (~1.5k). CCITT G4: 86 ms, chính xác (crate `fax`) | `docs/PLAN-import.md` §7 |
+| S15 | 2026-10-03 | `mcp-tools` | Rút gọn danh sách tool có giảm chi phí không? Quy tắc của skill gửi qua instructions của MCP server có thay được gợi ý trong prompt không? | **Instructions thay được gợi ý**: không gợi ý vẫn 46/48 (bằng có gợi ý), dùng `kb_query`/`data_query` như nhau. Đây là lời giải cho S9. Rút gọn tool: −3% token, chi phí không đổi, độ chính xác không đổi. $6.29 | `PLAN.md` §13–14 |
 
 ## 2. Số liệu tra nhanh
 
@@ -40,6 +41,7 @@ Máy chạy: AMD EPYC 8 vCPU, 23 GB RAM, không GPU; bản release. Chi tiết v
 | Chuyển tài liệu | 0.3–10 ms/tài liệu nhỏ; 172 ms cho bài báo 15 trang | `import-bench` |
 | Xuất ảnh trang scan | JPEG 1–3 ms; Flate 50–90 ms (A4 300 dpi); render PDFium 150 dpi ~0.2 s, 300 dpi ~0.6–0.95 s | `page-image-bench` |
 | Kích thước binary | anydoc +~10 MB; htmd +1.5 MB; page image +0 crate | `import-bench`, `page-image-bench` |
+| Chi phí mỗi câu (biz ×20, Claude Sonnet, Claude Code 2.1.284) | ~$0.043; ~34k token đầu vào, 4.1–4.2 lượt | `mcp-tools` |
 | Agent tự cài đặt | 35–51 s, 51–56k token mỗi lần (Claude) | `onboarding` |
 | Chi phí sinh câu hỏi để tune | ~$3 cho ~1k cặp (Claude Sonnet) | `embed-tune` |
 

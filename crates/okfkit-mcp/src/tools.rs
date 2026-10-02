@@ -156,7 +156,11 @@ pub fn all_tools(facts: &BundleFacts) -> Vec<ToolDef> {
                    "description": "field -> {from, to}, inclusive; numbers compare numerically, dates as text, e.g. {\"effective_to\": {\"from\": \"2026-01-01\"}}"},
         "active_on": {"type": "string", "description": "YYYY-MM-DD"},
     });
-    let mut query_props = filter_props.clone();
+    // grep and search take the same filter as query; repeating its schema made kb_grep's
+    // definition twice as long (spike S15: same accuracy without it).
+    let filter_ref =
+        json!({"type": "object", "description": "metadata filter: the same fields as kb_query"});
+    let mut query_props = filter_props;
     let q = query_props.as_object_mut().expect("object");
     q.insert("sort".into(), json!({"type": "string", "description": "field name, prefix '-' for descending, e.g. '-updated', 'effective_to'"}));
     q.insert("limit".into(), json!({"type": "integer", "default": 50}));
@@ -176,7 +180,7 @@ pub fn all_tools(facts: &BundleFacts) -> Vec<ToolDef> {
                 .into(),
             input_schema: json!({"type": "object", "properties": {
                 "query": {"type": "string"}, "limit": {"type": "integer", "default": 8},
-                "filter": {"type": "object", "properties": filter_props.clone()},
+                "filter": filter_ref.clone(),
             }, "required": ["query"]}),
         },
         ToolDef {
@@ -209,7 +213,7 @@ pub fn all_tools(facts: &BundleFacts) -> Vec<ToolDef> {
                 "pattern": {"type": "string"}, "path": {"type": "string"},
                 "context": {"type": "integer", "default": 1}, "files_only": {"type": "boolean", "default": false},
                 "limit": {"type": "integer", "default": 40},
-                "filter": {"type": "object", "properties": filter_props},
+                "filter": filter_ref,
             }, "required": ["pattern"]}),
         },
         ToolDef {
