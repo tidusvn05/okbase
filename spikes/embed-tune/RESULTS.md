@@ -152,3 +152,24 @@ keyword queries may name the title, vague Vietnamese may drop diacritics, and th
 the Japanese limits. Held-out cross-language did not improve on 80 questions (35 cross); the
 gain came from same-language questions, unlike S11, whose training set was larger and
 cross-language heavy.
+
+## Dependency update: peft 0.21.1 → 0.21.2 (2026-10-03)
+
+The same run as the acceptance above (same 320 training pairs and 80 held-out questions), with
+only peft changed in the training environment. 0.21.2 only removes an encoder-decoder generation
+hook, which embedding training does not use.
+
+| | peft 0.21.1 | peft 0.21.2 |
+|---|---|---|
+| Loss at epoch 0.5 / 1 / 1.5 / 2 | 0.1988 / 0.1668 / 0.0817 / 0.0470 | 0.1983 / 0.1663 / 0.0790 / 0.0465 |
+| Held-out R@1 (base → tuned) | 0.875 → 0.925 | 0.875 → 0.925 |
+| Cross-language / same-language R@1 (tuned) | 0.810 / 0.966 | 0.810 / 0.966 |
+| R@3 / MRR (tuned) | 1.0 / 0.9625 | 1.0 / 0.9625 |
+| General set R@1 (tuned) | 0.913 | 0.917 |
+| Gate | passed | passed |
+| Train time | 627 s | 3,599 s* |
+
+\* The machine was shared with another project's browser test suite (load 12–14 on 8 vCPU); the
+CPU time per step is the same order, so this is contention, not peft.
+
+Verdict: no change in quality; `python/requirements.txt` pins peft 0.21.2.
