@@ -28,7 +28,7 @@ The rest of this page describes the same steps for people.
 
 ## Install
 
-Not yet published; build from this repository (Rust 1.88+):
+Not yet published; build from this repository (Rust 1.89+):
 
 ```sh
 cargo install --path crates/okfkit-cli                   # okfkit: lexical tools, ~23 MB

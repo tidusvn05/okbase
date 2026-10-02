@@ -22,7 +22,7 @@ contract, exit codes 3/4), the consent catalog, safety and reversibility, the fu
 7. Public-facing text (README, rustdoc, CLI help, errors, commits) in English.
 
 ## Conventions
-- Rust edition 2024, stable, MSRV 1.88, workspace resolver 3.
+- Rust edition 2024, stable, MSRV 1.89, workspace resolver 3.
 - `thiserror` in libraries, `anyhow` only in `okfkit-cli`. `#![forbid(unsafe_code)]` unless justified.
 - YAML via `serde-saphyr` (never `serde_yaml`/`serde_yml`); SQLite via `rusqlite` (bundled, FTS5); MCP via `rmcp` (pinned minor).
 - Every read command supports `--json`; its schema equals the MCP tool output.

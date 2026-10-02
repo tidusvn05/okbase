@@ -7,7 +7,7 @@ Thanks for your interest! okfkit is dual-licensed under MIT OR Apache-2.0. Unles
 - For larger changes (file format, public API, defaults, tool/skill wording), open an issue first. Changes to defaults need evaluation numbers. See `spikes/` for how earlier decisions were measured.
 
 ## Development
-Requirements: stable Rust (MSRV 1.88) and [`cargo-deny`](https://github.com/EmbarkStudios/cargo-deny) (`cargo install cargo-deny --locked`).
+Requirements: stable Rust (MSRV 1.89) and [`cargo-deny`](https://github.com/EmbarkStudios/cargo-deny) (`cargo install cargo-deny --locked`).
 
 The workspace lives in `crates/`. `spikes/` holds standalone experiments and is excluded from the workspace.
 

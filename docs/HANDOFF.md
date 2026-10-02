@@ -50,7 +50,7 @@ Dự án là **mã nguồn mở** (MIT OR Apache-2.0). Mọi thứ công khai (R
 
 | Mục | Giá trị |
 |---|---|
-| Rust | edition 2024, stable; **MSRV 1.88** (do rmcp 3.x); workspace `resolver = "3"` |
+| Rust | edition 2024, stable; **MSRV 1.89** (serde-saphyr ≥ 1.2; rmcp 3.x cần 1.88); workspace `resolver = "3"` |
 | Lint | `clippy -D warnings`; `unsafe_code = "forbid"` ở mọi crate trừ khi có lý do ghi rõ |
 | Lỗi | `thiserror` trong lib, `anyhow` chỉ trong CLI |
 | Async | tokio; lõi đọc đồng bộ được (API sync + async wrapper), vì CLI và grep không cần async |
