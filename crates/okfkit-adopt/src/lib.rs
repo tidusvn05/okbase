@@ -10,6 +10,7 @@
 //! verify.
 
 pub mod heuristics;
+pub mod scaffold;
 pub mod vocab;
 
 use std::collections::{BTreeMap, BTreeSet};
@@ -43,6 +44,9 @@ pub enum Error {
     /// The target directory already exists and is not empty.
     #[error("{0} already exists and is not empty; choose a new directory")]
     OutExists(PathBuf),
+    /// The request does not fit the folder (it already has documents, a file exists…).
+    #[error("{0}")]
+    Invalid(String),
 }
 
 /// Adopt settings.

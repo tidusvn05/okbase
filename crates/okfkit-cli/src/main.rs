@@ -110,6 +110,91 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 )
             })?;
         }
+        Command::Init {
+            title,
+            description,
+            langs,
+            types,
+        } => {
+            std::fs::create_dir_all(&bundle_dir)
+                .with_context(|| format!("creating {}", bundle_dir.display()))?;
+            let files = okfkit_adopt::scaffold::init_files(
+                &bundle_dir,
+                &okfkit_adopt::scaffold::InitOptions {
+                    title,
+                    description,
+                    langs,
+                    types,
+                    today: today(),
+                },
+            )?;
+            let written = okfkit_adopt::scaffold::write_new(&bundle_dir, &files, &[])?;
+            done(
+                json,
+                serde_json::json!({"created": written}),
+                format!(
+                    "created {}",
+                    files
+                        .iter()
+                        .map(|(p, _)| p.as_str())
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                ),
+                &[
+                    "okfkit new --type <Type> \"<title>\" --description \"<one sentence>\"",
+                    "okfkit onboard",
+                ],
+            )?;
+        }
+        Command::New {
+            concept_type,
+            title,
+            description,
+            dir,
+            tags,
+            lang,
+        } => {
+            if !bundle_dir.is_dir() {
+                bail!(
+                    "bundle not found: {} is not a directory",
+                    bundle_dir.display()
+                );
+            }
+            let doc = okfkit_adopt::scaffold::new_doc(
+                &bundle_dir,
+                &okfkit_adopt::scaffold::NewOptions {
+                    concept_type,
+                    title,
+                    description,
+                    dir,
+                    tags,
+                    lang,
+                    today: today(),
+                },
+            )?;
+            let mut files = vec![(doc.path.clone(), doc.content.clone())];
+            let mut overwrite = Vec::new();
+            for (p, t) in &doc.index {
+                overwrite.push(p.clone());
+                files.push((p.clone(), t.clone()));
+            }
+            okfkit_adopt::scaffold::write_new(&bundle_dir, &files, &overwrite)?;
+            let mut next = vec![format!("write the body of {}", doc.path)];
+            if !doc.to_fill.is_empty() {
+                next.push(format!(
+                    "fill the required fields: {}",
+                    doc.to_fill.join(", ")
+                ));
+            }
+            next.push("okfkit lint --level L2".into());
+            let next_ref: Vec<&str> = next.iter().map(String::as_str).collect();
+            done(
+                json,
+                serde_json::json!({"created": doc.path, "listed_in": doc.index.iter().map(|i| &i.0).collect::<Vec<_>>(), "to_fill": doc.to_fill}),
+                format!("created {}", doc.path),
+                &next_ref,
+            )?;
+        }
         Command::Scan => {
             let sc = okfkit::scan::scan(&bundle_dir)?;
             emit(json, &sc, || sc.to_text())?;

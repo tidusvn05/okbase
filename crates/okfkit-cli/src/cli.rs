@@ -76,6 +76,47 @@ pub enum Command {
         #[arg(long, value_enum, default_value = "answer")]
         goal: GoalArg,
     },
+    /// Start a knowledge base in an empty folder: index.md, tag vocabulary, type schemas, log, okfkit.toml.
+    #[command(
+        after_help = "Examples:\n  okfkit init --title \"Support knowledge\" --langs vi,en\n  okfkit -b ./kb init --title \"HR policies\" --types Policy,FAQ"
+    )]
+    Init {
+        /// What the knowledge base is about.
+        #[arg(long)]
+        title: String,
+        /// One sentence about it.
+        #[arg(long, default_value = "")]
+        description: String,
+        /// Languages people write and ask in (comma-separated).
+        #[arg(long, value_delimiter = ',', value_name = "LANGS")]
+        langs: Vec<String>,
+        /// Document types to declare [default: Guide, Policy, FAQ].
+        #[arg(long, value_delimiter = ',', value_name = "TYPES")]
+        types: Vec<String>,
+    },
+    /// Create a document with the frontmatter its type needs, listed in its folder's index.md.
+    #[command(
+        after_help = "Examples:\n  okfkit new --type Policy \"Refund policy\" --description \"Refunds within 30 days.\" --tags refund\n  okfkit new --type Guide \"Cài đặt máy in\" --dir guides/office"
+    )]
+    New {
+        /// Document type (see _meta/types/).
+        #[arg(long = "type", value_name = "TYPE")]
+        concept_type: String,
+        /// Title.
+        title: String,
+        /// One specific sentence: what the document answers.
+        #[arg(long, default_value = "")]
+        description: String,
+        /// Folder [default: from the type, e.g. policies/].
+        #[arg(long)]
+        dir: Option<String>,
+        /// Tags (comma-separated; use the vocabulary's terms).
+        #[arg(long, value_delimiter = ',')]
+        tags: Vec<String>,
+        /// Language [default: the first in okfkit.toml].
+        #[arg(long)]
+        lang: Option<String>,
+    },
     /// What kind of folder this is and which folders in it should be bundles (read-only).
     #[command(
         after_help = "Recognizes empty folders, software repositories (docs/, nested OKF bundles), documentation\nsites, vaults, partly converted OKF, and PDF/Word files. `okfkit onboard` uses it first."
