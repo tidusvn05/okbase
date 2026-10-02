@@ -24,7 +24,7 @@ ID theo `docs/PLAN.md` §1. Ngày là ngày chạy.
 | S11 | 2026-10-01 → 02 | `embed-tune` | Fine-tune EmbeddingGemma (LoRA, cách của Unsloth) có lợi không? | Bản fp32: R@1 0.853 → 0.943. **Bản Q4 trong okfkit: 0.857 → 0.917**, S4 30/30. Quy trình agent + CLI đạt (held-out 0.875 → 0.925) | `docs/PLAN-advise-tune.md` |
 | S13 | 2026-10-02 | `onboarding` | Agent tự cài okfkit chỉ từ một câu? | Claude 3/3 hoàn tất (35–51 s, ~50k token); tự thêm cờ consent 0 lần. **Codex chưa chạy** | `docs/PLAN-onboarding.md` |
 | S13b | 2026-10-02 | `onboarding` | Thư mục thực tế: repo phần mềm, thư mục rỗng, bundle hỏng một phần | 3/3 hiểu đúng thư mục và hỏi đúng chỗ. Agent tìm ra 5 lỗi, đã sửa | `docs/PLAN-usecases.md` |
-| S14 | 2026-10-02 | `page-image-bench` | Đưa trang scan cho agent: xuất ảnh nhúng hay render trang? | **Xuất ảnh nhúng**: JPEG 1–3 ms (render 0.2–0.95 s); Flate không mất chi tiết và nhanh hơn render 2–4×. Token ảnh như nhau (~1.5k). Không thêm crate. **Thiếu CCITT G4** | `docs/PLAN-import.md` §7 |
+| S14 | 2026-10-02 | `page-image-bench` | Đưa trang scan cho agent: xuất ảnh nhúng hay render trang? | **Xuất ảnh nhúng**: JPEG 1–3 ms (render 0.2–0.95 s); Flate không mất chi tiết và nhanh hơn render 2–4×. Token ảnh như nhau (~1.5k). CCITT G4: 86 ms, chính xác (crate `fax`) | `docs/PLAN-import.md` §7 |
 
 ## 2. Số liệu tra nhanh
 
@@ -51,7 +51,7 @@ Máy chạy: AMD EPYC 8 vCPU, 23 GB RAM, không GPU; bản release. Chi tiết v
 | S10 | ~20 PDF và 5 sheet thật | Cần tài liệu thật của người dùng |
 | S12 | Codex sinh câu hỏi để tune | Tốn quota |
 | S13 (Codex) | Codex tự cài okfkit | Tốn quota |
-| S14 tiếp | Giải mã CCITT G4 (crate `fax`, MIT); trang ghép nhiều ảnh; file scan thật | Đề xuất, chưa bắt đầu |
+| S14 tiếp | Trang ghép nhiều ảnh; file scan thật | Chưa bắt đầu (CCITT G4 đã xong) |
 
 ## 4. Quy ước cho spike mới
 

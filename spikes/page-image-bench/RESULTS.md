@@ -41,7 +41,7 @@ page, in time, fidelity, agent cost and weight? Which scans does it miss?
 | flate-gray-300dpi | **82 ms**, **0.0** | 182 ms, 0.0 | 184 ms, 4.56 | 544 ms, 2.48 | 156 ms, 5.93 |
 | flate-rgb-150dpi | **51 ms**, **0.0** | 123 ms, 0.0 | 197 ms, 4.14 | 635 ms, 3.42 | 176 ms, 5.43 |
 | flate-1bit-300dpi | **88 ms**, **0.0** | 148 ms, 0.0 | 209 ms, 4.99 | 576 ms, 1.82 | 134 ms, 5.35 |
-| ccitt-g4-300dpi | **not exported** (falls back to "open the PDF page") | 172 ms, 0.0 | 218 ms, 4.99 | 599 ms, 1.82 | 144 ms, 5.35 |
+| ccitt-g4-300dpi | **not exported** at the time (see the follow-up below: now 86 ms, MAE 0.0) | 172 ms, 0.0 | 218 ms, 4.99 | 599 ms, 1.82 | 144 ms, 5.35 |
 
 Output size:
 - okfkit equals the embedded image: 0.15–0.83 MB at 300 dpi.
@@ -87,3 +87,13 @@ agent.
 cargo run --release > results/okfkit.jsonl            # RUNS=20 by default
 ../embed-tune/.venv/bin/python compare.py            # writes results/s14.json and prints the table
 ```
+
+## Follow-up: CCITT G4 (2026-10-03)
+
+okfkit now decodes CCITT Group 4 with the `fax` crate (MIT, pure Rust, about 25 KB of source).
+On `ccitt-g4-300dpi`, okfkit takes **86 ms with MAE 0.0**, against 156 ms for mupdf extract and
+202 ms (MAE 4.99) for a PDFium render at 150 dpi. The same run also found that `DecodeParms` can
+be an array, one entry per filter, as img2pdf writes it. The predictor lookup did not read that
+form before; now it does, and `/Decode [1 0]` (inverted 1-bit images) is honoured. Group 3 fax
+and JBIG2 still fall back to opening the PDF page. `results/s14.json` now holds this second run (other
+timings within the run-to-run noise of the table above).

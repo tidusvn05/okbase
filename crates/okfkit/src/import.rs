@@ -51,7 +51,7 @@ pub struct OcrTask {
     /// Pages in the file, when known.
     pub pages: Option<u32>,
     /// An image of the page to read (exported from the PDF, or the image file itself); `None`
-    /// when the page cannot be exported (fax or JBIG2 scans): open the PDF page instead.
+    /// when the page cannot be exported (Group 3 fax or JBIG2 scans): open the PDF page instead.
     pub image: Option<PathBuf>,
 }
 

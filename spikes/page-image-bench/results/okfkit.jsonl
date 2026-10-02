@@ -1,7 +1,7 @@
-{"sample":"ccitt-g4-300dpi","tool":"okfkit","page":1,"ms":0.14,"ext":"none","bytes":0}
-{"sample":"flate-1bit-300dpi","tool":"okfkit","page":1,"ms":87.54,"ext":"png","bytes":147586}
-{"sample":"flate-gray-300dpi","tool":"okfkit","page":1,"ms":82.42,"ext":"png","bytes":279788}
-{"sample":"flate-rgb-150dpi","tool":"okfkit","page":1,"ms":50.62,"ext":"png","bytes":221819}
-{"sample":"jpeg-gray-300dpi","tool":"okfkit","page":1,"ms":1.72,"ext":"jpg","bytes":798454}
-{"sample":"jpeg-gray-50pages","tool":"okfkit","page":50,"ms":2.91,"ext":"jpg","bytes":290741}
-{"sample":"jpeg-rgb-300dpi","tool":"okfkit","page":1,"ms":0.84,"ext":"jpg","bytes":834857}
+{"sample":"ccitt-g4-300dpi","tool":"okfkit","page":1,"ms":85.68,"ext":"png","bytes":147586}
+{"sample":"flate-1bit-300dpi","tool":"okfkit","page":1,"ms":78.39,"ext":"png","bytes":147586}
+{"sample":"flate-gray-300dpi","tool":"okfkit","page":1,"ms":76.96,"ext":"png","bytes":279788}
+{"sample":"flate-rgb-150dpi","tool":"okfkit","page":1,"ms":49.32,"ext":"png","bytes":221819}
+{"sample":"jpeg-gray-300dpi","tool":"okfkit","page":1,"ms":0.67,"ext":"jpg","bytes":798454}
+{"sample":"jpeg-gray-50pages","tool":"okfkit","page":50,"ms":1.64,"ext":"jpg","bytes":290741}
+{"sample":"jpeg-rgb-300dpi","tool":"okfkit","page":1,"ms":0.31,"ext":"jpg","bytes":834857}

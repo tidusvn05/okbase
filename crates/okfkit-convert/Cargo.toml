@@ -23,6 +23,7 @@ markup5ever_rcdom.workspace = true
 lopdf.workspace = true
 flate2.workspace = true
 crc32fast.workspace = true
+fax.workspace = true
 serde.workspace = true
 thiserror.workspace = true
 
