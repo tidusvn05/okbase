@@ -37,13 +37,15 @@ fn rendered_skill_snapshot() {
             "okfkit-answer",
             "okfkit-curate",
             "okfkit-adopt",
-            "okfkit-tune"
+            "okfkit-tune",
+            "okfkit-setup"
         ]
     );
     insta::assert_snapshot!("okfkit_answer_lexical", skills[0].content);
     insta::assert_snapshot!("okfkit_curate", skills[1].content);
     insta::assert_snapshot!("okfkit_adopt", skills[2].content);
     insta::assert_snapshot!("okfkit_tune", skills[3].content);
+    insta::assert_snapshot!("okfkit_setup", skills[4].content);
     for s in &skills {
         assert!(
             !s.content.contains("<!--") && !s.content.contains("{{"),

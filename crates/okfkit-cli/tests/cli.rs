@@ -889,3 +889,42 @@ fn doctor_checks_the_setup_end_to_end() {
     assert_eq!(r["checks"][1]["id"], "bundle");
     assert_eq!(r["checks"][1]["status"], "fail");
 }
+
+#[test]
+fn agent_instructions_agree_everywhere() {
+    // The same rules reach agents through README, llms.txt, help --agent, onboard and the skill.
+    let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+    let readme = std::fs::read_to_string(root.join("README.md")).unwrap();
+    let llms = std::fs::read_to_string(root.join("llms.txt")).unwrap();
+    let skill =
+        std::fs::read_to_string(root.join("crates/okfkit-skills/skills/okfkit-setup/SKILL.md"))
+            .unwrap();
+    let guide = stdout(
+        Command::cargo_bin("okfkit")
+            .unwrap()
+            .args(["help", "--agent"]),
+    );
+    for text in [&readme, &llms, &skill, &guide] {
+        for must in [
+            "onboard",
+            "--accept-license",
+            "--yes",
+            "--write",
+            "--force",
+            "--replace",
+            "help --agent",
+        ] {
+            if std::ptr::eq(text, &guide) && must == "help --agent" {
+                continue;
+            }
+            assert!(
+                text.contains(must),
+                "`{must}` missing from one of the agent instructions"
+            );
+        }
+    }
+    assert!(
+        llms.starts_with("# okfkit\n\n> "),
+        "llms.txt format: title, then a summary quote"
+    );
+}

@@ -14,6 +14,18 @@ okfkit advise --for claude|codex|team|host --json   # the same, for scripts and 
 `advise` only reads. Every step it prints says why, citing the measurement behind it (the
 spikes in `spikes/`), and lists the commands to run.
 
+## The easy way: let your agent do it
+
+Tell Claude Code or Codex: **"set up okfkit for this folder"** (with a link to this repository if
+okfkit is not installed yet). The agent runs `okfkit onboard`, which plans every step below from
+the real state of your machine and folder; it asks you only where the decision is yours
+(licenses, downloads, editing documents, sending text to its model provider, deleting data), then
+checks the result with `okfkit doctor`. `okfkit onboard --goal remove` plans the removal the same
+way. What agents follow: the [README section for agents](../README.md#for-agents), `llms.txt`, and
+`okfkit help --agent`.
+
+The rest of this page describes the same steps for people.
+
 ## Install
 
 Not yet published; build from this repository (Rust 1.88+):

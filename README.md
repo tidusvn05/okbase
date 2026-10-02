@@ -6,6 +6,22 @@ okfkit is an open-source Rust toolkit for knowledge bundles in the [Open Knowled
 
 > Status: **pre-release** (v0.1–v0.3 implemented; not yet published). okfkit is an independent community project and is not affiliated with Google.
 
+## For agents
+
+If you are an AI agent asked to set up okfkit, do this (the user only answers your questions):
+
+1. Install it if `okfkit --version` fails. Until it is published, build it from a clone of this
+   repository: `cargo install --path crates/okfkit-cli` (add `--features full` for semantic search
+   and fine-tuning). After publication: `cargo install okfkit-cli`.
+2. In the knowledge folder (or with `-b <folder>`), run **`okfkit onboard`** and follow it: do the
+   first step, run `okfkit onboard` again, repeat. At every ASK step, ask the user and wait.
+3. Read **`okfkit help --agent`** once: JSON output, exit codes (3 = ask the user, 4 = findings),
+   error codes, and what you must never decide alone (`--accept-license`, `--yes`, `--write`,
+   `--force`, `--replace`).
+4. Finish with `okfkit doctor`, then tell the user to restart the agent session.
+
+A machine-readable summary is in [`llms.txt`](llms.txt).
+
 ## Quick start
 
 ```sh

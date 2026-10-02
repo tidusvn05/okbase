@@ -498,9 +498,11 @@ pub fn plan(opts: &InstallOptions) -> Result<Vec<Action>, Error> {
                 .join("\n");
             if matches!(opts.server, Server::Stdio { .. }) {
                 body.push_str(&format!(
-                    "\nTo improve the bundle itself, start from `okfkit --bundle {} lint --level L2 --json` (fix descriptions, index.md, tags, status); \
-                     to convert a plain markdown folder, use `okfkit adopt DIR -v`.\n",
-                    opts.skill.bundle.display()
+                    "\nTo improve the bundle itself, start from `okfkit --bundle {b} lint --level L2 --json` (fix descriptions, index.md, tags, status); \
+                     to convert a plain markdown folder, use `okfkit adopt DIR -v`.\n\
+                     To set up, repair, extend or remove okfkit, run `okfkit --bundle {b} onboard` and follow it: stop at every ASK step and wait for the user; \
+                     never add --accept-license, --yes, --write, --force or --replace on your own (`okfkit help --agent` has the contract).\n",
+                    b = opts.skill.bundle.display()
                 ));
             }
             let (begin, end) = block_markers(&opts.server_name);
