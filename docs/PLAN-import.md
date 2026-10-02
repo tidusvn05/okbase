@@ -94,4 +94,4 @@ Google Drive/Sheets vẫn để sau).
 | I4 | `7354629` | `scan` đếm tài liệu nguồn; `onboard` hỏi về OCR (consent); `doctor` báo file không đọc được và trang chưa có chữ; skill `okfkit-import`; `new --source`; tài liệu |
 | Sau I5 | `0ea2323` | `import ocr-next` xuất ảnh của trang scan (JPEG giữ nguyên; ảnh Flate, kể cả PNG predictor và đen trắng 1-bit, thành PNG); fax/JBIG2 thì hướng dẫn mở thẳng trang PDF. Sửa deadlock khoá index trong `ocr_next` |
 | S14 | `992b919` | Benchmark `spikes/page-image-bench`: xuất ảnh nhúng nhanh hơn render (JPEG 1–3 ms so với 0.2–0.95 s; Flate 2–4×), không mất chi tiết, token ảnh như nhau. Còn thiếu CCITT G4 (đề xuất crate `fax`) |
-| CCITT G4 | (commit này) | Xuất ảnh scan đen trắng CCITT Group 4 (crate `fax`, MIT, thuần Rust): 86 ms cho A4 300 dpi, không sai pixel nào. Đọc `DecodeParms` dạng mảng (img2pdf) và `/Decode [1 0]`. Group 3 và JBIG2 vẫn hướng dẫn mở thẳng trang PDF |
+| CCITT G4 | `565455d` | Xuất ảnh scan đen trắng CCITT Group 4 (crate `fax`, MIT, thuần Rust): 86 ms cho A4 300 dpi, không sai pixel nào. Đọc `DecodeParms` dạng mảng (img2pdf) và `/Decode [1 0]`. Group 3 và JBIG2 vẫn hướng dẫn mở thẳng trang PDF |
