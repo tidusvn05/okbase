@@ -16,6 +16,7 @@ readme = "../../README.md"
 workspace = true
 
 [dependencies]
+okfkit-core.workspace = true
 okfkit-analyze.workspace = true
 thiserror.workspace = true
 serde.workspace = true

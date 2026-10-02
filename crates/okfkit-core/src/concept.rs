@@ -66,42 +66,83 @@ impl Concept {
     }
 }
 
+/// Directory names never walked, whatever the ignore files say: installed dependencies, which are
+/// never the user's knowledge and must never be edited by okfkit. Build output (`target/`,
+/// `dist/`, `site/`…) is left to `.gitignore`, because those names can also be real folders of a
+/// knowledge base.
+pub const DEFAULT_EXCLUDES: &[&str] = &[
+    "node_modules",
+    "bower_components",
+    "jspm_packages",
+    "__pycache__",
+    "site-packages",
+];
+
+/// Per-bundle ignore file, same syntax as `.gitignore` (negations re-include files).
+pub const IGNORE_FILE: &str = ".okfkitignore";
+
 /// Lists the `.md` files of a bundle as sorted, `/`-separated relative paths.
 ///
-/// Skips hidden files and directories (such as `.git` and `.okfkit`) and agent instruction
-/// files at the root ([`crate::id::AGENT_FILES`]), and does not follow symbolic links, so the
-/// walk never leaves the bundle.
+/// Skips hidden files and directories (such as `.git` and `.okfkit`), agent instruction files at
+/// the root ([`crate::id::AGENT_FILES`]), the directories in [`DEFAULT_EXCLUDES`], and anything
+/// ignored by `.gitignore` files (of the bundle and its parent directories up to the repository)
+/// or by [`IGNORE_FILE`]. Does not follow symbolic links, so the walk never leaves the bundle.
 pub fn discover(root: &Path) -> Result<Vec<PathBuf>, Error> {
+    let mut out = walk(root, &["md"])?;
+    out.retain(|rel| {
+        !(rel.parent().is_some_and(|p| p.as_os_str().is_empty())
+            && rel
+                .to_str()
+                .is_some_and(|n| crate::id::AGENT_FILES.contains(&n)))
+    });
+    Ok(out)
+}
+
+/// Lists files with one of `extensions` (lowercase, without the dot) under `root`, with the same
+/// skipping rules as [`discover`]. Sorted, `/`-separated relative paths.
+pub fn walk(root: &Path, extensions: &[&str]) -> Result<Vec<PathBuf>, Error> {
+    if !root.is_dir() {
+        return Err(Error::Io {
+            path: root.to_owned(),
+            source: std::io::Error::new(std::io::ErrorKind::NotFound, "not a directory"),
+        });
+    }
+    let walker = ignore::WalkBuilder::new(root)
+        .hidden(true)
+        .follow_links(false)
+        .git_ignore(true)
+        .git_exclude(true)
+        .git_global(false)
+        .require_git(false)
+        .parents(true)
+        .add_custom_ignore_filename(IGNORE_FILE)
+        .filter_entry(|e| {
+            !(e.depth() > 0
+                && e.file_type().is_some_and(|t| t.is_dir())
+                && e.file_name()
+                    .to_str()
+                    .is_some_and(|n| DEFAULT_EXCLUDES.contains(&n)))
+        })
+        .build();
     let mut out = Vec::new();
-    let mut stack = vec![PathBuf::new()];
-    while let Some(rel) = stack.pop() {
-        let dir = root.join(&rel);
-        let entries = fs::read_dir(&dir).map_err(|source| Error::Io {
-            path: dir.clone(),
-            source,
+    for entry in walker {
+        let entry = entry.map_err(|e| Error::Io {
+            path: root.to_owned(),
+            source: std::io::Error::other(e.to_string()),
         })?;
-        for entry in entries {
-            let entry = entry.map_err(|source| Error::Io {
-                path: dir.clone(),
-                source,
-            })?;
-            let name = entry.file_name();
-            let Some(name) = name.to_str() else { continue };
-            if name.starts_with('.') {
-                continue;
-            }
-            let ft = entry.file_type().map_err(|source| Error::Io {
-                path: entry.path(),
-                source,
-            })?;
-            if ft.is_dir() {
-                stack.push(rel.join(name));
-            } else if ft.is_file()
-                && name.ends_with(".md")
-                && !(rel.as_os_str().is_empty() && crate::id::AGENT_FILES.contains(&name))
-            {
-                out.push(rel.join(name));
-            }
+        if !entry.file_type().is_some_and(|t| t.is_file()) {
+            continue;
+        }
+        let path = entry.path();
+        let ext_ok = path
+            .extension()
+            .and_then(|e| e.to_str())
+            .is_some_and(|e| extensions.iter().any(|x| x.eq_ignore_ascii_case(e)));
+        if !ext_ok {
+            continue;
+        }
+        if let Ok(rel) = path.strip_prefix(root) {
+            out.push(rel.to_owned());
         }
     }
     out.sort();
@@ -127,6 +168,47 @@ mod tests {
             .collect();
         // Only the root ones are agent instructions; a docs page named AGENTS.md is knowledge.
         assert_eq!(found, ["a.md", "docs/AGENTS.md"]);
+    }
+
+    #[test]
+    fn discover_skips_dependencies_build_output_and_ignored_files() {
+        let tmp = tempfile::tempdir().unwrap();
+        let repo = tmp.path();
+        for f in [
+            "docs/a.md",
+            "docs/drafts/wip.md",
+            "docs/drafts/keep.md",
+            "docs/node_modules/x/README.md",
+            "docs/vendor/contracts.md",
+            "docs/generated/api.md",
+            "docs/.hidden/n.md",
+        ] {
+            let p = repo.join(f);
+            std::fs::create_dir_all(p.parent().unwrap()).unwrap();
+            std::fs::write(p, "x").unwrap();
+        }
+        // The repository's .gitignore (a parent of the bundle) and the bundle's .okfkitignore apply.
+        std::fs::write(repo.join(".gitignore"), "docs/generated/\n").unwrap();
+        std::fs::create_dir_all(repo.join(".git")).unwrap();
+        std::fs::write(
+            repo.join("docs/.okfkitignore"),
+            "drafts/\n!drafts/keep.md\n",
+        )
+        .unwrap();
+        let found: Vec<String> = discover(&repo.join("docs"))
+            .unwrap()
+            .iter()
+            .map(|p| p.to_string_lossy().replace('\\', "/"))
+            .collect();
+        // `vendor/` is not a dependency folder by name alone: it may be real knowledge.
+        assert_eq!(
+            found,
+            [
+                "a.md",
+                "docs/vendor/contracts.md".trim_start_matches("docs/")
+            ],
+            "{found:?}"
+        );
     }
 
     #[test]

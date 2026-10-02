@@ -1,6 +1,6 @@
 # Kế hoạch: các tình huống thực tế (repo phần mềm, thư mục rỗng, OKF chưa chuẩn, bundle trong thư mục con…)
 
-Trạng thái: **đề xuất, chưa triển khai** (2026-10-02). Bằng chứng: chạy bản build hiện tại trên 4 thư
+Trạng thái: **đã chốt, đang triển khai** (2026-10-02; 4 câu hỏi ở §4 chốt theo đề xuất). Bằng chứng: chạy bản build hiện tại trên 4 thư
 mục mẫu (§1). Liên quan: `PLAN-onboarding.md`, `docs/usage.md`.
 
 ## 0. Kết luận ngắn

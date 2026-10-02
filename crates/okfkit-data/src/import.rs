@@ -1,7 +1,7 @@
 //! Discovering dataset files and importing them into SQLite.
 
 use std::collections::{BTreeMap, HashSet};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use calamine::{Data as Cell, Reader, open_workbook_auto};
 use rusqlite::{Connection, params};
@@ -10,33 +10,14 @@ use crate::{Error, SCHEMA_TABLE, SOURCES_TABLE, SyncReport};
 
 const EXTENSIONS: [&str; 3] = ["csv", "tsv", "xlsx"];
 
-/// Bundle-relative paths (`/`-separated) of dataset files, sorted. Hidden entries and symlinks are skipped.
+/// Bundle-relative paths (`/`-separated) of dataset files, sorted. Same skipping rules as the
+/// markdown walk: hidden entries, dependency folders, `.gitignore` and `.okfkitignore`.
 pub(crate) fn discover(root: &Path) -> Vec<String> {
-    let mut out = Vec::new();
-    let mut stack = vec![PathBuf::new()];
-    while let Some(rel) = stack.pop() {
-        let Ok(entries) = std::fs::read_dir(root.join(&rel)) else {
-            continue;
-        };
-        for e in entries.flatten() {
-            let name = e.file_name().to_string_lossy().into_owned();
-            if name.starts_with('.') {
-                continue;
-            }
-            let Ok(ft) = e.file_type() else { continue };
-            if ft.is_dir() {
-                stack.push(rel.join(&name));
-            } else if ft.is_file()
-                && name
-                    .rsplit_once('.')
-                    .is_some_and(|(_, ext)| EXTENSIONS.contains(&ext.to_ascii_lowercase().as_str()))
-            {
-                out.push(rel.join(&name).to_string_lossy().replace('\\', "/"));
-            }
-        }
-    }
-    out.sort();
-    out
+    okfkit_core::walk(root, &EXTENSIONS)
+        .unwrap_or_default()
+        .into_iter()
+        .map(|p| p.to_string_lossy().replace('\\', "/"))
+        .collect()
 }
 
 /// One sheet of raw cells.

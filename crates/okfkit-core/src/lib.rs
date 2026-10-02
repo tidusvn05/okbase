@@ -21,7 +21,7 @@ pub mod id;
 pub mod links;
 pub mod validate;
 
-pub use concept::{Concept, discover};
+pub use concept::{Concept, DEFAULT_EXCLUDES, IGNORE_FILE, discover, walk};
 pub use error::Error;
 pub use frontmatter::{Frontmatter, FrontmatterState, Mapping};
 pub use id::ConceptId;

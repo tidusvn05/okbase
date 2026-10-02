@@ -49,6 +49,7 @@ lingua = { version = "1.8", default-features = false, features = ["english", "ja
 rust-stemmers = "1.2"
 rusqlite = { version = "0.40", features = ["bundled"] }
 blake3 = { version = "1.8", default-features = false, features = ["std"] }
+ignore = "0.4"
 tempfile = "3"
 rmcp = { version = "~3.5", default-features = false, features = ["server", "transport-io"] }
 axum = { version = "0.8", default-features = false, features = ["tokio", "http1"] }
