@@ -2,7 +2,7 @@
 //! tables that agents query with read-only SQL (spike S5: without SQL, agents
 //! give up on sheets of ~10k rows).
 //!
-//! - Every `*.csv`, `*.tsv` and `*.xlsx` file in the bundle (hidden directories
+//! - Every `*.csv`, `*.tsv`, `*.xlsx`, `*.xlsm`, `*.xlsb`, `*.xls` and `*.ods` file in the bundle (hidden directories
 //!   excluded) becomes a table named after the file (one table per XLSX sheet).
 //!   Column names are folded to `snake_case`; the original headers are kept in
 //!   the `_schema` table.

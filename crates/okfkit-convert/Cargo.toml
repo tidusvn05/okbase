@@ -1,0 +1,26 @@
+[package]
+name = "okfkit-convert"
+description = "Document conversion for okfkit: PDF (per page), Word, PowerPoint, OpenDocument, RTF, EPUB and HTML to markdown, without models or services."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+anydoc.workspace = true
+pdf-inspector.workspace = true
+htmd.workspace = true
+markup5ever_rcdom.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]

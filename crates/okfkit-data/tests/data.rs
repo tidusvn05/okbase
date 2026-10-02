@@ -228,3 +228,27 @@ fn perf_aggregate_10k_rows() {
     );
     assert!(took < Duration::from_millis(50), "{took:?}");
 }
+
+#[test]
+fn macro_enabled_workbooks_are_tables_too() {
+    // .xlsm (and .xlsb, .xls, .ods) are read like .xlsx.
+    let tmp = tempfile::tempdir().unwrap();
+    let root = tmp.path().join("kb");
+    std::fs::create_dir_all(&root).unwrap();
+    std::fs::copy(
+        Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/data/stock.xlsx"),
+        root.join("Stock.xlsm"),
+    )
+    .unwrap();
+    assert!(Data::has_datasets(&root));
+    let data = Data::new(&root, &tmp.path().join("d.sqlite"));
+    data.sync().unwrap();
+    let names: Vec<_> = data
+        .tables(&all)
+        .unwrap()
+        .tables
+        .into_iter()
+        .map(|t| t.name)
+        .collect();
+    assert_eq!(names, ["stock__kho_ha_noi", "stock__tokyo"]);
+}

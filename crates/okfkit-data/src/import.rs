@@ -8,7 +8,8 @@ use rusqlite::{Connection, params};
 
 use crate::{Error, SCHEMA_TABLE, SOURCES_TABLE, SyncReport};
 
-const EXTENSIONS: [&str; 3] = ["csv", "tsv", "xlsx"];
+/// Sheets: CSV/TSV, and every workbook format calamine reads (Excel 97–365, binary, OpenDocument).
+const EXTENSIONS: [&str; 7] = ["csv", "tsv", "xlsx", "xlsm", "xlsb", "xls", "ods"];
 
 /// Bundle-relative paths (`/`-separated) of dataset files, sorted. Same skipping rules as the
 /// markdown walk: hidden entries, dependency folders, `.gitignore` and `.okfkitignore`.
@@ -36,7 +37,7 @@ fn read_sheets(path: &Path, rel: &str) -> Result<Vec<Sheet>, Error> {
         .rsplit_once('.')
         .map(|(_, e)| e.to_ascii_lowercase())
         .unwrap_or_default();
-    if ext == "xlsx" {
+    if matches!(ext.as_str(), "xlsx" | "xlsm" | "xlsb" | "xls" | "ods") {
         let mut wb = open_workbook_auto(path).map_err(|e| err(e.to_string()))?;
         let mut sheets = Vec::new();
         for name in wb.sheet_names().to_vec() {

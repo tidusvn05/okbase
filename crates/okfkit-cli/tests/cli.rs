@@ -1017,7 +1017,10 @@ fn onboard_understands_real_folders() {
     // Repository root: go to docs/, nothing else.
     let p = plan("repo", &[]);
     assert_eq!(ids(&p), ["bundle"], "{p}");
-    assert!(!tmp.path().join("st-repo").exists(), "no index of the whole repository");
+    assert!(
+        !tmp.path().join("st-repo").exists(),
+        "no index of the whole repository"
+    );
     assert_eq!(p["steps"][0]["commands"][0], "okfkit -b docs onboard");
     // From the root with -b docs: every command keeps -b docs; the site is used as is or annotated in place.
     let p = plan("repo", &["-b", "docs"]);
@@ -1047,13 +1050,25 @@ fn onboard_understands_real_folders() {
     };
     git(&["init", "-q"]);
     git(&["add", "-A"]);
-    git(&["-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", "init"]);
+    git(&[
+        "-c",
+        "user.email=t@t",
+        "-c",
+        "user.name=t",
+        "commit",
+        "-qm",
+        "init",
+    ]);
     write("partial/.mcp.json", "{}\n"); // uncommitted, unrelated
     let mut c = Command::cargo_bin("okfkit").unwrap();
     c.current_dir(tmp.path().join("partial"))
         .args(["adopt", "--only", "loose.md", "--write"]);
     stdout(&mut c);
-    assert!(std::fs::read_to_string(tmp.path().join("partial/loose.md")).unwrap().starts_with("---\n"));
+    assert!(
+        std::fs::read_to_string(tmp.path().join("partial/loose.md"))
+            .unwrap()
+            .starts_with("---\n")
+    );
     git(&["checkout", "-q", "--", "."]);
     // Mostly OKF: fix the one file in place.
     let p = plan("partial", &[]);

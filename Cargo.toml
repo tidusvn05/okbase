@@ -35,6 +35,7 @@ okfkit-data = { path = "crates/okfkit-data", version = "0.1.0-dev" }
 okfkit-mcp = { path = "crates/okfkit-mcp", version = "0.1.0-dev" }
 okfkit-skills = { path = "crates/okfkit-skills", version = "0.1.0-dev" }
 okfkit-tune = { path = "crates/okfkit-tune", version = "0.1.0-dev" }
+okfkit-convert = { path = "crates/okfkit-convert", version = "0.1.0-dev" }
 okfkit = { path = "crates/okfkit", version = "0.1.0-dev" }
 thiserror = "2"
 serde = { version = "1", features = ["derive"] }
@@ -50,6 +51,10 @@ rust-stemmers = "1.2"
 rusqlite = { version = "0.40", features = ["bundled"] }
 blake3 = { version = "1.8", default-features = false, features = ["std"] }
 ignore = "0.4"
+anydoc = "0.2.4"
+pdf-inspector = "1.14"
+htmd = "0.5"
+markup5ever_rcdom = "0.38"
 tempfile = "3"
 rmcp = { version = "~3.5", default-features = false, features = ["server", "transport-io"] }
 axum = { version = "0.8", default-features = false, features = ["tokio", "http1"] }
