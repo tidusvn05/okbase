@@ -28,6 +28,12 @@ pub const EXTENSIONS: &[&str] = &[
     "odp", "rtf", "epub", "html", "htm", "txt", "rst", "adoc", "png", "jpg", "jpeg",
 ];
 
+// Converter names for provenance (`converter`, `generated.by`): the major.minor resolved in
+// Cargo.lock, checked by a test so they follow dependency updates.
+const ANYDOC: &str = "anydoc/0.2";
+const HTMD: &str = "htmd/0.5";
+const PDF_INSPECTOR: &str = "pdf-inspector/1.25";
+
 /// Image extensions: always pages to transcribe.
 const IMAGES: &[&str] = &["png", "jpg", "jpeg"];
 
@@ -117,7 +123,7 @@ pub fn convert(path: &Path, bytes: &[u8], ocr: Ocr<'_>) -> Result<Converted, Err
         "pdf" => pdf(bytes, ocr)?,
         "html" | "htm" => {
             let (md, title) = html::to_markdown(&String::from_utf8_lossy(bytes))?;
-            (md, title, None, Flags::default(), "htmd/0.5")
+            (md, title, None, Flags::default(), HTMD)
         }
         "txt" | "rst" | "adoc" => (
             String::from_utf8_lossy(bytes).into_owned(),
@@ -146,7 +152,7 @@ pub fn convert(path: &Path, bytes: &[u8], ocr: Ocr<'_>) -> Result<Converted, Err
                     anydoc::ConvertError::Encrypted => Error::Encrypted,
                     other => Error::Failed(other.to_string()),
                 })?;
-            (md, None, None, Flags::default(), "anydoc/0.2")
+            (md, None, None, Flags::default(), ANYDOC)
         }
     };
     let title = meta_title
@@ -212,7 +218,7 @@ fn pdf(bytes: &[u8], ocr: Ocr<'_>) -> Result<Parts, Error> {
         title,
         Some(info.page_count),
         flags,
-        "pdf-inspector/1.14",
+        PDF_INSPECTOR,
     ))
 }
 

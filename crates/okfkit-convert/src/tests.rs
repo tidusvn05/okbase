@@ -88,3 +88,17 @@ fn spike_samples_when_present() {
     assert_eq!(paper.pages, Some(15));
     assert!(paper.markdown.contains("<!-- page 3 -->"));
 }
+
+#[test]
+fn converter_names_match_the_locked_versions() {
+    let lock = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/../../Cargo.lock"))
+        .expect("workspace Cargo.lock");
+    for name in [super::ANYDOC, super::HTMD, super::PDF_INSPECTOR] {
+        let (krate, minor) = name.split_once('/').unwrap();
+        let entry = format!("name = \"{krate}\"\nversion = \"{minor}.");
+        assert!(
+            lock.contains(&entry),
+            "{name} is not the version in Cargo.lock"
+        );
+    }
+}
