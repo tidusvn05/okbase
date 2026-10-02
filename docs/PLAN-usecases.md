@@ -151,6 +151,6 @@ với agent trên các thư mục này.
 | U2, U5, U6 | `7ac51a3` | Profile `docs-site`/`vault` (nhận diện cả ở thư mục cha tới gốc repo; ghi đè bằng `okfkit.toml`); `adopt` giữ `index.md`, không tạo danh sách hay log; `adopt --only` |
 | U3, U4 | `1db3ab0` | `okfkit scan`; `onboard` chọn hoặc hỏi bundle, có luồng thư mục rỗng, PDF, "sửa N file" và metadata cho site; lệnh của `onboard` giữ `-b` |
 | U7 | `1d129c6` | `okfkit init`, `okfkit new`, skill `okfkit-author` |
-| U8 | (commit này) | `docs/usage.md`: thư mục thực tế, profile, luật bỏ qua, CI, bot |
+| U8 | `7626a83` | `docs/usage.md`: thư mục thực tế, profile, luật bỏ qua, CI, bot |
 
 Đã kiểm chứng bằng test kịch bản (`onboard_understands_real_folders`): repo có MkDocs và `node_modules`, thư mục rỗng, OKF hỏng 1 file, repo bot có `knowledge/`.

@@ -1,7 +1,7 @@
 # Kế hoạch: import tài liệu (PDF, Office, HTML) — v0.4
 
-Trạng thái: **I1–I4 xong** (2026-10-02); I5 (chạy thử với agent) ở §7. Bằng chứng: `spikes/import-bench/RESULTS.md`
-(S10-lite). Thay mục "v0.4 — Import + source" của `PLAN.md` §13 về phần chuyển đổi (connector
+Trạng thái: **I1–I5 xong** (2026-10-02), kèm S14 (xuất ảnh trang scan); kết quả ở §7. Bằng chứng: `spikes/import-bench/RESULTS.md`
+(S10-lite), `spikes/page-image-bench/RESULTS.md` (S14). Thay mục "v0.4 — Import + source" của `PLAN.md` §13 về phần chuyển đổi (connector
 Google Drive/Sheets vẫn để sau).
 
 ## 0. Quyết định (2026-10-02)
@@ -93,4 +93,4 @@ Google Drive/Sheets vẫn để sau).
 | I3 | `f9e9979` | `import` (kế hoạch), `--write` (tách > 6k token, giữ bản sửa tay, báo mồ côi), `status`, `ocr-next`/`ocr-submit` |
 | I4 | `7354629` | `scan` đếm tài liệu nguồn; `onboard` hỏi về OCR (consent); `doctor` báo file không đọc được và trang chưa có chữ; skill `okfkit-import`; `new --source`; tài liệu |
 | Sau I5 | `0ea2323` | `import ocr-next` xuất ảnh của trang scan (JPEG giữ nguyên; ảnh Flate, kể cả PNG predictor và đen trắng 1-bit, thành PNG); fax/JBIG2 thì hướng dẫn mở thẳng trang PDF. Sửa deadlock khoá index trong `ocr_next` |
-| S14 | (commit này) | Benchmark `spikes/page-image-bench`: xuất ảnh nhúng nhanh hơn render (JPEG 1–3 ms so với 0.2–0.95 s; Flate 2–4×), không mất chi tiết, token ảnh như nhau. Còn thiếu CCITT G4 (đề xuất crate `fax`) |
+| S14 | `992b919` | Benchmark `spikes/page-image-bench`: xuất ảnh nhúng nhanh hơn render (JPEG 1–3 ms so với 0.2–0.95 s; Flate 2–4×), không mất chi tiết, token ảnh như nhau. Còn thiếu CCITT G4 (đề xuất crate `fax`) |

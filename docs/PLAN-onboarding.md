@@ -152,7 +152,7 @@ Viết một lần, trong binary:
 | O1–O2 | `903a1f5` | Mã lỗi, JSON lỗi, mã thoát 3/4, JSON cho lệnh ghi; `okfkit onboard` (run/ask/tell, `--goal`); `help --agent`; danh mục consent |
 | O3 | `ee9d65c` | `okfkit doctor`, kèm lượt gọi MCP thật |
 | O4 | `6167059` | README "For agents", `llms.txt`, skill `okfkit-setup`, khối AGENTS.md trỏ tới `onboard`; test giữ các bản hướng dẫn thống nhất |
-| O5 | (commit này) | S13 với Claude: 3/3 tự thiết lập, 0 lần tự thêm cờ đồng ý (`spikes/onboarding/RESULTS.md`). Sửa 3 lỗi do agent phát hiện. Codex chưa chạy |
+| O5 | `be73fa6` | S13 với Claude: 3/3 tự thiết lập, 0 lần tự thêm cờ đồng ý (`spikes/onboarding/RESULTS.md`). Sửa 3 lỗi do agent phát hiện. Codex chưa chạy |
 
 Khác với kế hoạch: trường `next` có ở lệnh thiết lập, lỗi và các lệnh `onboard/doctor/tune`. Lệnh
 đọc giữ nguyên JSON của tool MCP (luật AGENTS.md: schema `--json` = đầu ra tool MCP).

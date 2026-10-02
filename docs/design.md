@@ -427,6 +427,15 @@ Output text/JSON/SARIF; `--fix-safe` fixes only what is safe (generate index.md,
 
 ## 13. Roadmap
 
+**Status (2026-10-03).**
+- v0.1, v0.2 and v0.3 are done and accepted: see `spikes/acceptance-v0.*`.
+  - S9 (skills) is inconclusive: agents never invoked the skills.
+- Later plans are implemented: `PLAN-advise-tune.md`, `PLAN-usecases.md`, `PLAN-onboarding.md` (Codex not run yet) and `PLAN-import.md`.
+  - From the import plan, the Google Drive/Sheets connectors, `distill` and S10 on real documents remain.
+- `okfkit-eval lexical` runs in `cargo test`.
+- v0.5 → v1.0 has not started.
+- Details: `PLAN.md` §13 (Vietnamese).
+
 Estimates for 1 full-time developer.
 
 ### v0.1 — Works immediately with existing bundles (2 weeks)

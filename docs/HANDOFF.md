@@ -12,7 +12,7 @@
 | `AGENTS.md` (gốc repo, tiếng Anh) | Quy ước làm việc hằng ngày cho mọi agent/contributor |
 | `spikes/` | Bằng chứng thực nghiệm và **code mẫu dùng lại được**. `spikes/README.md` có bảng tổng hợp |
 
-Trạng thái hiện tại: **chưa có code production, chưa `git init`**. Chỉ có tài liệu và spike.
+Trạng thái (2026-10-03): v0.1–v0.3 đã xong và qua nghiệm thu; các plan bổ sung (advise/tune, tình huống thực tế, onboarding, import) đã triển khai. Xem `docs/PLAN.md` §13 (Trạng thái). Repo có lịch sử commit nhưng **chưa push** (chưa có tổ chức GitHub). File này giữ lại làm tài liệu bàn giao ban đầu cho v0.1; các quy tắc ở §5 vẫn áp dụng.
 
 Dự án là **mã nguồn mở** (MIT OR Apache-2.0). Mọi thứ công khai (README, rustdoc, CLI help, commit message, CONTRIBUTING) viết bằng **tiếng Anh**.
 
