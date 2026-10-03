@@ -6,11 +6,51 @@
 [![Release](https://img.shields.io/github/v/release/tidusvn05/okbase?include_prereleases)](https://github.com/tidusvn05/okbase/releases)
 [![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue)](#license)
 
-okbase is an open-source Rust toolkit for knowledge bundles in the [Open Knowledge Format (OKF)](https://github.com/GoogleCloudPlatform/open-knowledge-format). It helps agents such as Claude Code, Codex, OpenCode, or any MCP client answer questions from a folder of markdown files quickly, cheaply and correctly, in Vietnamese, English and Japanese.
+okbase is an open-source Rust toolkit for knowledge bundles in the [Open Knowledge Format (OKF)](https://github.com/GoogleCloudPlatform/open-knowledge-format). It helps agents such as Claude Code, Codex, OpenCode, or any MCP client answer questions from a folder of markdown files quickly, cheaply and correctly, in any language (measured with Vietnamese, English and Japanese, including questions asked in one language about documents in another).
 
 > Status: **pre-release**. The v0.1–v0.3 milestones are implemented; the first release (0.1.0) is being prepared. okbase is an independent community project and is not affiliated with Google.
 
-## Install
+## Get started: paste this to your agent
+
+okbase is set up by your coding agent (Claude Code, Codex, or another agent with a shell). Open it
+in the folder that holds your knowledge and paste:
+
+```text
+Set up okbase (https://github.com/tidusvn05/okbase) so you can answer questions from the
+knowledge in this folder.
+
+1. If `okbase --version` fails, install it:
+   curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | sh
+   (Windows: irm https://raw.githubusercontent.com/tidusvn05/okbase/main/install.ps1 | iex)
+   If you cannot run it (no network or a sandbox), give me the command and wait.
+2. Run `okbase onboard` here and follow it until no steps are left (or only ones I declined): run
+   its `run` steps, ask me its `ask` questions and wait for my answers, and never add a consent
+   flag I did not approve.
+3. Finish with `okbase doctor`. Then tell me briefly what you set up, how to use it now, and
+   what okbase recommends for later.
+```
+
+The agent looks at the folder (a docs site, a wiki, a repository with `docs/`, an empty folder),
+connects itself to okbase, and asks you only what is yours to decide: editing documents,
+licenses, large downloads, sending text to a service, deleting data (the flags `--accept-license`,
+`--yes`, `--write`, `--force`, `--replace` and `--send-documents` are added only after you agree). In the experiments, Claude
+and Codex finished this from one sentence without ever adding a consent flag on their own (S13),
+and followed this exact prompt, handing over the install command when their sandbox had no network
+(S16).
+
+Other goals: change the first sentence and keep steps 1–3.
+
+| Goal | First sentence |
+|---|---|
+| Documents in a subfolder | Set up okbase so you can answer questions from the knowledge in `docs/`. |
+| A new knowledge base | Start a knowledge base about *&lt;topic&gt;* in this folder with okbase, and write the first document about *&lt;subject&gt;*. |
+| Better answers from an existing bundle | Use okbase to improve this knowledge base so agents answer better (`okbase onboard --goal curate`). |
+| Stop using okbase | Remove okbase from this project (`okbase onboard --goal remove`). |
+
+Agents reading this: the steps above are the whole procedure; [`llms.txt`](llms.txt) and
+`okbase help --agent` give the details (JSON output, exit codes, consent rules).
+
+## Install it yourself
 
 Linux and macOS (x86_64 and arm64):
 
@@ -33,26 +73,7 @@ From source (Rust 1.89+): `cargo install --locked --path crates/okbase-cli` in a
 (`--features full` for okbase-full). Archives for every platform are on the
 [releases page](https://github.com/tidusvn05/okbase/releases).
 
-## For agents
-
-If you are an AI agent asked to set up okbase, do this (the user only answers your questions):
-
-1. Install it if `okbase --version` fails:
-   `curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | sh` (on Windows,
-   `irm https://raw.githubusercontent.com/tidusvn05/okbase/main/install.ps1 | iex`). Before the first
-   release, build it from a clone instead: `cargo install --locked --path crates/okbase-cli`.
-2. In the knowledge folder (or with `-b <folder>`), run **`okbase onboard`** and follow it: do the
-   first step, run `okbase onboard` again, repeat. At every ASK step, ask the user and wait.
-3. Read **`okbase help --agent`** once: JSON output, exit codes (3 = ask the user, 4 = findings),
-   error codes, and what you must never decide alone (`--accept-license`, `--yes`, `--write`,
-   `--force`, `--replace`, `--send-documents`).
-4. Finish with `okbase doctor`, then tell the user to restart the agent session.
-5. Inside Codex, its sandbox keeps `.codex/` read-only: ask the user to run
-   `okbase agent install --codex` in their own terminal.
-
-A machine-readable summary is in [`llms.txt`](llms.txt).
-
-## Quick start
+## Quick start (CLI)
 
 ```sh
 cd my-bundle                          # a folder of markdown files (OKF or not)

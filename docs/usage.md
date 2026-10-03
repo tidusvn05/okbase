@@ -16,12 +16,14 @@ spikes in `spikes/`), and lists the commands to run.
 
 ## The easy way: let your agent do it
 
-Tell Claude Code or Codex: **"set up okbase for this folder"** (with a link to this repository if
-okbase is not installed yet). The agent runs `okbase onboard`, which plans every step below from
-the real state of your machine and folder; it asks you only where the decision is yours
-(licenses, downloads, editing documents, sending text to its model provider, deleting data), then
-checks the result with `okbase doctor`. `okbase onboard --goal remove` plans the removal the same
-way. What agents follow: the [README section for agents](../README.md#for-agents), `llms.txt`, and
+Paste the prompt from the README ([Get started](../README.md#get-started-paste-this-to-your-agent))
+into Claude Code, Codex or another agent with a shell, in the folder that holds your knowledge.
+The agent installs okbase, runs `okbase onboard`, which plans every step below from the real
+state of your machine and folder, and asks you only where the decision is yours (licenses,
+downloads, editing documents, sending text to a service, deleting data). It checks the result
+with `okbase doctor` and ends with what is set up, how to use it, and what okbase recommends for
+later. The same prompt with another first sentence starts a new knowledge base, improves one
+(`--goal curate`) or removes okbase (`--goal remove`). What agents follow: `llms.txt` and
 `okbase help --agent`.
 
 The rest of this page describes the same steps for people.
