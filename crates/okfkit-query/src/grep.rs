@@ -277,10 +277,24 @@ impl GrepResult {
         }
         for d in &self.docs {
             if files_only {
-                let _ = writeln!(out, "{} ({} matches) — {}", d.id, d.matches, d.title);
+                let _ = writeln!(
+                    out,
+                    "{} ({} {}) — {}",
+                    d.id,
+                    d.matches,
+                    plural(d.matches, "match", "matches"),
+                    d.title
+                );
                 continue;
             }
-            let _ = writeln!(out, "## {} — {} ({} matches)", d.id, d.title, d.matches);
+            let _ = writeln!(
+                out,
+                "## {} — {} ({} {})",
+                d.id,
+                d.title,
+                d.matches,
+                plural(d.matches, "match", "matches")
+            );
             let mut prev = 0;
             for l in &d.lines {
                 if prev > 0 && l.line > prev + 1 {
@@ -314,6 +328,10 @@ impl GrepResult {
         );
         out
     }
+}
+
+fn plural(n: usize, one: &'static str, many: &'static str) -> &'static str {
+    if n == 1 { one } else { many }
 }
 
 #[cfg(test)]

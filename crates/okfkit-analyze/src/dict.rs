@@ -99,6 +99,12 @@ fn install_into(dir: &Path) -> Result<(), DictError> {
     let work = parent.join(format!(".build-{}-{}", LAYOUT, std::process::id()));
     let _ = std::fs::remove_dir_all(&work);
     std::fs::create_dir_all(&work).map_err(|e| err(e.to_string()))?;
+    // Say so once: this is the only time okfkit downloads anything without a command for it.
+    eprintln!(
+        "okfkit: downloading the Japanese dictionary (IPADIC, about 13 MB) from {IPADIC_URL} into {} \
+         (once; set OKFKIT_OFFLINE=1 to stop, or run `okfkit dict install` ahead of time)",
+        dir.display()
+    );
     let result = (|| {
         let mut body = ureq::get(IPADIC_URL)
             .call()

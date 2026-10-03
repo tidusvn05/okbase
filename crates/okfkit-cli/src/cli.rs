@@ -249,7 +249,7 @@ pub enum Command {
         /// Document id.
         id: String,
     },
-    /// Check the bundle against the okfkit levels (L0-L3). Exits with 1 when there are errors.
+    /// Check the bundle against the okfkit levels (L0-L3). Exits with 4 when there are errors.
     Lint {
         /// Target level.
         #[arg(long, value_enum, default_value_t = LevelArg::L2)]
@@ -455,7 +455,7 @@ pub enum EmbedCmd {
     },
     /// Turn embeddings on for this bundle (writes okfkit.toml).
     #[command(
-        after_help = "Examples:\n  okfkit embed enable --accept-license                 # EmbeddingGemma 300M Q4 (Gemma terms)\n  okfkit embed enable --model bge-m3-int8              # MIT, no acceptance needed\n  okfkit embed enable --api-url https://api.openai.com/v1 --api-model text-embedding-3-small"
+        after_help = "Examples:\n  okfkit embed enable --accept-license                 # EmbeddingGemma 300M Q4 (Gemma terms)\n  okfkit embed enable --model bge-m3-int8              # MIT, no acceptance needed\n  okfkit embed enable --api-url https://api.openai.com/v1 --api-model text-embedding-3-small --send-documents"
     )]
     Enable {
         /// Local model id.
@@ -477,6 +477,9 @@ pub enum EmbedCmd {
         /// Environment variable holding the API key.
         #[arg(long, value_name = "VAR", default_value = "OPENAI_API_KEY")]
         api_key_env: String,
+        /// Confirm that document text may be sent to the API (it leaves this machine).
+        #[arg(long, requires = "api_url")]
+        send_documents: bool,
     },
     /// Turn embeddings off (writes okfkit.toml; vectors stay cached).
     Disable,

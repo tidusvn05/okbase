@@ -301,18 +301,25 @@ fn codex_entry_json(item: &toml_edit::Item) -> Value {
     v
 }
 
+/// Codex's own directory: `$CODEX_HOME`, else `~/.codex`.
+pub fn codex_home(home: &Path) -> PathBuf {
+    std::env::var_os("CODEX_HOME")
+        .filter(|v| !v.is_empty())
+        .map_or_else(|| home.join(".codex"), PathBuf::from)
+}
+
 /// Codex reads MCP servers from `<project>/.codex/config.toml` (trusted projects only) and
-/// `~/.codex/config.toml` (every project).
+/// `$CODEX_HOME/config.toml` (every project; `~/.codex` by default).
 pub fn codex_config_path(target: &Target, home: &Path) -> PathBuf {
     match target {
         Target::Project(dir) => dir.join(".codex/config.toml"),
-        Target::User => home.join(".codex/config.toml"),
+        Target::User => codex_home(home).join("config.toml"),
     }
 }
 
 /// Whether Codex trusts `project` (it ignores a project's `.codex/config.toml` otherwise).
 pub fn codex_trusts(project: &Path, home: &Path) -> bool {
-    let Ok(text) = std::fs::read_to_string(home.join(".codex/config.toml")) else {
+    let Ok(text) = std::fs::read_to_string(codex_home(home).join("config.toml")) else {
         return false;
     };
     let Ok(doc) = text.parse::<toml_edit::DocumentMut>() else {
@@ -345,7 +352,7 @@ fn claude_user_entry(home: &Path, name: &str) -> Option<Value> {
 fn agents_path(opts_target: &Target, home: &Path) -> PathBuf {
     match opts_target {
         Target::Project(dir) => dir.join("AGENTS.md"),
-        Target::User => home.join(".codex/AGENTS.md"),
+        Target::User => codex_home(home).join("AGENTS.md"),
     }
 }
 
@@ -666,21 +673,65 @@ pub fn plan_uninstall(opts: &UninstallOptions) -> Result<Vec<Action>, Error> {
     Ok(actions)
 }
 
-/// Performs the planned changes.
+/// After a removal, deletes the agent directories okfkit's files lived in (`.claude/skills`,
+/// `.claude`, `.codex`) when nothing else is left in them.
+fn remove_empty_agent_dirs(removed: &Path) {
+    let mut dir = removed.parent();
+    while let Some(d) = dir {
+        let name = d.file_name().and_then(|n| n.to_str()).unwrap_or("");
+        let agent_dir = matches!(name, ".claude" | ".codex")
+            || (name == "skills"
+                && d.parent()
+                    .and_then(Path::file_name)
+                    .is_some_and(|p| p == ".claude"));
+        // remove_dir only succeeds on an empty directory.
+        if !agent_dir || std::fs::remove_dir(d).is_err() {
+            break;
+        }
+        dir = d.parent();
+    }
+}
+
+/// A write refused under `.codex/` is Codex's sandbox protecting its configuration.
+fn write_error(path: &Path, source: std::io::Error) -> Error {
+    let refused = matches!(
+        source.kind(),
+        std::io::ErrorKind::PermissionDenied | std::io::ErrorKind::ReadOnlyFilesystem
+    );
+    if refused && path.components().any(|c| c.as_os_str() == ".codex") {
+        Error::Protected {
+            path: path.to_owned(),
+        }
+    } else {
+        Error::Io {
+            path: path.to_owned(),
+            source,
+        }
+    }
+}
+
+/// Performs the planned changes. Changes to Codex's configuration go first, so a sandbox that
+/// refuses them stops the install before anything else is written.
 pub fn apply(actions: &[Action]) -> Result<(), Error> {
-    for a in actions {
+    let codex = |a: &&Action| match a {
+        Action::Write { path, .. } | Action::Remove { path, .. } => {
+            path.components().any(|c| c.as_os_str() == ".codex")
+        }
+        Action::Run { .. } => false,
+    };
+    let ordered: Vec<&Action> = actions
+        .iter()
+        .filter(codex)
+        .chain(actions.iter().filter(|a| !codex(a)))
+        .collect();
+    for a in ordered {
         match a {
             Action::Write { path, content, .. } => {
                 if let Some(parent) = path.parent() {
-                    std::fs::create_dir_all(parent).map_err(|source| Error::Io {
-                        path: parent.to_owned(),
-                        source,
-                    })?;
+                    std::fs::create_dir_all(parent)
+                        .map_err(|source| write_error(parent, source))?;
                 }
-                std::fs::write(path, content).map_err(|source| Error::Io {
-                    path: path.clone(),
-                    source,
-                })?;
+                std::fs::write(path, content).map_err(|source| write_error(path, source))?;
             }
             Action::Remove { path, .. } => {
                 let r = if path.is_dir() {
@@ -689,14 +740,9 @@ pub fn apply(actions: &[Action]) -> Result<(), Error> {
                     std::fs::remove_file(path)
                 };
                 match r {
-                    Ok(()) => {}
+                    Ok(()) => remove_empty_agent_dirs(path),
                     Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
-                    Err(source) => {
-                        return Err(Error::Io {
-                            path: path.clone(),
-                            source,
-                        });
-                    }
+                    Err(source) => return Err(write_error(path, source)),
                 }
             }
             Action::Run { argv, .. } => {

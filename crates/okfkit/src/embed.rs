@@ -67,7 +67,13 @@ impl EmbedState {
             return Ok(h.clone());
         }
         self.loaded
-            .get_or_init(|| create(&self.config).map_err(|e| e.to_string()))
+            .get_or_init(|| {
+                create(&self.config).map_err(|e| match e {
+                    // Kept without its "embeddings:" prefix: it is wrapped again below.
+                    Error::Embedding(m) => m,
+                    other => other.to_string(),
+                })
+            })
             .clone()
             .map_err(Error::Embedding)
     }

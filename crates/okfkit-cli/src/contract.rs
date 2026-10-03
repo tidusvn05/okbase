@@ -1,16 +1,24 @@
 //! The machine contract for agents (docs/PLAN-onboarding.md §3.2): stable error codes,
 //! exit codes, and errors that carry the question an agent must ask the user.
 
+use std::path::{Path, PathBuf};
+
 use serde::Serialize;
 
 /// Success.
 pub const EXIT_OK: u8 = 0;
 /// An error.
 pub const EXIT_ERROR: u8 = 1;
-/// The user must agree first (a missing `--yes`, `--accept-license`, `--write`, `--replace`, `--force`).
+/// The user must agree first (a missing `--yes`, `--accept-license`, `--write`, `--replace`, `--force`, `--send-documents`), or must run a command themselves (`sandbox_blocked`).
 pub const EXIT_CONSENT: u8 = 3;
 /// The command worked and found problems (lint errors, a rejected batch, a failed gate).
 pub const EXIT_FINDINGS: u8 = 4;
+
+/// How to get the okfkit-full build (until okfkit is published, from a clone of the repository).
+pub const INSTALL_FULL: &str = "cargo install --locked --path crates/okfkit-cli --features full";
+/// [`INSTALL_FULL`] as a hint.
+pub const INSTALL_FULL_HINT: &str = "install the okfkit-full build: in a clone of the okfkit repository, \
+     cargo install --locked --path crates/okfkit-cli --features full";
 
 /// A step that needs the user's agreement. Agents must ask `question` and, only on yes,
 /// run the command again with `flag`.
@@ -80,6 +88,11 @@ pub const CODES: &[(&str, u8, &str)] = &[
         "name_conflict",
         EXIT_CONSENT,
         "the MCP server name serves another bundle; use another --name, or --replace with the user's consent",
+    ),
+    (
+        "sandbox_blocked",
+        EXIT_CONSENT,
+        "the agent's sandbox protects its own configuration (Codex: .codex/); the user must run `next` in their own terminal",
     ),
     (
         "gate_failed",
@@ -160,6 +173,43 @@ pub fn classify(e: &anyhow::Error) -> ErrorReport {
             exit: EXIT_CONSENT,
         };
     }
+    if let Some(okfkit_skills::Error::Protected { path }) = e.downcast_ref::<okfkit_skills::Error>()
+    {
+        let home = std::env::var_os("HOME").map_or_else(|| PathBuf::from("."), PathBuf::from);
+        let user = path.starts_with(okfkit_skills::codex_home(&home));
+        let cmd = if user {
+            "okfkit agent install --codex --user"
+        } else {
+            "okfkit agent install --codex"
+        };
+        return ErrorReport {
+            code: "sandbox_blocked",
+            message: format!(
+                "cannot write {}: Codex's sandbox keeps .codex/ read-only, so okfkit cannot connect Codex from inside Codex",
+                path.display()
+            ),
+            hint: Some(format!(
+                "nothing was written; ask the user to run `{cmd}` in their own terminal{}, then restart Codex. Until then, use the okfkit CLI (okfkit help --agent)",
+                if user {
+                    String::new()
+                } else {
+                    format!(
+                        " in {}",
+                        path.parent()
+                            .and_then(Path::parent)
+                            .unwrap_or(path)
+                            .display()
+                    )
+                }
+            )),
+            question: Some(format!(
+                "Codex's sandbox does not let me register okfkit for Codex. Please run `{cmd}` in your own terminal, then restart Codex."
+            )),
+            flag: None,
+            next: vec![cmd.into()],
+            exit: EXIT_CONSENT,
+        };
+    }
     if let Some(okfkit_skills::Error::Conflict {
         name,
         existing,
@@ -224,10 +274,7 @@ pub fn classify(e: &anyhow::Error) -> ErrorReport {
             Some("put CSV, TSV or XLSX files in the bundle (for example under data/)"),
         )
     } else if msg.contains("not available in this build") || msg.contains("not in this build") {
-        (
-            "not_built",
-            Some("install the okfkit-full build (cargo install okfkit-cli --features full)"),
-        )
+        ("not_built", Some(INSTALL_FULL_HINT))
     } else if msg.contains("embeddings are off") {
         (
             "embeddings_off",
@@ -294,6 +341,11 @@ pub const CONSENT: &[(&str, &str, &str)] = &[
         "send document text to the agent's model provider (writing tune questions)",
         "embed tune next",
         "that passages leave the machine",
+    ),
+    (
+        "send document text to an embeddings API (embed enable --api-url)",
+        "--send-documents",
+        "the service URL, and that every chunk and query is sent there",
     ),
     (
         "change documents (adopt --write, lint --fix-safe, vocab --write, curating)",
@@ -365,7 +417,7 @@ pub fn agent_guide(commands: &[(String, String)]) -> String {
         out.push_str(&format!("- {action} [{flag}]: tell them {tell}\n"));
     }
     out.push_str(
-        "\nNever add --accept-license, --yes, --write, --force or --replace on your own.\n\n## Commands\n",
+        "\nNever add --accept-license, --yes, --write, --force, --replace or --send-documents on your own.\n\n## Commands\n",
     );
     for (name, about) in commands {
         out.push_str(&format!("- `okfkit {name}`: {about}\n"));

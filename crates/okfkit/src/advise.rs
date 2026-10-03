@@ -256,7 +256,7 @@ fn plan(profile: Profile, o: &AdviseOptions) -> Advice {
             tier: Tier::Curate,
             when: When::Now,
             title: "Adopt the folder into the okfkit standard".into(),
-            why: "the files are not OKF-conformant yet; a well-organized bundle is what makes agents accurate (PLAN §1)".into(),
+            why: "the files are not OKF-conformant yet; a well-organized bundle is what makes agents accurate (spikes S3-S5, spikes/README.md)".into(),
             commands: vec![
                 "okfkit adopt --plan".into(),
                 "okfkit adopt --out <dir>   # or --write after review".into(),
@@ -275,7 +275,7 @@ fn plan(profile: Profile, o: &AdviseOptions) -> Advice {
                 when: When::Now,
                 title: "Curate: descriptions, index.md, tags".into(),
                 why: format!(
-                    "{}; agents rely on descriptions and index.md to pick documents (PLAN §1)",
+                    "{}; agents rely on descriptions and index.md to pick documents (spikes S3-S5, spikes/README.md)",
                     why.join(", ")
                 ),
                 commands: vec![
@@ -490,6 +490,7 @@ mod tests {
                 embed_local: true,
                 embed_api: false,
                 ja_embedded: false,
+                import: true,
             },
         }
     }

@@ -358,9 +358,11 @@ impl KbServer {
         let has = |name: &str| self.tools.iter().any(|t| t.name == name);
         let p = &self.prefix;
         let tool = |name: &str| self.full_name(name);
+        let root = self.bundle.root();
+        let root = std::fs::canonicalize(root).unwrap_or_else(|_| root.to_owned());
         let mut out = format!(
             "Tools for the markdown knowledge bundle at {}.\n",
-            self.bundle.root().display()
+            root.display()
         );
         if has("catalog") {
             out.push_str(&format!(

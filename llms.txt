@@ -4,11 +4,12 @@
 
 Agents set okfkit up for the user; the user only answers questions.
 
-1. Install (if `okfkit --version` fails): from a clone of the repository, `cargo install --path crates/okfkit-cli` (`--features full` adds semantic search and fine-tuning). After publication: `cargo install okfkit-cli`.
+1. Install (if `okfkit --version` fails): from a clone of the repository, `cargo install --locked --path crates/okfkit-cli` (Rust 1.89+; `--features full` adds semantic search and fine-tuning). After publication: `cargo install --locked okfkit-cli`.
 2. Run `okfkit onboard` in the knowledge folder (or `okfkit -b <folder> onboard`; `--json` for structured output). Do the first step, run it again, repeat until nothing is left.
 3. At every ASK step, ask the user the question and wait; run only the commands of the chosen option.
-4. Never add `--accept-license`, `--yes`, `--write`, `--force` or `--replace` unless the user agreed. A command that exits 3 needs consent: relay its `error.question`. Exit 4 means findings (lint errors, a rejected batch, a failed gate).
+4. Never add `--accept-license`, `--yes`, `--write`, `--force`, `--replace` or `--send-documents` unless the user agreed. A command that exits 3 needs consent: relay its `error.question`. Exit 4 means findings (lint errors, a rejected batch, a failed gate).
 5. Finish with `okfkit doctor` (a real MCP round trip), then ask the user to restart the agent session.
+6. Inside Codex, its sandbox keeps `.codex/` read-only: ask the user to run `okfkit agent install --codex` in their own terminal (error code `sandbox_blocked`).
 
 To remove okfkit: `okfkit onboard --goal remove`.
 

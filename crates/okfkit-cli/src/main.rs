@@ -22,6 +22,21 @@ use cli::{
 };
 
 fn main() -> ExitCode {
+    // `okfkit … | head` closes stdout early: stop like other Unix tools (128 + SIGPIPE) instead
+    // of printing a panic.
+    let default_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(move |info| {
+        let payload = info.payload();
+        let msg = payload
+            .downcast_ref::<String>()
+            .map(String::as_str)
+            .or_else(|| payload.downcast_ref::<&str>().copied())
+            .unwrap_or("");
+        if msg.contains("Broken pipe") {
+            std::process::exit(141);
+        }
+        default_hook(info);
+    }));
     let cli = Cli::parse();
     let json = cli.json;
     match run(cli) {
@@ -428,7 +443,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     "embed",
                     Status::Fail,
                     format!("okfkit.toml asks for {m}, but this build has no embed module"),
-                    Some("cargo install okfkit-cli --features full"),
+                    Some(contract::INSTALL_FULL_HINT),
                 )),
                 (Some(m), st) => {
                     let base = m.split('@').next().unwrap_or(&m).to_owned();
@@ -605,6 +620,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     .into_iter()
                     .map(|a| a.label())
                     .collect(),
+                inside_codex: std::env::var_os("CODEX_THREAD_ID").is_some(),
                 gemma_accepted: okfkit::find_model("embeddinggemma-300m-q4")
                     .is_some_and(okfkit::license_accepted),
                 ..Default::default()
@@ -1073,6 +1089,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 api_url,
                 api_model,
                 api_key_env,
+                send_documents,
             } => {
                 if !bundle_dir.is_dir() {
                     bail!(
@@ -1080,13 +1097,40 @@ fn run(cli: Cli) -> Result<ExitCode> {
                         bundle_dir.display()
                     );
                 }
+                let built = okfkit::build_features();
                 let cfg = match (api_url, api_model) {
-                    (Some(base_url), Some(model)) => okfkit::config::EmbedConfig::Api {
-                        base_url,
-                        model,
-                        key_env: api_key_env,
-                    },
+                    (Some(base_url), Some(model)) => {
+                        // Refuse before writing anything: okfkit.toml must not ask for a module
+                        // this build cannot run.
+                        if !built.embed_api {
+                            bail!("embeddings through an API are not in this build");
+                        }
+                        if !send_documents {
+                            return Err(contract::Consent {
+                                code: "consent_required",
+                                message: format!("embedding through {base_url} sends document text there"),
+                                question: format!(
+                                    "Every document chunk (and each search query) will be sent to {base_url} to be embedded. \
+                                     May okfkit send this bundle's text to that service? (A local model keeps everything on this machine.)"
+                                ),
+                                flag: "--send-documents",
+                                next: vec![
+                                    format!("okfkit embed enable --api-url {base_url} --api-model {model} --send-documents"),
+                                    "okfkit embed enable --model bge-m3-int8".into(),
+                                ],
+                            }
+                            .into());
+                        }
+                        okfkit::config::EmbedConfig::Api {
+                            base_url,
+                            model,
+                            key_env: api_key_env,
+                        }
+                    }
                     _ => {
+                        if !built.embed_local {
+                            bail!("local embedding models are not in this build");
+                        }
                         let info = if model.starts_with("custom:") {
                             okfkit::find_custom(&model)?
                                 .manifest
@@ -1809,12 +1853,16 @@ location: {}
                 },
                 Module {
                     name: "import",
-                    status: "not in this build (planned for v0.4)",
+                    status: if built.import {
+                        "on (PDF, Word, PowerPoint, HTML, text, images: okfkit import)"
+                    } else {
+                        "not in this build"
+                    },
                     capabilities: vec![],
                 },
                 Module {
                     name: "write",
-                    status: "not in this build",
+                    status: "CLI only, with explicit flags (init, new, adopt --write, import --write, lint --fix-safe); no MCP write tools",
                     capabilities: vec![],
                 },
             ];
@@ -1823,7 +1871,7 @@ location: {}
                     .iter()
                     .map(|m| {
                         format!(
-                            "{:<12} {:<40} {}\n",
+                            "{:<14} {:<40} {}\n",
                             m.name,
                             m.status,
                             m.capabilities.join(" ")
@@ -2316,8 +2364,7 @@ struct TuneEnv {
 }
 
 #[cfg(not(feature = "embed-tune"))]
-const NO_TUNE: &str =
-    "training is not in this build: use okfkit-full (cargo install okfkit-cli --features full)";
+const NO_TUNE: &str = "training is not in this build: use okfkit-full (in a clone of the okfkit repository: cargo install --locked --path crates/okfkit-cli --features full)";
 
 /// The training environment; creates it only with `--yes` (it downloads packages).
 #[cfg(feature = "embed-tune")]

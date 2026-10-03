@@ -703,55 +703,91 @@ fn machine_contract_errors_consent_and_no_prompts() {
     let e: Value = serde_json::from_slice(&out.stdout).unwrap();
     assert_eq!(e["error"]["code"], "bundle_not_found");
     assert!(e["error"]["hint"].as_str().unwrap().contains("--bundle"));
-    // A license is the user's decision: exit 3 with the question to ask.
     let kb = tmp.path().join("kb");
     std::fs::create_dir_all(&kb).unwrap();
     let kb_s = kb.to_str().unwrap();
-    let out = run(&[
-        "-b",
-        kb_s,
-        "--state-dir",
-        tmp.path().join("st").to_str().unwrap(),
-        "embed",
-        "enable",
-        "--json",
-    ]);
-    assert_eq!(out.status.code(), Some(3));
-    let e: Value = serde_json::from_slice(&out.stdout).unwrap();
-    assert_eq!(e["error"]["code"], "license_required");
-    assert_eq!(e["error"]["flag"], "--accept-license");
-    assert!(
-        e["error"]["question"]
-            .as_str()
-            .unwrap()
-            .contains("Gemma Terms of Use")
-    );
-    assert!(
-        !kb.join("okfkit.toml").exists(),
-        "nothing written without consent"
-    );
-    // Text mode tells people the same.
-    let out = run(&[
-        "-b",
-        kb_s,
-        "--state-dir",
-        tmp.path().join("st").to_str().unwrap(),
-        "embed",
-        "enable",
-    ]);
-    assert!(String::from_utf8_lossy(&out.stderr).contains("ask the user:"));
-    // Write commands report changes and next steps.
-    let out = run(&[
-        "-b",
-        kb_s,
-        "embed",
-        "enable",
-        "--model",
-        "bge-m3-int8",
-        "--json",
-    ]);
-    let v: Value = serde_json::from_slice(&out.stdout).unwrap();
-    assert_eq!(v["next"][0], "okfkit embed index");
+    let st1 = tmp.path().join("st");
+    let st1 = st1.to_str().unwrap();
+    let modules: Value = serde_json::from_slice(&run(&["modules", "--json"]).stdout).unwrap();
+    let local = modules.as_array().unwrap().iter().any(|m| {
+        m["name"] == "embed-local" && !m["status"].as_str().unwrap().contains("not in this build")
+    });
+    if local {
+        // A license is the user's decision: exit 3 with the question to ask.
+        let out = run(&["-b", kb_s, "--state-dir", st1, "embed", "enable", "--json"]);
+        assert_eq!(out.status.code(), Some(3));
+        let e: Value = serde_json::from_slice(&out.stdout).unwrap();
+        assert_eq!(e["error"]["code"], "license_required");
+        assert_eq!(e["error"]["flag"], "--accept-license");
+        assert!(
+            e["error"]["question"]
+                .as_str()
+                .unwrap()
+                .contains("Gemma Terms of Use")
+        );
+        assert!(
+            !kb.join("okfkit.toml").exists(),
+            "nothing written without consent"
+        );
+        // Text mode tells people the same.
+        let out = run(&["-b", kb_s, "--state-dir", st1, "embed", "enable"]);
+        assert!(String::from_utf8_lossy(&out.stderr).contains("ask the user:"));
+        // Write commands report changes and next steps.
+        let out = run(&[
+            "-b",
+            kb_s,
+            "embed",
+            "enable",
+            "--model",
+            "bge-m3-int8",
+            "--json",
+        ]);
+        let v: Value = serde_json::from_slice(&out.stdout).unwrap();
+        assert_eq!(v["next"][0], "okfkit embed index");
+        std::fs::remove_file(kb.join("okfkit.toml")).unwrap();
+    } else {
+        // Without the module, nothing is written: okfkit.toml must not ask for what cannot run.
+        let out = run(&[
+            "-b",
+            kb_s,
+            "embed",
+            "enable",
+            "--model",
+            "bge-m3-int8",
+            "--json",
+        ]);
+        assert_eq!(out.status.code(), Some(1));
+        let e: Value = serde_json::from_slice(&out.stdout).unwrap();
+        assert_eq!(e["error"]["code"], "not_built");
+        assert!(
+            e["error"]["hint"]
+                .as_str()
+                .unwrap()
+                .contains("--path crates/okfkit-cli")
+        );
+        assert!(!kb.join("okfkit.toml").exists());
+    }
+    let api = modules.as_array().unwrap().iter().any(|m| {
+        m["name"] == "embed-api" && !m["status"].as_str().unwrap().contains("not in this build")
+    });
+    if api {
+        // Sending documents to an embeddings API is the user's decision too.
+        let out = run(&[
+            "-b",
+            kb_s,
+            "embed",
+            "enable",
+            "--api-url",
+            "https://api.example.com/v1",
+            "--api-model",
+            "m",
+            "--json",
+        ]);
+        assert_eq!(out.status.code(), Some(3));
+        let e: Value = serde_json::from_slice(&out.stdout).unwrap();
+        assert_eq!(e["error"]["flag"], "--send-documents");
+        assert!(!kb.join("okfkit.toml").exists());
+    }
     // A sweep of commands with stdin closed: none waits for input.
     let st = tmp.path().join("st2");
     let st = st.to_str().unwrap();
@@ -1292,5 +1328,72 @@ fn ocr_next_exports_the_scanned_page_image() {
     assert!(
         !kb.join(image.file_name().unwrap()).exists(),
         "nothing written into the bundle"
+    );
+}
+
+#[test]
+fn inside_codex_the_user_connects_codex() {
+    let tmp = tempfile::tempdir().unwrap();
+    let (home, project) = (tmp.path().join("home"), tmp.path().join("proj"));
+    std::fs::create_dir_all(home.join(".codex")).unwrap();
+    std::fs::create_dir_all(project.join(".codex")).unwrap();
+    let run = |args: &[&str]| {
+        let mut c = Command::cargo_bin("okfkit").unwrap();
+        c.env("HOME", &home)
+            .env("XDG_CONFIG_HOME", home.join(".config"))
+            .env("XDG_CACHE_HOME", home.join(".cache"))
+            .env_remove("CODEX_HOME")
+            .env("PATH", "/usr/bin:/bin")
+            .current_dir(&project)
+            .arg("-b")
+            .arg(fixture("okf-official/acme_retail"))
+            .arg("--state-dir")
+            .arg(tmp.path().join("st"))
+            .args(args)
+            .write_stdin("");
+        c
+    };
+    // Codex's sandbox keeps .codex/ read-only: a clear error for the user, nothing written.
+    let mut perms = std::fs::metadata(project.join(".codex"))
+        .unwrap()
+        .permissions();
+    perms.set_readonly(true);
+    std::fs::set_permissions(project.join(".codex"), perms.clone()).unwrap();
+    if std::fs::write(project.join(".codex/probe"), "").is_err() {
+        let out = run(&["agent", "install", "--codex", "--json"])
+            .output()
+            .unwrap();
+        assert_eq!(out.status.code(), Some(3));
+        let e: Value = serde_json::from_slice(&out.stdout).unwrap();
+        assert_eq!(e["error"]["code"], "sandbox_blocked");
+        assert_eq!(e["error"]["next"][0], "okfkit agent install --codex");
+        assert!(!project.join("AGENTS.md").exists(), "nothing else written");
+    }
+    #[allow(clippy::permissions_set_readonly_false)]
+    perms.set_readonly(false);
+    std::fs::set_permissions(project.join(".codex"), perms).unwrap();
+    // onboard inside a Codex session: connecting Codex is a step for the user.
+    let p = json_of(run(&["onboard"]).env("CODEX_THREAD_ID", "t"));
+    let step = p["steps"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|s| s["id"] == "agents-codex")
+        .expect("a step for the user");
+    assert_eq!(step["kind"], "tell");
+    assert!(
+        step["question"]
+            .as_str()
+            .unwrap()
+            .contains("okfkit agent install --codex")
+    );
+    // Outside Codex the agent connects it.
+    let p = json_of(&mut run(&["onboard"]));
+    assert!(
+        p["steps"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|s| s["id"] != "agents-codex")
     );
 }

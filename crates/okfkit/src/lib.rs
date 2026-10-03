@@ -108,6 +108,8 @@ pub struct BuildFeatures {
     pub embed_api: bool,
     /// The Japanese dictionary is embedded (no download needed).
     pub ja_embedded: bool,
+    /// Source documents (PDF, Office, HTML…) are read and imported.
+    pub import: bool,
 }
 
 /// The optional modules of this build.
@@ -116,6 +118,7 @@ pub fn build_features() -> BuildFeatures {
         embed_local: cfg!(feature = "embed-local"),
         embed_api: cfg!(feature = "embed-api"),
         ja_embedded: okfkit_analyze::dict::embedded(),
+        import: cfg!(feature = "import"),
     }
 }
 

@@ -67,6 +67,8 @@ pub struct State {
     pub advice: Option<Advice>,
     /// Agents found on this machine (labels).
     pub agents_found: Vec<&'static str>,
+    /// okfkit runs inside a Codex session, whose sandbox keeps `.codex/` read-only.
+    pub inside_codex: bool,
     /// Healthy installs serving this bundle (agent labels).
     pub installed_for: Vec<&'static str>,
     /// Problems with installs serving this bundle.
@@ -114,7 +116,7 @@ pub struct Plan {
 pub const RULES: &[&str] = &[
     "Do the steps in order. Run `okfkit onboard` again after each step: finished steps move to `done`.",
     "At an `ask` step, ask the user the question and wait. Run only the commands of the option they chose.",
-    "Never add --accept-license, --yes, --write, --force or --replace unless the user agreed to that step.",
+    "Never add --accept-license, --yes, --write, --force, --replace or --send-documents unless the user agreed to that step.",
     "Never edit documents without asking. A command that exits 3 needs the user's consent: relay its `question`.",
 ];
 
@@ -366,22 +368,53 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
                     "Install Claude Code or Codex, then run `okfkit onboard` again; or use `okfkit mcp serve` with another MCP client.".into(),
                 ));
             } else {
-                let mut s = run(
-                    "agents",
-                    &format!("Connect {} to the bundle", st.agents_found.join(" and ")),
-                    connect.map_or("agents get the okfkit tools and skills", |c| c.why.as_str()),
-                    &["okfkit agent install"],
-                    &[
-                        ".mcp.json",
-                        ".claude/skills/",
-                        ".codex/config.toml",
-                        "AGENTS.md",
-                    ],
-                );
-                s.question = Some(
-                    "Tell the user what was written, then: restart the agent session (or reconnect MCP) to load the okfkit tools.".into(),
-                );
-                steps.push(s);
+                let why =
+                    connect.map_or("agents get the okfkit tools and skills", |c| c.why.as_str());
+                // Inside Codex, its sandbox refuses writes to .codex/: the user connects Codex.
+                let sandboxed = st.inside_codex && st.agents_found.contains(&"Codex");
+                let here: Vec<&str> = st
+                    .agents_found
+                    .iter()
+                    .copied()
+                    .filter(|a| !(sandboxed && *a == "Codex"))
+                    .collect();
+                if !here.is_empty() {
+                    let (command, writes): (&str, &[&str]) = if sandboxed {
+                        (
+                            "okfkit agent install --claude",
+                            &[".mcp.json", ".claude/skills/", "AGENTS.md"],
+                        )
+                    } else {
+                        (
+                            "okfkit agent install",
+                            &[
+                                ".mcp.json",
+                                ".claude/skills/",
+                                ".codex/config.toml",
+                                "AGENTS.md",
+                            ],
+                        )
+                    };
+                    let mut s = run(
+                        "agents",
+                        &format!("Connect {} to the bundle", here.join(" and ")),
+                        why,
+                        &[command],
+                        writes,
+                    );
+                    s.question = Some(
+                        "Tell the user what was written, then: restart the agent session (or reconnect MCP) to load the okfkit tools.".into(),
+                    );
+                    steps.push(s);
+                }
+                if sandboxed {
+                    steps.push(tell(
+                        "agents-codex",
+                        "Connect Codex (the user runs one command)",
+                        "Codex's sandbox keeps .codex/ read-only, so okfkit cannot connect Codex from inside Codex",
+                        "Please run `okfkit agent install --codex` in your own terminal in this folder (add `--user` for every project), then restart Codex. Until then I can use the okfkit CLI.".into(),
+                    ));
+                }
             }
         } else {
             done.push(format!("connected: {}", st.installed_for.join(", ")));
@@ -493,9 +526,9 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
                         "embed-build",
                         "Semantic search needs the okfkit-full build",
                         &s.why,
-                        "Semantic search needs the okfkit-full build of okfkit (adds ~70 MB). Install it?".into(),
+                        "Semantic search needs the okfkit-full build of okfkit (about 60 MB instead of 34 MB, plus a model download; built from a clone of the okfkit repository). Install it?".into(),
                         vec![
-                            choice("yes", &["cargo install okfkit-cli --features full", "okfkit onboard"]),
+                            choice("yes", &[crate::contract::INSTALL_FULL, "okfkit onboard"]),
                             choice("no", &[]),
                         ],
                         &["the okfkit program"],

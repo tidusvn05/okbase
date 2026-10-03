@@ -59,12 +59,19 @@ pub const AGENTS_END: &str = "<!-- okfkit:end -->";
 #[non_exhaustive]
 pub enum Error {
     /// A file could not be read or written.
-    #[error("{path}: {source}")]
+    #[error("{path}")]
     Io {
         /// The file.
         path: PathBuf,
         /// The underlying error.
         source: std::io::Error,
+    },
+    /// The agent's sandbox keeps its own configuration read-only (Codex protects `.codex/`), so
+    /// okfkit cannot register itself from inside that agent.
+    #[error("{path} is read-only inside the agent's sandbox (Codex protects .codex/)")]
+    Protected {
+        /// The file okfkit had to write.
+        path: PathBuf,
     },
     /// An existing configuration file cannot be parsed, so it is not touched.
     #[error("cannot update {path}: {message}")]
