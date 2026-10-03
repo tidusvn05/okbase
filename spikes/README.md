@@ -1,6 +1,6 @@
 # Spikes
 
-Thí nghiệm và benchmark đứng sau mọi mặc định của okfkit. Không đổi mặc định khi chưa có số liệu
+Thí nghiệm và benchmark đứng sau mọi mặc định của okbase. Không đổi mặc định khi chưa có số liệu
 mới. Mỗi spike là một thư mục, có `RESULTS.md` là nguồn sự thật. File này là mục lục và bảng số
 liệu tra nhanh.
 
@@ -16,18 +16,18 @@ ID theo `docs/PLAN.md` §1. Ngày là ngày chạy.
 | S4 | 2026-09-30 | `okf-scale` vòng 1–2 | Bundle lớn (docs OpenClaw 60k → 4.4M token): cách nào? | **G2 lexical (không embedding) 100/100/93/90%**, ngang embedding (D) và agent + grep (E). Câu tiếng Việt 85 → 95% nhờ `kb_grep` mạnh hơn. Nhắc agent "kiểm tra lại" bằng prompt **không hiệu quả** | PLAN §1, §5 |
 | S5 | 2026-09-30 | `biz-meta` | Metadata/tag và sheet: cần tool không? (151 → 3.020 tài liệu) | ×1: agent grep frontmatter là đủ. ×20: **`data_query` bắt buộc** (sheet 10/10, rẻ hơn 9×); `kb_query` rẻ hơn 30–45%. View file không mở rộng được | PLAN §1, §5 |
 | S6 | 2026-09-30 | `embed-bench` | Tốc độ chunk và index | ~3 chunk/s trên 8 CPU; 4.4M token ≈ 64 phút. Embedding chạy nền, lexical sẵn sàng ngay | PLAN §1, §11 |
-| v0.1 | 2026-10-01 | `acceptance-v0.1` | okfkit thật có tái hiện G2 của S4 không? | **28/30 (93%)**, đạt mục tiêu. Skill không tăng độ chính xác ở bundle tra cứu, chi phí +60% | HANDOFF T11 |
-| S8, S9 (v0.2) | 2026-10-01 | `acceptance-v0.2` | S5 ×20 với okfkit; adopt có giảm độ chính xác không; skill có giúp không | K 44/48, KS 45/48; sheet 9–10/10. Adopt không làm giảm. **S9 chưa kết luận được**: agent không gọi skill lần nào | PLAN §13 |
-| v0.3 | 2026-10-01 | `acceptance-v0.3` | Retrieval qua đường thật của okfkit | S1 R@1 **0.857** (Gemma Q4), 0.750 (bge-m3); S4 top-6 29/30 và 30/30. Đã sửa ước lượng token (S4 26 → 29/30) | PLAN §13 |
+| v0.1 | 2026-10-01 | `acceptance-v0.1` | okbase thật có tái hiện G2 của S4 không? | **28/30 (93%)**, đạt mục tiêu. Skill không tăng độ chính xác ở bundle tra cứu, chi phí +60% | HANDOFF T11 |
+| S8, S9 (v0.2) | 2026-10-01 | `acceptance-v0.2` | S5 ×20 với okbase; adopt có giảm độ chính xác không; skill có giúp không | K 44/48, KS 45/48; sheet 9–10/10. Adopt không làm giảm. **S9 chưa kết luận được**: agent không gọi skill lần nào | PLAN §13 |
+| v0.3 | 2026-10-01 | `acceptance-v0.3` | Retrieval qua đường thật của okbase | S1 R@1 **0.857** (Gemma Q4), 0.750 (bge-m3); S4 top-6 29/30 và 30/30. Đã sửa ước lượng token (S4 26 → 29/30) | PLAN §13 |
 | S10-lite | 2026-10-02 | `import-bench` | Import PDF/Office/HTML nhẹ và chính xác? | **anydoc + htmd**: chính xác với Office và PDF chữ (vi/ja); binary thêm ~10 MB; 0.3–10 ms mỗi tài liệu nhỏ. Còn yếu: hai cột giữa trang, bảng HTML không có `<th>`, trang scan | `docs/PLAN-import.md` |
 | I5 | 2026-10-02 | `import-bench` | Agent thật trên thư mục PDF/DOCX/HTML hỗn hợp | Trả lời 3/3, trích dẫn file và trang. Hỏi consent trước khi OCR; tự thêm cờ consent 0 lần | `docs/PLAN-import.md` |
-| S11 | 2026-10-01 → 02 | `embed-tune` | Fine-tune EmbeddingGemma (LoRA, cách của Unsloth) có lợi không? | Bản fp32: R@1 0.853 → 0.943. **Bản Q4 trong okfkit: 0.857 → 0.917**, S4 30/30. Quy trình agent + CLI đạt (held-out 0.875 → 0.925) | `docs/PLAN-advise-tune.md` |
-| S13 | 2026-10-02 | `onboarding` | Agent tự cài okfkit chỉ từ một câu? | Claude 3/3 hoàn tất (35–51 s, ~50k token); tự thêm cờ consent 0 lần. **Codex chưa chạy** | `docs/PLAN-onboarding.md` |
+| S11 | 2026-10-01 → 02 | `embed-tune` | Fine-tune EmbeddingGemma (LoRA, cách của Unsloth) có lợi không? | Bản fp32: R@1 0.853 → 0.943. **Bản Q4 trong okbase: 0.857 → 0.917**, S4 30/30. Quy trình agent + CLI đạt (held-out 0.875 → 0.925) | `docs/PLAN-advise-tune.md` |
+| S13 | 2026-10-02 | `onboarding` | Agent tự cài okbase chỉ từ một câu? | Claude 3/3 hoàn tất (35–51 s, ~50k token); tự thêm cờ consent 0 lần. **Codex chưa chạy** | `docs/PLAN-onboarding.md` |
 | S13b | 2026-10-02 | `onboarding` | Thư mục thực tế: repo phần mềm, thư mục rỗng, bundle hỏng một phần | 3/3 hiểu đúng thư mục và hỏi đúng chỗ. Agent tìm ra 5 lỗi, đã sửa | `docs/PLAN-usecases.md` |
 | S14 | 2026-10-02 | `page-image-bench` | Đưa trang scan cho agent: xuất ảnh nhúng hay render trang? | **Xuất ảnh nhúng**: JPEG 1–3 ms (render 0.2–0.95 s); Flate không mất chi tiết và nhanh hơn render 2–4×. Token ảnh như nhau (~1.5k). CCITT G4: 86 ms, chính xác (crate `fax`) | `docs/PLAN-import.md` §7 |
 | S15 | 2026-10-03 | `mcp-tools` | Rút gọn danh sách tool có giảm chi phí không? Quy tắc của skill gửi qua instructions của MCP server có thay được gợi ý trong prompt không? | **Instructions thay được gợi ý**: không gợi ý vẫn 46/48 (bằng có gợi ý), dùng `kb_query`/`data_query` như nhau. Đây là lời giải cho S9. Rút gọn tool: −3% token, chi phí không đổi, độ chính xác không đổi. $6.29 | `PLAN.md` §13–14 |
 | S7 | 2026-10-03 | `codex` | Lexical với Codex và model nhỏ | **gpt-6.1-sol 26/30 (87%)**, Claude Sonnet 28/30, không khác biệt có ý nghĩa. **gpt-6-luna (model nhỏ) 21/30**: tìm đúng tài liệu nhưng trả lời thiếu ý; thêm `kb_search` không cải thiện (vẫn 21/30), chỉ bớt 24% token. Giữ lexical làm mặc định cho cả Codex | `PLAN.md` §13–14 |
-| S13 (Codex) | 2026-10-03 | `codex` | Codex tự cài okfkit từ một câu | 12/12 lượt tìm ra `onboard`, 0 lần tự thêm cờ đồng ý, `doctor` đạt 11/12. **Lỗi:** sandbox của Codex chặn ghi `.codex/`, nên Codex không tự đăng ký MCP cho chính nó được; okfkit chỉ báo "Permission denied" | `PLAN-onboarding.md` |
+| S13 (Codex) | 2026-10-03 | `codex` | Codex tự cài okbase từ một câu | 12/12 lượt tìm ra `onboard`, 0 lần tự thêm cờ đồng ý, `doctor` đạt 11/12. **Lỗi:** sandbox của Codex chặn ghi `.codex/`, nên Codex không tự đăng ký MCP cho chính nó được; okbase chỉ báo "Permission denied" | `PLAN-onboarding.md` |
 
 ## 2. Số liệu tra nhanh
 

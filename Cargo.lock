@@ -2247,21 +2247,21 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit"
+name = "okbase"
 version = "0.1.0-dev"
 dependencies = [
  "blake3",
- "okfkit-analyze",
- "okfkit-convert",
- "okfkit-core",
- "okfkit-data",
- "okfkit-embed",
- "okfkit-index",
- "okfkit-lint",
- "okfkit-query",
- "okfkit-search",
- "okfkit-standard",
- "okfkit-tune",
+ "okbase-analyze",
+ "okbase-convert",
+ "okbase-core",
+ "okbase-data",
+ "okbase-embed",
+ "okbase-index",
+ "okbase-lint",
+ "okbase-query",
+ "okbase-search",
+ "okbase-standard",
+ "okbase-tune",
  "serde",
  "serde_json",
  "tempfile",
@@ -2270,14 +2270,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-adopt"
+name = "okbase-adopt"
 version = "0.1.0-dev"
 dependencies = [
  "insta",
- "okfkit-analyze",
- "okfkit-core",
- "okfkit-lint",
- "okfkit-standard",
+ "okbase-analyze",
+ "okbase-core",
+ "okbase-lint",
+ "okbase-standard",
  "regex",
  "serde",
  "serde_json",
@@ -2287,7 +2287,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-analyze"
+name = "okbase-analyze"
 version = "0.1.0-dev"
 dependencies = [
  "flate2",
@@ -2304,18 +2304,18 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-cli"
+name = "okbase-cli"
 version = "0.1.0-dev"
 dependencies = [
  "anyhow",
  "assert_cmd",
  "clap",
  "insta",
- "okfkit",
- "okfkit-adopt",
- "okfkit-lint",
- "okfkit-mcp",
- "okfkit-skills",
+ "okbase",
+ "okbase-adopt",
+ "okbase-lint",
+ "okbase-mcp",
+ "okbase-skills",
  "serde",
  "serde_json",
  "tempfile",
@@ -2323,7 +2323,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-convert"
+name = "okbase-convert"
 version = "0.1.0-dev"
 dependencies = [
  "anydoc",
@@ -2339,7 +2339,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-core"
+name = "okbase-core"
 version = "0.1.0-dev"
 dependencies = [
  "ignore",
@@ -2355,15 +2355,15 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-data"
+name = "okbase-data"
 version = "0.1.0-dev"
 dependencies = [
  "blake3",
  "calamine",
  "csv",
  "insta",
- "okfkit-analyze",
- "okfkit-core",
+ "okbase-analyze",
+ "okbase-core",
  "rusqlite",
  "serde",
  "serde_json",
@@ -2372,12 +2372,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-embed"
+name = "okbase-embed"
 version = "0.1.0-dev"
 dependencies = [
  "blake3",
  "fastembed",
- "okfkit-analyze",
+ "okbase-analyze",
  "rusqlite",
  "serde",
  "serde_json",
@@ -2387,25 +2387,25 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-eval"
+name = "okbase-eval"
 version = "0.1.0-dev"
 dependencies = [
- "okfkit",
- "okfkit-mcp",
+ "okbase",
+ "okbase-mcp",
  "serde",
  "serde_json",
  "thiserror",
 ]
 
 [[package]]
-name = "okfkit-index"
+name = "okbase-index"
 version = "0.1.0-dev"
 dependencies = [
  "blake3",
- "okfkit-analyze",
- "okfkit-convert",
- "okfkit-core",
- "okfkit-standard",
+ "okbase-analyze",
+ "okbase-convert",
+ "okbase-core",
+ "okbase-standard",
  "rusqlite",
  "serde",
  "serde_json",
@@ -2414,13 +2414,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-lint"
+name = "okbase-lint"
 version = "0.1.0-dev"
 dependencies = [
  "insta",
- "okfkit-analyze",
- "okfkit-core",
- "okfkit-standard",
+ "okbase-analyze",
+ "okbase-core",
+ "okbase-standard",
  "serde",
  "serde_json",
  "tempfile",
@@ -2428,13 +2428,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-mcp"
+name = "okbase-mcp"
 version = "0.1.0-dev"
 dependencies = [
  "axum",
  "http",
  "insta",
- "okfkit",
+ "okbase",
  "rmcp",
  "serde",
  "serde_json",
@@ -2445,14 +2445,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-query"
+name = "okbase-query"
 version = "0.1.0-dev"
 dependencies = [
  "insta",
- "okfkit-analyze",
- "okfkit-core",
- "okfkit-index",
- "okfkit-standard",
+ "okbase-analyze",
+ "okbase-core",
+ "okbase-index",
+ "okbase-standard",
  "regex",
  "rusqlite",
  "serde",
@@ -2462,13 +2462,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-search"
+name = "okbase-search"
 version = "0.1.0-dev"
 dependencies = [
- "okfkit-analyze",
- "okfkit-embed",
- "okfkit-index",
- "okfkit-query",
+ "okbase-analyze",
+ "okbase-embed",
+ "okbase-index",
+ "okbase-query",
  "rusqlite",
  "serde",
  "tempfile",
@@ -2476,7 +2476,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-skills"
+name = "okbase-skills"
 version = "0.1.0-dev"
 dependencies = [
  "insta",
@@ -2488,24 +2488,24 @@ dependencies = [
 ]
 
 [[package]]
-name = "okfkit-standard"
+name = "okbase-standard"
 version = "0.1.0-dev"
 dependencies = [
- "okfkit-core",
+ "okbase-core",
  "serde",
  "serde_json",
  "thiserror",
 ]
 
 [[package]]
-name = "okfkit-tune"
+name = "okbase-tune"
 version = "0.1.0-dev"
 dependencies = [
  "blake3",
- "okfkit-analyze",
- "okfkit-index",
- "okfkit-query",
- "okfkit-search",
+ "okbase-analyze",
+ "okbase-index",
+ "okbase-query",
+ "okbase-search",
  "rusqlite",
  "serde",
  "serde_json",

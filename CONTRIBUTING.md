@@ -1,6 +1,6 @@
-# Contributing to okfkit
+# Contributing to okbase
 
-Thanks for your interest! okfkit is dual-licensed under MIT OR Apache-2.0. Unless you state otherwise, any contribution you submit is licensed the same way, with no additional terms.
+Thanks for your interest! okbase is dual-licensed under MIT OR Apache-2.0. Unless you state otherwise, any contribution you submit is licensed the same way, with no additional terms.
 
 ## Before you start
 - Read `AGENTS.md` (hard rules and conventions) and `docs/PLAN.md` (design).

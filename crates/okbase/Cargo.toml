@@ -1,0 +1,54 @@
+[package]
+name = "okbase"
+description = "okbase: make markdown knowledge bundles (Open Knowledge Format) work well for AI agents."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+okbase-core.workspace = true
+okbase-standard.workspace = true
+okbase-analyze.workspace = true
+okbase-index.workspace = true
+okbase-query.workspace = true
+okbase-lint.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+okbase-data.workspace = true
+tempfile.workspace = true
+okbase-embed.workspace = true
+okbase-search.workspace = true
+okbase-tune.workspace = true
+okbase-convert = { workspace = true, optional = true }
+blake3.workspace = true
+serde_json.workspace = true
+toml_edit.workspace = true
+
+[features]
+default = ["import"]
+## Read and import PDF, Word, PowerPoint, OpenDocument, RTF, EPUB and HTML (okbase-convert, ~10 MB).
+import = ["okbase-index/import", "dep:okbase-convert"]
+## Local embedding models (EmbeddingGemma, bge-m3) through ONNX Runtime.
+embed-local = ["okbase-embed/local"]
+## An OpenAI-compatible embeddings API.
+embed-api = ["okbase-embed/api"]
+## Fine-tuning: train and export through a private Python environment.
+embed-tune = ["okbase-tune/train"]
+## Embed the Japanese dictionary instead of downloading it on first use.
+ja-embedded = ["okbase-analyze/ja-embedded"]
+
+[[example]]
+name = "retrieval_eval"
+required-features = ["embed-local"]
+
+[dev-dependencies]

@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""v0.2 evals (PLAN §13): okfkit in the setups of the biz-meta and okf-scale spikes.
+"""v0.2 evals (PLAN §13): okbase in the setups of the biz-meta and okf-scale spikes.
 
   biz (biz-meta ×20 bundle: 3,020 docs, sheets of ~10k rows, 48 questions)
-    K   okfkit MCP (kb_query, data_tables, data_query) + Read/Grep/Glob, spike QD prompt   -> S5 ×20 replication
-    KS  as K, but no tool hints in the prompt; the okfkit-answer skill instead              -> S9 (skill)
+    K   okbase MCP (kb_query, data_tables, data_query) + Read/Grep/Glob, spike QD prompt   -> S5 ×20 replication
+    KS  as K, but no tool hints in the prompt; the okbase-answer skill instead              -> S9 (skill)
   s8 (okf-scale L questions, 30, OpenClaw docs)
     R   agent with Read/Grep/Glob on the raw markdown files of bundle L (no OKF frontmatter, no index.md)
-    A   the same files after `okfkit adopt` (L1)                                              -> S8 (adopt)
+    A   the same files after `okbase adopt` (L1)                                              -> S8 (adopt)
 
 Usage:
-  cargo build --release -p okfkit-cli
+  cargo build --release -p okbase-cli
   python3 run.py biz [--configs K,KS] [--limit N]
   python3 run.py s8  [--configs R,A] [--limit N]
   python3 run.py report
@@ -20,7 +20,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 SPIKES = HERE.parent
-OKFKIT = SPIKES.parent / "target/release/okfkit"
+OKBASE = SPIKES.parent / "target/release/okbase"
 sys.path.insert(0, str(SPIKES / "biz-meta"))
 import run as biz  # noqa: E402  BASE, HINT, SCHEMA
 import report as biz_report  # noqa: E402  PROMPT, SCHEMA (judge)
@@ -59,7 +59,7 @@ def stream(cmd, user, cwd):
 
 
 def mcp_file(path, bundle, state):
-    path.write_text(json.dumps({"mcpServers": {"kb": {"command": str(OKFKIT), "args": [
+    path.write_text(json.dumps({"mcpServers": {"kb": {"command": str(OKBASE), "args": [
         "--state-dir", str(state), "--bundle", str(bundle), "mcp", "serve", "--stdio"]}}}))
 
 
@@ -67,10 +67,10 @@ def mcp_file(path, bundle, state):
 def prepare_biz():
     state = WORK / "state-biz"
     state.mkdir(parents=True, exist_ok=True)
-    subprocess.run([str(OKFKIT), "--state-dir", str(state), "-b", str(BIZ), "index"], check=True, capture_output=True)
-    subprocess.run([str(OKFKIT), "--state-dir", str(state), "-b", str(BIZ), "data", "tables"], check=True, capture_output=True)
+    subprocess.run([str(OKBASE), "--state-dir", str(state), "-b", str(BIZ), "index"], check=True, capture_output=True)
+    subprocess.run([str(OKBASE), "--state-dir", str(state), "-b", str(BIZ), "data", "tables"], check=True, capture_output=True)
     # The skill goes into the (git-ignored) spike bundle, the agent's working directory.
-    subprocess.run([str(OKFKIT), "-b", str(BIZ), "agent", "install", "--claude", "--project", str(BIZ)], check=True, capture_output=True)
+    subprocess.run([str(OKBASE), "-b", str(BIZ), "agent", "install", "--claude", "--project", str(BIZ)], check=True, capture_output=True)
     (BIZ / ".mcp.json").unlink(missing_ok=True)
     return state
 
@@ -118,8 +118,8 @@ def prepare_s8():
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy(OPENCLAW / rel, dst)
     if not ADOPTED_L.exists():
-        subprocess.run([str(OKFKIT), "adopt", str(RAW_L), "--out", str(ADOPTED_L)], check=True)
-        lint = subprocess.run([str(OKFKIT), "--state-dir", str(WORK / "state-s8"), "-b", str(ADOPTED_L), "lint", "--level", "L1"],
+        subprocess.run([str(OKBASE), "adopt", str(RAW_L), "--out", str(ADOPTED_L)], check=True)
+        lint = subprocess.run([str(OKBASE), "--state-dir", str(WORK / "state-s8"), "-b", str(ADOPTED_L), "lint", "--level", "L1"],
                               capture_output=True, text=True)
         print(lint.stdout.strip().splitlines()[-1])
 
@@ -242,8 +242,8 @@ def main():
     ap.add_argument("--jobs", type=int, default=4)
     ap.add_argument("--model", default="sonnet")
     a = ap.parse_args()
-    if not OKFKIT.exists():
-        sys.exit("build first: cargo build --release -p okfkit-cli")
+    if not OKBASE.exists():
+        sys.exit("build first: cargo build --release -p okbase-cli")
     if a.suite == "biz":
         state = prepare_biz()
         qs = json.loads((SPIKES / "biz-meta/questions-x20.json").read_text())[: a.limit or None]

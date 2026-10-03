@@ -7,7 +7,7 @@ publish = false
 [workspace]
 
 [dependencies]
-okfkit-convert = { path = "../../crates/okfkit-convert" }
+okbase-convert = { path = "../../crates/okbase-convert" }
 
 [profile.release]
 strip = true

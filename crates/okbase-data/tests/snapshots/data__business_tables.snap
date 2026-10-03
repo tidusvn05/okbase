@@ -1,0 +1,7 @@
+---
+source: crates/okbase-data/tests/data.rs
+expression: t.to_text()
+---
+inventory (240 rows): sku TEXT, product_name TEXT, category TEXT, warehouse TEXT, qty INTEGER, reorder_level INTEGER  [source: data/inventory.csv]
+price_list (60 rows): sku TEXT, product_name TEXT, category TEXT, price_vnd INTEGER, price_jpy INTEGER, status TEXT  [source: data/price_list.csv]
+sales_2026 (506 rows): month TEXT, region TEXT, sku TEXT, category TEXT, units INTEGER, revenue INTEGER, currency TEXT  [source: data/sales_2026.csv]

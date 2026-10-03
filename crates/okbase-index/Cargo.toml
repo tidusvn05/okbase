@@ -1,0 +1,35 @@
+[package]
+name = "okbase-index"
+description = "Incremental SQLite index (metadata, links, chunks, FTS) for okbase bundles."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+okbase-core.workspace = true
+okbase-standard.workspace = true
+okbase-analyze.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+rusqlite.workspace = true
+blake3.workspace = true
+okbase-convert = { workspace = true, optional = true }
+
+[features]
+default = ["import"]
+## Read PDF, Word, PowerPoint, OpenDocument, RTF, EPUB and HTML directly (okbase-convert, ~10 MB).
+import = ["dep:okbase-convert"]
+
+[dev-dependencies]
+tempfile.workspace = true

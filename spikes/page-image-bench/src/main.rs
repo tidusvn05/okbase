@@ -1,5 +1,5 @@
-//! S14: times `okfkit_convert::page_image` on each sample (median of N runs) and writes the
-//! exported image to `out/<sample>.okfkit.<ext>`. Output: one JSON line per sample.
+//! S14: times `okbase_convert::page_image` on each sample (median of N runs) and writes the
+//! exported image to `out/<sample>.okbase.<ext>`. Output: one JSON line per sample.
 use std::time::Instant;
 
 fn main() {
@@ -20,19 +20,19 @@ fn main() {
         let mut img = None;
         for _ in 0..runs {
             let t = Instant::now();
-            img = okfkit_convert::page_image(&bytes, page);
+            img = okbase_convert::page_image(&bytes, page);
             times.push(t.elapsed().as_secs_f64() * 1000.0);
         }
         times.sort_by(f64::total_cmp);
         let (ext, size) = match &img {
             Some(i) => {
-                std::fs::write(format!("out/{name}.okfkit.{}", i.ext), &i.bytes).unwrap();
+                std::fs::write(format!("out/{name}.okbase.{}", i.ext), &i.bytes).unwrap();
                 (i.ext, i.bytes.len())
             }
             None => ("none", 0),
         };
         println!(
-            "{{\"sample\":\"{name}\",\"tool\":\"okfkit\",\"page\":{page},\"ms\":{:.2},\"ext\":\"{ext}\",\"bytes\":{size}}}",
+            "{{\"sample\":\"{name}\",\"tool\":\"okbase\",\"page\":{page},\"ms\":{:.2},\"ext\":\"{ext}\",\"bytes\":{size}}}",
             times[runs / 2]
         );
     }

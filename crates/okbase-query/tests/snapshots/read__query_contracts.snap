@@ -1,0 +1,13 @@
+---
+source: crates/okbase-query/tests/read.rs
+expression: "query(&biz, &req, &all).unwrap().to_text()"
+---
+total: 18 documents
+facet region: VN=11, JP=7
+| id | title | type | status | lang | updated | tags | extra |
+| contracts/minh-phat-jsc/maintenance-202402 | Hợp đồng bảo trì – Minh Phat JSC (VN), tháng 2/2024 | Contract | stable | vi | 2024-02-07 | contract, b2b, sales, vn | contract_value=4942000000 currency=VND customer=Minh Phat JSC department=Sales effective_from=2024-02-23 effective_to=2026-02-22 region=VN |
+| contracts/minh-phat-jsc/installation-202506 | Installation Services Agreement – Minh Phat JSC (Vietnam) | Contract | stable | en | 2025-05-25 | contract, b2b, sales, vn | contract_value=4800000000 currency=VND customer=Minh Phat JSC department=Sales effective_from=2025-06-07 effective_to=2026-06-06 region=VN |
+| contracts/saigon-hotels-group/installation-202510 | Hợp đồng lắp đặt Saigon Hotels Group (VN, tháng 10/2025) | Contract | stable | vi | 2025-09-24 | contract, b2b, sales, vn | contract_value=4602000000 currency=VND customer=Saigon Hotels Group department=Sales effective_from=2025-10-13 effective_to=2027-10-12 region=VN |
+| contracts/saigon-hotels-group/installation-202504 | Installation Contract – Saigon Hotels Group (VN) | Contract | stable | en | 2025-03-31 | contract, b2b, sales, vn | contract_value=4252000000 currency=VND customer=Saigon Hotels Group department=Sales effective_from=2025-04-20 effective_to=2026-04-19 region=VN |
+| contracts/minh-phat-jsc/maintenance-202401 | Maintenance Contract – Minh Phat JSC (January 2024) | Contract | stable | en | 2024-01-21 | contract, b2b, sales, vn | contract_value=4086000000 currency=VND customer=Minh Phat JSC department=Sales effective_from=2024-01-27 effective_to=2026-01-26 region=VN |
+... 13 more (raise limit or narrow filters)

@@ -2,23 +2,23 @@
 """S15: a smaller MCP tool list, and the answer skill's rules as MCP server instructions.
 
 On the biz-meta x20 bundle (3,020 docs, sheets of ~10k rows, 48 questions), Claude Code with
-Read/Grep/Glob and every okfkit tool:
-  K0  okfkit before the change (bedbc52) + the spike's tool hints in the system prompt  (baseline)
-  K1  okfkit after the change              + the same hints                             (trim: cost)
-  I1  okfkit after the change, no hints: only okfkit's server instructions             (S9 again)
+Read/Grep/Glob and every okbase tool:
+  K0  okbase before the change (bedbc52) + the spike's tool hints in the system prompt  (baseline)
+  K1  okbase after the change              + the same hints                             (trim: cost)
+  I1  okbase after the change, no hints: only okbase's server instructions             (S9 again)
 
 Usage:
   python3 run.py run [--configs K0,K1,I1] [--limit N] [--jobs 6]
   python3 run.py report
-Binaries: $BASE_BIN (K0) and ../../target/release/okfkit (K1, I1). Costs Claude Code quota (~$6).
+Binaries: $BASE_BIN (K0) and ../../target/release/okbase (K1, I1). Costs Claude Code quota (~$6).
 """
 import argparse, concurrent.futures as cf, json, os, subprocess, sys, time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 SPIKES = HERE.parent
-NEW_BIN = SPIKES.parent / "target/release/okfkit"
-BASE_BIN = Path(os.environ.get("BASE_BIN", HERE / "work/okfkit-base"))
+NEW_BIN = SPIKES.parent / "target/release/okbase"
+BASE_BIN = Path(os.environ.get("BASE_BIN", HERE / "work/okbase-base"))
 sys.path.insert(0, str(SPIKES / "biz-meta"))
 import run as biz  # noqa: E402  BASE, HINT, SCHEMA, QS
 import report as biz_report  # noqa: E402  judge PROMPT, SCHEMA

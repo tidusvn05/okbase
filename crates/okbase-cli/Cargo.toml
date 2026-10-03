@@ -1,0 +1,53 @@
+[package]
+name = "okbase-cli"
+description = "Command-line interface for okbase."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "okbase"
+path = "src/main.rs"
+# The binary's doc comments are its --help text; the library docs live in the okbase crate.
+doc = false
+
+[dependencies]
+okbase.workspace = true
+okbase-mcp.workspace = true
+okbase-skills.workspace = true
+okbase-lint.workspace = true
+okbase-adopt.workspace = true
+clap.workspace = true
+anyhow.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+
+[dev-dependencies]
+assert_cmd.workspace = true
+insta.workspace = true
+tempfile.workspace = true
+serde_json.workspace = true
+okbase.workspace = true
+okbase-mcp.workspace = true
+
+[features]
+## Local embedding models (ONNX Runtime): `okbase embed`, `search`, `retrieve`, kb_search.
+embed-local = ["okbase/embed-local"]
+## An OpenAI-compatible embeddings API.
+embed-api = ["okbase/embed-api"]
+## Fine-tuning (train/export through a private Python environment).
+embed-tune = ["okbase/embed-tune"]
+## Everything: the okbase-full build. Language dictionaries stay external (downloaded on first
+## use), as in the default build.
+full = ["embed-local", "embed-api", "embed-tune"]

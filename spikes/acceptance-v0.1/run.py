@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """v0.1 acceptance (HANDOFF T11): the okf-scale G2 setup, with the MCP server
-replaced by `okfkit mcp serve --stdio`, with and without the okfkit-answer skill.
+replaced by `okbase mcp serve --stdio`, with and without the okbase-answer skill.
 
 Configs (bundle L, 30 questions, same system prompt, questions and judge as okf-scale G2):
-  O   okfkit      — G2 system prompt (root index.md + lexical strategy) + okfkit MCP tools
-  OS  okfkit+skill — as O, plus the okfkit-answer skill installed in the working directory
+  O   okbase      — G2 system prompt (root index.md + lexical strategy) + okbase MCP tools
+  OS  okbase+skill — as O, plus the okbase-answer skill installed in the working directory
 
 Target: >= 93% correct on bundle L (G2 in the spike).
 
 Usage:
-  cargo build --release -p okfkit-cli
+  cargo build --release -p okbase-cli
   python3 run.py [--configs O,OS] [--jobs 4] [--limit N] [--model sonnet] [--judge-model sonnet]
 Costs Claude Code quota: about $0.02 per run plus judging (~$1.5 for both configs).
 """
@@ -22,7 +22,7 @@ sys.path.insert(0, str(SCALE))
 import run as scale  # noqa: E402  (BASE, LEXICAL, SCHEMA, QS, BUNDLES)
 import report as scale_report  # noqa: E402  (PROMPT, judge)
 
-OKFKIT = HERE.parent.parent / "target/release/okfkit"
+OKBASE = HERE.parent.parent / "target/release/okbase"
 SIZE = "L"
 BUNDLE = scale.BUNDLES / SIZE
 STATE = HERE / "work/state"
@@ -30,16 +30,16 @@ TOOLS = [f"mcp__kb__kb_{t}" for t in ("catalog", "list", "grep", "get", "query",
 
 
 def prepare():
-    if not OKFKIT.exists():
-        sys.exit(f"build the CLI first: cargo build --release -p okfkit-cli ({OKFKIT} missing)")
+    if not OKBASE.exists():
+        sys.exit(f"build the CLI first: cargo build --release -p okbase-cli ({OKBASE} missing)")
     if not BUNDLE.is_dir():
         sys.exit(f"{BUNDLE} missing: build the okf-scale bundles first (spikes/okf-scale/build_bundles.py)")
     STATE.mkdir(parents=True, exist_ok=True)
     # Index once so the parallel MCP servers start from a warm index.
-    subprocess.run([str(OKFKIT), "--state-dir", str(STATE), "-b", str(BUNDLE), "index"], check=True)
+    subprocess.run([str(OKBASE), "--state-dir", str(STATE), "-b", str(BUNDLE), "index"], check=True)
     skill_dir = HERE / "work/skill"
     skill_dir.mkdir(parents=True, exist_ok=True)
-    subprocess.run([str(OKFKIT), "-b", str(BUNDLE), "agent", "install", "--claude", "--project", str(skill_dir)], check=True,
+    subprocess.run([str(OKBASE), "-b", str(BUNDLE), "agent", "install", "--claude", "--project", str(skill_dir)], check=True,
                    capture_output=True)
     (skill_dir / ".mcp.json").unlink(missing_ok=True)  # the MCP server comes from --mcp-config below
     (HERE / "work/plain").mkdir(parents=True, exist_ok=True)
@@ -52,7 +52,7 @@ def run_one(cfg, q, model):
     if out.exists():
         return json.loads(out.read_text())
     mcp = run_dir / f"{q['qid']}.mcp.json"
-    mcp.write_text(json.dumps({"mcpServers": {"kb": {"command": str(OKFKIT), "args": [
+    mcp.write_text(json.dumps({"mcpServers": {"kb": {"command": str(OKBASE), "args": [
         "--state-dir", str(STATE), "--bundle", str(BUNDLE), "mcp", "serve", "--stdio"]}}}))
     system = scale.BASE + scale.LEXICAL + "\n" + (BUNDLE / "index.md").read_text()
     sp = run_dir / f"{q['qid']}.system.txt"

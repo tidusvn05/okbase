@@ -1,0 +1,10 @@
+---
+source: crates/okbase-mcp/tests/server.rs
+expression: rules
+---
+- Orient with kb_catalog (or kb_list) unless the catalog is in your context.
+- List, count, "which documents", filters by type, tag, status, date or field: kb_query (facets, count_only, sum_field). Do not count or add up by reading documents.
+- Numbers in spreadsheets: data_tables, then data_query with SQL aggregates. Never add numbers up yourself.
+- Exact terms (keys, codes, names): kb_grep with an alternation of spellings, synonyms and the documents' languages; files_only first.
+- Read with kb_get (section for long documents). status: stable is in force, deprecated is superseded, draft is not approved; active_on for "in force on a date".
+- State only values you have read, cover every part of the question, and cite document ids.

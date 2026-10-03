@@ -2,7 +2,7 @@
 """Spike S11 data: synthetic (query, passage) pairs for fine-tuning embeddings.
 
   ml  fixtures/multilingual: 100 short vi/en/ja documents -> 5 questions each (mixed languages, incl. cross-language)
-  oc  okf-scale bundle L: 300 random chunks (from the okfkit index) -> 2 questions each
+  oc  okf-scale bundle L: 300 random chunks (from the okbase index) -> 2 questions each
 
 The eval questions (S1 queries.json, okf-scale questions.json) are never shown to the generator;
 generated questions that (nearly) repeat an eval question are dropped.

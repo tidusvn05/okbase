@@ -1,8 +1,8 @@
 # Conventions: building tools that end users and their agents can use well
 
-These conventions come from designing okfkit with its maintainer. They are written to be reused by
+These conventions come from designing okbase with its maintainer. They are written to be reused by
 other projects: CLIs, libraries with a CLI, MCP servers, developer tools, anything a person may set
-up through an AI agent. Each rule has a short "why" and an "in okfkit" example. Treat MUST/SHOULD as
+up through an AI agent. Each rule has a short "why" and an "in okbase" example. Treat MUST/SHOULD as
 in RFC 2119.
 
 ---
@@ -11,12 +11,12 @@ in RFC 2119.
 
 1. **Every default is backed by a measurement.** Thresholds, recommended models and limits come from
    spikes or evals that are kept in the repository (inputs, scripts, results). Changing a default needs
-   new data. *Why:* users cannot judge defaults; they trust you to have measured. *okfkit:* the full
+   new data. *Why:* users cannot judge defaults; they trust you to have measured. *okbase:* the full
    context limit of 30k tokens, the embedding model and the question counts each cite a spike.
 2. **Advice cites its evidence in one line.** When the tool recommends something, it says why, with the
    number behind it ("lexical search reached 90–100% at 4.4M tokens, S4"). No unexplained "recommended".
 3. **Report results honestly.** State misses, regressions and what was not tested, next to the gains.
-   Never round a failed threshold into a pass. *okfkit:* "kept 2/3 of the gain; missed my own 0.92 by
+   Never round a failed threshold into a pass. *okbase:* "kept 2/3 of the gain; missed my own 0.92 by
    one question; same-language dropped 3 points".
 4. **Measure before switching.** Anything that replaces a working setup (a tuned model, a new index)
    passes a quality gate against the current one first, on data it was not trained on.
@@ -27,7 +27,7 @@ in RFC 2119.
 
 1. **Offer a ladder, from simplest to most complex**, and recommend climbing only when a measured
    signal says so (size, languages, data types, quality level). Say explicitly what is *not* needed.
-   *okfkit:* `advise`: full context → lexical tools → curate → SQL for tables → semantic search →
+   *okbase:* `advise`: full context → lexical tools → curate → SQL for tables → semantic search →
    fine-tuning.
 2. **Organization beats machinery.** If cleaning up the user's own material helps more than adding a
    model, recommend that first.
@@ -55,7 +55,7 @@ in RFC 2119.
 People increasingly ask an agent ("set this up for me") instead of reading docs. The tool must be
 operable by an agent from a single sentence.
 
-1. **One entry point.** A single command (okfkit: `onboard`) computes the plan from the real state of
+1. **One entry point.** A single command (okbase: `onboard`) computes the plan from the real state of
    the machine and the project: what is done, what to run next, and what to ask the user. Running it
    again shows progress; finished steps move to "done".
 2. **Step kinds:** `run` (safe, do it), `ask` (a question for the user, verbatim, with the commands for
@@ -71,7 +71,7 @@ operable by an agent from a single sentence.
 
 ## 5. The machine contract
 
-1. **Every command accepts `--json`.** Read commands keep a stable schema (in okfkit: identical to the
+1. **Every command accepts `--json`.** Read commands keep a stable schema (in okbase: identical to the
    MCP tool output); setup commands return what they changed and `next` (commands to run next).
 2. **Errors are data.** With `--json`, errors are printed as `{"error": {code, message, hint, question,
    flag, next}}` with a stable, documented `code`.

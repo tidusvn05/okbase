@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""S7: lexical okfkit with Codex (and a small model), on the okf-scale L bundle (287 OpenClaw pages,
+"""S7: lexical okbase with Codex (and a small model), on the okf-scale L bundle (287 OpenClaw pages,
 30 questions vi/en/ja): the setup of the v0.1 acceptance (config O) with `codex exec` instead of
 Claude Code. Same system text (okf-scale G2: rules + lexical strategy + root index.md), questions,
 structured answer and judge (okf-scale's, Claude Sonnet).
@@ -21,7 +21,7 @@ import run as scale  # noqa: E402  BASE, LEXICAL, SCHEMA, QS, BUNDLES
 import report as scale_report  # noqa: E402  judge
 sys.path.pop(0)
 
-OKFKIT = Path(os.environ.get("OKFKIT_BIN", HERE / "work/okfkit"))
+OKBASE = Path(os.environ.get("OKBASE_BIN", HERE / "work/okbase"))
 BUNDLE = scale.BUNDLES / "L"
 WORK = HERE / "work"
 # OpenAI structured outputs need a strict schema (additionalProperties: false).
@@ -66,7 +66,7 @@ def codex(prompt, model, cwd, extra_cfg, schema=None, timeout=900):
 
 
 SEARCH_STATE = WORK / "state-L-bge"
-MODELS_DIR = os.environ.get("OKFKIT_MODELS_DIR", "/tmp/claude-1000/-home-beebiz-workspace-okfkit/7c824f32-bccf-4cb3-b57c-91551aa33e32/scratchpad/models")
+MODELS_DIR = os.environ.get("OKBASE_MODELS_DIR", "/tmp/claude-1000/-home-beebiz-workspace-okbase/7c824f32-bccf-4cb3-b57c-91551aa33e32/scratchpad/models")
 
 
 def run_one(cfg, q):
@@ -80,11 +80,11 @@ def run_one(cfg, q):
     cwd = WORK / "empty" / cfg / str(q["qid"])
     cwd.mkdir(parents=True, exist_ok=True)
     system = scale.BASE + (scale.TOOLS_HINT if search else scale.LEXICAL) + "\n" + (BUNDLE / "index.md").read_text()
-    mcp = [f'mcp_servers.kb.command="{OKFKIT}"',
+    mcp = [f'mcp_servers.kb.command="{OKBASE}"',
            "mcp_servers.kb.args=" + json.dumps(["--state-dir", str(SEARCH_STATE if search else STATE), "--bundle", str(BUNDLE),
                                                 "mcp", "serve", "--stdio"])]
     if search:
-        mcp.append(f'mcp_servers.kb.env={{OKFKIT_MODELS_DIR="{MODELS_DIR}", XDG_CACHE_HOME="{WORK / "xdg"}"}}')
+        mcp.append(f'mcp_servers.kb.env={{OKBASE_MODELS_DIR="{MODELS_DIR}", XDG_CACHE_HOME="{WORK / "xdg"}"}}')
         mcp.append("mcp_servers.kb.startup_timeout_sec=60")
     final, calls, usage, wall, err = codex(f"{system}\n\nUser question:\n{q['q']}", model, cwd, mcp, SCHEMA)
     try:
@@ -100,7 +100,7 @@ def run_one(cfg, q):
 
 def run(models, limit, jobs):
     STATE.mkdir(parents=True, exist_ok=True)
-    subprocess.run([str(OKFKIT), "--state-dir", str(STATE), "-b", str(BUNDLE), "index"], check=True, capture_output=True)
+    subprocess.run([str(OKBASE), "--state-dir", str(STATE), "-b", str(BUNDLE), "index"], check=True, capture_output=True)
     qs = list(scale.QS.values())[:limit]
     todo = [(m, q) for q in qs for m in models]
     done = 0

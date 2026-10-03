@@ -7,7 +7,7 @@ Google Drive/Sheets vẫn để sau).
 ## 0. Quyết định (2026-10-02)
 
 1. **Bộ chuyển đổi:** anydoc (Office, PDF qua pdf-inspector) và htmd (HTML), bọc trong wrapper
-   `okfkit-convert`. Không dùng model, không gọi dịch vụ, **không bao giờ dùng OCR qua dịch vụ ngoài**.
+   `okbase-convert`. Không dùng model, không gọi dịch vụ, **không bao giờ dùng OCR qua dịch vụ ngoài**.
 2. **Hai chế độ:**
    - **đọc trực tiếp** (mặc định, không ghi file): file nguồn được index thẳng, kết quả chuyển đổi
      lưu trong index (cache theo hash);
@@ -16,7 +16,7 @@ Google Drive/Sheets vẫn để sau).
 4. Kèm theo: module data đọc thêm `.xls/.xlsm/.xlsb/.ods`; `.txt` (và `.rst`/`.adoc` dạng văn bản
    thuần) được index.
 
-## 1. Wrapper `okfkit-convert`
+## 1. Wrapper `okbase-convert`
 
 - `convert(path, bytes) -> Converted { markdown, title, format, pages, flags }`.
 - **PDF:** dùng thẳng `pdf_inspector::extract_pages_markdown_mem`, lấy từng trang:
@@ -34,19 +34,19 @@ Google Drive/Sheets vẫn để sau).
 
 ## 2. Đọc trực tiếp (index)
 
-- Bộ duyệt file (đã tôn trọng `.gitignore`/`.okfkitignore`) lấy thêm các đuôi nguồn. Id của tài
+- Bộ duyệt file (đã tôn trọng `.gitignore`/`.okbaseignore`) lấy thêm các đuôi nguồn. Id của tài
   liệu là đường dẫn giữ đuôi (`manuals/printer.pdf`), nên không trùng với `printer.md`.
 - Frontmatter tổng hợp:
   - `type: Source`, `title`, `description` (câu đầu);
   - `source: {path, format, pages}`;
-  - `generated` (các trường do okfkit điền).
+  - `generated` (các trường do okbase điền).
 - Mọi tool (`grep`, `get`, `search`, `catalog`) chạy trên các tài liệu này như với markdown.
 - Bảng `sources` trong index ghi trạng thái từng file: `ok | partial (cần OCR) | encrypted | error`,
   danh sách trang cần OCR và trang nhiều cột.
 - **Nếu đã chuyển hẳn** (có file markdown khai `source.path` trỏ tới file gốc) thì bỏ bản đọc trực
   tiếp, tránh trùng.
 
-## 3. Chuyển hẳn: `okfkit import`
+## 3. Chuyển hẳn: `okbase import`
 
 | Lệnh | Việc |
 |---|---|
@@ -55,7 +55,7 @@ Google Drive/Sheets vẫn để sau).
 | Chạy lại `import --write` | Chỉ ghi lại file có nguồn đã đổi **và** bản markdown chưa bị sửa tay (so hash lúc import); bản đã sửa tay thì báo xung đột, cần `--force` |
 | `import status` | `stale` (nguồn đổi), `orphan` (nguồn mất), `needs-ocr`, `columns`, `edited` |
 
-## 4. OCR nhờ agent (không có engine OCR trong okfkit)
+## 4. OCR nhờ agent (không có engine OCR trong okbase)
 
 - `import ocr-next`: in file và trang cần OCR (kèm lý do). Agent đa phương thức đọc trang đó
   (Claude Code đọc được PDF/ảnh) rồi chép lại.
@@ -65,7 +65,7 @@ Google Drive/Sheets vẫn để sau).
 
 ## 5. Agent và các phần sẵn có
 
-- Skill **`okfkit-import`**: khi nào import, OCR nhờ agent, xem lại trang nhiều cột, chắt lọc
+- Skill **`okbase-import`**: khi nào import, OCR nhờ agent, xem lại trang nhiều cột, chắt lọc
   nguồn thành tài liệu chuẩn có `sources[]`.
 - `scan`/`onboard`:
   - thư mục chỉ có PDF/DOCX → "đọc được ngay";
@@ -78,20 +78,20 @@ Google Drive/Sheets vẫn để sau).
 
 | Phase | Nội dung | Tiêu chí xong |
 |---|---|---|
-| I1 | `okfkit-convert` (PDF từng trang, Office, HTML, văn bản); data đọc thêm xls/ods | Bộ mẫu S10-lite cho kết quả như spike; PDF có 1 trang scan vẫn giữ các trang chữ |
+| I1 | `okbase-convert` (PDF từng trang, Office, HTML, văn bản); data đọc thêm xls/ods | Bộ mẫu S10-lite cho kết quả như spike; PDF có 1 trang scan vẫn giữ các trang chữ |
 | I2 | Đọc trực tiếp trong index; bảng `sources` | `grep`/`get`/`catalog` chạy trên PDF/DOCX/PPTX/HTML; sửa file nguồn thì kết quả cập nhật |
 | I3 | `import --plan/--write/status`, tách tài liệu dài, chống ghi đè bản đã sửa | Chạy lại an toàn; bản trùng bị loại |
-| I4 | OCR nhờ agent; skill `okfkit-import`; tích hợp scan/onboard/doctor | Agent hoàn tất một thư mục có trang scan |
+| I4 | OCR nhờ agent; skill `okbase-import`; tích hợp scan/onboard/doctor | Agent hoàn tất một thư mục có trang scan |
 | I5 | Chạy thử với agent thật (thư mục PDF/DOCX/HTML hỗn hợp) | Agent trả lời đúng câu hỏi từ tài liệu nguồn, trích dẫn file và trang |
 
 ## 7. Triển khai
 
 | Phase | Commit | Ghi chú |
 |---|---|---|
-| I1 | `90f8603`, `d0eba82` | `okfkit-convert`. PDF dùng thẳng `pdf-inspector` từng trang (trang scan không làm mất cả tài liệu). Data đọc thêm xlsm/xlsb/xls/ods. `ttf-parser` (không còn bảo trì, phụ thuộc của pdf-inspector) được ghi nhận trong `deny.toml` |
+| I1 | `90f8603`, `d0eba82` | `okbase-convert`. PDF dùng thẳng `pdf-inspector` từng trang (trang scan không làm mất cả tài liệu). Data đọc thêm xlsm/xlsb/xls/ods. `ttf-parser` (không còn bảo trì, phụ thuộc của pdf-inspector) được ghi nhận trong `deny.toml` |
 | I2 | `3bf8b0d` | Đọc trực tiếp trong index; bảng `sources`; ghép văn bản OCR; nhường chỗ cho bản đã import ngay trong cùng lượt đồng bộ |
 | I3 | `f9e9979` | `import` (kế hoạch), `--write` (tách > 6k token, giữ bản sửa tay, báo mồ côi), `status`, `ocr-next`/`ocr-submit` |
-| I4 | `7354629` | `scan` đếm tài liệu nguồn; `onboard` hỏi về OCR (consent); `doctor` báo file không đọc được và trang chưa có chữ; skill `okfkit-import`; `new --source`; tài liệu |
+| I4 | `7354629` | `scan` đếm tài liệu nguồn; `onboard` hỏi về OCR (consent); `doctor` báo file không đọc được và trang chưa có chữ; skill `okbase-import`; `new --source`; tài liệu |
 | Sau I5 | `0ea2323` | `import ocr-next` xuất ảnh của trang scan (JPEG giữ nguyên; ảnh Flate, kể cả PNG predictor và đen trắng 1-bit, thành PNG); fax/JBIG2 thì hướng dẫn mở thẳng trang PDF. Sửa deadlock khoá index trong `ocr_next` |
 | S14 | `992b919` | Benchmark `spikes/page-image-bench`: xuất ảnh nhúng nhanh hơn render (JPEG 1–3 ms so với 0.2–0.95 s; Flate 2–4×), không mất chi tiết, token ảnh như nhau. Còn thiếu CCITT G4 (đề xuất crate `fax`) |
 | CCITT G4 | `565455d` | Xuất ảnh scan đen trắng CCITT Group 4 (crate `fax`, MIT, thuần Rust): 86 ms cho A4 300 dpi, không sai pixel nào. Đọc `DecodeParms` dạng mảng (img2pdf) và `/Decode [1 0]`. Group 3 và JBIG2 vẫn hướng dẫn mở thẳng trang PDF |

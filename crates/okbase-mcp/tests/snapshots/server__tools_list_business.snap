@@ -1,0 +1,267 @@
+---
+source: crates/okbase-mcp/tests/server.rs
+expression: server.list()
+---
+[
+  {
+    "name": "kb_catalog",
+    "description": "Catalog of the knowledge bundle: every document (id, title, one-line description) for small bundles, or the root index for large ones, plus the tag vocabulary and facet counts. Call it once at the start unless the catalog is already in your context.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "kb_list",
+    "description": "Show the index.md of a directory in the knowledge bundle (subdirectories and documents with one-line descriptions). Use dir='.' for the root.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "dir": {
+          "type": "string",
+          "default": "."
+        }
+      }
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "kb_grep",
+    "description": "Lexical search over all documents (including frontmatter title/description). `pattern` is a regex, case-insensitive and accent-insensitive (e.g. 'dmScope|dm_scope', 'preload.*false', 'heartbeat'); use alternation to try synonyms. Documents are in Vietnamese, Japanese, English: try key terms in each language (alternation). Options: `path` (glob or prefix, e.g. 'gateway/**', 'channels/'), `context` (lines around each match, 0-5), `files_only` (list matching documents ranked by match count — good first step), `limit` (max output lines), `filter` (metadata filter, same fields as kb_query).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "pattern": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "context": {
+          "type": "integer",
+          "default": 1
+        },
+        "files_only": {
+          "type": "boolean",
+          "default": false
+        },
+        "limit": {
+          "type": "integer",
+          "default": 40
+        },
+        "filter": {
+          "type": "object",
+          "description": "metadata filter: the same fields as kb_query"
+        }
+      },
+      "required": [
+        "pattern"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "kb_get",
+    "description": "Read a document by id (path without .md, e.g. 'gateway/configuration'). Optional `section`: a heading text to return only that section. Long documents are truncated — use `section` then. `lines` ('10-40') returns a line range.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "section": {
+          "type": "string"
+        },
+        "lines": {
+          "type": "string"
+        },
+        "max_tokens": {
+          "type": "integer",
+          "default": 4000
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "kb_query",
+    "description": "Filter documents by frontmatter metadata and get counts/facets. All filters are optional and combined with AND. status: stable=current/in force, deprecated=old/superseded, draft=not yet approved. `active_on` (YYYY-MM-DD) keeps documents in force on that date: stable (or no status) and effective_from <= date <= effective_to where those fields exist. Use it to list, count or filter documents, and `sum_field` to add up numbers instead of computing them yourself. Returns: total count, a table of matching documents (id, title, type, status, lang, updated, tags, other fields), optional facet counts and sum. Types: Policy, Contract, SOP, Meeting Note, Product Spec, Announcement, FAQ, Dataset. Other fields in this bundle: department, currency, effective_from, region, version, contract_value, customer, effective_to, meeting_date, model.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags_all": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags_any": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status_not": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lang": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": "other frontmatter field -> allowed values, e.g. {\"region\": [\"VN\"]}"
+        },
+        "path": {
+          "type": "string",
+          "description": "id prefix or glob, e.g. 'policies/jp/'"
+        },
+        "text": {
+          "type": "string",
+          "description": "case- and accent-insensitive substring of id/title/description"
+        },
+        "updated_from": {
+          "type": "string"
+        },
+        "updated_to": {
+          "type": "string"
+        },
+        "ranges": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string"
+              },
+              "to": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "field -> {from, to}, inclusive; numbers compare numerically, dates as text, e.g. {\"effective_to\": {\"from\": \"2026-01-01\"}}"
+        },
+        "active_on": {
+          "type": "string",
+          "description": "YYYY-MM-DD"
+        },
+        "sort": {
+          "type": "string",
+          "description": "field name, prefix '-' for descending, e.g. '-updated', 'effective_to'"
+        },
+        "limit": {
+          "type": "integer",
+          "default": 50
+        },
+        "count_only": {
+          "type": "boolean",
+          "default": false
+        },
+        "facets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "fields to count over the filtered set, e.g. type, tags, status, lang"
+        },
+        "sum_field": {
+          "type": "string",
+          "description": "numeric field to sum over the filtered set, e.g. contract_value"
+        }
+      }
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "data_tables",
+    "description": "List SQL tables (imported spreadsheets: CSV, TSV, XLSX) with columns and row counts.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "data_query",
+    "description": "Run a read-only SQLite SELECT over the spreadsheet tables (inventory, price_list, sales_2026). Use aggregates (SUM, COUNT, GROUP BY) instead of reading rows. Max 100 rows returned.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "sql": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "sql"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "kb_links",
+    "description": "Links from a document to other documents, and backlinks to it. Use it to follow related documents.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "openWorldHint": false
+    }
+  }
+]

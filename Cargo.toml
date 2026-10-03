@@ -8,9 +8,9 @@ version = "0.1.0-dev"
 edition = "2024"
 rust-version = "1.89"
 license = "MIT OR Apache-2.0"
-authors = ["The okfkit contributors"]
-repository = "https://github.com/okfkit/okfkit"
-homepage = "https://github.com/okfkit/okfkit"
+authors = ["The okbase contributors"]
+repository = "https://github.com/tidusvn05/okbase"
+homepage = "https://github.com/tidusvn05/okbase"
 keywords = ["markdown", "knowledge-base", "mcp", "agents", "okf"]
 categories = ["command-line-utilities", "text-processing"]
 
@@ -22,21 +22,21 @@ missing_docs = "warn"
 all = { level = "warn", priority = -1 }
 
 [workspace.dependencies]
-okfkit-core = { path = "crates/okfkit-core", version = "0.1.0-dev" }
-okfkit-standard = { path = "crates/okfkit-standard", version = "0.1.0-dev" }
-okfkit-analyze = { path = "crates/okfkit-analyze", version = "0.1.0-dev" }
-okfkit-index = { path = "crates/okfkit-index", version = "0.1.0-dev" }
-okfkit-query = { path = "crates/okfkit-query", version = "0.1.0-dev" }
-okfkit-lint = { path = "crates/okfkit-lint", version = "0.1.0-dev" }
-okfkit-adopt = { path = "crates/okfkit-adopt", version = "0.1.0-dev" }
-okfkit-search = { path = "crates/okfkit-search", version = "0.1.0-dev" }
-okfkit-embed = { path = "crates/okfkit-embed", version = "0.1.0-dev" }
-okfkit-data = { path = "crates/okfkit-data", version = "0.1.0-dev" }
-okfkit-mcp = { path = "crates/okfkit-mcp", version = "0.1.0-dev" }
-okfkit-skills = { path = "crates/okfkit-skills", version = "0.1.0-dev" }
-okfkit-tune = { path = "crates/okfkit-tune", version = "0.1.0-dev" }
-okfkit-convert = { path = "crates/okfkit-convert", version = "0.1.0-dev" }
-okfkit = { path = "crates/okfkit", version = "0.1.0-dev" }
+okbase-core = { path = "crates/okbase-core", version = "0.1.0-dev" }
+okbase-standard = { path = "crates/okbase-standard", version = "0.1.0-dev" }
+okbase-analyze = { path = "crates/okbase-analyze", version = "0.1.0-dev" }
+okbase-index = { path = "crates/okbase-index", version = "0.1.0-dev" }
+okbase-query = { path = "crates/okbase-query", version = "0.1.0-dev" }
+okbase-lint = { path = "crates/okbase-lint", version = "0.1.0-dev" }
+okbase-adopt = { path = "crates/okbase-adopt", version = "0.1.0-dev" }
+okbase-search = { path = "crates/okbase-search", version = "0.1.0-dev" }
+okbase-embed = { path = "crates/okbase-embed", version = "0.1.0-dev" }
+okbase-data = { path = "crates/okbase-data", version = "0.1.0-dev" }
+okbase-mcp = { path = "crates/okbase-mcp", version = "0.1.0-dev" }
+okbase-skills = { path = "crates/okbase-skills", version = "0.1.0-dev" }
+okbase-tune = { path = "crates/okbase-tune", version = "0.1.0-dev" }
+okbase-convert = { path = "crates/okbase-convert", version = "0.1.0-dev" }
+okbase = { path = "crates/okbase", version = "0.1.0-dev" }
 thiserror = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["preserve_order"] }

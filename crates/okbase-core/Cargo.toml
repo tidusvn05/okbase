@@ -1,0 +1,30 @@
+[package]
+name = "okbase-core"
+description = "Concept model, frontmatter round-trip, OKF validation and links for okbase."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+thiserror.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+serde-saphyr.workspace = true
+pulldown-cmark.workspace = true
+regex.workspace = true
+ignore.workspace = true
+toml_edit.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+proptest.workspace = true

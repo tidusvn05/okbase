@@ -2,8 +2,8 @@
 /target/
 **/target/
 
-# okfkit runtime state
-.okfkit/
+# okbase runtime state
+.okbase/
 
 # Spike caches, models, corpora and generated data (regenerable; see spikes/README.md)
 spikes/embed-bench/.fastembed_cache/

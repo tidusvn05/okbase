@@ -45,14 +45,14 @@ jobs:
       - run: cargo test --workspace --all-features
 
   full:
-    # The okfkit-full build: local embeddings (ONNX Runtime) and fine-tuning.
+    # The okbase-full build: local embeddings (ONNX Runtime) and fine-tuning.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
-      - run: cargo build --release -p okfkit-cli --features full
-      - run: cargo test -p okfkit-embed -p okfkit-search -p okfkit --all-features
+      - run: cargo build --release -p okbase-cli --features full
+      - run: cargo test -p okbase-embed -p okbase-search -p okbase --all-features
 
   msrv:
     runs-on: ubuntu-latest

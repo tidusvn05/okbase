@@ -1,12 +1,12 @@
 Synthetic multilingual knowledge bundle (100 short documents: 33 Vietnamese,
 33 English, 34 Japanese) for the fictional company "Hikari Home", built from
-okfkit's embed-bench spike data set v2 (spikes/embed-bench/data/v2). queries.json
+okbase's embed-bench spike data set v2 (spikes/embed-bench/data/v2). queries.json
 holds the spike's 300 questions (vi/en/ja, including cross-language) with the id
 of the document that answers each one ("gold").
 
 Generated with the help of an LLM. All names and facts are fictional.
-Part of okfkit; licensed under MIT OR Apache-2.0 like the rest of the repository.
+Part of okbase; licensed under MIT OR Apache-2.0 like the rest of the repository.
 
 Change from the spike output: the `description` of knowledge/en-points-birthday.md
 and knowledge/vi-personal-leave.md is now quoted; unquoted, it contained ": " and
-was invalid YAML (found by `okfkit lint`).
+was invalid YAML (found by `okbase lint`).

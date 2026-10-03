@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Export a tuned EmbeddingGemma to okfkit's ONNX Q4 format by patching the reference model.
+"""Export a tuned EmbeddingGemma to okbase's ONNX Q4 format by patching the reference model.
 
 LoRA changes only some linear weights, so instead of re-exporting the graph we take the
-onnx-community reference export (the one okfkit already uses), add each weight delta
+onnx-community reference export (the one okbase already uses), add each weight delta
 (tuned - base) to its fp32 values and re-quantize just those matrices with the same scheme
 (MatMulNBits, 4 bits, block 32, symmetric). Everything else stays byte-identical.
 
@@ -73,7 +73,7 @@ def main():
         "external_data": ["model_q4.onnx_data"], "pooling": "output", "prompting": "gemma",
         "dim": 768, "max_length": 2048, "provenance": {"tuned_from": str(tuned), "patched_matrices": changed},
     }
-    (out / "okfkit-model.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    (out / "okbase-model.json").write_text(json.dumps(manifest, indent=2) + "\n")
     print(f"patched {changed} matrices -> {out / 'model_q4.onnx'}")
 
 

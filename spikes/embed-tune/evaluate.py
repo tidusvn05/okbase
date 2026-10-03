@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Spike S11 eval, same protocol as okfkit's retrieval_eval (S1 doc-level R@k; S4 gold in top-6 chunks,
+"""Spike S11 eval, same protocol as okbase's retrieval_eval (S1 doc-level R@k; S4 gold in top-6 chunks,
 at most 2 per document), with sentence-transformers so base and tuned models compare like for like.
 Usage: .venv/bin/python evaluate.py <model path or HF id> [label]"""
 import json, re, sqlite3, sys, time

@@ -1,6 +1,6 @@
-Lexical eval suites for okfkit-eval. Each case is a tool call Claude made in okfkit's spikes
+Lexical eval suites for okbase-eval. Each case is a tool call Claude made in okbase's spikes
 (spikes/biz-meta, spikes/embed-bench round 4), with the expected answer from those spikes. The
 questions and answers are synthetic; the bundles they run on are fixtures/business and
 fixtures/multilingual (see their NOTICE files).
 
-License: MIT OR Apache-2.0 (the same as okfkit).
+License: MIT OR Apache-2.0 (the same as okbase).

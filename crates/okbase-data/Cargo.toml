@@ -1,0 +1,31 @@
+[package]
+name = "okbase-data"
+description = "Tabular datasets (CSV, XLSX) as read-only SQL for okbase bundles."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+okbase-core.workspace = true
+okbase-analyze.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+rusqlite = { workspace = true, features = ["hooks"] }
+blake3.workspace = true
+csv.workspace = true
+calamine.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+insta.workspace = true

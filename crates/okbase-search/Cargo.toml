@@ -1,0 +1,28 @@
+[package]
+name = "okbase-search"
+description = "Semantic search and retrieval for okbase bundles (needs an embedder from okbase-embed)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+okbase-index.workspace = true
+okbase-query.workspace = true
+okbase-embed.workspace = true
+okbase-analyze.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+rusqlite.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

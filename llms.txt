@@ -1,24 +1,24 @@
-# okfkit
+# okbase
 
-> okfkit makes a folder of markdown knowledge (an Open Knowledge Format bundle, a docs site, a wiki, an Obsidian vault) easy for AI agents to use: an MCP server and CLI with multilingual (vi/en/ja) search, metadata queries, SQL over spreadsheets, optional semantic search and fine-tuning, and Agent Skills for Claude Code and Codex. Rust, MIT OR Apache-2.0, read-only by default, no telemetry.
+> okbase makes a folder of markdown knowledge (an Open Knowledge Format bundle, a docs site, a wiki, an Obsidian vault) easy for AI agents to use: an MCP server and CLI with multilingual (vi/en/ja) search, metadata queries, SQL over spreadsheets, optional semantic search and fine-tuning, and Agent Skills for Claude Code and Codex. Rust, MIT OR Apache-2.0, read-only by default, no telemetry.
 
-Agents set okfkit up for the user; the user only answers questions.
+Agents set okbase up for the user; the user only answers questions.
 
-1. Install (if `okfkit --version` fails): from a clone of the repository, `cargo install --locked --path crates/okfkit-cli` (Rust 1.89+; `--features full` adds semantic search and fine-tuning). After publication: `cargo install --locked okfkit-cli`.
-2. Run `okfkit onboard` in the knowledge folder (or `okfkit -b <folder> onboard`; `--json` for structured output). Do the first step, run it again, repeat until nothing is left.
+1. Install (if `okbase --version` fails): from a clone of the repository, `cargo install --locked --path crates/okbase-cli` (Rust 1.89+; `--features full` adds semantic search and fine-tuning). After publication: `cargo install --locked okbase-cli`.
+2. Run `okbase onboard` in the knowledge folder (or `okbase -b <folder> onboard`; `--json` for structured output). Do the first step, run it again, repeat until nothing is left.
 3. At every ASK step, ask the user the question and wait; run only the commands of the chosen option.
 4. Never add `--accept-license`, `--yes`, `--write`, `--force`, `--replace` or `--send-documents` unless the user agreed. A command that exits 3 needs consent: relay its `error.question`. Exit 4 means findings (lint errors, a rejected batch, a failed gate).
-5. Finish with `okfkit doctor` (a real MCP round trip), then ask the user to restart the agent session.
-6. Inside Codex, its sandbox keeps `.codex/` read-only: ask the user to run `okfkit agent install --codex` in their own terminal (error code `sandbox_blocked`).
+5. Finish with `okbase doctor` (a real MCP round trip), then ask the user to restart the agent session.
+6. Inside Codex, its sandbox keeps `.codex/` read-only: ask the user to run `okbase agent install --codex` in their own terminal (error code `sandbox_blocked`).
 
-To remove okfkit: `okfkit onboard --goal remove`.
+To remove okbase: `okbase onboard --goal remove`.
 
 ## Docs
 
-- [README](README.md): what okfkit does, builds, fine-tuning
-- [Usage](docs/usage.md): small, medium and large projects; every scenario (several bundles, several projects, shared servers, removing okfkit)
-- `okfkit help --agent`: the agent contract (JSON, exit codes, error codes, consent rules, commands)
-- `okfkit embed tune guide`: fine-tuning the search model with agent-written questions
+- [README](README.md): what okbase does, builds, fine-tuning
+- [Usage](docs/usage.md): small, medium and large projects; every scenario (several bundles, several projects, shared servers, removing okbase)
+- `okbase help --agent`: the agent contract (JSON, exit codes, error codes, consent rules, commands)
+- `okbase embed tune guide`: fine-tuning the search model with agent-written questions
 
 ## Optional
 

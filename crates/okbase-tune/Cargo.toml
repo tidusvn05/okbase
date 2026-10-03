@@ -1,0 +1,35 @@
+[package]
+name = "okbase-tune"
+description = "Fine-tuning data for okbase embeddings: passage sampling, agent-written questions (standard v1), validation and splits."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[lints]
+workspace = true
+
+[dependencies]
+okbase-index.workspace = true
+okbase-query.workspace = true
+okbase-analyze.workspace = true
+okbase-search.workspace = true
+thiserror.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+rusqlite.workspace = true
+blake3.workspace = true
+
+[features]
+default = []
+## Train and export through a private Python environment (okbase-full).
+train = []
+
+[dev-dependencies]
+tempfile.workspace = true

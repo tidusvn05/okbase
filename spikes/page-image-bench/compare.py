@@ -1,6 +1,6 @@
 """S14: the same pages through the alternatives an agent or a tool would otherwise use, then
-fidelity and agent image cost for every output (okfkit's included).
-Usage: ../embed-tune/.venv/bin/python compare.py  (after `cargo run --release > results/okfkit.jsonl`)"""
+fidelity and agent image cost for every output (okbase's included).
+Usage: ../embed-tune/.venv/bin/python compare.py  (after `cargo run --release > results/okbase.jsonl`)"""
 import io
 import json
 import statistics
@@ -82,9 +82,9 @@ def size(img_bytes):
     return "x".join(map(str, Image.open(io.BytesIO(img_bytes)).size)) if img_bytes else None
 
 
-rows = [json.loads(line) for line in (HERE / "results/okfkit.jsonl").read_text().splitlines()]
+rows = [json.loads(line) for line in (HERE / "results/okbase.jsonl").read_text().splitlines()]
 for r in rows:
-    data = next(OUT.glob(f"{r['sample']}.okfkit.*"), None)
+    data = next(OUT.glob(f"{r['sample']}.okbase.*"), None)
     r["img"] = data.read_bytes() if data else b""
 for pdf in sorted(S.glob("*.pdf")):
     name = pdf.stem
