@@ -1,0 +1,15 @@
+# Fixtures, snapshots and frontmatter round-trips are compared byte for byte: check text files
+# out with LF on every platform (Windows included).
+* text=auto eol=lf
+
+# Kept exactly as committed (CSV files use CRLF row endings).
+*.csv -text
+
+*.pdf binary
+*.png binary
+*.jpg binary
+*.xlsx binary
+*.docx binary
+*.pptx binary
+*.gz binary
+*.onnx binary
