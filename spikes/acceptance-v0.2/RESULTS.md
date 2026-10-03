@@ -1,14 +1,14 @@
 # v0.2 eval results (PLAN §13)
 
 Run on 2026-10-01 with Claude Code 2.1.284 (`--model sonnet`) and a release
-build of okfkit (commit 38dc7c1). 156 runs, $6.36 including judging.
+build of okbase (commit 38dc7c1). 156 runs, $6.36 including judging.
 Questions, prompts and judges are the spikes' own (biz-meta, okf-scale).
 
 ## S5 ×20 and S9 — biz-meta ×20 bundle (3,020 docs, sheets of ~10k rows, 48 questions)
 
 - **K**: the spike's QD setup (its system prompt with tool hints, Read/Grep/Glob + `kb_query`,
-  `data_tables`, `data_query`) with the MCP server replaced by `okfkit mcp serve --stdio`.
-- **KS**: no tool hints in the system prompt; the three okfkit skills are installed instead.
+  `data_tables`, `data_query`) with the MCP server replaced by `okbase mcp serve --stdio`.
+- **KS**: no tool hints in the system prompt; the three okbase skills are installed instead.
 
 | Category | Spike QD ×20 | **K** | KS |
 |---|---|---|---|
@@ -34,14 +34,14 @@ Findings:
   points; not significant). The misses are the same kind as the spike's: facet
   questions over ~120 customers / 18 drafts (q28, q29; the spike also missed one
   facet question) and one content question citing other documents (q40).
-- **Cost** is ~28% higher than the spike's server ($0.041 vs $0.032): okfkit lists
+- **Cost** is ~28% higher than the spike's server ($0.041 vs $0.032): okbase lists
   more tools with longer descriptions. Worth trimming before v1.0 (with eval).
-- **S9 (skill) is inconclusive.** Claude Code listed the okfkit skills (checked
+- **S9 (skill) is inconclusive.** Claude Code listed the okbase skills (checked
   separately) but **never invoked them** in 48 runs; without any tool hints in the
   prompt, KS still used `kb_query` as often as K (30/48) and scored 45/48. The tool
   descriptions alone carry the strategy. The PLAN target (`kb_query` on ≥ 45/48)
   is not reached by either config. Next step: test the skill where it is actually
-  loaded (e.g. `/okfkit-answer` invoked by the user, or the skill text in the
+  loaded (e.g. `/okbase-answer` invoked by the user, or the skill text in the
   system prompt) before changing tool descriptions or skill content.
 - KS costs ~50% more than K: the skill listing (and the user's other installed
   skills) enlarge the prompt.
@@ -49,7 +49,7 @@ Findings:
 ## S8 — adopt (okf-scale L: 287 OpenClaw pages, 30 questions vi/en/ja)
 
 An agent with Read/Grep/Glob and the same neutral prompt, on the raw markdown files
-of bundle L (**R**) and on the output of `okfkit adopt --out` (**A**, L1: 0 lint
+of bundle L (**R**) and on the output of `okbase adopt --out` (**A**, L1: 0 lint
 errors).
 
 | Metric | R (raw) | A (adopted) |

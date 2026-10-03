@@ -4,7 +4,7 @@ The experiments and benchmarks behind every okbase default. Do not change a defa
 data. Each spike is a directory whose `RESULTS.md` is the source of truth. This file is the index and
 a quick-reference table of numbers.
 
-okbase was called okfkit until 2026-10-03; spike records and results keep the old name.
+Early spikes ran inside qobot, the host application okbase was first built for; their records mention it.
 
 ## 1. Index
 
@@ -24,12 +24,12 @@ IDs follow `docs/design.md` §1. The date is the run date.
 | S10-lite | 2026-10-02 | `import-bench` | Lightweight and accurate PDF/Office/HTML import? | **anydoc + htmd**: accurate for Office and text PDFs (vi/ja); binary +~10 MB; 0.3–10 ms per small document. Still weak: two columns in mid-page, HTML tables without `<th>`, scanned pages | `docs/plans/import.md` |
 | I5 | 2026-10-02 | `import-bench` | Real agent on a mixed PDF/DOCX/HTML folder | Answered 3/3, citing file and page. Asked for consent before OCR; added a consent flag on its own 0 times | `docs/plans/import.md` |
 | S11 | 2026-10-01 → 02 | `embed-tune` | Does fine-tuning EmbeddingGemma (LoRA, the Unsloth approach) help? | fp32: R@1 0.853 → 0.943. **Q4 in okbase: 0.857 → 0.917**, S4 30/30. The agent + CLI workflow works (held-out 0.875 → 0.925) | `docs/plans/advise-tune.md` |
-| S13 | 2026-10-02 | `onboarding` | Can an agent install okbase on its own from one sentence? | Claude 3/3 completed (35–51 s, ~50k tokens); added a consent flag on its own 0 times. **Codex not run yet** | `docs/plans/onboarding.md` |
+| S13 | 2026-10-02 | `onboarding` | Can an agent install okbase on its own from one sentence? | Claude 3/3 completed (35–51 s, ~50k tokens); added a consent flag on its own 0 times. Codex: see S13 (Codex) | `docs/plans/onboarding.md` |
 | S13b | 2026-10-02 | `onboarding` | Real-world folders: software repo, empty folder, partially broken bundle | 3/3 understood the folder correctly and asked at the right points. The agent found 5 bugs, now fixed | `docs/plans/usecases.md` |
 | S14 | 2026-10-02 | `page-image-bench` | Giving scanned pages to an agent: extract embedded images or render pages? | **Extract embedded images**: JPEG 1–3 ms (render 0.2–0.95 s); Flate is lossless and 2–4× faster than rendering. Same image tokens (~1.5k). CCITT G4: 86 ms, accurate (crate `fax`) | `docs/plans/import.md` §7 |
 | S15 | 2026-10-03 | `mcp-tools` | Does trimming the tool list reduce cost? Can skill rules sent through the MCP server instructions replace hints in the prompt? | **Instructions can replace hints**: without hints still 46/48 (same as with hints), `kb_query`/`data_query` used equally. This resolves S9. Trimming tools: −3% tokens, cost unchanged, accuracy unchanged. $6.29 | `design.md` §13–14 |
 | S7 | 2026-10-03 | `codex` | Lexical with Codex and small models | **gpt-6.1-sol 26/30 (87%)**, Claude Sonnet 28/30, no meaningful difference. **gpt-6-luna (small model) 21/30**: finds the right documents but answers are missing points; adding `kb_search` does not help (still 21/30), only cuts 24% of tokens. Keep lexical as the default for Codex too | `design.md` §13–14 |
-| S13 (Codex) | 2026-10-03 | `codex` | Codex installs okbase on its own from one sentence | 12/12 runs found `onboard`, 0 times added the consent flag on its own, `doctor` passed 11/12. **Bug:** the Codex sandbox blocks writes to `.codex/`, so Codex cannot register the MCP server for itself; okbase only reports "Permission denied" | `plans/onboarding.md` |
+| S13 (Codex) | 2026-10-03 | `codex` | Codex installs okbase on its own from one sentence | 12/12 runs found `onboard`, 0 times added the consent flag on its own, `doctor` passed 11/12. The Codex sandbox blocks writes to `.codex/`; fixed (`sandbox_blocked` and a step for the user in `onboard`): the rerun hands the user the exact command, 61–72 s per setup | `plans/onboarding.md` |
 
 ## 2. Quick-reference numbers
 

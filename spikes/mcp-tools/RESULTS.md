@@ -1,9 +1,9 @@
 # S15 — a smaller MCP tool list, and the answer rules as server instructions (2026-10-03)
 
 Two open items from the v0.2 eval (`../acceptance-v0.2/RESULTS.md`):
-1. okfkit cost about 28% more per question than the spike's own server. Is the longer tool list
+1. okbase cost about 28% more per question than the spike's own server. Is the longer tool list
    the cause, and does trimming it change accuracy?
-2. S9: agents never invoked the `okfkit-answer` skill (0 of 48 runs). Do the skill's rules work
+2. S9: agents never invoked the `okbase-answer` skill (0 of 48 runs). Do the skill's rules work
    when the MCP server sends them as instructions? Claude Code puts server instructions into the
    system prompt.
 
@@ -11,7 +11,7 @@ Two open items from the v0.2 eval (`../acceptance-v0.2/RESULTS.md`):
 - `kb_grep` and `kb_search` describe their `filter` argument as "the same fields as kb_query"
   instead of repeating the whole filter schema. The tool list for this bundle went from 6,986 to
   5,874 characters (−16%).
-- The server instructions carry the rules of `okfkit-answer`, about 810 characters, built from
+- The server instructions carry the rules of `okbase-answer`, about 810 characters, built from
   the tools that are on:
   - `kb_query` for list, count and filter questions;
   - `data_query` with aggregates for numbers in sheets;
@@ -23,13 +23,13 @@ Two open items from the v0.2 eval (`../acceptance-v0.2/RESULTS.md`):
 ## Setup
 - **Bundle:** biz-meta ×20 (3,020 documents, sheets of about 10k rows) and its 48 questions; the
   questions, prompt, structured output and judge are the spike's.
-- **Agent:** Claude Code 2.1.284 (`--model sonnet`) with Read, Grep, Glob and every okfkit tool;
+- **Agent:** Claude Code 2.1.284 (`--model sonnet`) with Read, Grep, Glob and every okbase tool;
   6 runs in parallel.
 - **Configs:**
-  - **K0:** okfkit before the change, plus the spike's tool hints in the system prompt (the v0.2
+  - **K0:** okbase before the change, plus the spike's tool hints in the system prompt (the v0.2
     K setup, rerun so that all configs use the same model and day);
-  - **K1:** okfkit after the change, plus the same hints;
-  - **I1:** okfkit after the change, with **no hints**: only the server instructions.
+  - **K1:** okbase after the change, plus the same hints;
+  - **I1:** okbase after the change, with **no hints**: only the server instructions.
 - **Cost:** 144 runs, $6.29, plus the judge.
 
 ## Results (`results/table.md`)
@@ -66,12 +66,12 @@ Missed questions:
    - Accuracy is the same: one question apart, which is not significant with n = 48 (1 question
      = 2.1 points).
    - The cost per question is set by Claude Code's own prompt and the tool results, not by
-     okfkit's tool definitions.
+     okbase's tool definitions.
    - The trim is kept: same results with less context.
 3. **The v0.2 cost gap was not the tool list.**
    - K0 costs $0.043 today, against $0.041 in v0.2 and $0.032 for the spike's server.
    - The spike ran a different Claude Code version, so the remaining gap cannot be attributed to
-     okfkit. Comparing against the spike's server again would need it rerun on the same day.
+     okbase. Comparing against the spike's server again would need it rerun on the same day.
 
 ## Not covered
 - Codex, and agents other than Claude Code. Whether a client shows server instructions differs
@@ -80,7 +80,7 @@ Missed questions:
 
 ## Reproduce
 ```
-cargo build --release -p okfkit-cli          # the new binary; BASE_BIN=<bedbc52 build> for K0
+cargo build --release -p okbase-cli          # the new binary; BASE_BIN=<bedbc52 build> for K0
 python3 run.py run [--configs K0,K1,I1] [--limit N]
 python3 run.py report
 ```

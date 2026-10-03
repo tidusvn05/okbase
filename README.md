@@ -83,7 +83,20 @@ okbase -b ./docs-okf lint --level L1
 - **Standard and lint:** quality levels L0–L3, text/JSON/SARIF output, `--fix-safe`; `okbase vocab` for a tag vocabulary.
 - **Every read takes a `Scope`** from the host (path rules, metadata filters, per HTTP caller); okbase never decides permissions itself.
 
-The defaults are backed by experiments (see [`spikes/`](spikes/README.md)). One example: lexical navigation with a strong `grep` matched embedding-based retrieval on bundles from 60k to 4.4M tokens, so embeddings are optional.
+## What the experiments show
+
+Every default comes from a measured experiment with real agents ([`spikes/README.md`](spikes/README.md)
+has all of them, with data and scripts). The ones that shape how okbase works:
+
+| Question | Result |
+|---|---|
+| Do agents need embeddings to find answers in a large bundle? | **No.** Lexical tools with a strong `grep` answered 100 / 100 / 93 / 90% on bundles of 60k, 150k, 1M and 4.4M tokens, on par with embedding retrieval (S4). okbase itself: 28/30 on the 1M-token bundle with Claude (v0.1). |
+| Does it work with other agents? | Codex (gpt-6.1-sol) 26/30 on the same bundle. A small model (gpt-6-luna) 21/30: it finds the documents but leaves details out, and semantic search does not change that, so use a strong model for answering (S7). |
+| Spreadsheets with ~10k rows? | Without SQL the agent gives up; with okbase's `data_query` it answers 10/10, 9× cheaper (S5). Metadata questions through `kb_query` cost 30–45% less. |
+| Questions in another language than the documents? | Lexical search finds 3.5% of cross-language answers; EmbeddingGemma Q4 reaches R@1 0.857 on 300 vi/en/ja questions, 0.917 after fine-tuning on the bundle (S1, S11). |
+| Can an agent set okbase up alone? | From one sentence: Claude 3/3 and Codex 12/12 runs found `okbase onboard` and never added a consent flag the user had not given; all but one ended with a passing `okbase doctor` (S13). |
+| Do agents follow okbase's answering rules? | They never invoked the skill, but with the same rules sent as MCP server instructions they score 46/48 without any hints in the prompt (S9, S15). |
+| Scanned PDFs? | okbase hands the agent the page's embedded image: 1–3 ms for a JPEG scan against 0.2–0.95 s to render the page, pixel-exact, with the same image tokens (S14). |
 
 ## Builds
 

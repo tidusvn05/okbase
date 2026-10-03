@@ -1,11 +1,11 @@
 # S14 — handing a scanned PDF page to an agent as an image (2026-10-02)
 
-Question: `okfkit import ocr-next` exports the image embedded in a scanned page (commit
+Question: `okbase import ocr-next` exports the image embedded in a scanned page (commit
 `0ea2323`). How does that compare with what an agent or a tool would otherwise do, rendering the
 page, in time, fidelity, agent cost and weight? Which scans does it miss?
 
 ## Setup
-- Machine: AMD EPYC, 8 vCPU, 23 GB RAM; okfkit release build; median of 20 runs (okfkit) or
+- Machine: AMD EPYC, 8 vCPU, 23 GB RAM; okbase release build; median of 20 runs (okbase) or
   10 runs (Python), document opened inside each run.
 - Samples (`make_samples.py`, not committed): one A4 page of Vietnamese text and a table grid,
   produced the ways scanners and PDF libraries store scans. The source image is kept, so fidelity
@@ -23,7 +23,7 @@ page, in time, fidelity, agent cost and weight? Which scans does it miss?
   - **pdfium render** at 150 or 300 dpi (pypdfium2 5, PDFium 153, the Chrome engine): what a tool
     with a PDF renderer does;
   - **mupdf render** at 150 dpi (PyMuPDF 1.28, AGPL);
-  - **mupdf extract**: the same idea as okfkit (take the embedded image), reference only (AGPL).
+  - **mupdf extract**: the same idea as okbase (take the embedded image), reference only (AGPL).
 - Measures:
   - time to a file in memory;
   - output size;
@@ -33,7 +33,7 @@ page, in time, fidelity, agent cost and weight? Which scans does it miss?
 
 ## Results (`results/s14.json`)
 
-| Sample | okfkit | mupdf extract | pdfium 150 dpi | pdfium 300 dpi | mupdf 150 dpi |
+| Sample | okbase | mupdf extract | pdfium 150 dpi | pdfium 300 dpi | mupdf 150 dpi |
 |---|---|---|---|---|---|
 | jpeg-gray-300dpi | **1.7 ms**, MAE 0.41 (bytes as embedded) | 1.4 ms, 0.41 | 240 ms, 3.26 | 804 ms, 1.26 | 188 ms, 3.49 |
 | jpeg-rgb-300dpi | **0.8 ms**, 0.41 | 1.3 ms, 0.41 | 284 ms, 3.26 | 866 ms, 1.26 | 307 ms, 3.49 |
@@ -44,7 +44,7 @@ page, in time, fidelity, agent cost and weight? Which scans does it miss?
 | ccitt-g4-300dpi | **not exported** at the time (see the follow-up below: now 86 ms, MAE 0.0) | 172 ms, 0.0 | 218 ms, 4.99 | 599 ms, 1.82 | 144 ms, 5.35 |
 
 Output size:
-- okfkit equals the embedded image: 0.15–0.83 MB at 300 dpi.
+- okbase equals the embedded image: 0.15–0.83 MB at 300 dpi.
 - Renders at 150 dpi: 0.27–0.88 MB.
 - Renders at 300 dpi: 0.6–2.4 MB.
 
@@ -54,16 +54,16 @@ agent.
 
 ## Findings
 1. **Exact and fast where it applies.**
-   - JPEG scans: okfkit hands over the embedded bytes in about 1–3 ms, versus about 0.2–0.95 s to
+   - JPEG scans: okbase hands over the embedded bytes in about 1–3 ms, versus about 0.2–0.95 s to
      render.
-   - Flate scans: okfkit is lossless (MAE 0) and 2–4× faster than rendering. Renders lose detail
+   - Flate scans: okbase is lossless (MAE 0) and 2–4× faster than rendering. Renders lose detail
      to resampling (MAE 3.5–6 at 150 dpi).
 2. **Same agent cost.** Image tokens are capped by the model, so extraction costs the agent
    nothing extra. Resolution above about 1568 px is wasted either way.
 3. **No new weight.** No crate was added to `Cargo.lock`: lopdf, flate2 and crc32fast already
    came with pdf-inspector. A renderer would add PDFium (a prebuilt C++ library of several MB per
    platform, shipped next to the binary) or MuPDF (AGPL, not acceptable for an MIT/Apache crate).
-4. **Gap: CCITT G4.** Black-and-white office scanners commonly write CCITT G4, and okfkit does
+4. **Gap: CCITT G4.** Black-and-white office scanners commonly write CCITT G4, and okbase does
    not export it yet: the agent is told to open the PDF page and needs a renderer, as in I5.
    - A pure-Rust G4 decoder (for example the `fax` crate, MIT) would close the gap without a
      renderer.
@@ -84,14 +84,14 @@ agent.
 ```
 ../embed-tune/.venv/bin/pip install pillow fpdf2 img2pdf pypdfium2 pymupdf numpy
 ../embed-tune/.venv/bin/python make_samples.py      # needs ../import-bench/fonts/NotoSans.ttf
-cargo run --release > results/okfkit.jsonl            # RUNS=20 by default
+cargo run --release > results/okbase.jsonl            # RUNS=20 by default
 ../embed-tune/.venv/bin/python compare.py            # writes results/s14.json and prints the table
 ```
 
 ## Follow-up: CCITT G4 (2026-10-03)
 
-okfkit now decodes CCITT Group 4 with the `fax` crate (MIT, pure Rust, about 25 KB of source).
-On `ccitt-g4-300dpi`, okfkit takes **86 ms with MAE 0.0**, against 156 ms for mupdf extract and
+okbase now decodes CCITT Group 4 with the `fax` crate (MIT, pure Rust, about 25 KB of source).
+On `ccitt-g4-300dpi`, okbase takes **86 ms with MAE 0.0**, against 156 ms for mupdf extract and
 202 ms (MAE 4.99) for a PDFium render at 150 dpi. The same run also found that `DecodeParms` can
 be an array, one entry per filter, as img2pdf writes it. The predictor lookup did not read that
 form before; now it does, and `/Decode [1 0]` (inverted 1-bit images) is honoured. Group 3 fax

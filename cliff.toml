@@ -31,6 +31,11 @@ trim = true
 
 [git]
 conventional_commits = true
+# The project was renamed (see AGENTS.md); older commit messages use the earlier name.
+commit_preprocessors = [
+  { pattern = "okfkit", replace = "okbase" },
+  { pattern = "rename okbase to okbase", replace = "rename the project to okbase" },
+]
 filter_unconventional = true
 split_commits = false
 protect_breaking_commits = true

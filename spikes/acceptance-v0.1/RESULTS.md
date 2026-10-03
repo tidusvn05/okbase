@@ -4,13 +4,13 @@ Run on 2026-10-01 with Claude Code 2.1.284 (`--model sonnet`), the okf-scale
 bundle **L** (OpenClaw docs, ~1M tokens, 301 files) and its 30 questions
 (10 vi, 10 en, 10 ja). Same system prompt, questions and blind LLM judge
 (sonnet) as the okf-scale spike's G2; the MCP server is
-`okfkit mcp serve --stdio` (release build of commit 6499968).
+`okbase mcp serve --stdio` (release build of commit 6499968).
 
 | Config | Correct | Key facts | Turns (mean) | Tool calls (mean) | Cost (mean) |
 |---|---|---|---|---|---|
 | okf-scale G2 (spike, reference) | 28/30 (93%) | — | ~4.5 | 2.4 (XL) | $0.017–0.022 |
-| **O** okfkit | **28/30 (93%)** | 96% | 4.6 | 2.5 | $0.029 |
-| OS okfkit + okfkit-answer skill | 27/30 (90%) | 96% | 4.8 | 2.7 | $0.047 |
+| **O** okbase | **28/30 (93%)** | 96% | 4.6 | 2.5 | $0.029 |
+| OS okbase + okbase-answer skill | 27/30 (90%) | 96% | 4.8 | 2.7 | $0.047 |
 
 **Acceptance: met.** Config O reaches the 93% target.
 
@@ -30,7 +30,7 @@ Notes:
   questions) is not exercised — neither config called `kb_query`. Measure the
   skill on the business bundle (spike S9) before changing its defaults.
 - Cost per question is higher than the spike's G2 ($0.029 vs ~$0.02): the
-  okfkit tool list is larger (6 tools with longer descriptions vs 3).
+  okbase tool list is larger (6 tools with longer descriptions vs 3).
 
 Files: `results/table.md`, `results/summary.json`, `results/judge.json`
 (grades), `results/runs.jsonl.gz` (all runs), `results/run.log`.

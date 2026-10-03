@@ -28,7 +28,7 @@ formulas, tables). Inputs are not committed (generated or downloaded).
 |---|---|
 | DOCX vi / ja | exact: headings, bullets, table, every diacritic and kana/kanji |
 | PPTX | exact: slide titles as headings, bullets, the table slide as a table |
-| XLSX | a markdown table (okfkit's SQL data module is the better path for sheets) |
+| XLSX | a markdown table (okbase's SQL data module is the better path for sheets) |
 | Text PDF vi / ja | exact, including headings (from font size), bullets and the table |
 | PDF, two side-by-side columns in the middle of a page | **lines of the two columns interleaved** (reading order lost) |
 | Real two-column paper | body text in the right order; headings partly noisy (author names, licence line as headings); the main table right except a few split cells |
@@ -38,14 +38,14 @@ formulas, tables). Inputs are not committed (generated or downloaded).
 ## Verdict
 
 anydoc is light (no models, no runtime services) and accurate for office files and text PDFs in
-vi/en/ja; it is the converter to use. Gaps to handle in okfkit, not in the converter:
-1. **Scans**: report the pages; let a multimodal agent transcribe them (no OCR engine in okfkit),
+vi/en/ja; it is the converter to use. Gaps to handle in okbase, not in the converter:
+1. **Scans**: report the pages; let a multimodal agent transcribe them (no OCR engine in okbase),
    or run an OCR tool the user already has. Never use hosted OCR by default (it sends the file out).
 2. **Layout risk in PDFs**: flag pages whose text looks interleaved or very short so an agent or a
    person reviews them; mark imported documents `generated` until reviewed.
 3. **HTML**: htmd plus a main-content step (drop nav/header/footer/scripts) and a table fix for
    header-less tables; or convert HTML tables through anydoc-like logic.
-4. **Size**: ≈ 10 MB more; keep import optional (a feature, or the `okfkit-import` plugin binary).
+4. **Size**: ≈ 10 MB more; keep import optional (a feature, or the `okbase-import` plugin binary).
 
 ## I5 — agents on a folder of source documents (2026-10-02)
 
@@ -57,7 +57,7 @@ paper; only the user's sentence and the binary.
 |---|---|---|
 | Setup | `onboard` → `agent install` → `doctor` (MCP ok) | same |
 | Scanned page | `import ocr-next` → read the page → `import ocr-submit` (stored in state); found afterwards | asked: "May I read that page and transcribe it? Its content goes to my model provider" |
-| Answers | 3/3 with file (and page) citations, using only okfkit commands; noted the scan's text is cut off | correct, and noticed the Vietnamese and Japanese policies disagree, asking which applies |
+| Answers | 3/3 with file (and page) citations, using only okbase commands; noted the scan's text is cut off | correct, and noticed the Vietnamese and Japanese policies disagree, asking which applies |
 | Consent flags on their own | 0 | 0 |
 
 Follow-up: the agent had no PDF renderer and extracted the scan's image itself. `ocr-next` could

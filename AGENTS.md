@@ -2,6 +2,17 @@
 
 okbase is an open-source (MIT OR Apache-2.0) Rust toolkit that helps AI agents work with markdown knowledge bundles in the Open Knowledge Format (OKF v0.2). It ships a CLI (`okbase`), an MCP server, a Rust library (`okbase::Bundle`), and Agent Skills.
 
+## Name
+- The project is **okbase**, short for **Open Knowledge base**. Write it in lowercase (`okbase`), as
+  the binary, crates (`okbase`, `okbase-cli`, `okbase-*`), skills (`okbase-answer`, …), MCP server
+  name, `okbase.toml`, `.okbase/`, `.okbaseignore` and `OKBASE_*` variables do.
+- It was called **okfkit** until 2026-10-03. Do not use the old name in new text; git history keeps
+  it, and `cliff.toml` rewrites it in the changelog.
+- **OKF** (Open Knowledge Format) is the file format okbase reads, a separate specification by
+  Google. Keep that name for the format; okbase is not affiliated with Google.
+- Repository: https://github.com/tidusvn05/okbase. Installs come from GitHub releases
+  (`install.sh` / `install.ps1`).
+
 ## Read first
 - `docs/design.md` — design source of truth (section numbers are referenced below); later plans in `docs/plans/`.
 - `docs/HANDOFF.md` — the original v0.1 handoff (task order, acceptance criteria, hard rules).

@@ -1,7 +1,7 @@
 # v0.3 retrieval evals (PLAN §13)
 
 Run on 2026-10-01, CPU only (8 vCPU), release build, `examples/retrieval_eval.rs` through the
-okfkit facade (the same path MCP `kb_search` and hosts use). Models from the user cache;
+okbase facade (the same path MCP `kb_search` and hosts use). Models from the user cache;
 EmbeddingGemma used after the maintainer accepted the Gemma Terms of Use.
 
 | Eval | Metric | Target | Spike | EmbeddingGemma 300M Q4 | bge-m3 int8 |

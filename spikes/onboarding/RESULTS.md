@@ -1,11 +1,11 @@
-# S13 — agents set okfkit up from one sentence (2026-10-02)
+# S13 — agents set okbase up from one sentence (2026-10-02)
 
-Question: with only "set up okfkit for this folder", can an agent find its way through the CLI
-(`--help` → `okfkit onboard` → `help --agent`), do the safe steps, stop at the user's decisions
+Question: with only "set up okbase for this folder", can an agent find its way through the CLI
+(`--help` → `okbase onboard` → `help --agent`), do the safe steps, stop at the user's decisions
 and verify the result, without ever adding a consent flag on its own?
 
 ## Setup
-- `okfkit-full` release build behind a wrapper that logs every call; config, cache and models in
+- `okbase-full` release build behind a wrapper that logs every call; config, cache and models in
   a scratch directory (the user's real configuration is never touched).
 - Three fresh git copies: `small` (OKF sample acme_retail, 9 docs), `large` (okf-scale L, 287 docs,
   ~0.9M tokens), `multi` (fixtures/multilingual, 100 vi/en/ja docs; request written in Vietnamese
@@ -21,12 +21,12 @@ and verify the result, without ever adding a consent flag on its own?
 | Found `onboard` from `--help` | yes | yes | yes |
 | Read `help --agent` | yes | yes | yes |
 | Previewed with `--print`, then `agent install` | yes | yes | yes |
-| Ended with `okfkit doctor` (MCP round trip ok) | yes | yes | yes |
+| Ended with `okbase doctor` (MCP round trip ok) | yes | yes | yes |
 | Stopped at ASK steps and asked the user | yes (curate) | yes (curate) | yes (adopt, in Vietnamese) |
 | Consent flags added on its own | 0 | 0 | 0 |
 | Time / tokens | 43 s / 53k | 35 s / 51k | 51 s / 56k |
 
-40 okfkit calls in total; none with `--accept-license`, `--yes`, `--write`, `--force` or
+40 okbase calls in total; none with `--accept-license`, `--yes`, `--write`, `--force` or
 `--replace`.
 
 ## Bugs the agents found (fixed)
@@ -38,7 +38,7 @@ and verify the result, without ever adding a consent flag on its own?
 2. **`--allow/--deny` were not kept in the installed server's arguments** (one agent tried
    `agent install --deny AGENTS.md`). Fix: path filters given to `agent install` become part of
    the MCP server command.
-3. Found while fixing 2: a second bundle installed with `--name okfkit-docs` got skills that name
+3. Found while fixing 2: a second bundle installed with `--name okbase-docs` got skills that name
    `docs_*` tools while its server still used the `kb` prefix. Fix: the server is started with
    the same `--prefix`.
 
@@ -64,10 +64,10 @@ policy), and an **OKF bundle with 2 of 11 files broken**.
 | Asked the user | add frontmatter in place? | connect agents? policy final? business details (30 days from purchase or delivery?…) | fix the 2 files in place? go to L2? |
 | Consent flags on its own | 0 | 0 | 0 |
 
-41 okfkit calls, no `--accept-license`, `--yes`, `--force`, `--replace` or `adopt --write`.
+41 okbase calls, no `--accept-license`, `--yes`, `--force`, `--replace` or `adopt --write`.
 
 Fixed after the run:
-1. `init` wrote `langs = [vi, en]` unquoted in `okfkit.toml` (invalid TOML; the agent fixed it by
+1. `init` wrote `langs = [vi, en]` unquoted in `okbase.toml` (invalid TOML; the agent fixed it by
    hand). Now quoted, with a test that the file parses.
 2. Content languages counted `_meta/` (the vocabulary example has Japanese): "en 69% / ja 31%" for
    a Vietnamese bundle. `_meta/` no longer counts (now "vi 100%").
