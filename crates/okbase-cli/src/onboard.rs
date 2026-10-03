@@ -110,14 +110,26 @@ pub struct Plan {
     pub steps: Vec<Step>,
     /// Rules every agent follows.
     pub rules: Vec<&'static str>,
+    /// What to tell the user once no steps are left (or when they stop).
+    pub report: Report,
+}
+
+/// The closing report an agent gives the user: a few lines, in the user's language.
+#[derive(Debug, Clone, Default, Serialize)]
+pub struct Report {
+    /// How to use okbase now.
+    pub use_now: Vec<String>,
+    /// Optional upgrades `okbase advise` lists for later (not done without the user asking).
+    pub optional: Vec<String>,
 }
 
 /// Rules repeated in every plan.
 pub const RULES: &[&str] = &[
     "Do the steps in order. Run `okbase onboard` again after each step: finished steps move to `done`.",
-    "At an `ask` step, ask the user the question and wait. Run only the commands of the option they chose.",
+    "At an `ask` step, ask the user the question and wait. Run only the commands of the option they chose. A step they declined stays listed: treat it as done.",
     "Never add --accept-license, --yes, --write, --force, --replace or --send-documents unless the user agreed to that step.",
     "Never edit documents without asking. A command that exits 3 needs the user's consent: relay its `question`.",
+    "When no steps are left, or the user stops: tell them in a few lines what is set up (`done`), how to use it now (`report.use_now`) and the optional upgrades (`report.optional`). Do optional steps only if they ask.",
 ];
 
 fn run(id: &'static str, title: &str, why: &str, commands: &[&str], writes: &[&str]) -> Step {
@@ -216,6 +228,7 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
             done,
             steps,
             rules: RULES.to_vec(),
+            report: Report::default(),
         };
     }
     if let Some(sc) = st.scan.as_ref().filter(|_| st.bundle_exists) {
@@ -239,6 +252,7 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
                     done,
                     steps,
                     rules: RULES.to_vec(),
+                    report: Report::default(),
                 };
             }
         }
@@ -298,6 +312,7 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
                 done,
                 steps,
                 rules: RULES.to_vec(),
+                report: Report::default(),
             };
         }
     }
@@ -323,6 +338,7 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
             done,
             steps,
             rules: RULES.to_vec(),
+            report: Report::default(),
         };
     };
     let p = &advice.profile;
@@ -617,13 +633,50 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
             &[],
         ));
     }
+    let report = report(st);
     Plan {
         bundle: st.bundle.clone(),
         summary,
         done,
         steps,
         rules: RULES.to_vec(),
+        report,
     }
+}
+
+/// How to use okbase now, and what `advise` keeps for later.
+fn report(st: &State) -> Report {
+    let mut use_now = Vec::new();
+    if st.installed_for.is_empty() {
+        use_now.push(format!(
+            "Ask questions about the knowledge in {}: the agent answers with the okbase CLI (`okbase help --agent`).",
+            st.bundle
+        ));
+    } else {
+        use_now.push(format!(
+            "Restart {} (or reconnect MCP) once, then ask questions about the knowledge in {}: answers come from the documents, with their ids.",
+            st.installed_for.join(" / "),
+            st.bundle
+        ));
+    }
+    use_now.push("`okbase doctor` checks the setup at any time; `okbase onboard --goal remove` removes okbase.".into());
+    let optional = st
+        .advice
+        .as_ref()
+        .map(|a| {
+            a.steps
+                .iter()
+                .filter(|s| {
+                    matches!(
+                        s.when,
+                        okbase::advise::When::Next | okbase::advise::When::Maybe
+                    )
+                })
+                .map(|s| format!("{}: {}", s.title, s.why))
+                .collect()
+        })
+        .unwrap_or_default();
+    Report { use_now, optional }
 }
 
 impl Plan {
@@ -637,7 +690,16 @@ impl Plan {
             out.push_str(&format!("  ✓ {d}\n"));
         }
         if self.steps.is_empty() {
-            out.push_str("\nNothing left to do. `okbase doctor` checks the setup at any time.\n");
+            out.push_str("\nNothing left to do. Tell the user:\n");
+            for l in &self.report.use_now {
+                out.push_str(&format!("  - {l}\n"));
+            }
+            if !self.report.optional.is_empty() {
+                out.push_str("  Optional, only if they ask:\n");
+                for l in &self.report.optional {
+                    out.push_str(&format!("  - {l}\n"));
+                }
+            }
         } else {
             out.push_str("\nTo do (in order; stop at every ASK and wait for the user's answer)\n");
         }

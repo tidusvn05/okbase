@@ -981,6 +981,7 @@ fn agent_instructions_agree_everywhere() {
             "--write",
             "--force",
             "--replace",
+            "--send-documents",
             "help --agent",
         ] {
             if std::ptr::eq(text, &guide) && must == "help --agent" {
