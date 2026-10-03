@@ -19,6 +19,7 @@ okbase is an open-source (MIT OR Apache-2.0) Rust toolkit that helps AI agents w
 - `docs/releasing.md` — versioning, what is public surface, how to cut a release.
 - `spikes/README.md` — the experiments behind every default. Do not change a default without new eval data.
 - `docs/runbooks/fix-issues.md` — how to take open GitHub issues, group related ones, fix them and open one pull request per group.
+- `docs/runbooks/merge-and-release.md` — how to merge ready pull requests, close the issues they fix, and decide on and cut a release.
 
 ## Product conventions
 `docs/conventions/end-user-and-agent-friendly-tools.md` applies to every user-facing change: evidence
