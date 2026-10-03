@@ -101,6 +101,20 @@ The agent was told only the request, and that it could not ask questions during 
 - Codex reads a lot of help text: about 300–390k input tokens per setup, against about 50k for
   Claude in S13. Most of it is cached.
 
+## After the fix (`b98cebf`)
+okfkit now:
+- stops `agent install --codex` before writing anything, with `sandbox_blocked` (exit 3) and the
+  command for the user;
+- when run inside a Codex session, makes connecting Codex a step for the user in `onboard`.
+
+Rerun with gpt-6.1-sol on `small` and `repo`:
+- Both runs ended by giving the user the exact command for their terminal, for example
+  `okfkit -b docs agent install --codex --project .`, and checked the rest with `doctor`.
+- No launcher scripts, no Claude Code setup in place of Codex, and 0 consent flags.
+- Wall time: 61 s and 72 s, against 82 s and 103 s before.
+
+Runs are in `results/s13-after-fix-runs.jsonl.gz`.
+
 ## Not covered
 - Codex outside the sandbox (`danger-full-access`), where `.codex/` is writable.
 - Codex answering through its own project MCP config after `okfkit agent install --codex`; the
