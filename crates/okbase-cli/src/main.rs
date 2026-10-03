@@ -37,6 +37,18 @@ fn main() -> ExitCode {
         }
         default_hook(info);
     }));
+    // The main thread's stack is 1 MB on Windows; the command tree (clap) and the deeper calls
+    // overflow it in debug builds. Run on a thread with a larger stack on every platform.
+    std::thread::Builder::new()
+        .name("okbase".into())
+        .stack_size(16 * 1024 * 1024)
+        .spawn(cli_main)
+        .map_or(ExitCode::FAILURE, |t| {
+            t.join().unwrap_or(ExitCode::from(101))
+        })
+}
+
+fn cli_main() -> ExitCode {
     let cli = Cli::parse();
     let json = cli.json;
     match run(cli) {
