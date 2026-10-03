@@ -54,7 +54,7 @@ ignore = "0.4"
 anydoc = "0.2.4"
 pdf-inspector = "1.25"
 htmd = "0.5"
-markup5ever_rcdom = "0.38"
+markup5ever_rcdom = "0.39"
 lopdf = { version = "0.45", default-features = false }
 crc32fast = "1"
 fax = "0.3"
