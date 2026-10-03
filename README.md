@@ -24,6 +24,8 @@ knowledge in this folder.
 1. If `okbase --version` fails, install it:
    curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | sh
    (Windows: irm https://raw.githubusercontent.com/tidusvn05/okbase/main/install.ps1 | iex)
+   If it finds no release (before 0.1.0), install from source instead (Rust 1.89+, a few minutes):
+   cargo install --locked --git https://github.com/tidusvn05/okbase okbase-cli
    If you cannot run it (no network or a sandbox), give me the command and wait.
 2. Run `okbase onboard` here and follow it until no steps are left (or only ones I declined): run
    its `run` steps, ask me its `ask` questions and wait for my answers, and never add a consent
@@ -51,7 +53,7 @@ Agents: [`llms.txt`](llms.txt) and `okbase help --agent` have the full contract.
 | Linux, macOS | `curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh \| sh` |
 | … with semantic search | add `-s -- --full` |
 | Windows | `irm https://raw.githubusercontent.com/tidusvn05/okbase/main/install.ps1 \| iex` |
-| From source (Rust 1.89+) | `cargo install --locked --path crates/okbase-cli` |
+| From source (Rust 1.89+) | `cargo install --locked --git https://github.com/tidusvn05/okbase okbase-cli` |
 
 Each download is checked against the release's `SHA256SUMS`. More: [install, update, remove](docs/usage.md#install).
 

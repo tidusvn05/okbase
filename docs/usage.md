@@ -38,8 +38,10 @@ curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | 
 On Windows: `irm https://raw.githubusercontent.com/tidusvn05/okbase/main/install.ps1 | iex`
 (`$env:OKBASE_FULL=1` first for okbase-full). The installers verify each download against the
 release's `SHA256SUMS` and write only the `okbase` binary (`~/.local/bin`, or
-`%LOCALAPPDATA%\okbase\bin` on Windows). From source, with Rust 1.89 or newer:
-`cargo install --locked --path crates/okbase-cli [--features full]` in a clone.
+`%LOCALAPPDATA%\okbase\bin` on Windows). From source, with Rust 1.89 or newer (the only way
+before the first release, when the installers report "no release found"):
+`cargo install --locked --git https://github.com/tidusvn05/okbase okbase-cli [--features full]`,
+or `cargo install --locked --path crates/okbase-cli` in a clone.
 
 To update, run the installer again. To remove okbase, see
 [Trying okbase, then stopping](#trying-okbase-then-stopping).
