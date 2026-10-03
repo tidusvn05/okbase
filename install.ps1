@@ -18,7 +18,14 @@ if ([Environment]::Is64BitOperatingSystem -ne $true -or $env:PROCESSOR_ARCHITECT
 $Target = 'x86_64-pc-windows-msvc'
 
 if ($Version -eq 'latest') {
-    $release = Invoke-RestMethod "https://api.github.com/repos/$Repo/releases/latest"
+    try {
+        $release = Invoke-RestMethod "https://api.github.com/repos/$Repo/releases/latest"
+    } catch {
+        if ([int]$_.Exception.Response.StatusCode -eq 404) {
+            throw "okbase-install: no release found at https://github.com/$Repo/releases; before the first release, install from source (Rust 1.89+, takes a few minutes): cargo install --locked --git https://github.com/$Repo okbase-cli"
+        }
+        throw
+    }
     $Version = $release.tag_name
 }
 if (-not $Version.StartsWith('v')) { $Version = "v$Version" }

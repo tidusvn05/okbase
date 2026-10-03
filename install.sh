@@ -60,7 +60,10 @@ target="$arch-$os"
 if [ "$VERSION" = "latest" ]; then
   url="$(final_url "https://github.com/$REPO/releases/latest")" || fail "cannot reach github.com"
   VERSION="${url##*/}"
-  case "$VERSION" in v[0-9]*) ;; *) fail "no release found at https://github.com/$REPO/releases" ;; esac
+  case "$VERSION" in
+    v[0-9]*) ;;
+    *) fail "no release found at https://github.com/$REPO/releases; before the first release, install from source (Rust 1.89+, takes a few minutes): cargo install --locked --git https://github.com/$REPO okbase-cli" ;;
+  esac
 fi
 case "$VERSION" in v*) ;; *) VERSION="v$VERSION" ;; esac
 
