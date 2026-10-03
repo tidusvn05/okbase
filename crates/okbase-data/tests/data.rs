@@ -196,7 +196,7 @@ fn xlsx_sheets_and_changes() {
     assert_eq!(names, ["notes"]);
 }
 
-/// PLAN §11: an aggregate over 10k rows ≤ 50 ms. Run with `--release -- --ignored`.
+/// design §11: an aggregate over 10k rows ≤ 50 ms. Run with `--release -- --ignored`.
 #[test]
 #[ignore = "timing test; run in release mode"]
 fn perf_aggregate_10k_rows() {

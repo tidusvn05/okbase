@@ -1,5 +1,5 @@
 //! `okbase import`: turn source documents (PDF, Word, PowerPoint, HTML…) into markdown with
-//! provenance, safely and repeatably (docs/PLAN-import.md §3–4).
+//! provenance, safely and repeatably (docs/plans/import.md §3–4).
 //!
 //! Without `--write` nothing changes: sources are already readable directly. Writing produces
 //! `<out>/<source path>.md` (split into parts when long), records the source hash and a hash of the

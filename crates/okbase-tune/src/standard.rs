@@ -1,4 +1,4 @@
-//! The okbase question standard v1 (docs/PLAN-advise-tune.md §3): what an agent writes for each
+//! The okbase question standard v1 (docs/plans/advise-tune.md §3): what an agent writes for each
 //! passage, and the checks every question must pass.
 
 use std::collections::{BTreeMap, HashSet};

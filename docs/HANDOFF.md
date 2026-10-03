@@ -1,164 +1,166 @@
-# okbase — Bàn giao triển khai
+# okbase — Implementation handoff
 
-> Ngày: 2026-10-01 · Người bàn giao: phiên thiết kế và spike (Claude Code)
-> Đối tượng: agent hoặc dev sẽ triển khai okbase. Đọc hết file này trước khi viết code.
+> This is the historical v0.1 handoff. Current status is in `docs/design.md` §13.
 
-## 1. Bạn đang nhận gì
+> Date: 2026-10-01 · Handed over by: the design and spike session (Claude Code)
+> Audience: the agent or developer who will implement okbase. Read this whole file before writing code.
 
-| Tài liệu | Vai trò |
+## 1. What you are receiving
+
+| Document | Role |
 |---|---|
-| `docs/PLAN.md` (v2.1) | **Nguồn sự thật** về thiết kế: chuẩn L0–L3, kiến trúc, module/profile, tool, skill, lộ trình, OSS (§17) |
-| `docs/HANDOFF.md` (file này) | Cách bắt đầu, thứ tự việc, tiêu chí hoàn thành, những điều không được làm |
-| `AGENTS.md` (gốc repo, tiếng Anh) | Quy ước làm việc hằng ngày cho mọi agent/contributor |
-| `spikes/` | Bằng chứng thực nghiệm và **code mẫu dùng lại được**. `spikes/README.md` có bảng tổng hợp |
+| `docs/design.md` (v2.1) | **Source of truth** for the design: L0–L3 standard, architecture, modules/profiles, tools, skills, roadmap, OSS (§17) |
+| `docs/HANDOFF.md` (this file) | How to start, task order, completion criteria, what not to do |
+| `AGENTS.md` (repo root, English) | Day-to-day working conventions for every agent/contributor |
+| `spikes/` | Experimental evidence and **reusable sample code**. `spikes/README.md` has a summary table |
 
-Trạng thái (2026-10-03): v0.1–v0.3 đã xong và qua nghiệm thu; các plan bổ sung (advise/tune, tình huống thực tế, onboarding, import) đã triển khai. Xem `docs/PLAN.md` §13 (Trạng thái). Repo có lịch sử commit nhưng **chưa push** (chưa có tổ chức GitHub). File này giữ lại làm tài liệu bàn giao ban đầu cho v0.1; các quy tắc ở §5 vẫn áp dụng.
+Status (2026-10-03): v0.1–v0.3 are done and accepted; the additional plans (advise/tune, real-world use cases, onboarding, import) are implemented. See `docs/design.md` §13 (Status). The repo has commit history but is **not pushed** yet (no GitHub organization). This file is kept as the original v0.1 handoff; the rules in §5 still apply.
 
-Dự án là **mã nguồn mở** (MIT OR Apache-2.0). Mọi thứ công khai (README, rustdoc, CLI help, commit message, CONTRIBUTING) viết bằng **tiếng Anh**.
+The project is **open source** (MIT OR Apache-2.0). Everything public (README, rustdoc, CLI help, commit messages, CONTRIBUTING) is written in **English**.
 
-## 2. Tóm tắt thiết kế trong 10 dòng
+## 2. The design in 10 lines
 
-1. okbase = CLI + MCP server + thư viện Rust, giúp agent làm việc với bundle markdown theo **OKF v0.2**.
-2. **Mặc định lexical, không có model:** catalog + `grep` v2 + `query` (metadata) + `get`/`list`. Spike S4: độ chính xác ngang embedding.
-3. **Embedding là module opt-in** (`embed-local`: EmbeddingGemma-300M Q4 hoặc bge-m3 int8; `embed-api`), đến ở v0.3.
-4. **Dữ liệu bảng cần SQL** (module `data`, v0.2). Spike S5: không có SQL thì agent bỏ cuộc với sheet ~10k dòng.
-5. **Chuẩn okbase L0–L3** + `okbase lint --level` + `okbase adopt` (markdown thường → OKF).
-6. **Skills** (`okbase-answer`, `-curate`, `-adopt`, `-import`, `-author`), cài bằng `okbase agent install --claude|--codex`.
-7. **Chỉ đọc mặc định.** Round-trip giữ nguyên key lạ, thứ tự và comment. Index có thể đặt ngoài bundle.
-8. **Không biết người dùng:** mọi thao tác đọc nhận `Scope` do host truyền vào (qobot là host đầu tiên).
-9. Mở rộng qua **capability registry**, profile (`minimal`/`standard`/`full`), `_meta/types`, `_meta/vocabulary.md`, plugin CLI `okbase-<x>`, trait Rust.
-10. Mọi mặc định đều gắn với một spike. **Muốn đổi mặc định thì phải có số liệu** (eval).
+1. okbase = CLI + MCP server + Rust library that helps agents work with markdown bundles in **OKF v0.2**.
+2. **Lexical by default, no model:** catalog + `grep` v2 + `query` (metadata) + `get`/`list`. Spike S4: accuracy on par with embedding.
+3. **Embedding is an opt-in module** (`embed-local`: EmbeddingGemma-300M Q4 or bge-m3 int8; `embed-api`), arriving in v0.3.
+4. **Tabular data needs SQL** (`data` module, v0.2). Spike S5: without SQL the agent gives up on a ~10k-row sheet.
+5. **okbase standard L0–L3** + `okbase lint --level` + `okbase adopt` (plain markdown → OKF).
+6. **Skills** (`okbase-answer`, `-curate`, `-adopt`, `-import`, `-author`), installed with `okbase agent install --claude|--codex`.
+7. **Read-only by default.** Round-trip keeps unknown keys, order and comments. The index can live outside the bundle.
+8. **User-agnostic:** every read operation takes a `Scope` passed in by the host (qobot is the first host).
+9. Extension through the **capability registry**, profiles (`minimal`/`standard`/`full`), `_meta/types`, `_meta/vocabulary.md`, `okbase-<x>` CLI plugins, Rust traits.
+10. Every default is tied to a spike. **Changing a default requires data** (eval).
 
-## 3. Code mẫu từ spike, nên dùng lại
+## 3. Sample code from the spikes, worth reusing
 
-| Cần làm | Xem | Ghi chú |
+| Task | Look at | Notes |
 |---|---|---|
-| Chunker H2/H3 (bỏ qua code fence, gộp < min, cắt > max) | `spikes/embed-bench/src/bundle.rs` → `chunk_doc` | Đang dùng tokenizer Gemma để đếm token; lõi không có model nên cần bộ đếm xấp xỉ (§6 T4) |
-| **grep v2** (regex, bỏ dấu, frontmatter, path glob, context, files_only, gợi ý khi rỗng) | `bundle.rs` → `grep`, `fold`, `glob_re` | Đã đo: G lên G2 tăng 3–7 điểm, câu tiếng Việt 85% → 95% |
-| `get` theo section, cắt bớt kèm danh sách heading | `bundle.rs` → `serve()` nhánh `kb_get` | |
-| **kb_query** (filter, `active_on`, facets, sum, sort) | `spikes/biz-meta/mcp_meta.py` → `match`, `kb_query` | Ngữ nghĩa đã được kiểm chứng bằng 336 lượt |
-| **data_query** (SQLite `query_only`, SELECT only, giới hạn số dòng) | `mcp_meta.py` → `data_query`, `data_tables` | Thêm timeout (progress handler) |
-| MCP stdio tối giản (JSON-RPC) | `bundle.rs` → `serve()` | Bản production dùng **rmcp** |
-| Analyzer: NFKC, bỏ dấu tiếng Việt, lindera | `spikes/embed-bench/src/main.rs` → `Analyzer`, `fold_latin` | lindera 6: `load_dictionary("embedded://ipadic")` |
-| Embedding (v0.3) | `main.rs` → `load()`; `bundle.rs` → `index()` (cache theo hash, sắp xếp theo độ dài) | fastembed phải tắt default features, dùng rustls |
-| Eval với agent CLI thật | `spikes/okf-scale/run.py`, `report.py`; `spikes/biz-meta/run.py`, `report.py` | Mẫu cho `okbase-eval` |
-| Chuyển docs có frontmatter lạ (Mintlify `summary`) sang OKF | `spikes/okf-scale/build_bundles.py` | Mẫu cho `adopt` |
+| H2/H3 chunker (skips code fences, merges < min, splits > max) | `spikes/embed-bench/src/bundle.rs` → `chunk_doc` | Uses the Gemma tokenizer to count tokens; the core has no model, so it needs an approximate counter (§6 T4) |
+| **grep v2** (regex, diacritic folding, frontmatter, path glob, context, files_only, hints when empty) | `bundle.rs` → `grep`, `fold`, `glob_re` | Measured: G to G2 gains 3–7 points, Vietnamese questions 85% → 95% |
+| `get` by section, truncation with a list of headings | `bundle.rs` → `serve()`, `kb_get` branch | |
+| **kb_query** (filter, `active_on`, facets, sum, sort) | `spikes/biz-meta/mcp_meta.py` → `match`, `kb_query` | Semantics validated over 336 runs |
+| **data_query** (SQLite `query_only`, SELECT only, row limit) | `mcp_meta.py` → `data_query`, `data_tables` | Add a timeout (progress handler) |
+| Minimal MCP stdio (JSON-RPC) | `bundle.rs` → `serve()` | Production uses **rmcp** |
+| Analyzer: NFKC, Vietnamese diacritic folding, lindera | `spikes/embed-bench/src/main.rs` → `Analyzer`, `fold_latin` | lindera 6: `load_dictionary("embedded://ipadic")` |
+| Embedding (v0.3) | `main.rs` → `load()`; `bundle.rs` → `index()` (cache by hash, sorted by length) | fastembed must have default features off and use rustls |
+| Eval with real agent CLIs | `spikes/okf-scale/run.py`, `report.py`; `spikes/biz-meta/run.py`, `report.py` | Template for `okbase-eval` |
+| Converting docs with foreign frontmatter (Mintlify `summary`) to OKF | `spikes/okf-scale/build_bundles.py` | Template for `adopt` |
 
-**Lưu ý:** code spike viết để đo nhanh, không theo chuẩn production (unwrap, không có test). Hãy chép **logic và ngữ nghĩa**, không chép nguyên xi.
+**Note:** the spike code was written for quick measurement, not to production standards (unwrap, no tests). Copy the **logic and semantics**, not the code verbatim.
 
-## 4. Quy ước kỹ thuật đã chốt
+## 4. Settled technical conventions
 
-| Mục | Giá trị |
+| Item | Value |
 |---|---|
-| Rust | edition 2024, stable; **MSRV 1.89** (serde-saphyr ≥ 1.2; rmcp 3.x cần 1.88); workspace `resolver = "3"` |
-| Lint | `clippy -D warnings`; `unsafe_code = "forbid"` ở mọi crate trừ khi có lý do ghi rõ |
-| Lỗi | `thiserror` trong lib, `anyhow` chỉ trong CLI |
-| Async | tokio; lõi đọc đồng bộ được (API sync + async wrapper), vì CLI và grep không cần async |
-| YAML | **serde-saphyr** (không dùng serde_yaml, serde_yml). **Round-trip giữ comment không thể làm bằng serde** → lưu raw frontmatter text và sửa theo từng key ở mức text (xem T1) |
+| Rust | edition 2024, stable; **MSRV 1.89** (serde-saphyr ≥ 1.2; rmcp 3.x needs 1.88); workspace `resolver = "3"` |
+| Lint | `clippy -D warnings`; `unsafe_code = "forbid"` in every crate unless a reason is written down |
+| Errors | `thiserror` in libraries, `anyhow` only in the CLI |
+| Async | tokio; the core can read synchronously (sync API + async wrapper), because the CLI and grep do not need async |
+| YAML | **serde-saphyr** (not serde_yaml, serde_yml). **A round-trip that keeps comments cannot be done with serde** → store the raw frontmatter text and edit it per key at the text level (see T1) |
 | SQLite | rusqlite 0.40 (`bundled`), FTS5 |
-| Markdown | pulldown-cmark (heading, link); không render lại body |
-| Tiếng Nhật | lindera 6 (`embed-ipadic`); tiếng Việt: unicode-normalization |
-| CLI | clap 4 (derive); mọi lệnh đọc có `--json` |
-| MCP | rmcp 3.5 (pin minor), stdio ở v0.1, streamable HTTP ở v0.3 |
-| TLS | chỉ **rustls** (không OpenSSL) |
-| Log | tracing; không có telemetry |
-| Tên tool MCP | `kb_catalog`, `kb_list`, `kb_grep`, `kb_get`, `kb_query`, `kb_links`, `data_tables`, `data_query`, `kb_search` (embed), `kb_write` (write); prefix đổi được |
+| Markdown | pulldown-cmark (headings, links); the body is never re-rendered |
+| Japanese | lindera 6 (`embed-ipadic`); Vietnamese: unicode-normalization |
+| CLI | clap 4 (derive); every read command has `--json` |
+| MCP | rmcp 3.5 (pinned minor), stdio in v0.1, streamable HTTP in v0.3 |
+| TLS | **rustls** only (no OpenSSL) |
+| Logging | tracing; no telemetry |
+| MCP tool names | `kb_catalog`, `kb_list`, `kb_grep`, `kb_get`, `kb_query`, `kb_links`, `data_tables`, `data_query`, `kb_search` (embed), `kb_write` (write); prefix can be changed |
 
-Phiên bản crate được ghi theo lần kiểm tra ngày 2026-09-30. Dùng bản mới nhất tương thích khi bắt đầu, và ghi vào `Cargo.lock`.
+Crate versions are as checked on 2026-09-30. Use the latest compatible versions when you start, and record them in `Cargo.lock`.
 
-## 5. Không được làm
+## 5. Do not
 
-1. **Không đưa embedding, ONNX hay model vào lõi** hoặc vào build mặc định `okbase`.
-2. **Không ghi vào bundle** khi người dùng chưa yêu cầu rõ (`--write`, `--fix-safe`, module `write`).
-3. **Không phá round-trip:** parse → write không đổi gì thì file phải giống byte-by-byte.
-4. **Không trộn BM25 với vector** trong ranking (spike S2).
-5. **Không sinh view đầy đủ** (bảng mọi tài liệu theo tag); chỉ sinh từ vựng và facet (S5).
-6. **Không tự quyết định phân quyền theo người dùng**; chỉ thực thi `Scope` được truyền vào.
-7. **Không đổi mặc định** (mode, chunk size, output tool, nội dung skill) khi chưa có eval chứng minh.
-8. Không commit cache, model, corpus hay bundle đã dựng (`.gitignore` đã có sẵn).
-9. Không dùng tên hay logo gây hiểu nhầm là sản phẩm của Google.
+1. **Do not put embedding, ONNX or models into the core** or into the default `okbase` build.
+2. **Do not write to the bundle** unless the user asked explicitly (`--write`, `--fix-safe`, `write` module).
+3. **Do not break round-trip:** parse → write with no changes must produce a byte-identical file.
+4. **Do not fuse BM25 with vectors** in ranking (spike S2).
+5. **Do not generate full views** (a table of every document by tag); generate only the vocabulary and facets (S5).
+6. **Do not decide per-user permissions yourself**; only enforce the `Scope` passed in.
+7. **Do not change defaults** (mode, chunk size, tool output, skill content) without an eval that justifies it.
+8. Do not commit caches, models, corpora or built bundles (`.gitignore` already covers them).
+9. Do not use names or logos that suggest a Google product.
 
-## 6. Việc cho v0.1 (mục tiêu 2 tuần) — theo thứ tự
+## 6. v0.1 tasks (2-week target), in order
 
-Mỗi task có tiêu chí hoàn thành. Làm tuần tự T0 → T9; T10 và T11 có thể làm song song khi T5 xong.
+Each task has completion criteria. Work sequentially T0 → T9; T10 and T11 can run in parallel once T5 is done.
 
-**T0 — Khởi tạo repo OSS**
-- `git init`, workspace, crate rỗng: `okbase-core`, `okbase-standard`, `okbase-analyze`, `okbase-index`, `okbase-query`, `okbase-lint`, `okbase-mcp`, `okbase-skills`, `okbase` (facade), `okbase-cli`.
-- `LICENSE-MIT`, `LICENSE-APACHE` (nguyên văn chính thức), `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1, nguyên văn), cập nhật `CONTRIBUTING.md`, `SECURITY.md`, `THIRD_PARTY.md`.
-- CI (GitHub Actions): fmt, clippy, test trên 3 OS, cargo-deny, MSRV.
-- ✅ CI xanh trên workspace rỗng; `cargo deny check` pass.
+**T0 — Set up the OSS repo**
+- `git init`, workspace, empty crates: `okbase-core`, `okbase-standard`, `okbase-analyze`, `okbase-index`, `okbase-query`, `okbase-lint`, `okbase-mcp`, `okbase-skills`, `okbase` (facade), `okbase-cli`.
+- `LICENSE-MIT`, `LICENSE-APACHE` (official text, verbatim), `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1, verbatim), update `CONTRIBUTING.md`, `SECURITY.md`, `THIRD_PARTY.md`.
+- CI (GitHub Actions): fmt, clippy, test on 3 OSes, cargo-deny, MSRV.
+- ✅ CI green on the empty workspace; `cargo deny check` passes.
 
-**T1 — `okbase-core`: model và round-trip**
-- `Concept { id, path, frontmatter: Frontmatter, body }`. `Frontmatter` giữ **raw text** và bản đã parse (serde-saphyr → `Value` có thứ tự).
-- `set(key, value)` / `remove(key)` sửa text ở đúng khối của key top-level (giữ comment, thứ tự, định dạng của key khác). Key mới được thêm vào cuối.
-- Validate OKF v0.2 (L0); trích link (markdown thường + wikilink); ID = path bỏ `.md`.
-- ✅ Round-trip byte-identical trên 4 bundle OKF chính thức và fixture docs OpenClaw; test `set` một key chỉ đổi đúng các dòng của key đó; property test với frontmatter ngẫu nhiên.
+**T1 — `okbase-core`: model and round-trip**
+- `Concept { id, path, frontmatter: Frontmatter, body }`. `Frontmatter` keeps the **raw text** and the parsed form (serde-saphyr → ordered `Value`).
+- `set(key, value)` / `remove(key)` edit the text in exactly the block of that top-level key (keeping comments, order and formatting of other keys). New keys are appended at the end.
+- Validate OKF v0.2 (L0); extract links (plain markdown + wikilinks); ID = path without `.md`.
+- ✅ Byte-identical round-trip on the 4 official OKF bundles and the OpenClaw docs fixture; a test that `set` on one key changes only that key's lines; property test with random frontmatter.
 
 **T2 — `okbase-standard`**
-- Kiểm tra mức L0–L2 (§2 PLAN); ánh xạ frontmatter ngoại khi đọc (`summary`/`excerpt` → description, `categories` → tags, `sidebar_label` → title); đọc `_meta/vocabulary.md` (tag chuẩn + đồng nghĩa).
-- ✅ Báo đúng mức cho fixture (bundle OKF chính thức ≈ L1; docs OpenClaw gốc: L0 fail nhưng đọc được qua ánh xạ).
+- Check levels L0–L2 (design §2); map foreign frontmatter on read (`summary`/`excerpt` → description, `categories` → tags, `sidebar_label` → title); read `_meta/vocabulary.md` (canonical tags + synonyms).
+- ✅ Reports the correct level for the fixtures (official OKF bundles ≈ L1; original OpenClaw docs: L0 fails but are readable through mapping).
 
 **T3 — `okbase-analyze`**
-- `fold()` (NFKC, bỏ dấu, `đ`→`d`, lowercase); tách từ tiếng Nhật cho FTS (lindera); stemming tiếng Anh; nhận diện ngôn ngữ (lingua, chỉ vi/en/ja, chỉ làm gợi ý).
-- ✅ Unit test các ví dụ từ spike (`đổi trả` ~ `doi tra`, `ＡＢＣ` → `abc`, `食べた` → `食べる`).
+- `fold()` (NFKC, diacritic folding, `đ`→`d`, lowercase); Japanese tokenization for FTS (lindera); English stemming; language detection (lingua, vi/en/ja only, hints only).
+- ✅ Unit tests for the examples from the spikes (`đổi trả` ~ `doi tra`, `ＡＢＣ` → `abc`, `食べた` → `食べる`).
 
 **T4 — `okbase-index`**
-- Schema SQLite v1 (§4.7 PLAN, trừ `chunk_vecs`): `docs`, `doc_fields`, `doc_tags`, `aliases`, `links`, `chunks`, `chunks_fts`, `meta(schema_version)`.
-- Index tăng dần theo hash; `state_dir = auto` (`.okbase/` nếu bundle ghi được, còn không thì `~/.cache/okbase/bundles/<hash>`).
-- **Bộ đếm token xấp xỉ** không cần model. Từ spike: en ≈ 1.24 token/từ, vi ≈ 1.28 token/âm tiết, ja ≈ 0.53 token/ký tự. Ghi rõ đây là ước lượng.
-- ✅ Index bundle 1k tài liệu lần đầu ≤ 5s; sửa 1 file chỉ reindex file đó; xoá `.okbase/` rồi index lại cho kết quả giống hệt.
+- SQLite schema v1 (design §4.7, except `chunk_vecs`): `docs`, `doc_fields`, `doc_tags`, `aliases`, `links`, `chunks`, `chunks_fts`, `meta(schema_version)`.
+- Incremental indexing by hash; `state_dir = auto` (`.okbase/` if the bundle is writable, otherwise `~/.cache/okbase/bundles/<hash>`).
+- **Approximate token counter** without a model. From the spikes: en ≈ 1.24 tokens/word, vi ≈ 1.28 tokens/syllable, ja ≈ 0.53 tokens/character. State clearly that this is an estimate.
+- ✅ First index of a 1k-document bundle ≤ 5s; editing 1 file reindexes only that file; deleting `.okbase/` and reindexing gives an identical result.
 
 **T5 — `okbase-query`**
-- Port `grep` v2, `get`, `list` (index.md hoặc catalog ảo nếu thiếu), `query` (theo `mcp_meta.py`, dùng bảng đã có kiểu), `catalog` (≤ N token: phẳng + từ vựng + facet; lớn hơn: index.md gốc + facet), `stats`, `recommend_mode` (Full nếu ≤ ~30k token; không thì Lexical).
-- Mọi hàm nhận `&Scope`.
-- ✅ Snapshot output; hiệu năng theo §11 PLAN (grep 4.4M token ≤ 500ms, query 3k tài liệu ≤ 20ms); test Scope chặn đúng path và filter.
+- Port `grep` v2, `get`, `list` (index.md, or a virtual catalog if missing), `query` (per `mcp_meta.py`, using the typed tables), `catalog` (≤ N tokens: flat + vocabulary + facets; larger: root index.md + facets), `stats`, `recommend_mode` (Full if ≤ ~30k tokens; otherwise Lexical).
+- Every function takes `&Scope`.
+- ✅ Output snapshots; performance per design §11 (grep over 4.4M tokens ≤ 500ms, query over 3k documents ≤ 20ms); tests that Scope blocks the right paths and filters.
 
 **T6 — `okbase-lint`**
-- Rule engine + rule L0–L2 (§9 PLAN); output text/JSON/SARIF; `--fix-safe` (sinh index.md, chuẩn hoá tag).
-- ✅ Bắt đúng các lỗi gài sẵn trong fixture `fixtures/lint/`.
+- Rule engine + L0–L2 rules (design §9); text/JSON/SARIF output; `--fix-safe` (generate index.md, normalize tags).
+- ✅ Catches the errors planted in the `fixtures/lint/` fixture.
 
 **T7 — `okbase-mcp` (stdio)**
-- rmcp; tool registry theo capability; tên và mô tả tool theo §5 PLAN. Mô tả là "prompt" cho agent, nên viết cẩn thận, lấy từ spike.
-- ✅ Chạy được với `claude --mcp-config` và Codex; snapshot `tools/list`.
+- rmcp; capability-based tool registry; tool names and descriptions per design §5. Descriptions are "prompts" for agents, so write them carefully, based on the spikes.
+- ✅ Works with `claude --mcp-config` and Codex; snapshot of `tools/list`.
 
 **T8 — `okbase-skills` + `agent install`**
-- Skill `okbase-answer` (template theo capability, có dự phòng dùng CLI `--json`); `okbase agent install --claude` (đăng ký MCP + ghi skill vào thư mục skill của project hoặc user), `--codex` (cấu hình MCP + đoạn `AGENTS.md`), `--print`.
-- ✅ Cài trên máy sạch, agent liệt kê được tool và nạp được skill.
+- `okbase-answer` skill (templated by capability, with a fallback to the CLI `--json`); `okbase agent install --claude` (register MCP + write the skill into the project or user skill folder), `--codex` (MCP config + `AGENTS.md` snippet), `--print`.
+- ✅ Installs on a clean machine; the agent can list the tools and load the skill.
 
 **T9 — `okbase-cli`**
-- `status`, `index`, `grep`, `get`, `list`, `query`, `catalog`, `lint`, `mcp serve --stdio`, `agent install`, `modules`; `--json` cho mọi lệnh đọc; thông báo lỗi có gợi ý.
-- ✅ Kiểm thử CLI bằng `assert_cmd` + snapshot.
+- `status`, `index`, `grep`, `get`, `list`, `query`, `catalog`, `lint`, `mcp serve --stdio`, `agent install`, `modules`; `--json` for every read command; error messages with hints.
+- ✅ CLI tests with `assert_cmd` + snapshots.
 
 **T10 — Fixtures**
-- `fixtures/okf-official/` (subset sample của Google, Apache-2.0, kèm NOTICE).
-- `fixtures/openclaw-s/` (khoảng 30 file docs OpenClaw, MIT, kèm NOTICE).
-- `fixtures/multilingual/` (bộ v2 từ `spikes/embed-bench/data/v2`).
-- `fixtures/business/` (×1 từ `spikes/biz-meta`).
-- `fixtures/lint/` (lỗi gài sẵn).
+- `fixtures/okf-official/` (subset of Google's samples, Apache-2.0, with NOTICE).
+- `fixtures/openclaw-s/` (about 30 OpenClaw docs files, MIT, with NOTICE).
+- `fixtures/multilingual/` (the v2 set from `spikes/embed-bench/data/v2`).
+- `fixtures/business/` (×1 from `spikes/biz-meta`).
+- `fixtures/lint/` (planted errors).
 
-**T11 — Nghiệm thu v0.1 bằng eval** (tốn quota CLI, chạy tay)
-- Dùng lại `spikes/okf-scale/run.py` với cấu hình G2, nhưng trỏ MCP sang `okbase mcp serve --stdio`, có và không có skill.
-- ✅ Bundle L: ≥ 93% đúng (bằng G2 của spike). Ghi kết quả vào `spikes/acceptance-v0.1/`.
+**T11 — v0.1 acceptance by eval** (uses CLI quota, run by hand)
+- Reuse `spikes/okf-scale/run.py` with the G2 configuration, but point MCP at `okbase mcp serve --stdio`, with and without the skill.
+- ✅ Bundle L: ≥ 93% correct (equal to the spike's G2). Record the results in `spikes/acceptance-v0.1/`.
 
-## 7. Sau v0.1
+## 7. After v0.1
 
-Theo §13 PLAN:
-- v0.2: adopt + data; spike S8 (adopt) và S9 (skill).
-- v0.3: embed opt-in, MCP HTTP, `router()`.
-- v0.4: import/source; spike S10.
-- v1.0: mở rộng, ổn định; spike S7 (Codex, model nhỏ).
+Per design §13:
+- v0.2: adopt + data; spikes S8 (adopt) and S9 (skills).
+- v0.3: opt-in embed, MCP HTTP, `router()`.
+- v0.4: import/sources; spike S10.
+- v1.0: extension, stabilization; spike S7 (Codex, small models).
 
-Trước khi công khai rộng (v0.2), dịch `docs/PLAN.md` sang tiếng Anh (`docs/design.md`).
+Before wide public release (v0.2), translate the design plan into English (`docs/design.md`). (Done: `docs/design.md` is now the only design document.)
 
-## 8. Người dùng hạ nguồn: qobot
+## 8. Downstream user: qobot
 
-qobot (`/home/beebiz/workspace/qobot`, xem `docs/PLAN.md` §5.1) chỉ dùng facade công khai: `Bundle::open`, `capabilities`, `catalog`, `recommend_mode`, `retrieve` (v0.3), `grep/get/query`, `data()`, `write`, `watch`, `okbase_mcp::router(bundle, ScopeProvider)`. Giữ ổn định các chữ ký này, và báo thay đổi qua CHANGELOG.
+qobot (a host application; see its own design notes) uses only the public facade: `Bundle::open`, `capabilities`, `catalog`, `recommend_mode`, `retrieve` (v0.3), `grep/get/query`, `data()`, `write`, `watch`, `okbase_mcp::router(bundle, ScopeProvider)`. Keep these signatures stable, and announce changes in the CHANGELOG.
 
-## 9. Câu hỏi còn mở (mặc định đã chọn, đổi được)
+## 9. Open questions (defaults chosen, can change)
 
-| Câu hỏi | Mặc định |
+| Question | Default |
 |---|---|
-| Tổ chức/tài khoản GitHub để host repo | Chưa có. Hỏi maintainer trước khi push |
-| Chủ sở hữu copyright trong LICENSE | "The okbase contributors" |
-| Tên mức L0–L3, tên skill | Như PLAN; có thể đổi trước v1.0 |
-| Publish crates.io từ v0.1 | Có (0.x) |
+| GitHub organization/account to host the repo | None yet. Ask the maintainer before pushing |
+| Copyright holder in LICENSE | "The okbase contributors" |
+| Names of levels L0–L3, skill names | As in the design; can change before v1.0 |
+| Publish to crates.io from v0.1 | Yes (0.x) |

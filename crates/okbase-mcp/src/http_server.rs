@@ -1,4 +1,4 @@
-//! MCP over streamable HTTP (PLAN §4.6, §10): `router()` for hosts that run their
+//! MCP over streamable HTTP (design §4.6, §10): `router()` for hosts that run their
 //! own axum server, and `serve_http()` for `okbase mcp serve --http`.
 
 use std::net::SocketAddr;

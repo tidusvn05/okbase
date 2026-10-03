@@ -19,7 +19,7 @@ ignore = [
 version = 2
 confidence-threshold = 0.9
 unused-allowed-license = "allow"
-# Allowlist from docs/PLAN.md §17. MPL-2.0 only for unmodified dependencies.
+# Allowlist from docs/design.md §17 (also used by about.toml). MPL-2.0 only for unmodified dependencies.
 allow = [
     "MIT",
     "Apache-2.0",

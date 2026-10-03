@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""v0.2 evals (PLAN §13): okbase in the setups of the biz-meta and okf-scale spikes.
+"""v0.2 evals (design §13): okbase in the setups of the biz-meta and okf-scale spikes.
 
   biz (biz-meta ×20 bundle: 3,020 docs, sheets of ~10k rows, 48 questions)
     K   okbase MCP (kb_query, data_tables, data_query) + Read/Grep/Glob, spike QD prompt   -> S5 ×20 replication

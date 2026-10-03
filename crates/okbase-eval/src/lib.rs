@@ -1,4 +1,4 @@
-//! Evals for okbase (`docs/PLAN.md` §12).
+//! Evals for okbase (`docs/design.md` §12).
 //!
 //! The **lexical** eval replays tool calls that real agents made in the spikes (recorded in
 //! `spikes/*/results/runs.jsonl.gz`) against the fixture bundles, through the MCP tool layer

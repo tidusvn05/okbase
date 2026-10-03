@@ -3,7 +3,7 @@
 Thanks for your interest! okbase is dual-licensed under MIT OR Apache-2.0. Unless you state otherwise, any contribution you submit is licensed the same way, with no additional terms.
 
 ## Before you start
-- Read `AGENTS.md` (hard rules and conventions) and `docs/PLAN.md` (design).
+- Read `AGENTS.md` (hard rules and conventions) and `docs/design.md` (design); releases follow `docs/releasing.md`.
 - For larger changes (file format, public API, defaults, tool/skill wording), open an issue first. Changes to defaults need evaluation numbers. See `spikes/` for how earlier decisions were measured.
 
 ## Development

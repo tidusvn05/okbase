@@ -1,4 +1,4 @@
-//! Document conversion for okbase (docs/PLAN-import.md §1): a thin, controlled wrapper over
+//! Document conversion for okbase (docs/plans/import.md §1): a thin, controlled wrapper over
 //! [anydoc](https://github.com/firecrawl/anydoc) (Word, PowerPoint, OpenDocument, RTF, EPUB),
 //! [pdf-inspector](https://github.com/firecrawl/pdf-inspector) (PDF, page by page) and
 //! [htmd](https://crates.io/crates/htmd) (HTML).

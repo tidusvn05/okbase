@@ -1,4 +1,4 @@
-//! Fine-tuning data for okbase embeddings (docs/PLAN-advise-tune.md §2–3).
+//! Fine-tuning data for okbase embeddings (docs/plans/advise-tune.md §2–3).
 //!
 //! okbase never calls an LLM: the user's agent (Claude Code, Codex, …) writes the questions.
 //! This crate samples passages from the index, splits them into small batches with a short

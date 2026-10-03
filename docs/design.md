@@ -1,10 +1,9 @@
 # okbase — Design
 
-> English translation of `docs/PLAN.md` (v2.1, Vietnamese), which remains the source of truth until v0.2 is released. Where the two differ, PLAN.md wins; implementation decisions made after the plan are recorded in commit messages and `spikes/acceptance-*/RESULTS.md`.
+> This is the okbase design document: the source of truth for the design. The evidence behind every default is in `spikes/` (summary table in `spikes/README.md`). Current status is in §13; decisions made after v2.1 are in Appendix B. Detailed sub-plans live in `docs/plans/`.
 
-> Version: 2.1 (2026-10-01) · Status: **Final for implementation** · **Open-source project** (MIT OR Apache-2.0) · Handoff: `docs/HANDOFF.md`
+> Version: 2.1 (2026-10-01) · Status: **Final for implementation** · **Open-source project** (MIT OR Apache-2.0) · Original v0.1 handoff: `docs/HANDOFF.md`
 > Changes since 1.0: embedding became **opt-in** (lexical by default); added the **okbase standard** (levels L0–L3) and the **adopt** flow (plain markdown → OKF); added **Agent Skills**; **modules + profiles + extension points** design.
-> Experimental evidence: `spikes/` (see `spikes/README.md`)
 
 ## 0. Summary
 
@@ -33,16 +32,18 @@ Four main uses:
 | S4 | OpenClaw docs 60k → 4.4M tokens, 9 approaches | **Lexical (G2) 100/100/93/90% ≈ embedding (D) 97/100/100/93%**; agent + Read/Grep is on par too; embedding needs fewer turns (~2 vs. ~4.5); prompting the agent to "double-check" does not help; remaining errors come from duplicated documents | **Lexical by default**; `grep` must be as strong as the CLI's Grep; embedding is opt-in to optimize speed; lint detects duplicates |
 | S5 | Metadata/tags + sheets, 151 → 3,020 documents (`biz-meta`) | Small: agent grepping frontmatter is enough. Large: `query` keeps lists complete, 30–45% cheaper. **Sheet ~10k rows: without SQL the agent gives up; with SQL 10/10, 9× cheaper** | `query` is core; `data` is a module (auto-enabled when CSV/XLSX is present); no full views are generated; catalog includes tag vocabulary and facets |
 | S6 | Chunking and indexing speed | ~3 chunks/s/8 CPUs; 4.4M tokens ≈ 64 minutes | Embedding runs in the background, cached by hash; lexical is ready immediately |
+| S11 | Fine-tuning EmbeddingGemma with LoRA (Unsloth's approach) on synthetic questions (`spikes/embed-tune`) | In-domain: S1 R@1 0.853 → 0.943, cross-language 0.815 → 0.95; no forgetting of other domains; S4 saturated (27 → 28/30). CPU ~25 minutes of training, ~$3/1k pairs; every model change requires re-embedding the whole bundle | Do not put training into okbase. Candidate: allow loading a user-supplied ONNX model (opt-in), **after** checking that ONNX/Q4 keeps the improvement |
 
 **Central lesson: good bundle organization is the deciding factor.** A strong agent with only Read/Grep already does well on a bundle with `index.md`, clear `description`s and consistent metadata. So okbase focuses on three things:
 1. **help organize well** (standard, adopt, lint);
 2. **help agents exploit that organization** (catalog, skills, tools);
 3. add heavy machinery only when needed: SQL for tabular data, embedding for speed and pre-retrieval.
 
-**Not yet measured; needs a spike before deciding:**
-- S7: lexical mode with **Codex** and small models.
-- S8: **does adopt actually improve agent accuracy** on plain markdown (before vs. after)?
-- S9: **do skills make agents use tools more correctly** (spike S5: the agent used `kb_query` on only 32/48 questions)?
+**Measured after this plan was written** (results in §13 and `spikes/README.md`):
+- S7: lexical mode with **Codex** and small models: gpt-6.1-sol 26/30 (Claude 28/30); the small
+  gpt-6-luna 21/30, and semantic search does not close the gap.
+- S8: adopt does not lower accuracy on plain markdown (29/30 before and after).
+- S9: agents never invoked the skills; S15 shows the same rules work as MCP server instructions.
 
 ---
 
@@ -203,7 +204,7 @@ okbase agent install --claude | --codex | --opencode | --print
 | `okbase-cli` | binary | `okbase`, discovers `okbase-<x>` plugins on PATH |
 
 Release builds:
-- **`okbase`**: core + data + mcp-http + import (PDF, Office, HTML; CSV/XLSX through data). No ONNX; about 34MB (2026-10-03). The Japanese dictionary is downloaded on first use.
+- **`okbase`**: core + data + mcp-http + import (PDF, Office, HTML; CSV/XLSX through data). No ONNX; about 34MB (2026-10-03). Language dictionaries (currently the Japanese IPADIC) are **not embedded** in any build, `okbase-full` included: they are downloaded on first use, or installed ahead of time with `okbase dict install`. Dictionaries for languages added later will work the same way.
 - **`okbase-full`**: adds embed-local, import-pdf/docx/html, source-*, eval.
 
 ### 4.4 Configuration: simple defaults, extend gradually
@@ -348,7 +349,7 @@ okbase get <id> [--section …] | okbase list [dir]
 okbase query 'type=Policy tag:billing status!=deprecated active_on=2026-10-01' [--facets tags] [--sum contract_value]
 okbase catalog [--max-tokens 10000]
 okbase data tables | okbase data sql "select …"              # data module
-okbase search "câu hỏi" | okbase retrieve "…" --budget 3000  # embed module
+okbase search "refund policy" | okbase retrieve "…" --budget 3000  # embed module
 
 # Organize
 okbase lint [--level L2] [--fix-safe] [--format text|json|sarif]
@@ -420,23 +421,29 @@ Output text/JSON/SARIF; `--fix-safe` fixes only what is safe (generate index.md,
 - Golden round-trip: the official OKF bundles (acme_retail, ga4, stackoverflow, crypto_bitcoin) must have diff = 0; tests for preserving comments and unknown keys.
 - **Adopt fixtures:** OpenClaw docs (Mintlify), a sample Obsidian vault, a Docusaurus docs folder, and a "dirty" markdown folder. Check that `adopt --plan` is stable (snapshot) and that lint after adopt reaches L1.
 - Snapshots of tool output and of skills generated per capability.
-- `okbase-eval` (from spikes): retrieval mode (R@k) and agent mode (claude/codex, scored by key facts or precomputed answers, cost, latency). Fixtures: multilingual v2 (S1), OpenClaw S/M/L (S4), business ×1/×20 (S5).
+- `okbase-eval lexical` (done, 2026-10-03): replays the agents' real tool calls from spikes S3/S5 on `fixtures/business` and `fixtures/multilingual` and compares them with the answers; takes a few seconds, needs no model; runs in `cargo test` and fails when a previously passing case regresses.
+- `okbase-eval` (remaining, from spikes): retrieval mode (R@k, currently `examples/retrieval_eval.rs`) and agent mode (claude/codex, scored by key facts or precomputed answers, cost, latency). Fixtures: multilingual v2 (S1), OpenClaw S/M/L (S4), business ×1/×20 (S5).
 - CI: fmt, clippy, test, deny; fast lexical eval on small fixtures.
 
 ---
 
 ## 13. Roadmap
 
-**Status (2026-10-03).**
-- v0.1, v0.2 and v0.3 are done and accepted: see `spikes/acceptance-v0.*`.
-  - S9 (skills): agents never invoked the skills. S15 shows that the same rules work when sent as MCP server instructions (46/48 without prompt hints).
-- Later plans are implemented: `PLAN-advise-tune.md`, `PLAN-usecases.md`, `PLAN-onboarding.md` (Codex not run yet) and `PLAN-import.md`.
-  - From the import plan, the Google Drive/Sheets connectors, `distill` and S10 on real documents remain.
-- `okbase-eval lexical` runs in `cargo test`.
-- v0.5 → v1.0 has not started.
-- Details: `PLAN.md` §13 (Vietnamese).
-
 Estimates for 1 full-time developer.
+
+**Status (2026-10-03):**
+
+| Milestone | Status | Evidence |
+|---|---|---|
+| v0.1 | ✅ Done. G2 reproduced 28/30 (93%) | `spikes/acceptance-v0.1` |
+| v0.2 | ✅ Done. S5 ×20: 44–45/48, sheet 9–10/10; S8 passed (adopt does not reduce accuracy). S9: agents did not invoke the skills; **S15** shows MCP server instructions can replace them (46/48 without hints) | `spikes/acceptance-v0.2` |
+| v0.3 | ✅ Done. S1 R@1 0.857; S4 top-6: 29/30 (Gemma), 30/30 (bge-m3) | `spikes/acceptance-v0.3` |
+| advise + fine-tune | ✅ Done (phases 0–5). The agent runs the whole workflow; Q4 keeps the improvement | `docs/plans/advise-tune.md`, `spikes/embed-tune` |
+| Real-world use cases | ✅ Done (U1–U8) | `docs/plans/usecases.md`, S13b |
+| Onboarding through an agent | ✅ Done (O1–O5). Claude 3/3; Codex 12/12 found `onboard` and did not add consent flags on its own. The Codex sandbox blocks `.codex/`: handled with `sandbox_blocked` and a step for the user | `docs/plans/onboarding.md`, S13, `spikes/codex` |
+| v0.4 import | ✅ Conversion part done (I1–I5, S14). Remaining: Google Drive/Sheets connectors, `distill`, S10 with real documents | `docs/plans/import.md` |
+| Eval | `okbase-eval lexical` runs in `cargo test`. Agent mode is still scripts in `spikes/` | §12 |
+| v0.5 → v1.0 | Not started | |
 
 ### v0.1 — Works immediately with existing bundles (2 weeks)
 - core (round-trip), standard (L0–L2, foreign frontmatter mapping), index (lexical), query (grep v2, get, list, query, catalog, stats), lint L0–L2, MCP stdio, CLI.
@@ -458,7 +465,17 @@ Estimates for 1 full-time developer.
 - `okbase-full` build.
 - ✅ Criteria: reproduce S1 v2 (R@1 ≥ 0.84); S4 retrieval ≥ 97% at size L; the default `okbase` binary still has no ONNX.
 
+### New proposal: `okbase advise` + embedding fine-tuning
+- See `docs/plans/advise-tune.md` (order relative to v0.4 not decided; phase 0 is the ONNX/Q4 technical gate).
+
+### New proposal: real-world use cases
+- See `docs/plans/usecases.md`: a software repo with `docs/`, an empty folder, non-conforming OKF, a bundle in a subfolder; a folder scanner, ignore rules, `adopt` that is safe on docs sites, a `docs-site` profile.
+
+### New proposal: onboarding through an agent
+- See `docs/plans/onboarding.md`: `okbase onboard`, the machine contract (JSON, error codes, exit codes), the consent catalog, `doctor`, bootstrap for agents; plus fixing the index during an MCP session (P0).
+
 ### v0.4 — Import + sources (2 weeks)
+- **Conversion part:** see `docs/plans/import.md` (anydoc + htmd, direct reading and full conversion, OCR through the agent).
 - import-pdf/docx/html, source fs/gdrive/gsheets, `okbase-import` skill, `distill --plan`.
 - **Spike S10:** about 20 real PDFs and 5 real sheets.
 - ✅ Criteria: the agent correctly answers lookup and aggregation questions on imported data.
@@ -476,13 +493,14 @@ Estimates for 1 full-time developer.
 
 | Risk / question | Mitigation |
 |---|---|
-| Lexical has only been measured with Claude Sonnet | Spike S7 (Codex, small models); profiles may differ per CLI |
+| Lexical has only been measured with Claude Sonnet | Measured (S7): Codex gpt-6.1-sol 87% vs. Claude 93%; small models 70%, and adding embedding does not improve them. Keep lexical as the default; recommend a strong model for answering |
 | Adopt heuristics write poor descriptions | Mark as `generated`; `okbase-curate` skill lets the agent rewrite them; S8 measures the impact |
-| Agents do not use the skills | S9; fallback `AGENTS.md` snippet; catalog includes facets |
+| Agents do not use the skills | Measured (S9, S15): agents do not invoke the skills, but rules sent as MCP server instructions are followed. Skills are kept for setups without MCP and for curation work |
 | The name "OKF" is a Google spec | Product name `okbase`; state clearly "community tool" |
 | The OKF spec changes | Core keeps unknown keys; the okbase standard is a separate layer (`okbase-standard`) |
 | Gemma license | Relevant only when embed-local is enabled; bge-m3 int8 (MIT) as an alternative |
 | PDF quality | Converter is a trait; S10 |
+| Self-fine-tuned models: the improvement is lost when quantized to Q4; synthetic questions differ from agents' real questions; internal data is sent to an LLM | S11: check ONNX/Q4 before building the feature; evaluate with human-written questions; vector cache keyed by model hash |
 | rmcp changes quickly | Pin minor |
 
 **Decided:** license MIT OR Apache-2.0 (§17); publish to crates.io from v0.1 (0.x releases); keep the L0–L3 level names and skill names as above (can change before v1.0).
@@ -510,7 +528,7 @@ Estimates for 1 full-time developer.
 |---|---|
 | License | **MIT OR Apache-2.0** (dual, per Rust convention); `LICENSE-MIT`, `LICENSE-APACHE` copied verbatim from the official sources |
 | Name | `okbase` (available on crates.io and GitHub, checked 2026-10-01). README states clearly: *independent community project, not affiliated with Google*; "OKF" is a Google Cloud spec |
-| Documentation language | README, rustdoc, CLI help, CONTRIBUTING: **English**. Internal design documents (`docs/PLAN.md`, `docs/HANDOFF.md`) are currently in Vietnamese; translate to English before wide public release (v0.2). vi/ja documentation is welcome |
+| Documentation language | README, rustdoc, CLI help, CONTRIBUTING: **English**. Design documents (`docs/design.md`, `docs/HANDOFF.md`, `docs/plans/`) are in English as well. vi/ja documentation is welcome |
 | Governance | The lead maintainer decides (BDFL) until v1.0; major changes (format, public API, defaults) need a short issue/RFC in `docs/rfcs/` with data (spike/eval) |
 | Contributions | PR + review; no CLA; `Signed-off-by` (DCO) encouraged; `CONTRIBUTING.md` covers build, test, eval; Code of Conduct: Contributor Covenant 2.1 |
 | Security | `SECURITY.md`: private reports via GitHub Security Advisories; no public issues for vulnerabilities |

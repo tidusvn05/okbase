@@ -3,8 +3,9 @@
 okbase is an open-source (MIT OR Apache-2.0) Rust toolkit that helps AI agents work with markdown knowledge bundles in the Open Knowledge Format (OKF v0.2). It ships a CLI (`okbase`), an MCP server, a Rust library (`okbase::Bundle`), and Agent Skills.
 
 ## Read first
-- `docs/PLAN.md` — design source of truth (written in Vietnamese; section numbers are referenced below).
-- `docs/HANDOFF.md` — task order for v0.1, acceptance criteria, reusable spike code, hard rules.
+- `docs/design.md` — design source of truth (section numbers are referenced below); later plans in `docs/plans/`.
+- `docs/HANDOFF.md` — the original v0.1 handoff (task order, acceptance criteria, hard rules).
+- `docs/releasing.md` — versioning, what is public surface, how to cut a release.
 - `spikes/README.md` — the experiments behind every default. Do not change a default without new eval data.
 
 ## Product conventions
@@ -19,7 +20,7 @@ contract, exit codes 3/4), the consent catalog, safety and reversibility, the fu
 4. No BM25/vector score fusion in ranking. No full metadata "view" pages (vocabulary + facets only).
 5. Every read API takes a `Scope` from the host; okbase never decides user permissions.
 6. TLS via rustls only. No telemetry.
-7. Public-facing text (README, rustdoc, CLI help, errors, commits) in English.
+7. All text in the repository is in English: README, docs (including `docs/design.md`, `docs/plans/`, spike RESULTS), rustdoc, CLI help, errors, commits. Multilingual test data in `fixtures/` is the exception.
 
 ## Conventions
 - Rust edition 2024, stable, MSRV 1.89, workspace resolver 3.
@@ -43,6 +44,6 @@ cargo run --release -p okbase-eval -- lexical
 It replays real agents' tool calls on `fixtures/` (seconds, no model) and exits 1 on a regression; `cargo test` runs it too. A change that makes a case pass is an improvement: rebuild the baselines with `python3 fixtures/eval/mine.py`.
 
 ## Layout
-- `crates/okbase-*` — see `docs/PLAN.md` §4.3 for responsibilities and core vs. module split.
+- `crates/okbase-*` — see `docs/design.md` §4.3 for responsibilities and core vs. module split.
 - `fixtures/` — small test bundles with licenses/NOTICE (OKF official samples: Apache-2.0; OpenClaw docs: MIT).
 - `spikes/` — experiments; heavy caches and generated bundles are git-ignored.

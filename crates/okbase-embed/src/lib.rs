@@ -1,4 +1,4 @@
-//! Opt-in embeddings for okbase (PLAN §4.3, module `embed-local` / `embed-api`).
+//! Opt-in embeddings for okbase (design §4.3, module `embed-local` / `embed-api`).
 //!
 //! Nothing here is part of the default `okbase` build: the core stays lexical and
 //! model-free. Models are never bundled; local models are downloaded into the

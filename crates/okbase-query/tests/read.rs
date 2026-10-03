@@ -387,7 +387,7 @@ fn replicated(name: &str, copies: usize) -> (tempfile::TempDir, Index) {
     (tmp, idx)
 }
 
-/// PLAN §11: grep over 4.4M tokens ≤ 500 ms. Run with `--release -- --ignored`.
+/// design §11: grep over 4.4M tokens ≤ 500 ms. Run with `--release -- --ignored`.
 #[test]
 #[ignore = "timing test; run in release mode"]
 fn perf_grep_4_4m_tokens() {
@@ -411,7 +411,7 @@ fn perf_grep_4_4m_tokens() {
     }
 }
 
-/// PLAN §11: query over 3k documents ≤ 20 ms. Run with `--release -- --ignored`.
+/// design §11: query over 3k documents ≤ 20 ms. Run with `--release -- --ignored`.
 #[test]
 #[ignore = "timing test; run in release mode"]
 fn perf_query_3k_docs() {

@@ -1,4 +1,4 @@
-//! `advise`: how to use okbase for a bundle, from the simplest setup up (docs/PLAN-advise-tune.md §1).
+//! `advise`: how to use okbase for a bundle, from the simplest setup up (docs/plans/advise-tune.md §1).
 //!
 //! Lexical and model-free: it reads the index, the lint report and `okbase.toml`, and only
 //! prints steps. Every threshold below cites the spike it comes from.

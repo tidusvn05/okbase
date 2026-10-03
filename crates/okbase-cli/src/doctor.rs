@@ -1,5 +1,5 @@
 //! `okbase doctor`: one pass/fail report of the whole setup, with the command that fixes each
-//! problem, including a real MCP round trip (docs/PLAN-onboarding.md §3.4).
+//! problem, including a real MCP round trip (docs/plans/onboarding.md §3.4).
 
 use std::io::{BufRead, BufReader, Write};
 use std::path::Path;

@@ -1,4 +1,4 @@
-//! okbase quality levels L0–L2 (PLAN §2). L3 checks belong to `okbase-lint`.
+//! okbase quality levels L0–L2 (design §2). L3 checks belong to `okbase-lint`.
 //!
 //! | Level | Requires |
 //! |---|---|

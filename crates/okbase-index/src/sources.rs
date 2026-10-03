@@ -1,4 +1,4 @@
-//! Direct reading of source documents (PDF, Word, PowerPoint, HTML…; docs/PLAN-import.md §2):
+//! Direct reading of source documents (PDF, Word, PowerPoint, HTML…; docs/plans/import.md §2):
 //! converted while indexing, never written into the bundle. A source whose markdown was
 //! materialized (`okbase import --write`, frontmatter `source.path`) is not read twice.
 

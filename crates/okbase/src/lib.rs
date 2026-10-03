@@ -472,7 +472,7 @@ impl Bundle {
     /// `Full` if the visible bundle fits in about 30k tokens; else `Retrieval` when every chunk is embedded, else `Lexical`.
     pub fn recommend_mode(&self, scope: &Scope) -> Result<Mode, Error> {
         let mode = okbase_query::recommend_mode(&self.index(), scope)?;
-        // Pre-retrieval only once every chunk has a vector (PLAN §4.7).
+        // Pre-retrieval only once every chunk has a vector (design §4.7).
         if mode == Mode::Lexical
             && self
                 .embed_status()

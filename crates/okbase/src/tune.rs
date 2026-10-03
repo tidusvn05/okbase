@@ -1,6 +1,6 @@
 //! Fine-tuning support in the facade: runs live in the bundle's state dir, and
 //! [`eval_models`] measures retrieval of several models on the same questions
-//! (docs/PLAN-advise-tune.md §2).
+//! (docs/plans/advise-tune.md §2).
 
 use std::collections::{BTreeMap, HashSet};
 use std::path::{Path, PathBuf};

@@ -28,19 +28,26 @@ The rest of this page describes the same steps for people.
 
 ## Install
 
-Not yet published; build from a clone of this repository (Rust 1.89 or newer):
-
 ```sh
-cargo install --locked --path crates/okbase-cli                   # okbase: lexical tools, ~34 MB
-cargo install --locked --path crates/okbase-cli --features full   # okbase-full: + embeddings, fine-tuning, ~60 MB
+curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | sh                # okbase: lexical tools, ~34 MB
+curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | sh -s -- --full  # okbase-full: + embeddings, fine-tuning, ~60 MB
 ```
+
+On Windows: `irm https://raw.githubusercontent.com/tidusvn05/okbase/main/install.ps1 | iex`
+(`$env:OKBASE_FULL=1` first for okbase-full). The installers verify each download against the
+release's `SHA256SUMS` and write only the `okbase` binary (`~/.local/bin`, or
+`%LOCALAPPDATA%\okbase\bin` on Windows). From source, with Rust 1.89 or newer:
+`cargo install --locked --path crates/okbase-cli [--features full]` in a clone.
+
+To update, run the installer again. To remove okbase, see
+[Trying okbase, then stopping](#trying-okbase-then-stopping).
 
 Start with the default build. You only need `okbase-full` when `advise` recommends semantic
 search or fine-tuning. Neither build embeds language dictionaries or models: they are downloaded
 on first use (see [Privacy](#privacy-what-leaves-the-machine)).
 
-Platforms: okbase is pure Rust with rustls. CI is set up for Linux, macOS and Windows, but until
-the repository is published it has only been run on Linux.
+Platforms: releases are built for Linux (x86_64, arm64; glibc 2.35+), macOS (Intel, Apple
+silicon) and Windows (x86_64); see [docs/releasing.md](releasing.md).
 
 ## Which setup?
 
@@ -118,7 +125,7 @@ numbers → `data_query`, exact terms → `kb_grep`, cite the document ids).
 ### 2. Organize the bundle (the biggest lever)
 
 Agents pick documents by their `description` and `index.md`; a well-organized bundle matters more
-than any model (PLAN §1). `advise` lists this step when the level is below L2, more than 10% of
+than any model (design §1). `advise` lists this step when the level is below L2, more than 10% of
 documents lack a description, or there is no `index.md`.
 
 ```sh
@@ -393,7 +400,7 @@ One process serves every client, and the model is loaded once. Agents only conne
 | Turn off semantic search only | `okbase embed disable` | Vectors stay cached; `embed enable` brings them back instantly |
 | Undo a fine-tuned model | `okbase embed tune rollback --write` | The previous `okbase.toml`, byte for byte |
 | Free disk space | `okbase clean` (shows sizes) → `okbase clean --index --yes` / `--all --yes` | Documents are never touched; everything deleted is rebuilt or re-downloaded on demand |
-| Remove okbase completely | `okbase agent uninstall --all`, `okbase clean --all --yes`, then `cargo uninstall okbase-cli` | Nothing; `~/.config/okbase/installs.json` is empty and can be deleted |
+| Remove okbase completely | `okbase agent uninstall --all`, `okbase clean --all --yes`, then delete the `okbase` binary (`~/.local/bin/okbase`, or `cargo uninstall okbase-cli` for a source install) | Nothing; `~/.config/okbase/installs.json` is empty and can be deleted |
 
 ---
 

@@ -1,4 +1,4 @@
-//! Retrieval evals of v0.3 (PLAN §13), CPU only:
+//! Retrieval evals of v0.3 (design §13), CPU only:
 //!
 //! - S1: 300 vi/en/ja questions over 100 documents (`fixtures/multilingual`), document-level
 //!   R@1 / R@3 / MRR, also by same-language vs cross-language.

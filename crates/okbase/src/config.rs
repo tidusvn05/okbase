@@ -1,4 +1,4 @@
-//! `okbase.toml` (PLAN §4.4): every key is optional; a missing file means defaults.
+//! `okbase.toml` (design §4.4): every key is optional; a missing file means defaults.
 //! v0.3 reads the `[modules] embed` and `[embed]` settings.
 
 use std::path::{Path, PathBuf};

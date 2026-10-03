@@ -1,5 +1,5 @@
 //! Lint for okbase bundles: a rule engine with the okbase standard rules
-//! (levels L0–L3, PLAN §9), text/JSON/SARIF output and safe automatic fixes.
+//! (levels L0–L3, design §9), text/JSON/SARIF output and safe automatic fixes.
 //!
 //! Linting only reads the bundle. [`fix_safe`] writes, and only when called.
 //!

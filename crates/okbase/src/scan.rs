@@ -1,5 +1,5 @@
 //! `scan`: what kind of folder this is, and which folders in it should be bundles
-//! (docs/PLAN-usecases.md §2). Lexical and read-only; it never writes an index.
+//! (docs/plans/usecases.md §2). Lexical and read-only; it never writes an index.
 
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
