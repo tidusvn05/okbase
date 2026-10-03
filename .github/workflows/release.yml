@@ -125,7 +125,7 @@ jobs:
           else
             tar -czf "$name.tar.gz" "$name"
           fi
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.variant }}-${{ matrix.target }}
           path: |
@@ -144,7 +144,7 @@ jobs:
         with:
           ref: ${{ needs.check.outputs.tag }}
           fetch-depth: 0
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: dist
           merge-multiple: true
@@ -174,7 +174,7 @@ jobs:
           \`irm https://raw.githubusercontent.com/${{ github.repository }}/main/install.ps1 | iex\`.
           Every archive is listed in \`SHA256SUMS\`.
           EOF
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.check.outputs.tag }}
           name: okbase ${{ needs.check.outputs.tag }}
