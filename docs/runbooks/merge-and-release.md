@@ -28,7 +28,9 @@ gh api graphql -f query='query { repository(owner: "tidusvn05", name: "okbase") 
 ```
 
 GraphQL works with every `gh` version; older ones lack `authorAssociation` and
-`closingIssuesReferences` in `gh pr list --json`.
+`closingIssuesReferences` in `gh pr list --json`. On old versions, `gh pr view`, `gh issue view` and
+`gh pr edit` without `--json` also fail on the retired Projects (classic) API: pass `--json <fields>`,
+or use `gh api` (`gh api -X PATCH repos/tidusvn05/okbase/pulls/<N> -f title=…`).
 
 Sort them:
 - **Candidates:** not a draft, `mergeable` is `MERGEABLE`, no `CHANGES_REQUESTED` review, no
@@ -45,7 +47,7 @@ Merge candidates oldest first: a later pull request may build on an earlier one.
 
 ```sh
 gh pr checks <N>                     # every check passes; none pending or skipped by mistake
-gh pr view <N> --json commits,files,body,baseRefOid
+gh pr view <N> --json commits,files,body,baseRefName
 gh pr diff <N>
 ```
 
