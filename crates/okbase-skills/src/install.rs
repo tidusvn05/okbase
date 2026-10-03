@@ -325,12 +325,26 @@ pub fn codex_trusts(project: &Path, home: &Path) -> bool {
     let Ok(doc) = text.parse::<toml_edit::DocumentMut>() else {
         return false;
     };
-    let key = project.display().to_string();
+    let want = path_key(&project.display().to_string());
     doc.get("projects")
-        .and_then(|p| p.get(&key))
-        .and_then(|p| p.get("trust_level"))
-        .and_then(|t| t.as_str())
-        == Some("trusted")
+        .and_then(|p| p.as_table_like())
+        .is_some_and(|projects| {
+            projects.iter().any(|(key, v)| {
+                path_key(key) == want
+                    && v.get("trust_level").and_then(|t| t.as_str()) == Some("trusted")
+            })
+        })
+}
+
+/// A path as Codex may write it, compared loosely: without the Windows `\\?\` prefix, and on
+/// Windows with `/` as `\` and ignoring case.
+fn path_key(p: &str) -> String {
+    let p = p.strip_prefix(r"\\?\").unwrap_or(p);
+    if cfg!(windows) {
+        p.replace('/', r"\").to_lowercase()
+    } else {
+        p.to_owned()
+    }
 }
 
 fn codex_config(path: PathBuf) -> Result<(PathBuf, toml_edit::DocumentMut), Error> {

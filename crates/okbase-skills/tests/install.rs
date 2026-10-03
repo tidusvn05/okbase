@@ -408,7 +408,8 @@ fn codex_projects_are_independent_but_user_names_are_shared() {
     fs::write(
         home.join(".codex/config.toml"),
         format!(
-            "[projects.\"{}\"]\ntrust_level = \"trusted\"\n",
+            // A literal string: Windows paths hold backslashes.
+            "[projects.'{}']\ntrust_level = \"trusted\"\n",
             p1.display()
         ),
     )
