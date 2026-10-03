@@ -4,7 +4,7 @@
 
 Agents set okbase up for the user; the user only answers questions.
 
-1. Install (if `okbase --version` fails): from a clone of the repository, `cargo install --locked --path crates/okbase-cli` (Rust 1.89+; `--features full` adds semantic search and fine-tuning). After publication: `cargo install --locked okbase-cli`.
+1. Install (if `okbase --version` fails): `curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | sh` (add `-s -- --full` for semantic search and fine-tuning; Windows: `irm https://raw.githubusercontent.com/tidusvn05/okbase/main/install.ps1 | iex`). Before the first release: `cargo install --locked --path crates/okbase-cli` in a clone (Rust 1.89+).
 2. Run `okbase onboard` in the knowledge folder (or `okbase -b <folder> onboard`; `--json` for structured output). Do the first step, run it again, repeat until nothing is left.
 3. At every ASK step, ask the user the question and wait; run only the commands of the chosen option.
 4. Never add `--accept-license`, `--yes`, `--write`, `--force`, `--replace` or `--send-documents` unless the user agreed. A command that exits 3 needs consent: relay its `error.question`. Exit 4 means findings (lint errors, a rejected batch, a failed gate).

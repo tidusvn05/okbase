@@ -1,4 +1,4 @@
-//! The machine contract for agents (docs/PLAN-onboarding.md §3.2): stable error codes,
+//! The machine contract for agents (docs/plans/onboarding.md §3.2): stable error codes,
 //! exit codes, and errors that carry the question an agent must ask the user.
 
 use std::path::{Path, PathBuf};
@@ -14,11 +14,13 @@ pub const EXIT_CONSENT: u8 = 3;
 /// The command worked and found problems (lint errors, a rejected batch, a failed gate).
 pub const EXIT_FINDINGS: u8 = 4;
 
-/// How to get the okbase-full build (until okbase is published, from a clone of the repository).
-pub const INSTALL_FULL: &str = "cargo install --locked --path crates/okbase-cli --features full";
+/// How to get the okbase-full build (the release installer; from source: `cargo install --locked
+/// --path crates/okbase-cli --features full` in a clone).
+pub const INSTALL_FULL: &str = "curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | sh -s -- --full";
 /// [`INSTALL_FULL`] as a hint.
-pub const INSTALL_FULL_HINT: &str = "install the okbase-full build: in a clone of the okbase repository, \
-     cargo install --locked --path crates/okbase-cli --features full";
+pub const INSTALL_FULL_HINT: &str = "install the okbase-full build: curl -fsSL \
+     https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | sh -s -- --full \
+     (from source: cargo install --locked --path crates/okbase-cli --features full)";
 
 /// A step that needs the user's agreement. Agents must ask `question` and, only on yes,
 /// run the command again with `flag`.

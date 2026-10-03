@@ -1,0 +1,19 @@
+name: Feature request
+description: Suggest an improvement or a new capability
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What you or your agent are trying to do, and what gets in the way.
+    validations: { required: true }
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you propose
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: okbase changes defaults only with measurements (see spikes/README.md). Numbers, examples or a bundle that shows the gain help.

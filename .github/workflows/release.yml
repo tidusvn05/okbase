@@ -1,0 +1,187 @@
+name: Release
+
+# Pushing a tag vX.Y.Z (or vX.Y.Z-rc.N) builds the okbase and okbase-full binaries for every
+# supported platform, attaches them with SHA256SUMS to a GitHub release, and writes the release
+# notes from the commits since the previous tag. The procedure is in docs/releasing.md.
+
+on:
+  push:
+    tags: ["v[0-9]+.[0-9]+.[0-9]+", "v[0-9]+.[0-9]+.[0-9]+-*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to (re)build, e.g. v0.1.0 (the release is created as a draft)"
+        required: true
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  # ONNX Runtime version linked by the `ort` crate (okbase-full); its notices ship in the archive.
+  ORT_VERSION: "1.28.0"
+
+jobs:
+  check:
+    name: Check the tag
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+      version: ${{ steps.tag.outputs.version }}
+      prerelease: ${{ steps.tag.outputs.prerelease }}
+    steps:
+      - id: tag
+        shell: bash
+        run: |
+          tag="${{ github.event.inputs.tag || github.ref_name }}"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "version=${tag#v}" >> "$GITHUB_OUTPUT"
+          if [[ "$tag" == *-* ]]; then echo "prerelease=true" >> "$GITHUB_OUTPUT"; else echo "prerelease=false" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ steps.tag.outputs.tag }}
+          fetch-depth: 0
+      - name: The tag matches the workspace version
+        shell: bash
+        run: |
+          want="${{ steps.tag.outputs.version }}"
+          have="$(sed -n '/^\[workspace.package\]/,/^\[/s/^version = "\(.*\)"/\1/p' Cargo.toml)"
+          if [ "$want" != "$have" ]; then
+            echo "::error::tag ${{ steps.tag.outputs.tag }} but Cargo.toml says version $have (see docs/releasing.md)"
+            exit 1
+          fi
+      - name: CHANGELOG.md has this version
+        shell: bash
+        run: grep -q "^## \[${{ steps.tag.outputs.version }}\]" CHANGELOG.md || { echo "::error::CHANGELOG.md has no section for ${{ steps.tag.outputs.version }}"; exit 1; }
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test --workspace --locked
+
+  build:
+    name: Build ${{ matrix.variant }} ${{ matrix.target }}
+    needs: check
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [okbase, okbase-full]
+        target:
+          - x86_64-unknown-linux-gnu
+          - aarch64-unknown-linux-gnu
+          - x86_64-apple-darwin
+          - aarch64-apple-darwin
+          - x86_64-pc-windows-msvc
+        include:
+          # Older Ubuntu images keep the glibc requirement low.
+          - { target: x86_64-unknown-linux-gnu, os: ubuntu-22.04 }
+          - { target: aarch64-unknown-linux-gnu, os: ubuntu-22.04-arm }
+          # Intel Macs: cross-compiled on Apple silicon (Intel runners are being retired).
+          - { target: x86_64-apple-darwin, os: macos-14 }
+          - { target: aarch64-apple-darwin, os: macos-14 }
+          - { target: x86_64-pc-windows-msvc, os: windows-latest }
+    runs-on: ${{ matrix.os }}
+    env:
+      TAG: ${{ needs.check.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.check.outputs.tag }}
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.variant }}-${{ matrix.target }}
+      - name: Build
+        shell: bash
+        run: |
+          features=""
+          if [ "${{ matrix.variant }}" = "okbase-full" ]; then features="--features full"; fi
+          cargo build --release --locked -p okbase-cli --target ${{ matrix.target }} $features
+      - name: Third-party licenses
+        shell: bash
+        run: |
+          cargo install --locked cargo-about --features cli
+          features=""
+          if [ "${{ matrix.variant }}" = "okbase-full" ]; then features="--features full"; fi
+          cargo about generate --manifest-path crates/okbase-cli/Cargo.toml $features \
+            --target ${{ matrix.target }} packaging/about.hbs -o THIRD_PARTY_LICENSES.md
+      - name: Package
+        shell: bash
+        run: |
+          name="${{ matrix.variant }}-$TAG-${{ matrix.target }}"
+          mkdir -p "dist/$name"
+          exe=okbase; [[ "${{ matrix.target }}" == *windows* ]] && exe=okbase.exe
+          cp "target/${{ matrix.target }}/release/$exe" "dist/$name/"
+          cp README.md LICENSE-MIT LICENSE-APACHE THIRD_PARTY.md THIRD_PARTY_LICENSES.md CHANGELOG.md "dist/$name/"
+          if [ "${{ matrix.variant }}" = "okbase-full" ]; then
+            mkdir -p "dist/$name/licenses"
+            cp licenses/ONNXRUNTIME.txt "dist/$name/licenses/"
+            curl -fsSL "https://raw.githubusercontent.com/microsoft/onnxruntime/v$ORT_VERSION/ThirdPartyNotices.txt" \
+              -o "dist/$name/licenses/ONNXRUNTIME-ThirdPartyNotices.txt"
+          fi
+          cd dist
+          if [[ "${{ matrix.target }}" == *windows* ]]; then
+            7z a -tzip "$name.zip" "$name" > /dev/null
+          else
+            tar -czf "$name.tar.gz" "$name"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.variant }}-${{ matrix.target }}
+          path: |
+            dist/*.tar.gz
+            dist/*.zip
+          if-no-files-found: error
+
+  release:
+    name: Publish the GitHub release
+    needs: [check, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.check.outputs.tag }}
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Checksums
+        run: |
+          cd dist
+          sha256sum *.tar.gz *.zip > SHA256SUMS
+          cat SHA256SUMS
+      - name: Release notes (git-cliff)
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --latest --strip header
+        env:
+          OUTPUT: NOTES.md
+      - name: Install instructions
+        run: |
+          cat >> NOTES.md <<EOF
+
+          ## Install
+
+          \`\`\`sh
+          curl -fsSL https://raw.githubusercontent.com/${{ github.repository }}/main/install.sh | sh -s -- --version ${{ needs.check.outputs.tag }}
+          \`\`\`
+
+          Add \`--full\` for okbase-full (semantic search and fine-tuning). Windows:
+          \`irm https://raw.githubusercontent.com/${{ github.repository }}/main/install.ps1 | iex\`.
+          Every archive is listed in \`SHA256SUMS\`.
+          EOF
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.check.outputs.tag }}
+          name: okbase ${{ needs.check.outputs.tag }}
+          body_path: NOTES.md
+          prerelease: ${{ needs.check.outputs.prerelease }}
+          draft: ${{ github.event_name == 'workflow_dispatch' }}
+          files: |
+            dist/*.tar.gz
+            dist/*.zip
+            dist/SHA256SUMS

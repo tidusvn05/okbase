@@ -1,19 +1,46 @@
 # okbase
 
-**Make markdown knowledge bases work well for AI agents.**
+**Open Knowledge base: make markdown knowledge work well for AI agents.**
+
+[![CI](https://github.com/tidusvn05/okbase/actions/workflows/ci.yml/badge.svg)](https://github.com/tidusvn05/okbase/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/tidusvn05/okbase?include_prereleases)](https://github.com/tidusvn05/okbase/releases)
+[![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue)](#license)
 
 okbase is an open-source Rust toolkit for knowledge bundles in the [Open Knowledge Format (OKF)](https://github.com/GoogleCloudPlatform/open-knowledge-format). It helps agents such as Claude Code, Codex, OpenCode, or any MCP client answer questions from a folder of markdown files quickly, cheaply and correctly, in Vietnamese, English and Japanese.
 
-> Status: **pre-release**. The v0.1–v0.3 milestones are implemented; crates are versioned `0.1.0-dev` and not yet published. okbase is an independent community project and is not affiliated with Google.
+> Status: **pre-release**. The v0.1–v0.3 milestones are implemented; the first release (0.1.0) is being prepared. okbase is an independent community project and is not affiliated with Google.
+
+## Install
+
+Linux and macOS (x86_64 and arm64):
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | sh
+```
+
+Add `-s -- --full` for **okbase-full** (semantic search and fine-tuning), `-s -- --version v0.1.0`
+for a given release. The script downloads the release archive from GitHub, checks it against the
+release's `SHA256SUMS` and installs `okbase` into `~/.local/bin` (`--dir` to change). Read it
+first if you prefer: [`install.sh`](install.sh).
+
+Windows (PowerShell):
+
+```powershell
+irm https://raw.githubusercontent.com/tidusvn05/okbase/main/install.ps1 | iex
+```
+
+From source (Rust 1.89+): `cargo install --locked --path crates/okbase-cli` in a clone
+(`--features full` for okbase-full). Archives for every platform are on the
+[releases page](https://github.com/tidusvn05/okbase/releases).
 
 ## For agents
 
 If you are an AI agent asked to set up okbase, do this (the user only answers your questions):
 
-1. Install it if `okbase --version` fails. Until it is published, build it from a clone of this
-   repository with Rust 1.89+: `cargo install --locked --path crates/okbase-cli` (add
-   `--features full` for semantic search and fine-tuning). After publication:
-   `cargo install --locked okbase-cli`.
+1. Install it if `okbase --version` fails:
+   `curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | sh` (on Windows,
+   `irm https://raw.githubusercontent.com/tidusvn05/okbase/main/install.ps1 | iex`). Before the first
+   release, build it from a clone instead: `cargo install --locked --path crates/okbase-cli`.
 2. In the knowledge folder (or with `-b <folder>`), run **`okbase onboard`** and follow it: do the
    first step, run `okbase onboard` again, repeat. At every ASK step, ask the user and wait.
 3. Read **`okbase help --agent`** once: JSON output, exit codes (3 = ask the user, 4 = findings),
@@ -99,7 +126,8 @@ is under the Gemma Terms of Use.
 - Usage for small, medium and large projects (matches `okbase advise`): [`docs/usage.md`](docs/usage.md)
   - [Privacy: what leaves the machine](docs/usage.md#privacy-what-leaves-the-machine) · [Troubleshooting](docs/usage.md#troubleshooting) · [FAQ](docs/usage.md#faq) · [Environment variables](docs/usage.md#environment-variables)
 - Design: [`docs/design.md`](docs/design.md); the evidence behind every default: [`spikes/README.md`](spikes/README.md)
-- Maintainers' working notes (Vietnamese): [`docs/PLAN.md`](docs/PLAN.md), [`docs/HANDOFF.md`](docs/HANDOFF.md)
+- Plans behind each feature: [`docs/plans/`](docs/plans/); the original v0.1 handoff: [`docs/HANDOFF.md`](docs/HANDOFF.md)
+- Releases: [`docs/releasing.md`](docs/releasing.md) · [`CHANGELOG.md`](CHANGELOG.md)
 - Contributing: [`CONTRIBUTING.md`](CONTRIBUTING.md) · Agents: [`AGENTS.md`](AGENTS.md)
 
 ## License

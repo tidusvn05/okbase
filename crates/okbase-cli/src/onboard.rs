@@ -1,5 +1,5 @@
 //! `okbase onboard`: a setup plan for agents, computed from the real state of the machine and
-//! the bundle (docs/PLAN-onboarding.md §3.1). Run it, do the first step that is not done, run it
+//! the bundle (docs/plans/onboarding.md §3.1). Run it, do the first step that is not done, run it
 //! again; stop at every `ask` step and wait for the user's answer.
 
 use serde::Serialize;
@@ -526,7 +526,7 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
                         "embed-build",
                         "Semantic search needs the okbase-full build",
                         &s.why,
-                        "Semantic search needs the okbase-full build of okbase (about 60 MB instead of 34 MB, plus a model download; built from a clone of the okbase repository). Install it?".into(),
+                        "Semantic search needs the okbase-full build of okbase (about 60 MB instead of 34 MB, plus a model download). Install it?".into(),
                         vec![
                             choice("yes", &[crate::contract::INSTALL_FULL, "okbase onboard"]),
                             choice("no", &[]),

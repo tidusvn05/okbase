@@ -763,7 +763,7 @@ fn machine_contract_errors_consent_and_no_prompts() {
             e["error"]["hint"]
                 .as_str()
                 .unwrap()
-                .contains("--path crates/okbase-cli")
+                .contains("install.sh | sh -s -- --full")
         );
         assert!(!kb.join("okbase.toml").exists());
     }

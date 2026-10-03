@@ -2364,7 +2364,7 @@ struct TuneEnv {
 }
 
 #[cfg(not(feature = "embed-tune"))]
-const NO_TUNE: &str = "training is not in this build: use okbase-full (in a clone of the okbase repository: cargo install --locked --path crates/okbase-cli --features full)";
+const NO_TUNE: &str = "training is not in this build: use okbase-full (curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | sh -s -- --full)";
 
 /// The training environment; creates it only with `--yes` (it downloads packages).
 #[cfg(feature = "embed-tune")]

@@ -1,0 +1,19 @@
+# Third-party licenses
+
+This okbase binary contains the Rust crates listed below. Each license text is given once,
+followed by the crates it covers. See also THIRD_PARTY.md (other bundled material) and, for
+okbase-full archives, licenses/ONNXRUNTIME.txt.
+
+{{#each licenses}}
+## {{name}}
+
+Used by:
+{{#each used_by}}
+- {{crate.name}} {{crate.version}}{{#if crate.repository}} ({{crate.repository}}){{/if}}
+{{/each}}
+
+```
+{{text}}
+```
+
+{{/each}}
