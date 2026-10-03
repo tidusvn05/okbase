@@ -18,6 +18,8 @@ workspace = true
 [[bin]]
 name = "okfkit"
 path = "src/main.rs"
+# The binary's doc comments are its --help text; the library docs live in the okfkit crate.
+doc = false
 
 [dependencies]
 okfkit.workspace = true

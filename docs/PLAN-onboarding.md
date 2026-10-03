@@ -1,6 +1,6 @@
 # Kế hoạch: onboarding qua agent (agent-friendly setup)
 
-Trạng thái: **O0–O5 xong** với Claude (2026-10-02) và Codex (2026-10-03, `spikes/codex`); kết quả ở §6. Còn lỗi: sandbox Codex chặn ghi `.codex/`. Bổ sung cho `PLAN.md` và `PLAN-advise-tune.md`.
+Trạng thái: **O0–O5 xong** với Claude (2026-10-02) và Codex (2026-10-03, `spikes/codex`); kết quả ở §6. Lỗi sandbox Codex chặn ghi `.codex/` đã xử lý (`sandbox_blocked`, bước cho người dùng trong `onboard`). Bổ sung cho `PLAN.md` và `PLAN-advise-tune.md`.
 
 ## 0. Mục tiêu
 
@@ -153,7 +153,7 @@ Viết một lần, trong binary:
 | O3 | `ee9d65c` | `okfkit doctor`, kèm lượt gọi MCP thật |
 | O4 | `6167059` | README "For agents", `llms.txt`, skill `okfkit-setup`, khối AGENTS.md trỏ tới `onboard`; test giữ các bản hướng dẫn thống nhất |
 | O5 | `be73fa6` | S13 với Claude: 3/3 tự thiết lập, 0 lần tự thêm cờ đồng ý (`spikes/onboarding/RESULTS.md`). Sửa 3 lỗi do agent phát hiện |
-| O5 (Codex) | (chưa sửa) | S13 với Codex (gpt-6.1-sol, gpt-6-luna; 6 thư mục): 12/12 tìm ra `onboard`, 0 lần tự thêm cờ đồng ý. Sandbox workspace-write của Codex chặn ghi `.codex/`: `agent install --codex` chỉ báo "Permission denied" mà không có gợi ý (`spikes/codex/RESULTS.md`) |
+| O5 (Codex) | `b98cebf` (sửa) | S13 với Codex (gpt-6.1-sol, gpt-6-luna; 6 thư mục): 12/12 tìm ra `onboard`, 0 lần tự thêm cờ đồng ý. Sandbox workspace-write của Codex chặn ghi `.codex/`: `agent install --codex` chỉ báo "Permission denied" mà không có gợi ý (`spikes/codex/RESULTS.md`) |
 
 Khác với kế hoạch: trường `next` có ở lệnh thiết lập, lỗi và các lệnh `onboard/doctor/tune`. Lệnh
 đọc giữ nguyên JSON của tool MCP (luật AGENTS.md: schema `--json` = đầu ra tool MCP).

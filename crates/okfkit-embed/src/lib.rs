@@ -6,7 +6,7 @@
 //! explicit acceptance first.
 //!
 //! - [`Embedder`]: query and document embeddings, L2-normalized.
-//! - [`models`]: the supported local models (EmbeddingGemma 300M Q4, bge-m3 int8).
+//! - [`models()`]: the supported local models (EmbeddingGemma 300M Q4, bge-m3 int8).
 //! - [`VectorCache`]: vectors keyed by model and text hash, shared between bundles.
 
 pub mod cache;

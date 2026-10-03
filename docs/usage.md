@@ -28,15 +28,19 @@ The rest of this page describes the same steps for people.
 
 ## Install
 
-Not yet published; build from this repository (Rust 1.89+):
+Not yet published; build from a clone of this repository (Rust 1.89 or newer):
 
 ```sh
-cargo install --path crates/okfkit-cli                   # okfkit: lexical tools, ~23 MB
-cargo install --path crates/okfkit-cli --features full   # okfkit-full: + embeddings, fine-tuning, ~96 MB
+cargo install --locked --path crates/okfkit-cli                   # okfkit: lexical tools, ~34 MB
+cargo install --locked --path crates/okfkit-cli --features full   # okfkit-full: + embeddings, fine-tuning, ~60 MB
 ```
 
 Start with the default build. You only need `okfkit-full` when `advise` recommends semantic
-search or fine-tuning.
+search or fine-tuning. Neither build embeds language dictionaries or models: they are downloaded
+on first use (see [Privacy](#privacy-what-leaves-the-machine)).
+
+Platforms: okfkit is pure Rust with rustls. CI is set up for Linux, macOS and Windows, but until
+the repository is published it has only been run on Linux.
 
 ## Which setup?
 
@@ -137,7 +141,9 @@ okfkit embed index                     # ~3 chunks/s on 8 CPUs; cached, only cha
 okfkit search "chính sách đổi trả"     # the agent gets kb_search
 ```
 
-Models download once into the user cache; nothing is bundled, nothing leaves the machine.
+Local models download once into the user cache (nothing is bundled), and your documents stay on
+the machine. An OpenAI-compatible API (`embed enable --api-url … --send-documents`) sends every
+chunk and query to that service instead; see [Privacy](#privacy-what-leaves-the-machine).
 
 ---
 
@@ -300,7 +306,7 @@ jobs:
     permissions: { security-events: write }
     steps:
       - uses: actions/checkout@v4
-      - run: cargo install okfkit-cli          # after publication; until then --git <repository>
+      - run: cargo install --locked okfkit-cli # after publication; until then build from a clone
       - run: okfkit -b knowledge lint --level L1 --format sarif > okfkit.sarif || test $? -eq 4
       - uses: github/codeql-action/upload-sarif@v3
         with: { sarif_file: okfkit.sarif }
@@ -337,16 +343,21 @@ again (they converge on the same files), and `--print` shows any change before i
 | Point an existing name at another bundle | `okfkit -b ./new agent install --replace` | Explicit, never silent |
 | A team on one shared server | admin: `okfkit mcp serve --http …`; members: `okfkit agent install --url https://kb.example.com/mcp --token-env KB_TOKEN` | Members need no copy of the bundle; only the answering skill is installed |
 | An application (chatbot, internal tool) | the library (`okfkit::Bundle`) or `okfkit_mcp::router()` | The application decides each user's `Scope` |
-| CI: keep the bundle healthy | `okfkit lint --level L2 --format sarif` | Exits 1 on errors; no agent needed |
+| CI: keep the bundle healthy | `okfkit lint --level L2 --format sarif` | Exits 4 on errors; no agent needed |
 
 ### Where `agent install` writes, and how long the server runs
 
 | | Default (this project only) | `--user` (every project) |
 |---|---|---|
-| Claude Code: MCP server | `<project>/.mcp.json` (can be committed; Claude Code asks once to approve it) | `claude mcp add --scope user` (`~/.claude.json`) |
+| Claude Code: MCP server | `<project>/.mcp.json` (Claude Code asks once to approve it; it holds absolute paths to the binary and the bundle, so do not commit it for other machines) | `claude mcp add --scope user` (`~/.claude.json`) |
 | Claude Code: skills | `<project>/.claude/skills/` | `~/.claude/skills/` |
-| Codex: MCP server | `<project>/.codex/config.toml`, read once the project is trusted in Codex (it asks on first run; okfkit does not trust it for you) | `~/.codex/config.toml` |
-| Codex: instructions | `<project>/AGENTS.md` (an okfkit block) | `~/.codex/AGENTS.md` |
+| Codex: MCP server | `<project>/.codex/config.toml`, read once the project is trusted in Codex (it asks on first run; okfkit does not trust it for you) | `$CODEX_HOME/config.toml` (`~/.codex` by default) |
+| Codex: instructions | `<project>/AGENTS.md` (an okfkit block) | `$CODEX_HOME/AGENTS.md` |
+
+Codex's sandbox keeps `.codex/` read-only, so a Codex agent cannot connect okfkit to Codex itself:
+`okfkit onboard` then shows a step for you, and `okfkit agent install --codex` stops with
+`sandbox_blocked` before writing anything. Run `okfkit agent install --codex` in your own terminal
+(spike S13 with Codex).
 
 **Local server (stdio), the default: its lifetime follows the agent.** The agent starts
 `okfkit --bundle <path> mcp serve --stdio` when a session starts and it exits when the session
@@ -386,7 +397,94 @@ One process serves every client, and the model is loaded once. Agents only conne
 
 ---
 
+## Privacy: what leaves the machine
+
+okfkit has no telemetry and never phones home. These are the only network uses, each one visible:
+
+| What | When | Sent to / downloaded from | To avoid it |
+|---|---|---|---|
+| Japanese dictionary (IPADIC, about 13 MB) | the first time Japanese text is indexed; okfkit prints a notice | download from `Lindera.dev` into the user cache | `OKFKIT_OFFLINE=1` (Japanese falls back to character bigrams), or `okfkit dict install` on a machine with network and copy the cache |
+| Local embedding models | `okfkit embed index` after `embed enable` | download from Hugging Face into the user cache | stay lexical (the default) |
+| Embeddings API | only after `embed enable --api-url … --send-documents` | **every document chunk and search query** goes to that service | use a local model |
+| Training environment | `okfkit embed tune setup --yes` | packages from PyPI and the PyTorch index | do not fine-tune |
+| ONNX Runtime | when building `okfkit-full` | the `ort` crate downloads its binaries | use the default build |
+
+What your agent reads through okfkit's tools (search results, documents, page images for OCR,
+passages for tune questions) goes to the agent's model provider, as with any file the agent opens.
+That is why `onboard` asks you before OCR and before writing tune questions.
+
+---
+
+## Troubleshooting
+
+| Symptom | Cause and fix |
+|---|---|
+| The agent does not see the `kb_*` tools | Restart the agent session after `agent install`; then `okfkit doctor` (it starts the MCP server for real) |
+| Codex does not load the server | Trust the project when Codex asks (project config is read only for trusted projects), or install with `--user` |
+| `sandbox_blocked` (exit 3) | Codex's sandbox keeps `.codex/` read-only: run the command in `next` in your own terminal |
+| `not_built` | The feature needs `okfkit-full`: `cargo install --locked --path crates/okfkit-cli --features full` in a clone |
+| `license_required` (exit 3) | Accept the model's license with `--accept-license`, or use `bge-m3-int8` (MIT) |
+| `name_conflict` (exit 3) | That server name serves another bundle: pass `--name`, or `--replace` to repoint it |
+| `doctor` reports a moved bundle or a missing binary | `okfkit onboard` plans the repair (`agent install --replace`) |
+| Japanese search is weaker offline | The dictionary is not installed yet: `okfkit dict status`, then `okfkit dict install` |
+| A PDF page has no text | It is a scan: `okfkit import ocr-next` hands its image to an agent that reads images |
+| `lint` fails a CI job | It exits 4 when the bundle has errors; `okfkit lint --level L1` is the usual first target |
+| Odd results after an upgrade | `okfkit clean --index --yes`; the next command rebuilds the index |
+| Exit 141 after `okfkit … \| head` | Normal: the pipe was closed early (128 + SIGPIPE) |
+
+---
+
+## FAQ
+
+**Does okfkit change my documents?** Not unless you pass a write flag; see
+[What writes to disk](#what-writes-to-disk). `agent install` writes agent configuration only, and
+`agent uninstall` removes exactly what it wrote.
+
+**Do I need semantic search?** Usually not. Lexical tools reach about 93% on a 1M-token bundle with
+Claude (S4) and 87% with Codex gpt-6.1-sol (S7). Add it when people ask in a language the documents
+are not written in.
+
+**Which agents work?** Claude Code and Codex are set up by `agent install`; any MCP client can run
+`okfkit mcp serve` (see [Other MCP clients](#other-mcp-clients)). For answering, use a strong model:
+in S7 the small gpt-6-luna scored 70% against 87% for gpt-6.1-sol, and semantic search did not
+close that gap.
+
+**Several bundles in one project?** `okfkit -b <other> agent install --name okfkit-<short>`; each
+gets its own tool prefix.
+
+**Why did `AGENTS.md` change?** okfkit adds one marked block (`okfkit:begin` … `okfkit:end`) with
+usage notes for agents; `agent uninstall` removes only that block.
+
+---
+
 ## Reference
+
+### Other MCP clients
+
+Any client that starts stdio servers can use okfkit:
+
+```json
+{"mcpServers": {"okfkit": {"command": "/path/to/okfkit", "args": ["--bundle", "/path/to/bundle", "mcp", "serve", "--stdio"]}}}
+```
+
+`--prefix` changes the tool prefix (`kb`), `--disable <tool>` hides a tool, and `--allow`/`--deny`
+limit which documents are served. Over HTTP: `okfkit mcp serve --http` (loopback; a bearer token
+from `OKFKIT_MCP_TOKEN` is required on other addresses).
+
+### Environment variables
+
+| Variable | Meaning |
+|---|---|
+| `OKFKIT_BUNDLE` | Default for `--bundle` |
+| `OKFKIT_STATE_DIR` | Default for `--state-dir` (`auto`, `cache` or a directory) |
+| `OKFKIT_OFFLINE` | `1`: never download (the dictionary falls back to bigrams) |
+| `OKFKIT_MODELS_DIR` | Where embedding models are stored |
+| `OKFKIT_EMB_CACHE` | The vector cache file |
+| `OKFKIT_DICT_DIR` | Where the Japanese dictionary is built |
+| `OKFKIT_CONFIG_DIR` | Where okfkit keeps its install records (`installs.json`) |
+| `OKFKIT_MCP_TOKEN` | Bearer token for `mcp serve --http` (the variable name can be changed with `--token-env`) |
+| `OKFKIT_PYTHON` | The Python used to create the training environment |
+| `CODEX_HOME` | Codex's directory for `--user` installs (`~/.codex` by default) |
 
 ### Thresholds behind `advise`
 
@@ -396,7 +494,7 @@ One process serves every client, and the model is loaded once. Agents only conne
 | A language counts | ≥ 5% of the bundle's tokens | — |
 | Semantic search for size alone | > 1,000,000 tokens | S4: fewer turns, same accuracy |
 | Semantic search for language | people's languages ≠ document languages, or a mixed bundle | S1: BM25 3.5% cross-language, embeddings 0.85 R@1 |
-| Curate first | level < L2, > 10% without description, or no `index.md` | PLAN §1 |
+| Curate first | level < L2, > 10% without description, or no `index.md` | S3–S5 (`spikes/README.md`) |
 | Fine-tuning | cross-language and ≥ 100 documents | S11 |
 
 ### What writes to disk
@@ -406,7 +504,7 @@ okfkit is read-only by default. These commands write, and only where stated:
 | Command | Writes |
 |---|---|
 | any read command | its index in `<bundle>/.okfkit/` (or the user cache; `--state-dir` to choose) |
-| `adopt --out DIR` / `adopt --write` | a new folder / the folder in place (clean git tree required) |
+| `adopt --out DIR` / `adopt --write` | a new folder / the folder in place (the files it changes must be committed in git first) |
 | `lint --fix-safe`, `vocab --suggest --write` | missing `index.md` files, `_meta/vocabulary.md` |
 | `embed enable/disable`, `tune activate/rollback --write` | `okfkit.toml` (only the `[embed]` keys) |
 | `agent install` / `agent uninstall` | agent configuration, skills, AGENTS.md block (`--print` to preview); a record in `~/.config/okfkit/installs.json` |
@@ -427,3 +525,11 @@ okfkit query --tag x --facet type # filter and count
 okfkit get <id> -s "Section"      # read
 okfkit modules                    # which optional modules this build has
 ```
+
+Less frequent commands (each has `--help`):
+- `okfkit index`: update the index.
+- `okfkit dict status` / `dict install`: the Japanese dictionary.
+- `okfkit embed status` / `embed eval` / `embed models`: semantic search and its models.
+- `okfkit embed tune status` / `tune runs` / `tune import`: fine-tuning runs.
+- `okfkit agent status`: which agents are connected to which bundles.
+- `okfkit agent install --project DIR`: connect another project folder.

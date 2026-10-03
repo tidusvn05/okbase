@@ -45,7 +45,7 @@ jobs:
       - run: cargo test --workspace --all-features
 
   full:
-    # The okfkit-full build: local embeddings (ONNX Runtime) and the embedded Japanese dictionary.
+    # The okfkit-full build: local embeddings (ONNX Runtime) and fine-tuning.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

@@ -523,7 +523,7 @@ struct RegressionDoc {
     content: String,
 }
 
-/// The model a run exported (`custom:<name>`), recorded by [`export`].
+/// The model a run exported (`custom:<name>`), recorded by `export`.
 pub fn exported_model(run: &Run) -> Option<String> {
     let text = std::fs::read_to_string(run.dir().join("model.json")).ok()?;
     serde_json::from_str::<serde_json::Value>(&text)

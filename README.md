@@ -4,21 +4,24 @@
 
 okfkit is an open-source Rust toolkit for knowledge bundles in the [Open Knowledge Format (OKF)](https://github.com/GoogleCloudPlatform/open-knowledge-format). It helps agents such as Claude Code, Codex, OpenCode, or any MCP client answer questions from a folder of markdown files quickly, cheaply and correctly, in Vietnamese, English and Japanese.
 
-> Status: **pre-release** (v0.1–v0.3 implemented; not yet published). okfkit is an independent community project and is not affiliated with Google.
+> Status: **pre-release**. The v0.1–v0.3 milestones are implemented; crates are versioned `0.1.0-dev` and not yet published. okfkit is an independent community project and is not affiliated with Google.
 
 ## For agents
 
 If you are an AI agent asked to set up okfkit, do this (the user only answers your questions):
 
 1. Install it if `okfkit --version` fails. Until it is published, build it from a clone of this
-   repository: `cargo install --path crates/okfkit-cli` (add `--features full` for semantic search
-   and fine-tuning). After publication: `cargo install okfkit-cli`.
+   repository with Rust 1.89+: `cargo install --locked --path crates/okfkit-cli` (add
+   `--features full` for semantic search and fine-tuning). After publication:
+   `cargo install --locked okfkit-cli`.
 2. In the knowledge folder (or with `-b <folder>`), run **`okfkit onboard`** and follow it: do the
    first step, run `okfkit onboard` again, repeat. At every ASK step, ask the user and wait.
 3. Read **`okfkit help --agent`** once: JSON output, exit codes (3 = ask the user, 4 = findings),
    error codes, and what you must never decide alone (`--accept-license`, `--yes`, `--write`,
-   `--force`, `--replace`).
+   `--force`, `--replace`, `--send-documents`).
 4. Finish with `okfkit doctor`, then tell the user to restart the agent session.
+5. Inside Codex, its sandbox keeps `.codex/` read-only: ask the user to run
+   `okfkit agent install --codex` in their own terminal.
 
 A machine-readable summary is in [`llms.txt`](llms.txt).
 
@@ -94,8 +97,9 @@ is under the Gemma Terms of Use.
 ## Documentation
 
 - Usage for small, medium and large projects (matches `okfkit advise`): [`docs/usage.md`](docs/usage.md)
-- Design: [`docs/design.md`](docs/design.md) (English translation of [`docs/PLAN.md`](docs/PLAN.md), Vietnamese)
-- Implementation handoff: [`docs/HANDOFF.md`](docs/HANDOFF.md); acceptance results: `spikes/acceptance-v0.1/`, `-v0.2/`, `-v0.3/`
+  - [Privacy: what leaves the machine](docs/usage.md#privacy-what-leaves-the-machine) · [Troubleshooting](docs/usage.md#troubleshooting) · [FAQ](docs/usage.md#faq) · [Environment variables](docs/usage.md#environment-variables)
+- Design: [`docs/design.md`](docs/design.md); the evidence behind every default: [`spikes/README.md`](spikes/README.md)
+- Maintainers' working notes (Vietnamese): [`docs/PLAN.md`](docs/PLAN.md), [`docs/HANDOFF.md`](docs/HANDOFF.md)
 - Contributing: [`CONTRIBUTING.md`](CONTRIBUTING.md) · Agents: [`AGENTS.md`](AGENTS.md)
 
 ## License
