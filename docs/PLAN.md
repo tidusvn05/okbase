@@ -438,7 +438,7 @@ Output text/JSON/SARIF; `--fix-safe` chỉ sửa những gì an toàn (sinh inde
 | v0.3 | ✅ Xong. S1 R@1 0.857; S4 top-6: 29/30 (Gemma), 30/30 (bge-m3) | `spikes/acceptance-v0.3` |
 | advise + fine-tune | ✅ Xong (phase 0–5). Agent làm hết quy trình; Q4 giữ được mức cải thiện | `PLAN-advise-tune.md`, `spikes/embed-tune` |
 | Tình huống thực tế | ✅ Xong (U1–U8) | `PLAN-usecases.md`, S13b |
-| Onboarding qua agent | ✅ Xong (O1–O5) với Claude. **Codex chưa chạy** | `PLAN-onboarding.md`, S13 |
+| Onboarding qua agent | ✅ Xong (O1–O5). Claude 3/3; Codex 12/12 tìm ra `onboard`, không tự thêm cờ đồng ý. Còn lỗi: sandbox Codex chặn `.codex/` (S13 Codex) | `PLAN-onboarding.md`, S13, `spikes/codex` |
 | v0.4 import | ✅ Phần chuyển đổi xong (I1–I5, S14). Còn: connector Google Drive/Sheets, `distill`, S10 với tài liệu thật | `PLAN-import.md` |
 | Eval | `okfkit-eval lexical` chạy trong `cargo test`. Chế độ agent vẫn là script trong `spikes/` | §12 |
 | v0.5 → v1.0 | Chưa bắt đầu | |
@@ -491,7 +491,7 @@ Output text/JSON/SARIF; `--fix-safe` chỉ sửa những gì an toàn (sinh inde
 
 | Rủi ro / câu hỏi | Hướng xử lý |
 |---|---|
-| Lexical chỉ mới đo với Claude Sonnet | Spike S7 (Codex, model nhỏ); profile có thể khác nhau theo CLI |
+| Lexical chỉ mới đo với Claude Sonnet | Đã đo (S7): Codex gpt-6.1-sol 87% so với Claude 93%; model nhỏ 70%, thêm embedding không cải thiện. Giữ lexical làm mặc định; khuyến nghị dùng model mạnh để trả lời |
 | Adopt heuristic viết description kém | Đánh dấu `generated`; skill `okfkit-curate` cho agent viết lại; S8 đo tác động |
 | Skill không được agent dùng | Đã đo (S9, S15): agent không gọi skill, nhưng quy tắc gửi qua instructions của MCP server thì được làm theo. Skill giữ cho trường hợp không có MCP và cho việc biên tập |
 | Tên "OKF" là spec của Google | Tên sản phẩm `okfkit`; ghi rõ "tool cộng đồng" |

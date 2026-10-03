@@ -26,6 +26,8 @@ ID theo `docs/PLAN.md` §1. Ngày là ngày chạy.
 | S13b | 2026-10-02 | `onboarding` | Thư mục thực tế: repo phần mềm, thư mục rỗng, bundle hỏng một phần | 3/3 hiểu đúng thư mục và hỏi đúng chỗ. Agent tìm ra 5 lỗi, đã sửa | `docs/PLAN-usecases.md` |
 | S14 | 2026-10-02 | `page-image-bench` | Đưa trang scan cho agent: xuất ảnh nhúng hay render trang? | **Xuất ảnh nhúng**: JPEG 1–3 ms (render 0.2–0.95 s); Flate không mất chi tiết và nhanh hơn render 2–4×. Token ảnh như nhau (~1.5k). CCITT G4: 86 ms, chính xác (crate `fax`) | `docs/PLAN-import.md` §7 |
 | S15 | 2026-10-03 | `mcp-tools` | Rút gọn danh sách tool có giảm chi phí không? Quy tắc của skill gửi qua instructions của MCP server có thay được gợi ý trong prompt không? | **Instructions thay được gợi ý**: không gợi ý vẫn 46/48 (bằng có gợi ý), dùng `kb_query`/`data_query` như nhau. Đây là lời giải cho S9. Rút gọn tool: −3% token, chi phí không đổi, độ chính xác không đổi. $6.29 | `PLAN.md` §13–14 |
+| S7 | 2026-10-03 | `codex` | Lexical với Codex và model nhỏ | **gpt-6.1-sol 26/30 (87%)**, Claude Sonnet 28/30, không khác biệt có ý nghĩa. **gpt-6-luna (model nhỏ) 21/30**: tìm đúng tài liệu nhưng trả lời thiếu ý; thêm `kb_search` không cải thiện (vẫn 21/30), chỉ bớt 24% token. Giữ lexical làm mặc định cho cả Codex | `PLAN.md` §13–14 |
+| S13 (Codex) | 2026-10-03 | `codex` | Codex tự cài okfkit từ một câu | 12/12 lượt tìm ra `onboard`, 0 lần tự thêm cờ đồng ý, `doctor` đạt 11/12. **Lỗi:** sandbox của Codex chặn ghi `.codex/`, nên Codex không tự đăng ký MCP cho chính nó được; okfkit chỉ báo "Permission denied" | `PLAN-onboarding.md` |
 
 ## 2. Số liệu tra nhanh
 
@@ -49,10 +51,8 @@ Máy chạy: AMD EPYC 8 vCPU, 23 GB RAM, không GPU; bản release. Chi tiết v
 
 | ID | Việc | Vì sao chưa |
 |---|---|---|
-| S7 | Lexical với Codex và model nhỏ | Tốn quota của người dùng |
 | S10 | ~20 PDF và 5 sheet thật | Cần tài liệu thật của người dùng |
 | S12 | Codex sinh câu hỏi để tune | Tốn quota |
-| S13 (Codex) | Codex tự cài okfkit | Tốn quota |
 | S14 tiếp | Trang ghép nhiều ảnh; file scan thật | Chưa bắt đầu (CCITT G4 đã xong) |
 
 ## 4. Quy ước cho spike mới

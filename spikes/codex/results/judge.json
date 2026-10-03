@@ -1,0 +1,722 @@
+{
+ "L-gpt-6-luna-16": {
+  "key": "x97066620",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three defaults match."
+ },
+ "L-gpt-6.1-sol-13": {
+  "key": "x84093661",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "L-gpt-6-luna-4": {
+  "key": "x75286932",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits that default error is terminal for whole chain."
+ },
+ "L-gpt-6.1-sol-28": {
+  "key": "x79335663",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits other options: off, all, allowlist."
+ },
+ "L-gpt-6-luna-17": {
+  "key": "x60325204",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both correct."
+ },
+ "L-gpt-6.1-sol-16": {
+  "key": "x43852175",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three defaults match."
+ },
+ "L-gpt-6.1-sol-21": {
+  "key": "x86806696",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered."
+ },
+ "L-gpt-6.1-sol-4": {
+  "key": "x95384937",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts covered."
+ },
+ "L-gpt-6-luna-2": {
+  "key": "x72517828",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Doesn't mention dedup by bridge event id."
+ },
+ "L-gpt-6.1-sol-8": {
+  "key": "x62944959",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated correctly."
+ },
+ "L-gpt-6-luna-7": {
+  "key": "x639312510",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Steer default and interrupt both correct."
+ },
+ "L-gpt-6-luna-19": {
+  "key": "x783494511",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated; extra detail not contradictory."
+ },
+ "L-gpt-6.1-sol-19": {
+  "key": "x91337180",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated."
+ },
+ "L-gpt-6-luna-29": {
+  "key": "x97542491",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, explicit error, bot registered with reaction feature."
+ },
+ "L-gpt-6.1-sol-25": {
+  "key": "x50018502",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "All facts correct."
+ },
+ "L-gpt-6-luna-21": {
+  "key": "x15996473",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing endpoint being part of cache key."
+ },
+ "L-gpt-6.1-sol-0": {
+  "key": "x42922054",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-gpt-6-luna-27": {
+  "key": "x14804765",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing default is international endpoint."
+ },
+ "L-gpt-6-luna-0": {
+  "key": "x40158636",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts stated; extra RSC info consistent."
+ },
+ "L-gpt-6.1-sol-2": {
+  "key": "x47612087",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts correct."
+ },
+ "L-gpt-6-luna-8": {
+  "key": "x53312848",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing boot ID and start ticks detail."
+ },
+ "L-gpt-6-luna-26": {
+  "key": "x33481749",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Doesn't mention DashScope's accepted default."
+ },
+ "L-gpt-6.1-sol-17": {
+  "key": "x457385010",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates, no model call."
+ },
+ "L-gpt-6-luna-28": {
+  "key": "x230649311",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing other options off, all, allowlist."
+ },
+ "L-gpt-6-luna-6": {
+  "key": "x73360860",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "L-gpt-6.1-sol-1": {
+  "key": "x61034581",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, one Graph lookup, avoids extra traffic/errors."
+ },
+ "L-gpt-6.1-sol-10": {
+  "key": "x29099362",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Gives preload false but doesn't clearly state preload default via native load endpoint; borderline."
+ },
+ "L-gpt-6-luna-3": {
+  "key": "x24750703",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered."
+ },
+ "L-gpt-6.1-sol-27": {
+  "key": "x59760714",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing that default is international endpoint."
+ },
+ "L-gpt-6.1-sol-7": {
+  "key": "x59068975",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default steer and interrupt both correct."
+ },
+ "L-gpt-6-luna-13": {
+  "key": "x14793286",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-gpt-6-luna-1": {
+  "key": "x62498897",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits one Graph lookup per HTML activity detail."
+ },
+ "L-gpt-6-luna-15": {
+  "key": "x37077998",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-gpt-6-luna-11": {
+  "key": "x33475479",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key as returned, no lmstudio/ prefix."
+ },
+ "L-gpt-6-luna-9": {
+  "key": "x463886710",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered, no contradiction."
+ },
+ "L-gpt-6.1-sol-22": {
+  "key": "x969361711",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Doesn't state no prompts/messages/keys/paths are sent."
+ },
+ "L-gpt-6-luna-20": {
+  "key": "x89908830",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated correctly."
+ },
+ "L-gpt-6-luna-12": {
+  "key": "x22339151",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "L-gpt-6.1-sol-15": {
+  "key": "x21662442",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "L-gpt-6-luna-24": {
+  "key": "x18871283",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, disabled requests, desktop app all stated."
+ },
+ "L-gpt-6-luna-5": {
+  "key": "x75440874",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Matches reference fully."
+ },
+ "L-gpt-6-luna-23": {
+  "key": "x81138035",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Single trust boundary, trusted team, separate gateways covered."
+ },
+ "L-gpt-6.1-sol-26": {
+  "key": "x63734276",
+  "correct": true,
+  "facts_hit": 1,
+  "reason": "5 seconds stated; DashScope default not mentioned but equivalent."
+ },
+ "L-gpt-6-luna-25": {
+  "key": "x38771447",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts correct."
+ },
+ "L-gpt-6.1-sol-18": {
+  "key": "x50462168",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 ports and base+110 stated."
+ },
+ "L-gpt-6.1-sol-5": {
+  "key": "x46118379",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Matches reference fully."
+ },
+ "L-gpt-6.1-sol-9": {
+  "key": "x486160110",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present, no contradiction."
+ },
+ "L-gpt-6.1-sol-11": {
+  "key": "x722904311",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key without lmstudio/ prefix, correct."
+ },
+ "L-gpt-6.1-sol-29": {
+  "key": "x62863560",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Add-only, remove explicit error, bot needs reaction feature; all stated."
+ },
+ "L-gpt-6-luna-10": {
+  "key": "x90325731",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "preload false under lmstudio provider; default preload stated."
+ },
+ "L-gpt-6-luna-22": {
+  "key": "x74980942",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Misses 'no prompts/messages/keys/paths sent'; adds request surface."
+ },
+ "L-gpt-6.1-sol-3": {
+  "key": "x16893903",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All identifiers, no auto-send, check/send CLI stated."
+ },
+ "L-gpt-6.1-sol-12": {
+  "key": "x75698694",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "L-gpt-6.1-sol-14": {
+  "key": "x15818035",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl localhost, omit apiKey."
+ },
+ "L-gpt-6-luna-14": {
+  "key": "x39965536",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl localhost, omit apiKey."
+ },
+ "L-gpt-6.1-sol-23": {
+  "key": "x64144737",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust domain, trusted only, separate gateways for adversarial."
+ },
+ "L-gpt-6.1-sol-6": {
+  "key": "x65991178",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Correct key, set true/remove, no restart."
+ },
+ "L-gpt-6.1-sol-24": {
+  "key": "x74044339",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redaction disables requests, use desktop app."
+ },
+ "L-gpt-6.1-sol-20": {
+  "key": "x907397810",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true, key sentence excerpts."
+ },
+ "L-gpt-6-luna-18": {
+  "key": "x795838811",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 ports and base+110 stated."
+ },
+ "L-gpt-6-luna+search-16": {
+  "key": "x36326800",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three defaults match."
+ },
+ "L-gpt-6.1-sol+search-13": {
+  "key": "x98615921",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated correctly."
+ },
+ "L-gpt-6-luna+search-4": {
+  "key": "x95635122",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Scope harness, side-effects caveat given; default terminal implied by contrast."
+ },
+ "L-gpt-6.1-sol+search-28": {
+  "key": "x81790113",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing other options off, all, allowlist."
+ },
+ "L-gpt-6-luna+search-17": {
+  "key": "x47420714",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates and no model call both correct."
+ },
+ "L-gpt-6.1-sol+search-16": {
+  "key": "x19831635",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three defaults match."
+ },
+ "L-gpt-6.1-sol+search-21": {
+  "key": "x88627776",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated."
+ },
+ "L-gpt-6.1-sol+search-4": {
+  "key": "x84344347",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts covered, no contradictions."
+ },
+ "L-gpt-6-luna+search-2": {
+  "key": "x90408168",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits dedup by bridge event id."
+ },
+ "L-gpt-6.1-sol+search-8": {
+  "key": "x62246959",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts match."
+ },
+ "L-gpt-6-luna+search-7": {
+  "key": "x989256310",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts correct."
+ },
+ "L-gpt-6-luna+search-19": {
+  "key": "x443964611",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts correct; extra detail is harmless."
+ },
+ "L-gpt-6.1-sol+search-19": {
+  "key": "x26840590",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated."
+ },
+ "L-gpt-6-luna+search-29": {
+  "key": "x60596911",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Remove unimplemented, rejected; bot registered with reaction feature."
+ },
+ "L-gpt-6.1-sol+search-25": {
+  "key": "x67979912",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Keys and 8,000 limit correct."
+ },
+ "L-gpt-6-luna+search-21": {
+  "key": "x59392693",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing endpoint being part of cache key."
+ },
+ "L-gpt-6.1-sol+search-0": {
+  "key": "x38105214",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-gpt-6-luna+search-27": {
+  "key": "x85356195",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing default international endpoint."
+ },
+ "L-gpt-6-luna+search-0": {
+  "key": "x57966866",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-gpt-6.1-sol+search-2": {
+  "key": "x95684137",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts correct."
+ },
+ "L-gpt-6-luna+search-8": {
+  "key": "x76197828",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing boot ID and start ticks."
+ },
+ "L-gpt-6-luna+search-26": {
+  "key": "x21904199",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "5 seconds, DashScope default."
+ },
+ "L-gpt-6.1-sol+search-17": {
+  "key": "x166003010",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "256 candidates, no model call."
+ },
+ "L-gpt-6-luna+search-28": {
+  "key": "x542478411",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing other options off, all, allowlist."
+ },
+ "L-gpt-6-luna+search-6": {
+  "key": "x75338320",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, set true, no restart all stated"
+ },
+ "L-gpt-6.1-sol+search-1": {
+  "key": "x70041471",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Default false, extra Graph lookup, avoids traffic/errors"
+ },
+ "L-gpt-6.1-sol+search-10": {
+  "key": "x53334322",
+  "correct": true,
+  "facts_hit": 1,
+  "reason": "Preload false stated; default-enabled implied by 'disables'"
+ },
+ "L-gpt-6-luna+search-3": {
+  "key": "x89431383",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing statement that final text isn't auto-sent"
+ },
+ "L-gpt-6.1-sol+search-27": {
+  "key": "x17867704",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits default international endpoint"
+ },
+ "L-gpt-6.1-sol+search-7": {
+  "key": "x23176125",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "steer default; interrupt aborts and restarts"
+ },
+ "L-gpt-6-luna+search-13": {
+  "key": "x90414136",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three rollback settings correct"
+ },
+ "L-gpt-6-luna+search-1": {
+  "key": "x27914547",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present"
+ },
+ "L-gpt-6-luna+search-15": {
+  "key": "x81511338",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "LLM Q&A, quick facts, thorough synthesis"
+ },
+ "L-gpt-6-luna+search-11": {
+  "key": "x89067699",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key without lmstudio prefix"
+ },
+ "L-gpt-6-luna+search-9": {
+  "key": "x428200510",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated, no contradiction"
+ },
+ "L-gpt-6.1-sol+search-22": {
+  "key": "x295279411",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Omits no prompts/messages/keys/paths sent fact"
+ },
+ "L-gpt-6-luna+search-20": {
+  "key": "x81612780",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated."
+ },
+ "L-gpt-6-luna+search-12": {
+  "key": "x40783521",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Said per-peer, not per-channel-peer; multi-account correct."
+ },
+ "L-gpt-6.1-sol+search-15": {
+  "key": "x67181812",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-gpt-6-luna+search-24": {
+  "key": "x72968003",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redact disables requests, desktop app all stated."
+ },
+ "L-gpt-6-luna+search-5": {
+  "key": "x80705094",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "L-gpt-6-luna+search-23": {
+  "key": "x36962085",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Trust domain, trusted sharing, separate gateways covered."
+ },
+ "L-gpt-6.1-sol+search-26": {
+  "key": "x66579316",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Says 5 seconds but omits DashScope default attribution."
+ },
+ "L-gpt-6-luna+search-25": {
+  "key": "x86032507",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts correct."
+ },
+ "L-gpt-6.1-sol+search-18": {
+  "key": "x95823288",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 ports and base+110 stated."
+ },
+ "L-gpt-6.1-sol+search-5": {
+  "key": "x33812609",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All facts present."
+ },
+ "L-gpt-6.1-sol+search-9": {
+  "key": "x499640610",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts stated, no contradiction."
+ },
+ "L-gpt-6.1-sol+search-11": {
+  "key": "x540708811",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Model key format, no lmstudio prefix."
+ },
+ "L-gpt-6.1-sol+search-29": {
+  "key": "x48488400",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both facts stated: add-only/explicit error, bot reaction feature."
+ },
+ "L-gpt-6-luna+search-10": {
+  "key": "x82216061",
+  "correct": false,
+  "facts_hit": 1,
+  "reason": "Missing that preload is enabled by default."
+ },
+ "L-gpt-6-luna+search-22": {
+  "key": "x70838232",
+  "correct": false,
+  "facts_hit": 2,
+  "reason": "Missing explicit statement that no prompts/messages/keys/paths are sent."
+ },
+ "L-gpt-6.1-sol+search-3": {
+  "key": "x81396053",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "All three facts present."
+ },
+ "L-gpt-6.1-sol+search-12": {
+  "key": "x96416614",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Both dmScope values correct."
+ },
+ "L-gpt-6.1-sol+search-14": {
+  "key": "x15349905",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local and apiKey omitted."
+ },
+ "L-gpt-6-luna+search-14": {
+  "key": "x53705466",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "baseUrl local and apiKey omitted."
+ },
+ "L-gpt-6.1-sol+search-23": {
+  "key": "x33081567",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "One trust domain, trusted sharing, separate gateways."
+ },
+ "L-gpt-6.1-sol+search-6": {
+  "key": "x67269088",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Key, set true, no restart all stated."
+ },
+ "L-gpt-6.1-sol+search-24": {
+  "key": "x11487249",
+  "correct": true,
+  "facts_hit": 3,
+  "reason": "Order, redaction disables requests, desktop app."
+ },
+ "L-gpt-6.1-sol+search-20": {
+  "key": "x974550510",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "Default highlights true and key sentence excerpts."
+ },
+ "L-gpt-6-luna+search-18": {
+  "key": "x689933911",
+  "correct": true,
+  "facts_hit": 2,
+  "reason": "120 ports spacing and base+110 stated."
+ }
+}
