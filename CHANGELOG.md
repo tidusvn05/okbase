@@ -87,10 +87,15 @@ breaking change). This file is generated from commit messages by git-cliff.
 - **spikes:** S7 and S13 with Codex (9fd98d3)
 - privacy, troubleshooting, FAQ, environment variables; fix stale facts (0c268fa)
 - **spikes:** S13 with Codex after the sandbox fix (548b958)
+- all documentation in English (708751d)
 
 ### Build and packaging
 
 - okfkit-full no longer embeds the Japanese dictionary (cedaf9c)
+
+### Continuous integration
+
+- release workflow, curl installer, changelog and OSS templates (1b27525)
 
 ### Dependencies
 
