@@ -197,7 +197,9 @@ fn agent_install_print_and_apply() {
     std::fs::create_dir_all(&project).unwrap();
     let run = |extra: &[&str]| {
         let mut c = Command::cargo_bin("okbase").unwrap();
+        // OKBASE_CONFIG_DIR: on Windows the install registry follows %APPDATA%, not HOME.
         c.env("HOME", &home)
+            .env("OKBASE_CONFIG_DIR", home.join(".config").join("okbase"))
             .arg("-b")
             .arg(fixture("business"))
             .args(["agent", "install"])
@@ -580,7 +582,9 @@ fn agent_scenarios_many_bundles_status_uninstall_clean() {
     }
     let cmd = |bundle: &Path, args: &[&str]| {
         let mut c = Command::cargo_bin("okbase").unwrap();
+        // OKBASE_CONFIG_DIR: on Windows the install registry follows %APPDATA%, not HOME.
         c.env("HOME", &home)
+            .env("OKBASE_CONFIG_DIR", home.join(".config").join("okbase"))
             .env("XDG_CONFIG_HOME", home.join(".config"))
             .env("XDG_CACHE_HOME", home.join(".cache"))
             .current_dir(&project)
@@ -687,7 +691,9 @@ fn machine_contract_errors_consent_and_no_prompts() {
     std::fs::create_dir_all(&home).unwrap();
     let run = |args: &[&str]| {
         let mut c = Command::cargo_bin("okbase").unwrap();
+        // OKBASE_CONFIG_DIR: on Windows the install registry follows %APPDATA%, not HOME.
         c.env("HOME", &home)
+            .env("OKBASE_CONFIG_DIR", home.join(".config").join("okbase"))
             .env("XDG_CONFIG_HOME", home.join(".config"))
             .env("XDG_CACHE_HOME", home.join(".cache"))
             .env("OKBASE_MODELS_DIR", home.join("models"))
@@ -821,7 +827,9 @@ fn onboard_plan_converges() {
     std::fs::create_dir_all(&project).unwrap();
     let run = |args: &[&str]| {
         let mut c = Command::cargo_bin("okbase").unwrap();
+        // OKBASE_CONFIG_DIR: on Windows the install registry follows %APPDATA%, not HOME.
         c.env("HOME", &home)
+            .env("OKBASE_CONFIG_DIR", home.join(".config").join("okbase"))
             .env("XDG_CONFIG_HOME", home.join(".config"))
             .env("XDG_CACHE_HOME", home.join(".cache"))
             .env("PATH", "/usr/bin:/bin")
@@ -908,7 +916,9 @@ fn doctor_checks_the_setup_end_to_end() {
     .unwrap();
     let run = |bundle: &Path, args: &[&str]| {
         let mut c = Command::cargo_bin("okbase").unwrap();
+        // OKBASE_CONFIG_DIR: on Windows the install registry follows %APPDATA%, not HOME.
         c.env("HOME", &home)
+            .env("OKBASE_CONFIG_DIR", home.join(".config").join("okbase"))
             .env("XDG_CONFIG_HOME", home.join(".config"))
             .env("XDG_CACHE_HOME", home.join(".cache"))
             .current_dir(&project)
@@ -1026,7 +1036,9 @@ fn onboard_understands_real_folders() {
     }
     let plan = |dir: &str, extra: &[&str]| -> Value {
         let mut c = Command::cargo_bin("okbase").unwrap();
+        // OKBASE_CONFIG_DIR: on Windows the install registry follows %APPDATA%, not HOME.
         c.env("HOME", &home)
+            .env("OKBASE_CONFIG_DIR", home.join(".config").join("okbase"))
             .env("XDG_CONFIG_HOME", home.join(".config"))
             .env("XDG_CACHE_HOME", home.join(".cache"))
             .env("PATH", "/usr/bin:/bin")
@@ -1246,7 +1258,9 @@ fn onboard_and_doctor_on_a_folder_of_source_documents() {
     std::fs::write(kb.join("whiteboard.png"), b"\x89PNG\r\n\x1a\n").unwrap();
     let run = |args: &[&str]| {
         let mut c = Command::cargo_bin("okbase").unwrap();
+        // OKBASE_CONFIG_DIR: on Windows the install registry follows %APPDATA%, not HOME.
         c.env("HOME", &home)
+            .env("OKBASE_CONFIG_DIR", home.join(".config").join("okbase"))
             .env("XDG_CONFIG_HOME", home.join(".config"))
             .env("XDG_CACHE_HOME", home.join(".cache"))
             .env("PATH", "/usr/bin:/bin")
@@ -1339,7 +1353,9 @@ fn inside_codex_the_user_connects_codex() {
     std::fs::create_dir_all(project.join(".codex")).unwrap();
     let run = |args: &[&str]| {
         let mut c = Command::cargo_bin("okbase").unwrap();
+        // OKBASE_CONFIG_DIR: on Windows the install registry follows %APPDATA%, not HOME.
         c.env("HOME", &home)
+            .env("OKBASE_CONFIG_DIR", home.join(".config").join("okbase"))
             .env("XDG_CONFIG_HOME", home.join(".config"))
             .env("XDG_CACHE_HOME", home.join(".cache"))
             .env_remove("CODEX_HOME")
