@@ -106,9 +106,10 @@ pub fn init_files(root: &Path, o: &InitOptions) -> Result<Vec<(String, String)>,
         (
             "_meta/vocabulary.md".to_owned(),
             format!(
-                "---\ntype: Vocabulary\ntitle: Tag vocabulary\ndescription: Canonical tags for {} and their synonyms in {}.\nterms: {{}}\n---\n\nAdd a term per topic, with synonyms in every language people use, for example:\n\n```yaml\nterms:\n  refund:\n    synonyms: [returns, hoàn tiền, 返金]\n    facet: topic\n```\n",
+                "---\ntype: Vocabulary\ntitle: Tag vocabulary\ndescription: Canonical tags for {} and their synonyms in {}.\nterms: {{}}\n---\n\nAdd a term per topic, with synonyms in every language people use, for example:\n\n```yaml\nterms:\n  refund:\n    synonyms: [{}]\n    facet: topic\n```\n",
                 o.title,
-                langs.join(", ")
+                langs.join(", "),
+                example_synonyms(&langs)
             ),
         ),
         (
@@ -374,6 +375,22 @@ pub fn write_new(
     Ok(out)
 }
 
+/// Synonyms of "refund" in the bundle's languages, for the vocabulary example. Only those
+/// languages: text in another script would make the index fetch that language's dictionary.
+fn example_synonyms(langs: &[String]) -> String {
+    let word = |l: &str| match l {
+        "en" => Some("returns"),
+        "vi" => Some("hoàn tiền"),
+        "ja" => Some("返金"),
+        _ => None,
+    };
+    let mut out: Vec<&str> = langs.iter().filter_map(|l| word(l)).collect();
+    if out.is_empty() {
+        out.push("returns");
+    }
+    out.join(", ")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -398,6 +415,13 @@ mod tests {
         let toml = std::fs::read_to_string(root.join("okbase.toml")).unwrap();
         assert!(toml.parse::<toml_edit::DocumentMut>().is_ok(), "{toml}");
         assert!(toml.contains(r#"langs = ["vi", "en"]"#), "{toml}");
+        // The vocabulary example stays in the bundle's languages (no Japanese: that would fetch
+        // the Japanese dictionary for a vi/en bundle).
+        let vocab = std::fs::read_to_string(root.join("_meta/vocabulary.md")).unwrap();
+        assert!(
+            vocab.contains("[hoàn tiền, returns]") && !vocab.contains('返'),
+            "{vocab}"
+        );
         let doc = new_doc(
             root,
             &NewOptions {
