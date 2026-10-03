@@ -105,6 +105,11 @@ Copy its numbers into the pull request. If a case now passes, rebuild the baseli
 `python3 fixtures/eval/mine.py` and commit them. Re-run each issue's reproduction and keep the
 output for the pull request.
 
+For changes to `install.sh` or `install.ps1`, also run `shellcheck install.sh` and the installer
+itself (`OKBASE_INSTALL_DIR=<scratch dir> sh install.sh`). When a tool is not installed locally
+(`shellcheck`, `pwsh`), check what you can (`sh -n install.sh`), rely on CI for the rest, and say in
+the pull request what was not run and what a reviewer should check by hand.
+
 If a check fails and the cause is not in your diff, stop and open an issue for it; do not fix it in
 this group.
 
