@@ -201,10 +201,16 @@ mod tests {
     fn env_dir_depends_on_device_and_pins() {
         let root = Path::new("/c");
         assert_ne!(env_dir(root, true), env_dir(root, false));
+        let cpu = env_dir(root, false);
+        assert_eq!(
+            cpu.parent(),
+            Some(root.join("okbase").join("tune-env").as_path())
+        );
         assert!(
-            env_dir(root, false)
+            cpu.file_name()
+                .unwrap()
                 .to_string_lossy()
-                .starts_with("/c/okbase/tune-env/cpu-")
+                .starts_with("cpu-")
         );
         assert!(REQUIREMENTS.contains("sentence-transformers==6.1.0"));
         assert!(SCRIPT.contains("def export("));
