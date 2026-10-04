@@ -45,14 +45,31 @@ jobs:
       - run: cargo test --workspace --all-features --no-fail-fast
 
   full:
-    # The okbase-full build: local embeddings (ONNX Runtime) and fine-tuning.
-    runs-on: ubuntu-latest
+    # The okbase-full build (local embeddings with ONNX Runtime, fine-tuning) on the runners
+    # release.yml builds it on, so a link failure shows up here and not at release time. Keep the
+    # list in sync with release.yml.
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm, macos-14, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
-      - run: cargo build --release -p okbase-cli --features full
+      - run: cargo build --locked -p okbase-cli --features full
+      - name: glibc stays within what docs/usage.md and install.sh promise (2.39)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          need="$(objdump -T target/debug/okbase | grep -o 'GLIBC_[0-9.]*' | sort -uV | tail -n 1)"
+          echo "okbase-full needs $need"
+          if [ "$(printf '%s\n' "$need" GLIBC_2.39 | sort -V | tail -n 1)" != GLIBC_2.39 ]; then
+            echo "::error::okbase-full needs $need; docs/usage.md and install.sh say glibc 2.39"
+            exit 1
+          fi
       - run: cargo test -p okbase-embed -p okbase-search -p okbase --all-features
+        if: matrix.os == 'ubuntu-24.04'
 
   msrv:
     runs-on: ubuntu-latest
