@@ -5,6 +5,29 @@ All notable changes to okbase are listed here. The format follows
 [Semantic Versioning](https://semver.org/) (see docs/releasing.md for what counts as a
 breaking change). This file is generated from commit messages by git-cliff.
 
+## [0.2.0] - 2026-10-04
+
+### Features
+
+- **query:** graph API and okbase graph command (79012a0)
+- **web:** okbase view, a read-only web viewer (9ad3dec)
+
+### Bug fixes
+
+- **release:** build okbase-full where ONNX Runtime links (ce208df)
+- **release:** okbase-full needs glibc 2.39 on Linux (f6b2eeb)
+
+### Documentation
+
+- commit only the release files, never git commit -a (b549180)
+- check the glibc the Linux binaries need after a release (db70668)
+- okbase view and the graph API (8335311)
+
+### Continuous integration
+
+- build okbase-full on the release runners (bb46916)
+- check that the committed viewer build matches its sources (9350f18)
+
 ## [0.1.0] - 2026-10-04
 
 ### Features
