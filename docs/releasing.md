@@ -94,13 +94,16 @@ cargo check --workspace                     # updates Cargo.lock
 # 2. The changelog, reviewed by hand.
 git cliff --tag "v$V" -o CHANGELOG.md
 
-# 3. Commit, tag, push.
-git commit -am "chore(release): v$V"
+# 3. Commit only the release files, tag, push.
+git add Cargo.toml Cargo.lock CHANGELOG.md
+git status --short                          # nothing else staged
+git commit -m "chore(release): v$V"
 git tag -a "v$V" -m "okbase v$V"
 git push origin main "v$V"
 ```
 
-Check that `sed` changed only the intended lines (`git diff Cargo.toml`) before committing.
+Check that `sed` changed only the intended lines (`git diff Cargo.toml`) before committing. Never
+use `git commit -a` here: it would also commit unrelated local changes.
 
 The workflow then:
 1. checks that the tag equals the version and that `CHANGELOG.md` has its section;
