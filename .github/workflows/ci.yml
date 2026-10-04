@@ -71,6 +71,31 @@ jobs:
       - run: cargo test -p okbase-embed -p okbase-search -p okbase --all-features
         if: matrix.os == 'ubuntu-24.04'
 
+  web:
+    # The viewer (crates/okbase-web/web) is built ahead of time and its dist/ committed, so building
+    # okbase needs no Node. Check that the committed build matches the sources.
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: crates/okbase-web/web
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: crates/okbase-web/web/package-lock.json
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+      - name: dist/ is up to date
+        run: |
+          if [ -n "$(git status --porcelain -- dist)" ]; then
+            git status --porcelain -- dist
+            echo "::error::crates/okbase-web/web/dist is stale: run 'npm run build' there and commit dist/"
+            exit 1
+          fi
+
   msrv:
     runs-on: ubuntu-latest
     steps:
