@@ -51,7 +51,8 @@ search or fine-tuning. Neither build embeds language dictionaries or models: the
 on first use (see [Privacy](#privacy-what-leaves-the-machine)).
 
 Platforms: releases are built for Linux (x86_64, arm64; glibc 2.35+), macOS (Intel, Apple
-silicon) and Windows (x86_64); see [docs/releasing.md](releasing.md).
+silicon) and Windows (x86_64). okbase-full needs glibc 2.38+ on Linux and is not built for Intel
+Macs (ONNX Runtime has no prebuilt library for them); see [docs/releasing.md](releasing.md).
 
 ## Which setup?
 

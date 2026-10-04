@@ -61,9 +61,9 @@ Neither build embeds models or language dictionaries.
 
 | Target | Runner | Notes |
 |---|---|---|
-| `x86_64-unknown-linux-gnu` | ubuntu-22.04 | glibc 2.35 or newer |
-| `aarch64-unknown-linux-gnu` | ubuntu-22.04-arm | glibc 2.35 or newer |
-| `x86_64-apple-darwin` | macos-14 (cross-compiled) | Intel Macs |
+| `x86_64-unknown-linux-gnu` | ubuntu-22.04; okbase-full on ubuntu-24.04 | glibc 2.35 or newer; okbase-full 2.38 or newer |
+| `aarch64-unknown-linux-gnu` | ubuntu-22.04-arm; okbase-full on ubuntu-24.04-arm | glibc 2.35 or newer; okbase-full 2.38 or newer |
+| `x86_64-apple-darwin` | macos-14 (cross-compiled) | Intel Macs; okbase only (ONNX Runtime has no prebuilt library) |
 | `aarch64-apple-darwin` | macos-14 | Apple silicon |
 | `x86_64-pc-windows-msvc` | windows-latest | installed with `install.ps1` |
 
@@ -105,7 +105,7 @@ Check that `sed` changed only the intended lines (`git diff Cargo.toml`) before 
 The workflow then:
 1. checks that the tag equals the version and that `CHANGELOG.md` has its section;
 2. runs the tests;
-3. builds the ten archives;
+3. builds the nine archives (five okbase, four okbase-full);
 4. publishes the release with the notes and `SHA256SUMS`.
 
 `workflow_dispatch` with an existing tag rebuilds it as a draft release (for a failed run).

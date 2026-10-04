@@ -57,6 +57,19 @@ case "$(uname -m)" in
 esac
 target="$arch-$os"
 
+if [ "$VARIANT" = "okbase-full" ]; then
+  case "$target" in
+    x86_64-apple-darwin)
+      fail "okbase-full is not built for Intel Macs (ONNX Runtime has no prebuilt library for them); install okbase without --full" ;;
+    *-linux-gnu)
+      glibc="$(getconf GNU_LIBC_VERSION 2>/dev/null | awk '{print $2}')" || glibc=""
+      case "$glibc" in
+        2.[0-9]|2.[0-2][0-9]|2.3[0-7])
+          fail "okbase-full needs glibc 2.38 or newer (this system has $glibc); install okbase without --full" ;;
+      esac ;;
+  esac
+fi
+
 if [ "$VERSION" = "latest" ]; then
   url="$(final_url "https://github.com/$REPO/releases/latest")" || fail "cannot reach github.com"
   VERSION="${url##*/}"
