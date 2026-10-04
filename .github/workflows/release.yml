@@ -78,7 +78,8 @@ jobs:
           - { target: x86_64-apple-darwin, os: macos-14 }
           - { target: aarch64-apple-darwin, os: macos-14 }
           - { target: x86_64-pc-windows-msvc, os: windows-latest }
-          # okbase-full links ONNX Runtime's prebuilt library, which needs glibc 2.38 or newer.
+          # okbase-full links ONNX Runtime's prebuilt library, which needs glibc 2.38 or newer;
+          # built on ubuntu-24.04, okbase-full needs glibc 2.39 or newer.
           - { variant: okbase-full, target: x86_64-unknown-linux-gnu, os: ubuntu-24.04 }
           - { variant: okbase-full, target: aarch64-unknown-linux-gnu, os: ubuntu-24.04-arm }
         exclude:
@@ -176,7 +177,7 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/${{ github.repository }}/main/install.sh | sh -s -- --version ${{ needs.check.outputs.tag }}
           \`\`\`
 
-          Add \`--full\` for okbase-full (semantic search and fine-tuning; Linux with glibc 2.38+,
+          Add \`--full\` for okbase-full (semantic search and fine-tuning; Linux with glibc 2.39+,
           Apple silicon and Windows). Windows:
           \`irm https://raw.githubusercontent.com/${{ github.repository }}/main/install.ps1 | iex\`.
           Every archive is listed in \`SHA256SUMS\`.
