@@ -249,6 +249,17 @@ pub enum Command {
         /// Document id.
         id: String,
     },
+    /// Link graph of the documents: nodes, edges and broken-link counts.
+    #[command(
+        after_help = "Examples:\n  okbase graph --json\n  okbase graph --type Policy --limit 200 --json"
+    )]
+    Graph {
+        #[command(flatten)]
+        filter: FilterArgs,
+        /// Maximum documents, keeping the most linked ones [default: 2000].
+        #[arg(long)]
+        limit: Option<usize>,
+    },
     /// Check the bundle against the okbase levels (L0-L3). Exits with 4 when there are errors.
     Lint {
         /// Target level.

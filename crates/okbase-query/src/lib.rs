@@ -1,5 +1,5 @@
 //! Read APIs for okbase bundles: `grep`, `get`, `list`, `query`, `catalog`,
-//! `links`, `stats` and `recommend_mode`.
+//! `links`, `graph`, `stats` and `recommend_mode`.
 //!
 //! Every function takes a [`Scope`] from the host and treats hidden documents as
 //! if they did not exist. Results are plain serializable structs (the `--json`
@@ -10,6 +10,7 @@ mod catalog;
 mod docs;
 mod error;
 mod get;
+mod graph;
 mod grep;
 mod links;
 mod list;
@@ -22,6 +23,7 @@ use okbase_index::Index;
 pub use catalog::{CatalogOptions, CatalogResult, CatalogTerm, DEFAULT_CATALOG_TOKENS};
 pub use error::Error;
 pub use get::{DEFAULT_GET_TOKENS, GetRequest, GetResult};
+pub use graph::{DEFAULT_GRAPH_NODES, GraphEdge, GraphNode, GraphRequest, GraphResult};
 pub use grep::{GrepDoc, GrepLine, GrepRequest, GrepResult};
 pub use links::{LinkRow, LinksResult};
 pub use list::ListResult;
@@ -61,6 +63,11 @@ pub fn catalog(
 /// Outgoing links and backlinks of a document.
 pub fn links(index: &Index, id: &str, scope: &Scope) -> Result<LinksResult, Error> {
     links::links(index, id, scope)
+}
+
+/// The link graph of the visible documents.
+pub fn graph(index: &Index, req: &GraphRequest, scope: &Scope) -> Result<GraphResult, Error> {
+    graph::graph(index, req, scope)
 }
 
 /// Counts, tokens and the recommended mode for the visible part of the bundle.
