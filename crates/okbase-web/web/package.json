@@ -1,0 +1,23 @@
+{
+  "name": "okbase-viewer",
+  "private": true,
+  "version": "0.0.0",
+  "license": "MIT OR Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "graphology": "^0.26.0",
+    "graphology-layout-forceatlas2": "^0.10.1",
+    "rollup-plugin-license": "^3.7.1",
+    "sigma": "^3.0.3",
+    "svelte": "^5.57.1",
+    "svelte-check": "^4.0.0",
+    "typescript": "^5.9.0",
+    "vite": "^8.3.2"
+  }
+}

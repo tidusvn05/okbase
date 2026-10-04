@@ -1,0 +1,33 @@
+[package]
+name = "okbase-web"
+description = "Read-only web viewer for okbase bundles (okbase view)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+include = ["src/**", "build.rs", "web/dist/**", "Cargo.toml"]
+
+[lints]
+workspace = true
+
+[dependencies]
+okbase.workspace = true
+okbase-query.workspace = true
+okbase-mcp.workspace = true
+axum = { workspace = true, features = ["json", "query"] }
+http.workspace = true
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+pulldown-cmark = { workspace = true, features = ["html"] }
+thiserror.workspace = true
+
+[dev-dependencies]
+tower.workspace = true
+http-body-util.workspace = true

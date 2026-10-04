@@ -49,6 +49,7 @@ fn read_commands_text_snapshots() {
         acme(&["get", "metrics/revenue", "--section", "reporting cuts"])
     );
     insta::assert_snapshot!("cli_links", acme(&["links", "metrics/revenue"]));
+    insta::assert_snapshot!("cli_graph", acme(&["graph", "--under", "metrics/"]));
     let status = acme(&["status"]);
     assert!(
         status.contains("documents: 9")
@@ -1413,4 +1414,25 @@ fn inside_codex_the_user_connects_codex() {
             .iter()
             .all(|s| s["id"] != "agents-codex")
     );
+}
+
+#[test]
+fn graph_json_and_view_stays_on_loopback() {
+    let st = tempfile::tempdir().unwrap();
+    let g = json_of(okbase("okf-official/acme_retail", st.path()).args(["graph", "--limit", "4"]));
+    assert_eq!(g["nodes"].as_array().unwrap().len(), 4);
+    assert_eq!(g["truncated"], 5);
+    let hidden = json_of(okbase("okf-official/acme_retail", st.path()).args([
+        "--deny",
+        "metrics/**",
+        "graph",
+    ]));
+    assert!(!hidden.to_string().contains("\"metrics/"), "{hidden}");
+
+    let out = okbase("okf-official/acme_retail", st.path())
+        .args(["view", "0.0.0.0:0"])
+        .output()
+        .unwrap();
+    assert_eq!(out.status.code(), Some(1));
+    assert!(String::from_utf8_lossy(&out.stderr).contains("refusing to serve the viewer"));
 }
