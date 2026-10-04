@@ -58,5 +58,8 @@ It replays real agents' tool calls on `fixtures/` (seconds, no model) and exits 
 
 ## Layout
 - `crates/okbase-*` — see `docs/design.md` §4.3 for responsibilities and core vs. module split.
+- `crates/okbase-web/web/` — the `okbase view` web app (Svelte 5 + Vite). After changing it, run
+  `npm ci && npm run check && npm run build` there and commit `dist/` with the sources; `cargo build`
+  embeds `dist/` and never runs Node (CI fails when `dist/` is stale).
 - `fixtures/` — small test bundles with licenses/NOTICE (OKF official samples: Apache-2.0; OpenClaw docs: MIT).
 - `spikes/` — experiments; heavy caches and generated bundles are git-ignored.
