@@ -5,7 +5,7 @@ All notable changes to okbase are listed here. The format follows
 [Semantic Versioning](https://semver.org/) (see docs/releasing.md for what counts as a
 breaking change). This file is generated from commit messages by git-cliff.
 
-## [Unreleased]
+## [0.1.0] - 2026-10-04
 
 ### Features
 
@@ -47,6 +47,7 @@ breaking change). This file is generated from commit messages by git-cliff.
 - **eval:** okbase-eval lexical replays real agents' tool calls (a3f4ff5)
 - **convert:** export CCITT Group 4 scans as PNG (565455d)
 - **mcp:** answer rules as server instructions; smaller tool list (54c79a7)
+- **cli:** onboard ends with a report for the user (5e8e17d)
 
 ### Bug fixes
 
@@ -61,6 +62,8 @@ breaking change). This file is generated from commit messages by git-cliff.
 - keep LF line endings on checkout (Windows) (a463959)
 - **cli:** run on a 16 MB stack (Windows main thread overflowed) (c99c73c)
 - **skills:** compare Codex project paths loosely; Windows-safe test (cb2b76e)
+- **adopt:** init's vocabulary example uses only the bundle's languages (405df5c)
+- **install:** point to a source install when no release exists (e104076)
 
 ### Refactoring
 
@@ -91,6 +94,14 @@ breaking change). This file is generated from commit messages by git-cliff.
 - privacy, troubleshooting, FAQ, environment variables; fix stale facts (0c268fa)
 - **spikes:** S13 with Codex after the sandbox fix (548b958)
 - all documentation in English (708751d)
+- okbase everywhere; the name in AGENTS.md; experiment results in the README (6872742)
+- agent-first README: paste a prompt, the agent sets okbase up (38bed31)
+- a shorter README: tables and key points, details on other pages (9b5866f)
+- runbook for fixing open issues in batches (046d3ba)
+- **runbook:** verify installer changes; say which checks did not run (1dd793f)
+- runbook for merging pull requests and cutting releases (b4b4ba5)
+- **runbook:** gh commands that work on older gh versions (ff6c99e)
+- drop the pre-release note for the first release (22c841e)
 
 ### Build and packaging
 
