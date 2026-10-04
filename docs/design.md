@@ -159,7 +159,7 @@ okbase agent install --claude | --codex | --opencode | --print
 
 ```
    ┌────────────── Interfaces ─────────────────────────────────────────────────┐
-   │ CLI `okbase` (+ plugin `okbase-<x>`)   MCP (stdio/HTTP)   Rust API   Skills│
+   │ CLI `okbase` (+ plugin)   MCP (stdio/HTTP)   Web viewer   Rust API  Skills│
    └──────────┬─────────────────────────────┬──────────────────┬───────────────┘
               ▼                             ▼                  ▼
    ┌──────────────────────── Facade `okbase::Bundle` ───────────────────────────┐
@@ -168,7 +168,7 @@ okbase agent install --claude | --codex | --opencode | --print
    ┌──────────▼──────────── CORE (always on) ──────────────────────────────────┐
    │ core: parse/write round-trip, validate, links · standard: L0–L3, schema    │
    │ index: metadata, tags, links, aliases, chunks, FTS (analyzer vi/en/ja)     │
-   │ read: grep v2 · get · list · query(filter/facet/sum) · catalog · stats     │
+   │ read: grep v2 · get · list · query(filter/facet/sum) · catalog · graph     │
    │ maint: lint (rule engine) · adopt (heuristic) · index.md/log.md/vocabulary │
    └───────┬───────────────┬──────────────┬───────────────┬────────────────────┘
    ┌───────▼─────┐ ┌───────▼──────┐ ┌─────▼───────┐ ┌─────▼──────────────────┐
@@ -188,7 +188,7 @@ okbase agent install --claude | --codex | --opencode | --print
 | `okbase-standard` | core | Levels L0–L3, type schemas (`_meta/types`), tag vocabulary, mapping of foreign frontmatter (summary→description…) |
 | `okbase-analyze` | core | Analyzer trait: NFKC, Vietnamese diacritic folding, lindera (ja, default-on feature), English stemming, language detection |
 | `okbase-index` | core | SQLite schema, incremental indexer, chunker, catalog, facets, index.md/log.md generation |
-| `okbase-query` | core | `grep` v2, `get`, `list`, `query`, `catalog`, `stats`, `recommend_mode` |
+| `okbase-query` | core | `grep` v2, `get`, `list`, `query`, `catalog`, `links`, `graph`, `stats`, `recommend_mode` |
 | `okbase-lint` | core | Rule engine + standard rules (L0–L3); `LintRule` trait |
 | `okbase-adopt` | core | Site detection, mapping, title/description/type heuristics, file splitting, plan/diff |
 | `okbase-data` | `data` module | Dataset → SQLite (DuckDB as a sub-feature), `data.query` with safety limits, schema doc |
@@ -197,6 +197,7 @@ okbase agent install --claude | --codex | --opencode | --print
 | `okbase-import` | `import-*` module | Converter trait + pdf/docx/html/xlsx/csv |
 | `okbase-source` | `source-*` module | Source trait + fs/gdrive/gsheets/notion |
 | `okbase-mcp` | core (stdio) / `http` module | Capability-based tool registry, rmcp; `router()` for hosts to embed |
+| `okbase-web` | core | `okbase view`: read-only web viewer (axum router + embedded Svelte app); `router()` for hosts to embed |
 | `okbase-skills` | core | Skills and instructions embedded in the binary; `agent install` for claude/codex/opencode |
 | `okbase-bridge` | `agent-bridge` module | Calls CLI agents (via agent-core) for adopt/curate/eval |
 | `okbase-eval` | `eval` module | Runs question sets (retrieval or agent), scores, reports cost and latency (from spikes) |
@@ -604,3 +605,4 @@ fields:
 | 2026-10-03 | Language resources (the Japanese IPADIC dictionary now, others later) are external: downloaded on first use into the user cache, or installed ahead of time with `okbase dict install`; no build embeds them, `okbase-full` included. Feature `ja-embedded` stays only for custom builds that must work offline from a single file. | Maintainer decision: with more languages, embedding every dictionary would not scale. |
 | 2026-10-03 | `embed enable --api-url` needs `--send-documents` (a new consent: every chunk and query goes to that service). `embed enable` refuses a module the build lacks before writing `okbase.toml`. | Readiness audit: the API path sent documents out without the user being asked. |
 | 2026-10-03 | Inside Codex (`CODEX_THREAD_ID`), connecting Codex is a step for the user: Codex's sandbox keeps `.codex/` read-only, so `agent install --codex` stops before writing with `sandbox_blocked` (exit 3) and the command to run in the user's terminal. `CODEX_HOME` is honoured. | S13 with Codex: 12/12 runs hit the read-only `.codex/` and improvised. |
+| 2026-10-04 | `okbase view` serves a read-only web viewer (crate `okbase-web`, [plan](plans/web-view.md)) on 127.0.0.1:7332 and refuses other addresses (no authentication). The Svelte app is built ahead of time and committed (`web/dist/`), so building okbase needs no Node. A new read API `graph` (`okbase graph --json`) returns the scoped link graph. | People maintaining a bundle need to see its links, gaps and lint findings; agents keep using the MCP tools. |
