@@ -307,6 +307,24 @@ drafts/
 !drafts/approved.md
 ```
 
+### Seeing the bundle in a browser
+
+```sh
+okbase -b knowledge view --open                    # http://127.0.0.1:7332
+okbase -b knowledge view --deny 'internal/**'      # what a restricted reader sees
+```
+
+`okbase view` is a read-only web viewer:
+- **Overview**: counts, broken links, the OKF level, and the lint report grouped by rule.
+- **Graph**: how documents link to each other, colored by type. Filter it by type, tag or path,
+  and hover over a document to see its neighbours.
+- **Document**: the rendered document with its frontmatter, links and backlinks.
+- **Search**: the same search as `okbase grep`, with filters by type, tag, status and language.
+
+It picks up edits within seconds; reload the page to see them. It serves only on loopback
+addresses because it has no login. To share it, mount `okbase_web::router` in your own server
+behind your authentication.
+
 ### Keep a bundle healthy in CI
 
 ```yaml
@@ -420,6 +438,9 @@ okbase has no telemetry and never phones home. These are the only network uses, 
 | Embeddings API | only after `embed enable --api-url … --send-documents` | **every document chunk and search query** goes to that service | use a local model |
 | Training environment | `okbase embed tune setup --yes` | packages from PyPI and the PyTorch index | do not fine-tune |
 | ONNX Runtime | when building `okbase-full` | the `ort` crate downloads its binaries | use the default build |
+
+`okbase view` serves only on a loopback address and its pages load nothing from other hosts:
+images linked from other websites are shown as links.
 
 What your agent reads through okbase's tools (search results, documents, page images for OCR,
 passages for tune questions) goes to the agent's model provider, as with any file the agent opens.
@@ -535,11 +556,13 @@ okbase lint --level L2            # quality
 okbase grep 'pattern' -l          # find documents
 okbase query --tag x --facet type # filter and count
 okbase get <id> -s "Section"      # read
+okbase view --open                # browse it: link graph, documents, search, lint
 okbase modules                    # which optional modules this build has
 ```
 
 Less frequent commands (each has `--help`):
 - `okbase index`: update the index.
+- `okbase graph --json`: the link graph (documents, links, broken-link counts).
 - `okbase dict status` / `dict install`: the Japanese dictionary.
 - `okbase embed status` / `embed eval` / `embed models`: semantic search and its models.
 - `okbase embed tune status` / `tune runs` / `tune import`: fine-tuning runs.

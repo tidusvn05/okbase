@@ -22,7 +22,9 @@ breaks it.
 
 **Not public:**
 - the on-disk index and caches (okbase rebuilds them when their schema changes);
-- internal crates' APIs, until they are published on crates.io.
+- internal crates' APIs, until they are published on crates.io;
+- the HTTP API under `/api/` that the `okbase view` web app uses (its bodies are the `--json`
+  structs, but routes and parameters follow the embedded app).
 
 Changing a default (search mode, ranking, chunk size, tool descriptions, skill text) needs eval
 data (AGENTS.md) and is called out in the release notes even when it is not breaking.

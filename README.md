@@ -62,6 +62,7 @@ Each download is checked against the release's `SHA256SUMS`. More: [install, upd
 |---|---|
 | **Reads** | OKF bundles, plain markdown (docs sites, wikis, Obsidian), PDF, Word, PowerPoint, HTML; scans are handed to the agent to transcribe |
 | **Agent tools** | MCP and CLI: `kb_grep`, `kb_query` (metadata, counts), `kb_get`, `kb_catalog`, `data_query` (SQL over CSV/XLSX), optional `kb_search` |
+| **Shows it** | `okbase view`: a local web viewer with the link graph, rendered documents, search with facets, and the lint report |
 | **Organizes** | `adopt` plain markdown into OKF, `lint` levels L0–L3, `init` and `new` for new knowledge bases |
 | **Sets itself up** | `onboard` plans the setup for an agent; `doctor` checks it; skills for Claude Code and Codex |
 | **Stays safe** | read-only unless you pass a write flag; no telemetry; the host decides who sees what (`Scope`) |
