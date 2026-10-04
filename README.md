@@ -10,8 +10,7 @@ Give Claude Code, Codex or any MCP client a folder of markdown, and get accurate
 in any language. okbase reads [Open Knowledge Format](https://github.com/GoogleCloudPlatform/open-knowledge-format)
 bundles, docs sites, wikis and PDFs; it is written in Rust and is read-only by default.
 
-> **Pre-release:** the first release (0.1.0) is being prepared. okbase is a community project, not
-> affiliated with Google.
+> okbase is a community project, not affiliated with Google.
 
 ## Get started: paste this to your agent
 
