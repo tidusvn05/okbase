@@ -64,8 +64,8 @@ if [ "$VARIANT" = "okbase-full" ]; then
     *-linux-gnu)
       glibc="$(getconf GNU_LIBC_VERSION 2>/dev/null | awk '{print $2}')" || glibc=""
       case "$glibc" in
-        2.[0-9]|2.[0-2][0-9]|2.3[0-7])
-          fail "okbase-full needs glibc 2.38 or newer (this system has $glibc); install okbase without --full" ;;
+        2.[0-9]|2.[0-2][0-9]|2.3[0-8])
+          fail "okbase-full needs glibc 2.39 or newer (this system has $glibc); install okbase without --full" ;;
       esac ;;
   esac
 fi
