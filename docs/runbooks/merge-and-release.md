@@ -167,7 +167,9 @@ cargo check --workspace
 git diff Cargo.toml                         # only the version lines changed
 git cliff --tag "v$V" -o CHANGELOG.md
 git diff CHANGELOG.md                       # read it: one section for v$V, user-facing entries
-git commit -am "chore(release): v$V"
+git add Cargo.toml Cargo.lock CHANGELOG.md  # never `git commit -a`: it sweeps in local changes
+git status --short                          # nothing else staged
+git commit -m "chore(release): v$V"
 git tag -a "v$V" -m "okbase v$V"
 git push origin main "v$V"
 ```
@@ -198,7 +200,8 @@ curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | 
 
 - Windows (`install.ps1`) needs a Windows machine: if you have none, say so in the report.
 - Set the next development version (`X.Y.(Z+1)-dev`) with the same two `sed` lines and
-  `cargo check --workspace`, commit `chore(release): X.Y.(Z+1)-dev`, push to `main`.
+  `cargo check --workspace`, then `git add Cargo.toml Cargo.lock`, commit
+  `chore(release): X.Y.(Z+1)-dev`, push to `main`.
 - On each issue closed by a pull request in this release, comment `Released in vX.Y.Z.` with the
   release link.
 
