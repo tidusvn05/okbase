@@ -48,8 +48,9 @@ pub use okbase_index::{
 };
 pub use okbase_lint::{Level, LintConfig, Report as LintReport};
 pub use okbase_query::{
-    CatalogOptions, CatalogResult, Filter, GetRequest, GetResult, GrepRequest, GrepResult,
-    LinksResult, ListResult, MetaFilter, Mode, QueryRequest, QueryResult, Range, Scope, Stats,
+    CatalogOptions, CatalogResult, Filter, GetRequest, GetResult, GraphEdge, GraphNode,
+    GraphRequest, GraphResult, GrepRequest, GrepResult, LinksResult, ListResult, MetaFilter, Mode,
+    QueryRequest, QueryResult, Range, Scope, Stats,
 };
 pub use okbase_search::{
     DEFAULT_BUDGET, EmbedStatus, Hit, RetrieveResult, SearchRequest, SearchResult,
@@ -506,6 +507,11 @@ impl Bundle {
     /// Links and backlinks of a document.
     pub fn links(&self, id: &str, scope: &Scope) -> Result<LinksResult, Error> {
         Ok(okbase_query::links(&self.index(), id, scope)?)
+    }
+
+    /// The link graph of the visible documents.
+    pub fn graph(&self, req: &GraphRequest, scope: &Scope) -> Result<GraphResult, Error> {
+        Ok(okbase_query::graph(&self.index(), req, scope)?)
     }
 
     /// Source documents with pages that still need a transcription (`okbase import ocr-next`).

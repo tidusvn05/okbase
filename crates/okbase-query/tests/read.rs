@@ -485,3 +485,68 @@ fn multilingual_grep_and_catalog() {
     assert_eq!(cat.mode, "flat");
     assert_eq!(recommend_mode(&idx, &all).unwrap(), Mode::Full);
 }
+
+#[test]
+fn graph_respects_scope_filter_and_limit() {
+    let idx = indexed("okf-official/acme_retail");
+    let all = graph(&idx, &GraphRequest::default(), &Scope::all()).unwrap();
+    assert_eq!(
+        (all.nodes.len(), all.edges.len(), all.truncated),
+        (9, 14, 0)
+    );
+    // Edges agree with `links`.
+    let l = links(&idx, "metrics/gross-margin", &Scope::all()).unwrap();
+    let mut targets: Vec<&str> = l.outgoing.iter().filter_map(|r| r.id.as_deref()).collect();
+    targets.sort_unstable();
+    targets.dedup();
+    let from: Vec<&str> = all
+        .edges
+        .iter()
+        .filter(|e| e.src == "metrics/gross-margin")
+        .map(|e| e.target.as_str())
+        .collect();
+    assert_eq!(from, targets);
+
+    // Hidden documents disappear as nodes and as edge ends, and are not counted as broken.
+    let scope = Scope::all().deny("computations/**").unwrap();
+    let g = graph(&idx, &GraphRequest::default(), &scope).unwrap();
+    assert!(g.nodes.iter().all(|n| !n.id.starts_with("computations/")));
+    assert!(
+        g.edges
+            .iter()
+            .all(|e| !e.src.starts_with("computations/") && !e.target.starts_with("computations/"))
+    );
+    assert!(g.nodes.iter().all(|n| n.broken == 0));
+
+    let metrics = GraphRequest {
+        filter: Some(Filter {
+            path: Some("metrics/".into()),
+            ..Default::default()
+        }),
+        ..Default::default()
+    };
+    let g = graph(&idx, &metrics, &Scope::all()).unwrap();
+    assert!(g.nodes.iter().all(|n| n.id.starts_with("metrics/")));
+    assert!(g.edges.iter().all(|e| e.target.starts_with("metrics/")));
+
+    let top = graph(
+        &idx,
+        &GraphRequest {
+            limit: Some(3),
+            ..Default::default()
+        },
+        &Scope::all(),
+    )
+    .unwrap();
+    assert_eq!((top.nodes.len(), top.truncated), (3, 6));
+    assert!(top.nodes.iter().any(|n| n.id == "metrics/gross-margin"));
+}
+
+#[test]
+fn graph_counts_broken_links() {
+    let idx = indexed("lint/l3");
+    let g = graph(&idx, &GraphRequest::default(), &Scope::all()).unwrap();
+    let n = g.nodes.iter().find(|n| n.id == "broken-link").unwrap();
+    assert!(n.broken >= 2, "{n:?}");
+    assert!(g.edges.is_empty());
+}

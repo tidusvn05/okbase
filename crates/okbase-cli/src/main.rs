@@ -838,6 +838,14 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 s
             })?;
         }
+        Command::Graph { filter, limit } => {
+            let req = okbase::GraphRequest {
+                filter: filter.to_filter()?,
+                limit,
+            };
+            let r = open()?.graph(&req, &scope()?)?;
+            emit(json, &r, || r.to_text())?;
+        }
         Command::Lint {
             level,
             format,
