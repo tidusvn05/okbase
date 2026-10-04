@@ -117,6 +117,8 @@ After the workflow:
 - [ ] Install with the README command on Linux or macOS, and with `install.ps1` on Windows.
 - [ ] `okbase --version` shows the new version.
 - [ ] `okbase doctor` is ok on a fixture bundle.
+- [ ] The Linux binaries need no newer glibc than the table above says (2.35, okbase-full 2.39):
+      `objdump -T okbase | grep -o 'GLIBC_[0-9.]*' | sort -uV | tail -n 1` on each Linux archive.
 - [ ] Set the version back to the next `-dev` (`0.1.1-dev`) in a `chore(release)` commit.
 
 ## Fixes to a release

@@ -196,7 +196,18 @@ d=$(mktemp -d)
 curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | OKBASE_INSTALL_DIR="$d" sh
 "$d/okbase" --version                        # okbase X.Y.Z
 (cd fixtures/okf-official && "$d/okbase" doctor)
+
+# The newest glibc each Linux binary needs: okbase at most 2.35, okbase-full at most 2.39
+# (docs/usage.md and install.sh promise these). objdump reads both architectures.
+for a in x86_64 aarch64; do for v in okbase okbase-full; do
+  n="$v-v$V-$a-unknown-linux-gnu"
+  gh release download "v$V" -p "$n.tar.gz" -D "$d" && tar -xzf "$d/$n.tar.gz" -C "$d"
+  echo "$n: $(objdump -T "$d/$n/okbase" | grep -o 'GLIBC_[0-9.]*' | sort -uV | tail -n 1)"
+done; done
 ```
+
+If a binary needs a newer glibc than promised, fix forward: correct `docs/usage.md`,
+`docs/releasing.md` and the check in `install.sh` in a pull request, and edit the release notes.
 
 - Windows (`install.ps1`) needs a Windows machine: if you have none, say so in the report.
 - Set the next development version (`X.Y.(Z+1)-dev`) with the same two `sed` lines and
