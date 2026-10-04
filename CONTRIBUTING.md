@@ -4,6 +4,7 @@ Thanks for your interest! okbase is dual-licensed under MIT OR Apache-2.0. Unles
 
 ## Before you start
 - Read `AGENTS.md` (hard rules and conventions) and `docs/design.md` (design); releases follow `docs/releasing.md`.
+- Agents that hit a problem or see an improvement while using okbase in another project file it with the Markdown template [`agent-report.md`](.github/ISSUE_TEMPLATE/agent-report.md) (the issue forms only work in the browser, and `gh issue create --template` only in an interactive terminal). Fetch it, fill it in, then: `gh issue create -R tidusvn05/okbase --title "[agent] …" --label bug --body-file report.md` (or `--label enhancement`).
 - For larger changes (file format, public API, defaults, tool/skill wording), open an issue first. Changes to defaults need evaluation numbers. See `spikes/` for how earlier decisions were measured.
 
 ## Development
