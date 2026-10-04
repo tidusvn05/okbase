@@ -46,7 +46,7 @@ pub use okbase_embed::{
 pub use okbase_index::{
     BUNDLE_STATE_DIR, IndexOptions, StateDir, SyncStats, cache_dir as bundle_cache_dir,
 };
-pub use okbase_lint::{Level, LintConfig, Report as LintReport};
+pub use okbase_lint::{Level, LintConfig, Report as LintReport, Severity};
 pub use okbase_query::{
     CatalogOptions, CatalogResult, Filter, GetRequest, GetResult, GraphEdge, GraphNode,
     GraphRequest, GraphResult, GrepRequest, GrepResult, LinksResult, ListResult, MetaFilter, Mode,

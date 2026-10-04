@@ -24,6 +24,7 @@ doc = false
 [dependencies]
 okbase.workspace = true
 okbase-mcp.workspace = true
+okbase-web.workspace = true
 okbase-skills.workspace = true
 okbase-lint.workspace = true
 okbase-adopt.workspace = true

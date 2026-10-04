@@ -350,6 +350,21 @@ pub enum Command {
         #[command(subcommand)]
         command: McpCmd,
     },
+    /// Browse the bundle in a web browser: link graph, documents, search and lint (read-only).
+    #[command(
+        after_help = "Examples:\n  okbase view --open                     # http://127.0.0.1:7332\n  okbase -b ./kb view --deny 'internal/**' 127.0.0.1:8080"
+    )]
+    View {
+        /// Address to serve on (loopback only: the viewer has no authentication).
+        #[arg(value_name = "ADDR", default_value = "127.0.0.1:7332")]
+        addr: std::net::SocketAddr,
+        /// Open the viewer in the default browser.
+        #[arg(long)]
+        open: bool,
+        /// Accept this Host header (repeatable; loopback hosts are always accepted).
+        #[arg(long, value_name = "HOST")]
+        allow_host: Vec<String>,
+    },
     /// Set up agent CLIs (Claude Code, Codex) to use this bundle.
     Agent {
         #[command(subcommand)]

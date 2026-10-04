@@ -1371,6 +1371,27 @@ location: {}
                 }
             }
         }
+        Command::View {
+            addr,
+            open: open_browser,
+            allow_host,
+        } => {
+            let b = open()?;
+            let scopes: Arc<dyn okbase_mcp::ScopeProvider> = Arc::new(scope()?);
+            let options = okbase_web::ViewOptions {
+                allowed_hosts: allow_host,
+            };
+            let rt = tokio::runtime::Builder::new_multi_thread()
+                .enable_all()
+                .build()?;
+            rt.block_on(okbase_web::serve(b, scopes, &options, addr, |local| {
+                let url = format!("http://{local}/");
+                eprintln!("okbase viewer on {url} (Ctrl-C to stop)");
+                if open_browser {
+                    open_url(&url);
+                }
+            }))?;
+        }
         Command::Agent { command } => {
             let home = std::env::var_os("HOME")
                 .or_else(|| std::env::var_os("USERPROFILE"))
@@ -1915,6 +1936,28 @@ fn abs(p: &Path) -> PathBuf {
 }
 
 /// Prints JSON (pretty) or the text form.
+/// Opens `url` in the default browser; prints a note when that fails.
+fn open_url(url: &str) {
+    let mut cmd = if cfg!(target_os = "macos") {
+        std::process::Command::new("open")
+    } else if cfg!(windows) {
+        let mut c = std::process::Command::new("cmd");
+        c.args(["/C", "start", ""]);
+        c
+    } else {
+        std::process::Command::new("xdg-open")
+    };
+    let ok = cmd
+        .arg(url)
+        .stdout(std::process::Stdio::null())
+        .stderr(std::process::Stdio::null())
+        .spawn()
+        .is_ok();
+    if !ok {
+        eprintln!("could not open a browser; visit {url}");
+    }
+}
+
 fn emit<T: Serialize>(json: bool, value: &T, text: impl FnOnce() -> String) -> Result<()> {
     let mut out = std::io::stdout().lock();
     if json {

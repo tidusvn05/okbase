@@ -36,6 +36,7 @@ okbase-mcp = { path = "crates/okbase-mcp", version = "0.1.1-dev" }
 okbase-skills = { path = "crates/okbase-skills", version = "0.1.1-dev" }
 okbase-tune = { path = "crates/okbase-tune", version = "0.1.1-dev" }
 okbase-convert = { path = "crates/okbase-convert", version = "0.1.1-dev" }
+okbase-web = { path = "crates/okbase-web", version = "0.1.1-dev" }
 okbase = { path = "crates/okbase", version = "0.1.1-dev" }
 thiserror = "2"
 serde = { version = "1", features = ["derive"] }
@@ -62,6 +63,8 @@ tempfile = "3"
 rmcp = { version = "~3.5", default-features = false, features = ["server", "transport-io"] }
 axum = { version = "0.8", default-features = false, features = ["tokio", "http1"] }
 http = "1"
+tower = { version = "0.5", default-features = false, features = ["util"] }
+http-body-util = "0.1"
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "io-std", "sync", "net", "signal"] }
 schemars = "1"
 toml_edit = "0.25"
