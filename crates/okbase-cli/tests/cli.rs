@@ -1526,3 +1526,32 @@ fn json_usage_error_exception_matches_agent_contract() {
             .contains("plain-text usage errors on stderr and empty stdout, even with `--json`")
     );
 }
+
+#[test]
+fn removal_guidance_covers_script_installations() {
+    let tmp = tempfile::tempdir().unwrap();
+    let install = tmp.path().join("script install");
+    std::fs::create_dir(&install).unwrap();
+    let exe = install.join(if cfg!(windows) {
+        "okbase.exe"
+    } else {
+        "okbase"
+    });
+    std::fs::copy(assert_cmd::cargo::cargo_bin("okbase"), &exe).unwrap();
+    let r = json_of(Command::new(&exe).args(["onboard", "--goal", "remove"]));
+    let step = r["steps"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|s| s["id"] == "remove-binary")
+        .unwrap();
+    let message = step["question"].as_str().unwrap();
+    assert!(
+        message.contains(&exe.canonicalize().unwrap().display().to_string()),
+        "{message}"
+    );
+    assert!(message.contains("If installed with install.sh or install.ps1, delete"));
+    assert!(message.contains("If installed with Cargo, run: cargo uninstall okbase-cli"));
+    assert_eq!(step["kind"], "tell");
+    assert!(exe.exists(), "planning removal must not delete the program");
+}

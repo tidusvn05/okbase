@@ -220,7 +220,15 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
             "remove-binary",
             "Remove the program",
             "the agent should not uninstall software on its own",
-            "To remove the program itself, run: cargo uninstall okbase-cli".into(),
+            format!(
+                "If installed with install.sh or install.ps1, delete this executable: {}. \
+                 If installed with Cargo, run: cargo uninstall okbase-cli. \
+                 If installed with a package manager, use its uninstall command.",
+                std::env::current_exe().map_or_else(
+                    |_| "the okbase binary in your installation directory".into(),
+                    |p| p.display().to_string(),
+                ),
+            ),
         ));
         return Plan {
             bundle: st.bundle.clone(),
