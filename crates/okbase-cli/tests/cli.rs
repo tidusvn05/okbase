@@ -1436,3 +1436,62 @@ fn graph_json_and_view_stays_on_loopback() {
     assert_eq!(out.status.code(), Some(1));
     assert!(String::from_utf8_lossy(&out.stderr).contains("refusing to serve the viewer"));
 }
+
+#[test]
+fn doctor_explains_invalid_state_directory() {
+    let tmp = tempfile::tempdir().unwrap();
+    let bundle = tmp.path().join("bundle");
+    std::fs::create_dir(&bundle).unwrap();
+    let state = tmp.path().join("state-file");
+    std::fs::write(&state, "not a directory").unwrap();
+    let out = Command::cargo_bin("okbase")
+        .unwrap()
+        .arg("-b")
+        .arg(&bundle)
+        .arg("--state-dir")
+        .arg(&state)
+        .args(["doctor", "--json"])
+        .output()
+        .unwrap();
+    assert_eq!(out.status.code(), Some(4));
+    let r: Value = serde_json::from_slice(&out.stdout).unwrap();
+    assert_eq!(r["ok"], false);
+    assert!(
+        r["checks"]
+            .to_string()
+            .contains(&state.display().to_string()),
+        "{r}"
+    );
+    assert!(r["next"].to_string().contains("--state-dir"), "{r}");
+}
+
+#[test]
+fn empty_bundle_needs_initialization() {
+    let tmp = tempfile::tempdir().unwrap();
+    let bundle = tmp.path().join("bundle");
+    std::fs::create_dir(&bundle).unwrap();
+    for args in [
+        vec!["doctor", "--json"],
+        vec!["lint", "--level", "L2", "--json"],
+    ] {
+        let out = Command::cargo_bin("okbase")
+            .unwrap()
+            .arg("-b")
+            .arg(&bundle)
+            .arg("--state-dir")
+            .arg(tmp.path().join("state"))
+            .args(&args)
+            .output()
+            .unwrap();
+        assert_eq!(out.status.code(), Some(4), "{out:?}");
+        let r: Value = serde_json::from_slice(&out.stdout).unwrap();
+        if args[0] == "doctor" {
+            assert_eq!(r["ok"], false);
+            assert!(r["next"].to_string().contains("onboard"), "{r}");
+            assert!(!r["checks"].to_string().contains("level L2"), "{r}");
+        } else {
+            assert!(r["level"].is_null(), "{r}");
+            assert!(r["diagnostics"].to_string().contains("empty-bundle"), "{r}");
+        }
+    }
+}

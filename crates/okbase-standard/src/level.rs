@@ -159,6 +159,15 @@ pub fn assess_profile(
         check_l1(&mut out, doc);
         check_l2(&mut out, doc, vocab, &ids);
     }
+    if docs.is_empty() {
+        out.push(Finding {
+            path: ".".into(),
+            level: Level::L0,
+            code: "empty-bundle",
+            message: "the bundle has no markdown documents; run `okbase onboard` to initialize it"
+                .into(),
+        });
+    }
     for dir in dirs.into_iter().filter(|_| !content_index) {
         let index = if dir.is_empty() {
             "index".to_owned()

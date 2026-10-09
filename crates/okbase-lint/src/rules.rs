@@ -31,6 +31,10 @@ macro_rules! info {
 /// Every diagnostic code with its level and default severity.
 pub static CATALOG: &[RuleInfo] = &[
     info!(
+        "empty-bundle",
+        L0, Error, "The bundle has no markdown documents; run `okbase onboard`."
+    ),
+    info!(
         "missing-frontmatter",
         L0, Error, "A concept has no YAML frontmatter block."
     ),
