@@ -4,7 +4,7 @@ members = ["crates/*"]
 exclude = ["spikes"]
 
 [workspace.package]
-version = "0.2.1-dev"
+version = "0.2.1"
 edition = "2024"
 rust-version = "1.89"
 license = "MIT OR Apache-2.0"
@@ -22,22 +22,22 @@ missing_docs = "warn"
 all = { level = "warn", priority = -1 }
 
 [workspace.dependencies]
-okbase-core = { path = "crates/okbase-core", version = "0.2.1-dev" }
-okbase-standard = { path = "crates/okbase-standard", version = "0.2.1-dev" }
-okbase-analyze = { path = "crates/okbase-analyze", version = "0.2.1-dev" }
-okbase-index = { path = "crates/okbase-index", version = "0.2.1-dev" }
-okbase-query = { path = "crates/okbase-query", version = "0.2.1-dev" }
-okbase-lint = { path = "crates/okbase-lint", version = "0.2.1-dev" }
-okbase-adopt = { path = "crates/okbase-adopt", version = "0.2.1-dev" }
-okbase-search = { path = "crates/okbase-search", version = "0.2.1-dev" }
-okbase-embed = { path = "crates/okbase-embed", version = "0.2.1-dev" }
-okbase-data = { path = "crates/okbase-data", version = "0.2.1-dev" }
-okbase-mcp = { path = "crates/okbase-mcp", version = "0.2.1-dev" }
-okbase-skills = { path = "crates/okbase-skills", version = "0.2.1-dev" }
-okbase-tune = { path = "crates/okbase-tune", version = "0.2.1-dev" }
-okbase-convert = { path = "crates/okbase-convert", version = "0.2.1-dev" }
-okbase-web = { path = "crates/okbase-web", version = "0.2.1-dev" }
-okbase = { path = "crates/okbase", version = "0.2.1-dev" }
+okbase-core = { path = "crates/okbase-core", version = "0.2.1" }
+okbase-standard = { path = "crates/okbase-standard", version = "0.2.1" }
+okbase-analyze = { path = "crates/okbase-analyze", version = "0.2.1" }
+okbase-index = { path = "crates/okbase-index", version = "0.2.1" }
+okbase-query = { path = "crates/okbase-query", version = "0.2.1" }
+okbase-lint = { path = "crates/okbase-lint", version = "0.2.1" }
+okbase-adopt = { path = "crates/okbase-adopt", version = "0.2.1" }
+okbase-search = { path = "crates/okbase-search", version = "0.2.1" }
+okbase-embed = { path = "crates/okbase-embed", version = "0.2.1" }
+okbase-data = { path = "crates/okbase-data", version = "0.2.1" }
+okbase-mcp = { path = "crates/okbase-mcp", version = "0.2.1" }
+okbase-skills = { path = "crates/okbase-skills", version = "0.2.1" }
+okbase-tune = { path = "crates/okbase-tune", version = "0.2.1" }
+okbase-convert = { path = "crates/okbase-convert", version = "0.2.1" }
+okbase-web = { path = "crates/okbase-web", version = "0.2.1" }
+okbase = { path = "crates/okbase", version = "0.2.1" }
 thiserror = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["preserve_order"] }

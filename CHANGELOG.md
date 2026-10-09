@@ -5,6 +5,25 @@ All notable changes to okbase are listed here. The format follows
 [Semantic Versioning](https://semver.org/) (see docs/releasing.md for what counts as a
 breaking change). This file is generated from commit messages by git-cliff.
 
+## [0.2.1] - 2026-10-09
+
+### Bug fixes
+
+- **cli:** diagnose invalid state directories and empty bundles (a9475ad)
+- **query:** preserve matching lines in overlapping grep context (358759f)
+- **cli:** explain removal for script and Cargo installations (a31dca0)
+
+### Documentation
+
+- add an agent-report issue template agents can fill from the CLI (cf7a2b1)
+- **cli:** document usage errors outside the JSON contract (cba2fdd)
+
+### Other
+
+- **cli:** compare decoded diagnostic paths on Windows (06ee126)
+- **cli:** resolve equivalent executable paths across platforms (7af2e43)
+- **cli:** avoid writable executable copies in removal checks (996565b)
+
 ## [0.2.0] - 2026-10-04
 
 ### Features
