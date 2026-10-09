@@ -186,7 +186,7 @@ pub(crate) fn grep(
                     doc.lines.push(GrepLine {
                         line: n + 1,
                         text: l.chars().take(MAX_LINE_CHARS).collect(),
-                        hit: n == h,
+                        hit: hits.binary_search(&n).is_ok(),
                     });
                     shown += 1;
                     if shown >= limit {

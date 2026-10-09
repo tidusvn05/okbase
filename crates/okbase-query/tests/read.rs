@@ -550,3 +550,38 @@ fn graph_counts_broken_links() {
     assert!(n.broken >= 2, "{n:?}");
     assert!(g.edges.is_empty());
 }
+
+#[test]
+fn grep_overlapping_context_preserves_every_hit() {
+    let tmp = tempfile::tempdir().unwrap();
+    std::fs::write(tmp.path().join("releases.md"),
+        "before\nrelease approved by Lan\nRelease approved yesterday\nafter\nrelease tomorrow\nend\n").unwrap();
+    let mut idx = Index::open_in_memory(tmp.path()).unwrap();
+    idx.sync().unwrap();
+    for context in 0..=5 {
+        let r = grep(
+            &idx,
+            &GrepRequest {
+                pattern: "release".into(),
+                context,
+                limit: 100,
+                ..Default::default()
+            },
+            &Scope::all(),
+        )
+        .unwrap();
+        assert_eq!(r.total_lines, 3);
+        assert_eq!(
+            r.docs[0]
+                .lines
+                .iter()
+                .filter(|l| l.hit)
+                .map(|l| l.line)
+                .collect::<Vec<_>>(),
+            [2, 3, 5],
+            "context={context}"
+        );
+        let line_numbers: Vec<_> = r.docs[0].lines.iter().map(|l| l.line).collect();
+        assert!(line_numbers.windows(2).all(|w| w[0] < w[1]));
+    }
+}
