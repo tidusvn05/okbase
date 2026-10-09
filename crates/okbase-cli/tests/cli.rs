@@ -1546,9 +1546,15 @@ fn removal_guidance_covers_script_installations() {
         .find(|s| s["id"] == "remove-binary")
         .unwrap();
     let message = step["question"].as_str().unwrap();
-    assert!(
-        message.contains(&exe.canonicalize().unwrap().display().to_string()),
-        "{message}"
+    let reported = message
+        .strip_prefix("If installed with install.sh or install.ps1, delete this executable: ")
+        .unwrap()
+        .split_once(". If installed with Cargo,")
+        .unwrap()
+        .0;
+    assert_eq!(
+        Path::new(reported).canonicalize().unwrap(),
+        exe.canonicalize().unwrap()
     );
     assert!(message.contains("If installed with install.sh or install.ps1, delete"));
     assert!(message.contains("If installed with Cargo, run: cargo uninstall okbase-cli"));
