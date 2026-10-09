@@ -1498,3 +1498,31 @@ fn empty_bundle_needs_initialization() {
         }
     }
 }
+
+#[test]
+fn json_usage_error_exception_matches_agent_contract() {
+    let out = Command::cargo_bin("okbase")
+        .unwrap()
+        .args(["doctor", "--bogus", "--json"])
+        .output()
+        .unwrap();
+    assert_eq!(out.status.code(), Some(2));
+    assert!(out.stdout.is_empty());
+    let stderr = String::from_utf8(out.stderr).unwrap();
+    assert!(stderr.contains("unexpected argument '--bogus'"));
+    assert!(stderr.contains("Usage:"));
+    let guide = stdout(
+        Command::cargo_bin("okbase")
+            .unwrap()
+            .args(["help", "--agent"]),
+    );
+    assert!(guide.contains("invalid command lines exit 2 with plain-text usage errors on stderr and empty stdout, even with --json"));
+    let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+    let conventions =
+        std::fs::read_to_string(root.join("docs/conventions/end-user-and-agent-friendly-tools.md"))
+            .unwrap();
+    assert!(
+        conventions
+            .contains("plain-text usage errors on stderr and empty stdout, even with `--json`")
+    );
+}

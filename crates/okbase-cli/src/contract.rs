@@ -392,6 +392,7 @@ pub fn agent_guide(commands: &[(String, String)]) -> String {
          - Every command accepts --json. Read commands print the same JSON as the MCP tools; setup commands\n\
          \x20 print {\"changes\" or result fields, \"next\": [commands to run next]}.\n\
          - With --json, errors are printed to stdout as {\"error\": {code, message, hint, question, flag, next}}.\n\
+         \x20 Exception: invalid command lines exit 2 with plain-text usage errors on stderr and empty stdout, even with --json.\n\
          - No command waits for input. Commands that write, delete or download need an explicit flag.\n\n\
          ## Exit codes\n",
     );
