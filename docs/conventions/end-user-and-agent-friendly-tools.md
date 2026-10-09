@@ -74,7 +74,8 @@ operable by an agent from a single sentence.
 1. **Every command accepts `--json`.** Read commands keep a stable schema (in okbase: identical to the
    MCP tool output); setup commands return what they changed and `next` (commands to run next).
 2. **Errors are data.** With `--json`, errors are printed as `{"error": {code, message, hint, question,
-   flag, next}}` with a stable, documented `code`.
+   flag, next}}` with a stable, documented `code`. Invalid command lines are the exception:
+   they exit 2 with plain-text usage errors on stderr and empty stdout, even with `--json`.
 3. **Exit codes carry meaning:** 0 success, 1 error, 2 usage, **3 the user must agree first**,
    **4 the command worked and found problems** (lint errors, a rejected input, a failed gate).
 4. **Never wait for input.** No interactive prompts, ever; a test runs every command with stdin closed.
