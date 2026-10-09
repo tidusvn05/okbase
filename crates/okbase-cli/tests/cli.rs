@@ -1457,9 +1457,12 @@ fn doctor_explains_invalid_state_directory() {
     let r: Value = serde_json::from_slice(&out.stdout).unwrap();
     assert_eq!(r["ok"], false);
     assert!(
-        r["checks"]
-            .to_string()
-            .contains(&state.display().to_string()),
+        r["checks"].as_array().unwrap().iter().any(|c| {
+            c["message"]
+                .as_str()
+                .unwrap()
+                .contains(&state.display().to_string())
+        }),
         "{r}"
     );
     assert!(r["next"].to_string().contains("--state-dir"), "{r}");
