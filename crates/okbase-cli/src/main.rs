@@ -338,10 +338,41 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 return Ok(ExitCode::from(contract::EXIT_FINDINGS));
             }
             let bundle_abs = abs(&bundle_dir);
-            let b = Bundle::open(
+            let resolved_state = match state_dir.resolve(&bundle_dir) {
+                Ok(path) => path,
+                Err(e) => {
+                    let location = match &state_dir {
+                        StateDir::Path(path) => path.display().to_string(),
+                        _ => "the automatically selected state directory".into(),
+                    };
+                    checks.push(check(
+                        "state-dir",
+                        Status::Fail,
+                        format!("cannot use {location} as a state directory: {e}"),
+                        Some("okbase --state-dir <writable-directory> doctor"),
+                    ));
+                    let r = doctor::Report::new(checks);
+                    emit(json, &r, || r.to_text())?;
+                    return Ok(ExitCode::from(contract::EXIT_FINDINGS));
+                }
+            };
+            let b = match Bundle::open(
                 &bundle_dir,
-                OpenOptions::default().state_dir(state_dir.clone()),
-            )?;
+                OpenOptions::default().state_dir(StateDir::Path(resolved_state.clone())),
+            ) {
+                Ok(b) => b,
+                Err(e) => {
+                    checks.push(check(
+                        "index",
+                        Status::Fail,
+                        format!("cannot open the index in {}: {e}", resolved_state.display()),
+                        Some("okbase --state-dir <writable-directory> doctor"),
+                    ));
+                    let r = doctor::Report::new(checks);
+                    emit(json, &r, || r.to_text())?;
+                    return Ok(ExitCode::from(contract::EXIT_FINDINGS));
+                }
+            };
             let mut sync_skipped: Vec<(String, String)> = Vec::new();
             match b.sync() {
                 Ok(st) if st.skipped.is_empty() => {
@@ -373,6 +404,16 @@ fn run(cli: Cli) -> Result<ExitCode> {
             let advice = b.advise(&okbase::AdviseOptions::default(), &scope)?;
             let p = &advice.profile;
             checks.push(match p.level {
+                _ if p.docs == 0
+                    && okbase::scan::scan(&bundle_dir)?.kind == okbase::scan::FolderKind::Empty =>
+                {
+                    check(
+                        "level",
+                        Status::Fail,
+                        "the bundle has no documents; initialize it before checking readiness",
+                        Some("okbase onboard"),
+                    )
+                }
                 None => check(
                     "level",
                     Status::Warn,
