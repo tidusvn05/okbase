@@ -1529,7 +1529,9 @@ fn json_usage_error_exception_matches_agent_contract() {
 
 #[test]
 fn removal_guidance_covers_script_installations() {
-    let tmp = tempfile::tempdir().unwrap();
+    let binary = assert_cmd::cargo::cargo_bin("okbase");
+    // A hard link avoids writable executable handles inherited by concurrent test subprocesses.
+    let tmp = tempfile::tempdir_in(binary.parent().unwrap()).unwrap();
     let install = tmp.path().join("script install");
     std::fs::create_dir(&install).unwrap();
     let exe = install.join(if cfg!(windows) {
@@ -1537,7 +1539,7 @@ fn removal_guidance_covers_script_installations() {
     } else {
         "okbase"
     });
-    std::fs::copy(assert_cmd::cargo::cargo_bin("okbase"), &exe).unwrap();
+    std::fs::hard_link(&binary, &exe).unwrap();
     let r = json_of(Command::new(&exe).args(["onboard", "--goal", "remove"]));
     let step = r["steps"]
         .as_array()
