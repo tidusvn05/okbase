@@ -2252,7 +2252,7 @@ dependencies = [
 
 [[package]]
 name = "okbase"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "blake3",
  "okbase-analyze",
@@ -2275,7 +2275,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-adopt"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "insta",
  "okbase-analyze",
@@ -2292,7 +2292,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-analyze"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "flate2",
  "lindera",
@@ -2309,7 +2309,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-cli"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -2329,7 +2329,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-convert"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "anydoc",
  "crc32fast",
@@ -2345,7 +2345,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-core"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "ignore",
  "proptest",
@@ -2361,7 +2361,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-data"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "blake3",
  "calamine",
@@ -2378,7 +2378,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-embed"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "blake3",
  "fastembed",
@@ -2393,7 +2393,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-eval"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "okbase",
  "okbase-mcp",
@@ -2404,7 +2404,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-index"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "blake3",
  "okbase-analyze",
@@ -2420,7 +2420,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-lint"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "insta",
  "okbase-analyze",
@@ -2434,7 +2434,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-mcp"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "axum",
  "http",
@@ -2451,7 +2451,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-query"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "insta",
  "okbase-analyze",
@@ -2468,7 +2468,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-search"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "okbase-analyze",
  "okbase-embed",
@@ -2482,7 +2482,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-skills"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "insta",
  "serde",
@@ -2494,7 +2494,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-standard"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "okbase-core",
  "serde",
@@ -2504,7 +2504,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-tune"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "blake3",
  "okbase-analyze",
@@ -2520,7 +2520,7 @@ dependencies = [
 
 [[package]]
 name = "okbase-web"
-version = "0.2.1"
+version = "0.2.2-dev"
 dependencies = [
  "axum",
  "http",
