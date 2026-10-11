@@ -1616,3 +1616,57 @@ fn doctor_repairs_preserve_the_selected_bundle() {
         assert_eq!(agent["fix"], format!("okbase -b '{bundle}' agent install"));
     }
 }
+
+#[test]
+fn concurrent_cli_reads_share_one_index() {
+    let tmp = tempfile::tempdir().unwrap();
+    let bundle = tmp.path().join("bundle");
+    std::fs::create_dir_all(&bundle).unwrap();
+    for name in ["operations", "releases", "archive"] {
+        std::fs::write(
+            bundle.join(format!("{name}.md")),
+            format!("---\ntitle: {name}\ntags: [atlas]\n---\n# {name}\nAtlas release approval. See [[operations]].\n"),
+        ).unwrap();
+    }
+    let run = |args: &[&str]| {
+        let mut command = StdCommand::new(assert_cmd::cargo::cargo_bin("okbase"));
+        command
+            .current_dir(&bundle)
+            .env("OKBASE_OFFLINE", "1")
+            .env("OKBASE_CONFIG_DIR", tmp.path().join("config"))
+            .env("XDG_CACHE_HOME", tmp.path().join("cache"))
+            .args(args)
+            .stdin(Stdio::null())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped());
+        command
+    };
+    assert!(
+        run(&["catalog", "--json"])
+            .output()
+            .unwrap()
+            .status
+            .success()
+    );
+    for _ in 0..5 {
+        let children: Vec<_> = [
+            vec!["catalog", "--json"],
+            vec!["grep", "Atlas", "--json"],
+            vec!["grep", "release", "--json"],
+            vec!["grep", "approval", "--json"],
+        ]
+        .iter()
+        .map(|args| run(args).spawn().unwrap())
+        .collect();
+        for child in children {
+            let output = child.wait_with_output().unwrap();
+            assert!(
+                output.status.success(),
+                "stdout: {}; stderr: {}",
+                String::from_utf8_lossy(&output.stdout),
+                String::from_utf8_lossy(&output.stderr)
+            );
+            let _: Value = serde_json::from_slice(&output.stdout).unwrap();
+        }
+    }
+}

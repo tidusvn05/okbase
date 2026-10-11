@@ -462,6 +462,7 @@ That is why `onboard` asks you before OCR and before writing tune questions.
 | Japanese search is weaker offline | The dictionary is not installed yet: `okbase dict status`, then `okbase dict install` |
 | A PDF page has no text | It is a scan: `okbase import ocr-next` hands its image to an agent that reads images |
 | `lint` fails a CI job | It exits 4 when the bundle has errors; `okbase lint --level L1` is the usual first target |
+| `index_error` with `database is locked` | Another session is updating the index; retry after it finishes. Lock contention does not mean the index is corrupt |
 | Odd results after an upgrade | `okbase clean --index --yes`; the next command rebuilds the index |
 | Exit 141 after `okbase … \| head` | Normal: the pipe was closed early (128 + SIGPIPE) |
 

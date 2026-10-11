@@ -22,14 +22,14 @@ mod state;
 
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use std::time::UNIX_EPOCH;
+use std::time::{Duration, Instant, UNIX_EPOCH};
 
 use okbase_analyze::{Analyzer, fold};
 use okbase_core::{
     Concept, ConceptId, FrontmatterState, LinkKind, Value, discover, resolve_link, resolve_wikilink,
 };
 use okbase_standard::{VOCABULARY_PATH, Vocabulary, meta, normalize_tag};
-use rusqlite::{Connection, OptionalExtension, Transaction, params};
+use rusqlite::{Connection, OptionalExtension, Transaction, TransactionBehavior, params};
 
 pub use chunk::{Chunk, chunk_body};
 pub use error::Error;
@@ -40,6 +40,8 @@ pub use state::{BUNDLE_STATE_DIR, StateDir, cache_dir};
 
 /// File name of the index database inside the state directory.
 pub const DB_FILE: &str = "index.sqlite";
+
+const BUSY_TIMEOUT: Duration = Duration::from_secs(30);
 
 /// Identifies the analyzer; a change forces a rebuild of the full-text index.
 const ANALYZER_ID: &str = concat!("okbase-analyze/", env!("CARGO_PKG_VERSION"), "+stem+tok2");
@@ -118,10 +120,26 @@ impl Index {
         })?;
         let db_path = dir.join(DB_FILE);
         let conn = Connection::open(&db_path)?;
-        conn.pragma_update(None, "journal_mode", "WAL")?;
-        conn.pragma_update(None, "synchronous", "NORMAL")?;
         // Several processes (for example parallel MCP servers) may sync the same index.
-        conn.busy_timeout(std::time::Duration::from_secs(30))?;
+        conn.busy_timeout(BUSY_TIMEOUT)?;
+        // Switching a fresh database to WAL can return SQLITE_BUSY without invoking
+        // SQLite's busy handler. Retry that operation within the same timeout.
+        let deadline = Instant::now() + BUSY_TIMEOUT;
+        loop {
+            match conn.pragma_update(None, "journal_mode", "WAL") {
+                Err(rusqlite::Error::SqliteFailure(error, _))
+                    if error.code == rusqlite::ErrorCode::DatabaseBusy
+                        && Instant::now() < deadline =>
+                {
+                    std::thread::sleep(Duration::from_millis(10));
+                }
+                result => {
+                    result?;
+                    break;
+                }
+            }
+        }
+        conn.pragma_update(None, "synchronous", "NORMAL")?;
         Index::init(conn, root, Some(db_path), &opts.vocabulary)
     }
 
@@ -131,13 +149,17 @@ impl Index {
     }
 
     fn init(
-        conn: Connection,
+        mut conn: Connection,
         root: &Path,
         db_path: Option<PathBuf>,
         vocabulary: &str,
     ) -> Result<Self, Error> {
-        conn.pragma_update(None, "foreign_keys", true)?;
-        let current: Option<String> = conn
+        // Disable foreign keys before schema replacement; SQLite cannot toggle them
+        // inside a transaction (the bundled SQLite enables them by default).
+        conn.pragma_update(None, "foreign_keys", false)?;
+        // Schema inspection and rebuilding must share one writer lock, including first open.
+        let tx = conn.transaction_with_behavior(TransactionBehavior::Immediate)?;
+        let current: Option<String> = tx
             .query_row("SELECT value FROM meta WHERE key = 'schema'", [], |r| {
                 r.get(0)
             })
@@ -152,13 +174,15 @@ impl Index {
         let content_index = okbase_core::site::profile(root).content_index();
         let wanted = analyzer_identity(content_index);
         if current.as_deref() != Some(wanted.as_str()) {
-            drop_all(&conn)?;
-            conn.execute_batch(schema::CREATE)?;
-            conn.execute(
+            drop_all(&tx)?;
+            tx.execute_batch(schema::CREATE)?;
+            tx.execute(
                 "INSERT INTO meta(key, value) VALUES ('schema', ?1)",
                 [&wanted],
             )?;
         }
+        tx.commit()?;
+        conn.pragma_update(None, "foreign_keys", true)?;
         Ok(Index {
             conn,
             root: root.to_owned(),
@@ -272,7 +296,11 @@ impl Index {
         let vocab = Vocabulary::load(&self.root, &self.vocabulary)
             .ok()
             .flatten();
-        let tx = self.conn.transaction()?;
+        // Wait for the writer before reading inside the transaction: a deferred
+        // read-to-write upgrade can return SQLITE_BUSY without honoring the timeout.
+        let tx = self
+            .conn
+            .transaction_with_behavior(TransactionBehavior::Immediate)?;
         for item in prepared {
             match item {
                 Prepared::Failed { path, reason } => {
@@ -340,12 +368,22 @@ impl Index {
         )?;
         tx.commit()?;
         if rebuild {
-            drop_all(&self.conn)?;
-            self.conn.execute_batch(schema::CREATE)?;
-            self.conn.execute(
-                "INSERT INTO meta(key, value) VALUES ('schema', ?1)",
-                [&identity],
-            )?;
+            self.conn.pragma_update(None, "foreign_keys", false)?;
+            let result = (|| {
+                let tx = self
+                    .conn
+                    .transaction_with_behavior(TransactionBehavior::Immediate)?;
+                drop_all(&tx)?;
+                tx.execute_batch(schema::CREATE)?;
+                tx.execute(
+                    "INSERT INTO meta(key, value) VALUES ('schema', ?1)",
+                    [&identity],
+                )?;
+                tx.commit()
+            })();
+            // Restore enforcement even when rebuilding fails and the caller retries.
+            self.conn.pragma_update(None, "foreign_keys", true)?;
+            result?;
             let again = self.sync()?;
             return Ok(SyncStats {
                 added: again.added,
