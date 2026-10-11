@@ -291,6 +291,15 @@ pub fn classify(e: &anyhow::Error) -> ErrorReport {
             "gate_failed",
             Some("keep the base model; --force only with the user's explicit consent"),
         )
+    } else if msg.contains("index database")
+        && (msg.contains("database is locked") || msg.contains("database table is locked"))
+    {
+        (
+            "index_error",
+            Some(
+                "the index is busy in another session; retry the command after that session finishes",
+            ),
+        )
     } else if msg.contains("index database") {
         (
             "index_error",
@@ -435,6 +444,22 @@ pub fn agent_guide(commands: &[(String, String)]) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn index_lock_errors_suggest_retrying_without_rebuilding() {
+        for message in ["database is locked", "database table is locked"] {
+            let error = anyhow::anyhow!("updating the index: index database: {message}");
+            let report = classify(&error);
+            assert_eq!((report.code, report.exit), ("index_error", 1));
+            let hint = report.hint.unwrap();
+            assert!(hint.contains("retry"));
+            assert!(!hint.contains("corrupt") && !hint.contains("rebuild"));
+        }
+        let report = classify(&anyhow::anyhow!(
+            "index database: database disk image is malformed"
+        ));
+        assert!(report.hint.unwrap().contains("rebuild"));
+    }
 
     #[test]
     fn codes_and_exit_codes() {

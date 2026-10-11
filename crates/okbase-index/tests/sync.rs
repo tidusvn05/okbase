@@ -183,3 +183,55 @@ fn first_index_of_1k_docs_under_5s() {
     assert!(stats.added >= 1000);
     assert!(took < Duration::from_secs(5), "took {took:?}");
 }
+
+#[test]
+fn concurrent_opens_and_syncs_share_the_index() {
+    for state in ["existing", "fresh", "outdated"] {
+        let tmp = tempfile::tempdir().unwrap();
+        for name in ["operations", "releases", "archive"] {
+            fs::write(tmp.path().join(format!("{name}.md")), format!("---\ntitle: {name}\ntags: [atlas]\n---\n# {name}\nAtlas operations. See [[operations]].\n")).unwrap();
+        }
+        if state != "fresh" {
+            let mut index = open(tmp.path());
+            index.sync().unwrap();
+            if state == "outdated" {
+                index
+                    .connection()
+                    .execute(
+                        "UPDATE meta SET value = 'obsolete' WHERE key = 'schema'",
+                        [],
+                    )
+                    .unwrap();
+            }
+        }
+        let start = std::sync::Barrier::new(4);
+        std::thread::scope(|scope| {
+            let handles: Vec<_> = (0..4)
+                .map(|_| {
+                    let start = &start;
+                    let root = tmp.path();
+                    scope.spawn(move || {
+                        start.wait();
+                        let mut index = open(root);
+                        for _ in 0..5 {
+                            index.sync().unwrap();
+                            let count: i64 = index
+                                .connection()
+                                .query_row("SELECT count(*) FROM docs", [], |r| r.get(0))
+                                .unwrap();
+                            assert_eq!(count, 3);
+                            let target: String = index
+                                .connection()
+                                .query_row("SELECT target FROM links LIMIT 1", [], |r| r.get(0))
+                                .unwrap();
+                            assert_eq!(target, "operations");
+                        }
+                    })
+                })
+                .collect();
+            for handle in handles {
+                handle.join().unwrap();
+            }
+        });
+    }
+}
