@@ -2,9 +2,10 @@
 
 How an agent merges the open pull requests that are ready, closes the issues they fix, decides
 whether a new version is due, and cuts it. The fixes themselves come from
-[fix-issues.md](fix-issues.md); run this runbook in a **separate session**, so the merge is a second
-look at the work and not the same agent approving itself. The release steps follow
-`docs/releasing.md`; read it first.
+[fix-issues.md](fix-issues.md). For an end-to-end invocation, start with
+[issues-prs-and-release.md](issues-prs-and-release.md) and continue here in the same session.
+Review the final diff and current-base CI before merging, including work produced in this session.
+The release steps follow `docs/releasing.md`; read it first.
 
 **Rules for the whole run**
 - Merge only what passes every check in step 2. When in doubt, comment and leave the pull request
@@ -31,6 +32,10 @@ GraphQL works with every `gh` version; older ones lack `authorAssociation` and
 `closingIssuesReferences` in `gh pr list --json`. On old versions, `gh pr view`, `gh issue view` and
 `gh pr edit` without `--json` also fail on the retired Projects (classic) API: pass `--json <fields>`,
 or use `gh api` (`gh api -X PATCH repos/tidusvn05/okbase/pulls/<N> -f title=…`).
+
+The classifications below are the standalone merge policy. In the full maintenance workflow,
+inspect every PR and follow the parent runbook for fixing blockers, reviewing contributor and
+major-dependency PRs, and closing superseded PRs.
 
 Sort them:
 - **Candidates:** not a draft, `mergeable` is `MERGEABLE`, no `CHANGES_REQUESTED` review, no
@@ -109,8 +114,10 @@ gh api graphql -f query='query { repository(owner: "tidusvn05", name: "okbase") 
 - An issue an earlier run marked as already fixed on `main` (comment with the commit) and nobody
   answered within 7 days: close it with a link to that comment.
 
-Close an issue only when a merged change fixes it. Never close one as "won't fix" or "duplicate":
-that is the maintainer's call.
+In a standalone merge run, close an issue only when a merged change fixes it; leave other
+resolutions to the maintainer. In the full maintenance workflow, the parent runbook also authorizes
+closing verified misunderstandings, duplicates and already-fixed reports with linked evidence.
+Failure to reproduce alone is not enough to close an issue.
 
 ## 5. Decide on a release
 
@@ -119,7 +126,12 @@ last=$(git describe --tags --abbrev=0 --match 'v*' 2>/dev/null)   # empty: nothi
 git log --format='%h %s' ${last:+$last..}main
 ```
 
-**Is a release due?** Count the commits since the last tag (all of them when there is no tag):
+For the full maintenance workflow, one final release is explicitly requested: do not apply the
+release-worthiness or seven-day waiting gates below. Follow the parent runbook's completion
+criteria, then choose the version and perform every release check here. Documentation-only or
+test-only maintenance uses the next patch version. Never bypass failing checks.
+
+**Is a release due in a standalone merge run?** Count the commits since the last tag (all of them when there is no tag):
 - **Release-worthy:** `feat`, `fix`, `perf`, any breaking change (`!`), and `build` or
   `chore(deps)` commits that change the shipped binary or fix a security advisory.
 - **Not release-worthy:** `docs`, `ci`, `test`, `refactor` and `chore` only. No release.
