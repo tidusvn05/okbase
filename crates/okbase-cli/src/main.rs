@@ -333,7 +333,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     format!("{} is not a folder", bundle_dir.display()),
                     Some("okbase -b <folder> doctor"),
                 ));
-                let r = doctor::Report::new(checks);
+                let r = doctor_report(checks, &bundle_dir);
                 emit(json, &r, || r.to_text())?;
                 return Ok(ExitCode::from(contract::EXIT_FINDINGS));
             }
@@ -351,7 +351,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
                         format!("cannot use {location} as a state directory: {e}"),
                         Some("okbase --state-dir <writable-directory> doctor"),
                     ));
-                    let r = doctor::Report::new(checks);
+                    let r = doctor_report(checks, &bundle_dir);
                     emit(json, &r, || r.to_text())?;
                     return Ok(ExitCode::from(contract::EXIT_FINDINGS));
                 }
@@ -368,7 +368,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
                         format!("cannot open the index in {}: {e}", resolved_state.display()),
                         Some("okbase --state-dir <writable-directory> doctor"),
                     ));
-                    let r = doctor::Report::new(checks);
+                    let r = doctor_report(checks, &bundle_dir);
                     emit(json, &r, || r.to_text())?;
                     return Ok(ExitCode::from(contract::EXIT_FINDINGS));
                 }
@@ -603,7 +603,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     ),
                 },
             );
-            let r = doctor::Report::new(checks);
+            let r = doctor_report(checks, &bundle_dir);
             emit(json, &r, || r.to_text())?;
             if !r.ok {
                 return Ok(ExitCode::from(contract::EXIT_FINDINGS));
@@ -2660,4 +2660,21 @@ fn with_bundle_flag(commands: &mut [String], dir: &Path) {
             c.replace_range(i + 1..i + 8, &flag);
         }
     }
+}
+
+/// Keeps doctor's repair commands in the bundle that was diagnosed.
+fn doctor_report(mut checks: Vec<doctor::Check>, dir: &Path) -> doctor::Report {
+    for check in &mut checks {
+        if let Some(fix) = &mut check.fix {
+            if let Some(rest) = fix.strip_prefix("okbase adopt . ") {
+                *fix = format!(
+                    "okbase adopt {} {rest}",
+                    shell_quote(&dir.display().to_string())
+                );
+            } else if dir != Path::new(".") {
+                with_bundle_flag(std::slice::from_mut(fix), dir);
+            }
+        }
+    }
+    doctor::Report::new(checks)
 }

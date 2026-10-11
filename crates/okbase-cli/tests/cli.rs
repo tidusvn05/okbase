@@ -949,9 +949,7 @@ fn doctor_checks_the_setup_end_to_end() {
     // This project's install still points at the old path.
     assert!(r["checks"].to_string().contains("no longer exists"), "{r}");
     assert!(
-        r["next"]
-            .to_string()
-            .contains("okbase agent install --replace"),
+        r["next"].to_string().contains("agent install --replace"),
         "{r}"
     );
     let out = run(&kb, &["doctor", "--json"]).output().unwrap();
@@ -1562,4 +1560,58 @@ fn removal_guidance_covers_script_installations() {
     assert!(message.contains("If installed with Cargo, run: cargo uninstall okbase-cli"));
     assert_eq!(step["kind"], "tell");
     assert!(exe.exists(), "planning removal must not delete the program");
+}
+
+#[test]
+fn doctor_repairs_preserve_the_selected_bundle() {
+    let tmp = tempfile::tempdir().unwrap();
+    let project = tmp.path().join("project");
+    std::fs::create_dir_all(project.join("empty target")).unwrap();
+    std::fs::create_dir_all(project.join("docs target")).unwrap();
+    std::fs::write(project.join("other.md"), "# Other\n\nOutside the bundle.\n").unwrap();
+    std::fs::write(
+        project.join("docs target/guide.md"),
+        "# Guide\n\nInside the bundle.\n",
+    )
+    .unwrap();
+    for (bundle, exit, expected) in [
+        ("empty target", 4, "okbase -b 'empty target' onboard"),
+        (
+            "docs target",
+            0,
+            "okbase adopt 'docs target' --out <new folder> (ask the user)",
+        ),
+    ] {
+        let output = Command::cargo_bin("okbase")
+            .unwrap()
+            .current_dir(&project)
+            .env("OKBASE_CONFIG_DIR", tmp.path().join("config"))
+            .env("XDG_CACHE_HOME", tmp.path().join("cache"))
+            .env("OKBASE_OFFLINE", "1")
+            .args(["-b", bundle, "doctor", "--json"])
+            .output()
+            .unwrap();
+        assert_eq!(output.status.code(), Some(exit));
+        let report: Value = serde_json::from_slice(&output.stdout).unwrap();
+        let level = report["checks"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|c| c["id"] == "level")
+            .unwrap();
+        assert_eq!(level["fix"], expected);
+        assert!(
+            report["next"]
+                .as_array()
+                .unwrap()
+                .contains(&json!(expected))
+        );
+        let agent = report["checks"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|c| c["id"] == "agents")
+            .unwrap();
+        assert_eq!(agent["fix"], format!("okbase -b '{bundle}' agent install"));
+    }
 }
