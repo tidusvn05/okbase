@@ -18,8 +18,18 @@ okbase is an open-source (MIT OR Apache-2.0) Rust toolkit that helps AI agents w
 - `docs/HANDOFF.md` — the original v0.1 handoff (task order, acceptance criteria, hard rules).
 - `docs/releasing.md` — versioning, what is public surface, how to cut a release.
 - `spikes/README.md` — the experiments behind every default. Do not change a default without new eval data.
+- `docs/runbooks/issues-prs-and-release.md` — default end-to-end maintenance workflow: inspect all issues and PRs, resolve them, then publish one release.
 - `docs/runbooks/fix-issues.md` — how to take open GitHub issues, group related ones, fix them and open one pull request per group.
 - `docs/runbooks/merge-and-release.md` — how to merge ready pull requests, close the issues they fix, and decide on and cut a release.
+
+## Maintenance workflow
+When the user asks to run the issues/PR workflow, use
+[`docs/runbooks/issues-prs-and-release.md`](docs/runbooks/issues-prs-and-release.md).
+The standing scope is to inspect all open issues and PRs, verify reports, fix real bugs, comment
+and close confirmed misunderstandings, merge ready PRs, close resolved issues, and publish one
+version after the work is complete. Continue through these steps without asking again for routine
+fixes, comments, closures, merges, or the final release. Honor an explicitly narrower request
+(review only, fix only, no release). A request to edit the runbook or report status does not invoke it.
 
 ## Product conventions
 `docs/conventions/end-user-and-agent-friendly-tools.md` applies to every user-facing change: evidence
