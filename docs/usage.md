@@ -458,7 +458,7 @@ That is why `onboard` asks you before OCR and before writing tune questions.
 | `not_built` | The feature needs `okbase-full`: `cargo install --locked --path crates/okbase-cli --features full` in a clone |
 | `license_required` (exit 3) | Accept the model's license with `--accept-license`, or use `bge-m3-int8` (MIT) |
 | `name_conflict` (exit 3) | That server name serves another bundle: pass `--name`, or `--replace` to repoint it |
-| `doctor` reports a moved bundle or a missing binary | `okbase onboard` plans the repair (`agent install --replace`) |
+| `doctor` reports a moved bundle or a missing binary | Follow its repair command; `okbase -b <bundle> doctor` keeps that bundle in its fixes and next steps (`agent install --replace` still needs consent) |
 | Japanese search is weaker offline | The dictionary is not installed yet: `okbase dict status`, then `okbase dict install` |
 | A PDF page has no text | It is a scan: `okbase import ocr-next` hands its image to an agent that reads images |
 | `lint` fails a CI job | It exits 4 when the bundle has errors; `okbase lint --level L1` is the usual first target |
