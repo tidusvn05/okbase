@@ -5,6 +5,21 @@ All notable changes to okbase are listed here. The format follows
 [Semantic Versioning](https://semver.org/) (see docs/releasing.md for what counts as a
 breaking change). This file is generated from commit messages by git-cliff.
 
+## [0.2.2] - 2026-10-11
+
+### Bug fixes
+
+- **cli:** preserve the selected bundle in doctor repairs (0b09fe5)
+- **index:** serialize concurrent index synchronization (9fb0360)
+
+### Dependencies
+
+- **deps:** bump the minor-and-patch group with 4 updates (26fdce3)
+
+### Other
+
+- **cli:** isolate onboarding from the surrounding Codex session (0969ab9)
+
 ## [0.2.1] - 2026-10-09
 
 ### Bug fixes
