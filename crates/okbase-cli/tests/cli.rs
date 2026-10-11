@@ -1359,6 +1359,7 @@ fn inside_codex_the_user_connects_codex() {
             .env("XDG_CONFIG_HOME", home.join(".config"))
             .env("XDG_CACHE_HOME", home.join(".cache"))
             .env_remove("CODEX_HOME")
+            .env_remove("CODEX_THREAD_ID")
             .env("PATH", "/usr/bin:/bin")
             .current_dir(&project)
             .arg("-b")
