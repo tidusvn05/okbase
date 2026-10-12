@@ -361,6 +361,22 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 OpenOptions::default().state_dir(StateDir::Path(resolved_state.clone())),
             ) {
                 Ok(b) => b,
+                Err(okbase::Error::Config(message)) => {
+                    let config = bundle_dir.join("okbase.toml");
+                    checks.push(check(
+                        "config",
+                        Status::Fail,
+                        format!("cannot load {}: {message}", config.display()),
+                        Some(&format!(
+                            "Repair {} at the reported location, then rerun okbase -b {} doctor",
+                            config.display(),
+                            shell_quote(&bundle_dir.display().to_string())
+                        )),
+                    ));
+                    let r = doctor_report(checks, &bundle_dir);
+                    emit(json, &r, || r.to_text())?;
+                    return Ok(ExitCode::from(contract::EXIT_FINDINGS));
+                }
                 Err(e) => {
                     checks.push(check(
                         "index",

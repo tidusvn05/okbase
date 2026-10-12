@@ -1437,6 +1437,48 @@ fn graph_json_and_view_stays_on_loopback() {
 }
 
 #[test]
+fn doctor_explains_invalid_config() {
+    let tmp = tempfile::tempdir().unwrap();
+    let bundle = tmp.path().join("bundle with spaces");
+    std::fs::create_dir(&bundle).unwrap();
+    std::fs::write(bundle.join("note.md"), "# Sample\n").unwrap();
+    let config = bundle.join("okbase.toml");
+    std::fs::write(&config, "[bundle\nprofile = \"invalid\"\n").unwrap();
+    let alternate = tmp.path().join("alternate-state");
+    for state in [None, Some(&alternate)] {
+        let mut cmd = Command::cargo_bin("okbase").unwrap();
+        cmd.arg("-b").arg(&bundle);
+        if let Some(state) = state {
+            cmd.arg("--state-dir").arg(state);
+        }
+        let out = cmd.args(["doctor", "--json"]).output().unwrap();
+        assert_eq!(out.status.code(), Some(4));
+        let r: Value = serde_json::from_slice(&out.stdout).unwrap();
+        assert_eq!(r["ok"], false);
+        let failed = r["checks"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|c| c["status"] == "fail")
+            .unwrap();
+        assert!(
+            failed["message"]
+                .as_str()
+                .unwrap()
+                .contains("line 1, column 8"),
+            "{r}"
+        );
+        let fix = failed["fix"].as_str().unwrap();
+        assert!(fix.contains(&config.display().to_string()), "{r}");
+        assert_eq!(failed["id"], "config");
+        assert!(fix.contains("Repair"), "{r}");
+        assert!(fix.contains("okbase -b '"), "{r}");
+        assert!(!fix.contains("--state-dir"), "{r}");
+        assert_eq!(r["next"][0], fix);
+    }
+}
+
+#[test]
 fn doctor_explains_invalid_state_directory() {
     let tmp = tempfile::tempdir().unwrap();
     let bundle = tmp.path().join("bundle");
