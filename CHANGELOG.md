@@ -5,6 +5,20 @@ All notable changes to okbase are listed here. The format follows
 [Semantic Versioning](https://semver.org/) (see docs/releasing.md for what counts as a
 breaking change). This file is generated from commit messages by git-cliff.
 
+## [0.2.3] - 2026-10-12
+
+### Bug fixes
+
+- **cli:** direct doctor config failures to okbase.toml (c1d68d8)
+
+### Documentation
+
+- save end-to-end issues and PR release workflow (f229ab2)
+
+### Continuous integration
+
+- bump actions/setup-node (c7b23bc)
+
 ## [0.2.2] - 2026-10-11
 
 ### Bug fixes
