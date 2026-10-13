@@ -91,8 +91,12 @@ fn spike_samples_when_present() {
 
 #[test]
 fn converter_names_match_the_locked_versions() {
-    let lock = std::fs::read_to_string(concat!(env!("CARGO_MANIFEST_DIR"), "/../../Cargo.lock"))
-        .expect("workspace Cargo.lock");
+    // The workspace lockfile is not shipped in registry packages.
+    let path = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../Cargo.lock");
+    if !path.is_file() {
+        return;
+    }
+    let lock = std::fs::read_to_string(path).expect("workspace Cargo.lock");
     for name in [super::ANYDOC, super::HTMD, super::PDF_INSPECTOR] {
         let (krate, minor) = name.split_once('/').unwrap();
         let entry = format!("name = \"{krate}\"\nversion = \"{minor}.");

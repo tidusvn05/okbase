@@ -13,6 +13,13 @@ fn fixture(name: &str) -> PathBuf {
 
 #[test]
 fn official_bundles_are_l1() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     for b in ["acme_retail", "crypto_bitcoin", "ga4", "stackoverflow"] {
         let a = assess_bundle(&fixture(&format!("okf-official/{b}")), VOCABULARY_PATH).unwrap();
         assert_eq!(
@@ -30,6 +37,13 @@ fn official_bundles_are_l1() {
 
 #[test]
 fn openclaw_fails_l0_but_reads_through_mapping() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let root = fixture("openclaw-s");
     let a = assess_bundle(&root, VOCABULARY_PATH).unwrap();
     assert_eq!(a.level, None);

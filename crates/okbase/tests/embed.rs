@@ -34,6 +34,13 @@ impl Embedder for Letters {
 
 #[test]
 fn host_embedder_search_retrieve_and_mode() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let fixture = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../fixtures/business");
     let tmp = tempfile::tempdir().unwrap();
     let opts = OpenOptions::default()

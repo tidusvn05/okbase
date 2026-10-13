@@ -63,6 +63,13 @@ async fn json_of(app: &axum::Router, req: Request<Body>) -> (StatusCode, Value) 
 
 #[tokio::test]
 async fn api_matches_the_library() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let app = app("okf-official/acme_retail");
     let (status, o) = json_of(&app, get("/api/overview")).await;
     assert_eq!(status, StatusCode::OK);
@@ -118,6 +125,13 @@ async fn api_matches_the_library() {
 
 #[tokio::test]
 async fn scope_hides_documents_everywhere() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let app = app("okf-official/acme_retail");
     let guest = |mut req: Request<Body>| {
         req.headers_mut().insert("x-user", "guest".parse().unwrap());
@@ -160,6 +174,13 @@ async fn scope_hides_documents_everywhere() {
 
 #[tokio::test]
 async fn rejects_foreign_hosts() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let app = app("okf-official/acme_retail");
     let req = Request::get("/api/overview")
         .header(header::HOST, "evil.example:7332")
@@ -175,6 +196,13 @@ async fn rejects_foreign_hosts() {
 
 #[tokio::test]
 async fn serves_the_viewer_with_security_headers() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let app = app("okf-official/acme_retail");
     let (status, body, headers) = send(&app, get("/")).await;
     assert_eq!(status, StatusCode::OK);
@@ -192,6 +220,13 @@ async fn serves_the_viewer_with_security_headers() {
 
 #[tokio::test]
 async fn files_stay_inside_the_bundle() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let app = app("okf-official/acme_retail");
     for path in [
         "/files/../Cargo.toml",
