@@ -55,9 +55,30 @@ Agents: [`llms.txt`](llms.txt) and `okbase help --agent` have the full contract.
 | crates.io (Rust 1.89+) | `cargo install --locked okbase-cli` |
 | From Git (Rust 1.89+) | `cargo install --locked --git https://github.com/tidusvn05/okbase okbase-cli` |
 
-For Rust applications, add the library with `cargo add okbase`.
-
 Each binary download is checked against the release's `SHA256SUMS`. More: [install, update, remove](docs/usage.md#install).
+
+### Install with Cargo
+
+With Rust 1.89 or newer, install the CLI from [crates.io](https://crates.io/crates/okbase-cli):
+
+```sh
+cargo install --locked okbase-cli
+okbase --version
+```
+
+The package is `okbase-cli`; the installed command is `okbase`. For semantic search and
+fine-tuning, install with the optional `full` features:
+
+```sh
+cargo install --locked okbase-cli --features full
+```
+
+To update, rerun the same install command, keeping `--features full` if you use it.
+For Rust applications, add the [library](https://crates.io/crates/okbase):
+
+```sh
+cargo add okbase
+```
 
 ## What it does
 
