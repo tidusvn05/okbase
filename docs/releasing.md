@@ -2,7 +2,8 @@
 
 How okbase is versioned, what a release contains, and the steps to cut one. Releases are built by
 `.github/workflows/release.yml` when a version tag is pushed; users install them with the `curl`
-command in the README.
+command in the README or with `cargo install --locked okbase-cli` from crates.io.
+A release is complete only when its GitHub assets and all 17 crates.io packages are available.
 
 ## Versioning
 
@@ -18,11 +19,10 @@ breaks it.
 - skill names and the files `agent install` writes;
 - `okbase.toml`, `.okbaseignore`, frontmatter written by okbase, and `OKBASE_*` environment
   variables;
-- the public Rust API of the `okbase` crate.
+- the public Rust APIs and features of every published `okbase` / `okbase-*` crate.
 
 **Not public:**
 - the on-disk index and caches (okbase rebuilds them when their schema changes);
-- internal crates' APIs, until they are published on crates.io;
 - the HTTP API under `/api/` that the `okbase view` web app uses (its bodies are the `--json`
   structs, but routes and parameters follow the embedded app).
 
@@ -81,6 +81,9 @@ non-pre-release unless `--version` is given.
       `spikes/` (and `spikes/README.md` is updated).
 - [ ] `docs/usage.md`, `README.md` and `llms.txt` match the release: commands, sizes, privacy table.
 - [ ] Breaking changes are marked in commits and explained in `docs/usage.md` when users must act.
+- [ ] Package CI passes: all publishable crates build from their packaged sources.
+- [ ] The publishing account has a verified crates.io email and permission to publish every crate.
+      Credentials are supplied by `cargo login` or `CARGO_REGISTRY_TOKEN`, never committed.
 
 ## Cutting a release
 
@@ -114,8 +117,12 @@ The workflow then:
 4. publishes the release with the notes and `SHA256SUMS`.
 
 `workflow_dispatch` with an existing tag rebuilds it as a draft release (for a failed run).
+The workflow publishes GitHub assets; the release operator must also complete
+[Publishing to crates.io](#publishing-to-cratesio) from the same release tag.
 
-After the workflow:
+After the workflow and crates.io publication:
+- [ ] Every publishable package is available on crates.io at the release version.
+- [ ] A registry installation of `okbase-cli` reports the release version.
 - [ ] Install with the README command on Linux or macOS, and with `install.ps1` on Windows.
 - [ ] `okbase --version` shows the new version.
 - [ ] `okbase doctor` is ok on a fixture bundle.
@@ -144,30 +151,73 @@ Each publishable crate carries its own README, LICENSE-MIT and LICENSE-APACHE. T
 that need repository fixtures skip when those fixtures are absent from registry packages.
 `okbase-web` includes its committed `web/dist/` assets; publishing does not require Node.
 
-Publish from a clean checkout of the intended release, with matching workspace and
-internal dependency versions. Run the checks under "Before a release" first, then:
+Publish from a clean checkout of the intended release tag, with matching workspace and
+internal dependency versions. Do this before advancing `main` to the next `-dev` version.
+Run the checks under "Before a release" first, then, with `V` set to the release version:
 
 ```sh
-cargo login                      # paste the token into Cargo, never into a commit
-cargo publish --workspace --exclude okbase-eval --dry-run
-cargo publish --workspace --exclude okbase-eval
+cargo login                      # only needed once; paste the token into Cargo
+registry_tree=$(mktemp -d)
+git worktree add --detach "$registry_tree" "v$V"
+(cd "$registry_tree" && cargo publish --workspace --exclude okbase-eval --registry crates-io --dry-run)
+(cd "$registry_tree" && cargo publish --workspace --exclude okbase-eval --registry crates-io)
 ```
 
-These workspace commands were verified with Cargo 1.99. Cargo builds the packaged sources
-and publishes in dependency order. Keep build verification enabled. If publishing stops
-partway through, inspect crates.io and publish only the remaining packages using
-`cargo publish -p <name>` in dependency order; an uploaded version is immutable.
+These workspace commands were verified with Cargo 1.99; the release tooling can use a newer
+Cargo than the library's MSRV. Cargo builds the packaged sources and publishes in dependency
+order. Keep build verification enabled. Do not publish a development version or use
+`--allow-dirty` to bypass a release checkout problem.
 
-Verify the registry installation outside the repository:
+### Partial publishes and rate limits
+
+An uploaded version is immutable. If publishing stops partway through, check which versions
+are already on crates.io. Resume only the missing packages with `cargo publish -p <name>
+--registry crates-io` from the release worktree, in dependency order. Alternatively, use the
+workspace command with an additional `--exclude <name>` for each package already published.
+Never blindly rerun the original workspace command, yank successful packages as a retry, or
+move the release tag. A genuine defect needs a fix-forward release.
+
+The [crates.io rate limits](https://crates.io/docs/rate-limits) apply per account:
+
+| Publish | Initial burst | Further allowance |
+|---|---|---|
+| Brand new crates | 5 crates | 1 crate every 10 minutes |
+| New versions of existing crates | 30 versions | 1 version per minute |
+
+A normal update of all 17 existing packages fits within the 30-version burst when the account
+has enough allowance. Adding new crates can take longer. On HTTP 429, wait until the timestamp
+in the registry error before retrying the missing package; do not repeatedly retry before it.
+Record partial progress and the next allowed time if publishing continues in the background.
+A background publish is still pending until registry and installation verification finish.
+
+### Verify before completing the release
+
+Verify every publishable package at the exact release version, then install the CLI from the
+registry into a temporary directory:
 
 ```sh
-cargo install --locked --version X.Y.Z okbase-cli
-okbase --version
+cargo metadata --no-deps --format-version 1 --manifest-path "$registry_tree/Cargo.toml" \
+  | python3 -c 'import json,sys; print("\n".join(p["name"] for p in json.load(sys.stdin)["packages"] if p["publish"] != []))' \
+  > "$registry_tree/crate-names.txt"
+while IFS= read -r crate; do
+  cargo info "$crate@$V" --registry crates-io || exit 1
+done < "$registry_tree/crate-names.txt"
+registry_install=$(mktemp -d)
+cargo install --locked --registry crates-io --version "$V" --root "$registry_install" okbase-cli
+"$registry_install/bin/okbase" --version
 ```
+
+Check that the installed version equals `V` and run a read command on a fixture with a temporary
+state directory. Record both the GitHub release URL and the crates.io `okbase` / `okbase-cli`
+version URLs in the release report. Only then advance the development version.
 
 Users add the library with `cargo add okbase` or install the CLI with
 `cargo install --locked okbase-cli`. GitHub binary releases remain available for users
 who do not have a Rust toolchain.
+
+The initial crates.io version, 0.2.3, was published after its GitHub binary release.
+Its packaging source is preserved by the `crates-v0.2.3` tag; subsequent release tags include
+the packaging files and are the source for both distribution channels.
 
 ## Not automated yet
 

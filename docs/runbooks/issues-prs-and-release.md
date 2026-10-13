@@ -103,6 +103,10 @@ Follow steps 6 and 7 of [merge-and-release.md](merge-and-release.md) and all of
 - Wait for the release workflow and verify the release and assets. Retry failed jobs only for
   transient failures. A real packaging defect needs a fix PR and a forward patch release; report
   this exception to the one-release goal rather than rewriting history.
+- Publish every publishable crate from the release tag, excluding `okbase-eval`, following
+  `docs/releasing.md` (credentials, dependency order, partial publishes and HTTP 429 waits).
+  Verify all exact registry versions and install `okbase-cli` from crates.io before advancing
+  the development version. Report pending registry uploads as an incomplete release.
 - Verify archive checksums, installer version, `doctor` on a fixture, and Linux glibc requirements.
   Rerun the relevant bug reproductions with the released binary. Report platform checks that
   could not be performed locally, including the Windows installer when unavailable.
@@ -111,6 +115,7 @@ Follow steps 6 and 7 of [merge-and-release.md](merge-and-release.md) and all of
 
 ## 6. Report
 
-Return the release version and link, fixed issues and merged PRs, evidence for non-bug closures,
+Return the release version, GitHub and crates.io links, published package count, fixed issues
+and merged PRs, evidence for non-bug closures,
 verification results, and every item left open with its reason. State any incomplete release or
 pending checks explicitly. Editing this runbook alone does not invoke another maintenance run.

@@ -11,7 +11,7 @@ okbase is an open-source (MIT OR Apache-2.0) Rust toolkit that helps AI agents w
 - **OKF** (Open Knowledge Format) is the file format okbase reads, a separate specification by
   Google. Keep that name for the format; okbase is not affiliated with Google.
 - Repository: https://github.com/tidusvn05/okbase. Installs come from GitHub releases
-  (`install.sh` / `install.ps1`).
+  (`install.sh` / `install.ps1`) or crates.io (`cargo install --locked okbase-cli`).
 
 ## Read first
 - `docs/design.md` — design source of truth (section numbers are referenced below); later plans in `docs/plans/`.

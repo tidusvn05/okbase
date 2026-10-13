@@ -22,6 +22,15 @@ jobs:
           components: rustfmt
       - run: cargo fmt --all -- --check
 
+  package:
+    # Validate registry archives, including embedded assets, without credentials or uploads.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo publish --workspace --exclude okbase-eval --registry crates-io --dry-run
+
   clippy:
     runs-on: ubuntu-latest
     steps:
