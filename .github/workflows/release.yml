@@ -181,6 +181,11 @@ jobs:
           Apple silicon and Windows). Windows:
           \`irm https://raw.githubusercontent.com/${{ github.repository }}/main/install.ps1 | iex\`.
           Every archive is listed in \`SHA256SUMS\`.
+
+          With Rust 1.89 or newer, install the CLI from crates.io:
+          \`cargo install --locked --version ${{ needs.check.outputs.version }} okbase-cli\`
+          (add \`--features full\` for semantic search and fine-tuning).
+          Rust library: [okbase](https://crates.io/crates/okbase/${{ needs.check.outputs.version }}).
           EOF
       - uses: softprops/action-gh-release@v3
         with:

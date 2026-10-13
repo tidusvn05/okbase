@@ -38,13 +38,26 @@ curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh | 
 On Windows: `irm https://raw.githubusercontent.com/tidusvn05/okbase/main/install.ps1 | iex`
 (`$env:OKBASE_FULL=1` first for okbase-full). The installers verify each download against the
 release's `SHA256SUMS` and write only the `okbase` binary (`~/.local/bin`, or
-`%LOCALAPPDATA%\okbase\bin` on Windows). From source, with Rust 1.89 or newer (the only way
-before the first release, when the installers report "no release found"):
+`%LOCALAPPDATA%\okbase\bin` on Windows).
+
+With Rust 1.89 or newer, install the CLI from [crates.io](https://crates.io/crates/okbase-cli):
+
+```sh
+cargo install --locked okbase-cli
+# Optional semantic search and fine-tuning:
+cargo install --locked okbase-cli --features full
+```
+
+The package is `okbase-cli`; the installed command is `okbase`. Rust applications use the
+[`okbase` library](https://crates.io/crates/okbase) with `cargo add okbase`.
+For an unreleased Git version, use
 `cargo install --locked --git https://github.com/tidusvn05/okbase okbase-cli [--features full]`,
 or `cargo install --locked --path crates/okbase-cli` in a clone.
 
-To update, run the installer again. To remove okbase, see
-[Trying okbase, then stopping](#trying-okbase-then-stopping).
+To update a binary installation, run its installer again. For a Cargo installation, rerun the
+same `cargo install --locked okbase-cli` command, keeping `--features full` if you use it.
+To remove a Cargo installation, run `cargo uninstall okbase-cli`; see
+[Trying okbase, then stopping](#trying-okbase-then-stopping) to remove project integrations too.
 
 Start with the default build. You only need `okbase-full` when `advise` recommends semantic
 search or fine-tuning. Neither build embeds language dictionaries or models: they are downloaded
@@ -336,7 +349,7 @@ jobs:
     permissions: { security-events: write }
     steps:
       - uses: actions/checkout@v4
-      - run: cargo install --locked okbase-cli # after publication; until then build from a clone
+      - run: cargo install --locked okbase-cli
       - run: okbase -b knowledge lint --level L1 --format sarif > okbase.sarif || test $? -eq 4
       - uses: github/codeql-action/upload-sarif@v3
         with: { sarif_file: okbase.sarif }

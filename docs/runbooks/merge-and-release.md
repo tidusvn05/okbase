@@ -201,6 +201,13 @@ gh run watch <run-id> --exit-status
 patch; if the failed run published a release, mark it broken in its notes. Report to the
 maintainer either way.
 
+Before moving to step 7 or bumping the development version, complete
+[Publishing to crates.io](../releasing.md#publishing-to-cratesio) from a clean worktree of `v$V`.
+Publish all 17 packages, excluding `okbase-eval`, and verify every exact version plus a registry
+CLI installation. Follow the documented partial-publish and HTTP 429 recovery rules.
+The release remains incomplete while any package or verification is pending; report the
+published count, missing packages, and next retry time when applicable.
+
 ## 7. After the release
 
 ```sh
@@ -233,5 +240,6 @@ If a binary needs a newer glibc than promised, fix forward: correct `docs/usage.
 End the run with a short summary for the maintainer:
 - pull requests merged (number, title, method) and the issues they closed;
 - pull requests left open and why (contributor, failing check, missing evidence, needs a person);
-- the release: the version and link, or "no release" with the reason, or the question from step 5;
+- the release: the version, GitHub release link, crates.io `okbase` / `okbase-cli` links and
+  published package count, or "no release" with the reason, or the question from step 5;
 - checks that could not be run (Windows install, a missing tool).
