@@ -134,12 +134,44 @@ After the workflow:
 - **Security fixes:** follow SECURITY.md (private advisory first, then a patch release that names
   the advisory).
 
+## Publishing to crates.io
+
+The publishable workspace contains 17 crates, including the `okbase` library and the
+`okbase-cli` package that installs the `okbase` binary. `okbase-eval` is repository-only
+and must not be published.
+
+Each publishable crate carries its own README, LICENSE-MIT and LICENSE-APACHE. Tests
+that need repository fixtures skip when those fixtures are absent from registry packages.
+`okbase-web` includes its committed `web/dist/` assets; publishing does not require Node.
+
+Publish from a clean checkout of the intended release, with matching workspace and
+internal dependency versions. Run the checks under "Before a release" first, then:
+
+```sh
+cargo login                      # paste the token into Cargo, never into a commit
+cargo publish --workspace --exclude okbase-eval --dry-run
+cargo publish --workspace --exclude okbase-eval
+```
+
+These workspace commands were verified with Cargo 1.99. Cargo builds the packaged sources
+and publishes in dependency order. Keep build verification enabled. If publishing stops
+partway through, inspect crates.io and publish only the remaining packages using
+`cargo publish -p <name>` in dependency order; an uploaded version is immutable.
+
+Verify the registry installation outside the repository:
+
+```sh
+cargo install --locked --version X.Y.Z okbase-cli
+okbase --version
+```
+
+Users add the library with `cargo add okbase` or install the CLI with
+`cargo install --locked okbase-cli`. GitHub binary releases remain available for users
+who do not have a Rust toolchain.
+
 ## Not automated yet
 
-- **Publishing the crates on crates.io.** It needs a crates.io token in the repository secrets and
-  publishing in dependency order (`okbase-core` first, `okbase-cli` last). The crates also need:
-  - their own license files;
-  - a crates.io README without repository-relative links;
-  - tests that skip when `fixtures/` is absent.
+- **Publishing the crates on crates.io in CI.** Local publishing uses Cargo credentials;
+  unattended releases need trusted publishing or a scoped token configured for the workflow.
 - **Signed artifacts.** Releases use checksums only; Sigstore or minisign signatures are possible
   later.

@@ -52,9 +52,12 @@ Agents: [`llms.txt`](llms.txt) and `okbase help --agent` have the full contract.
 | Linux, macOS | `curl -fsSL https://raw.githubusercontent.com/tidusvn05/okbase/main/install.sh \| sh` |
 | … with semantic search | add `-s -- --full` |
 | Windows | `irm https://raw.githubusercontent.com/tidusvn05/okbase/main/install.ps1 \| iex` |
-| From source (Rust 1.89+) | `cargo install --locked --git https://github.com/tidusvn05/okbase okbase-cli` |
+| crates.io (Rust 1.89+) | `cargo install --locked okbase-cli` |
+| From Git (Rust 1.89+) | `cargo install --locked --git https://github.com/tidusvn05/okbase okbase-cli` |
 
-Each download is checked against the release's `SHA256SUMS`. More: [install, update, remove](docs/usage.md#install).
+For Rust applications, add the library with `cargo add okbase`.
+
+Each binary download is checked against the release's `SHA256SUMS`. More: [install, update, remove](docs/usage.md#install).
 
 ## What it does
 

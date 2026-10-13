@@ -38,6 +38,13 @@ fn q(filter: Filter) -> QueryRequest {
 
 #[test]
 fn query_matches_spike_semantics() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let idx = business().lock().unwrap_or_else(|e| e.into_inner());
     let all = Scope::all();
     let contracts = Filter {
@@ -127,6 +134,13 @@ fn query_matches_spike_semantics() {
 
 #[test]
 fn grep_is_accent_insensitive_and_scoped() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let idx = business().lock().unwrap_or_else(|e| e.into_inner());
     let req = GrepRequest {
         pattern: "doi tra|返品".into(),
@@ -187,6 +201,13 @@ fn grep_is_accent_insensitive_and_scoped() {
 
 #[test]
 fn scope_hides_documents_everywhere() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let idx = business().lock().unwrap_or_else(|e| e.into_inner());
     let scope = Scope::all()
         .deny("contracts/**")
@@ -246,6 +267,13 @@ fn scope_hides_documents_everywhere() {
 
 #[test]
 fn get_sections_and_budget() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let idx = indexed("openclaw-s");
     let all = Scope::all();
     let req = GetRequest {
@@ -299,6 +327,13 @@ fn get_sections_and_budget() {
 
 #[test]
 fn links_and_mode() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let idx = indexed("okf-official/acme_retail");
     let l = links(&idx, "metrics/revenue", &Scope::all()).unwrap();
     assert!(!l.outgoing.is_empty() || !l.backlinks.is_empty(), "{l:?}");
@@ -309,6 +344,13 @@ fn links_and_mode() {
 
 #[test]
 fn snapshots() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let idx = indexed("okf-official/acme_retail");
     let all = Scope::all();
     let grep_req = GrepRequest {
@@ -391,6 +433,13 @@ fn replicated(name: &str, copies: usize) -> (tempfile::TempDir, Index) {
 #[test]
 #[ignore = "timing test; run in release mode"]
 fn perf_grep_4_4m_tokens() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let (_tmp, idx) = replicated("openclaw-s", 51);
     let tokens = stats(&idx, &Scope::all()).unwrap().tokens;
     assert!(tokens >= 4_400_000, "only {tokens} tokens");
@@ -415,6 +464,13 @@ fn perf_grep_4_4m_tokens() {
 #[test]
 #[ignore = "timing test; run in release mode"]
 fn perf_query_3k_docs() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let (_tmp, idx) = replicated("business", 20);
     let req = QueryRequest {
         filter: Filter {
@@ -458,6 +514,13 @@ fn perf_query_3k_docs() {
 
 #[test]
 fn multilingual_grep_and_catalog() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let idx = indexed("multilingual");
     let all = Scope::all();
     let files = |p: &str| -> Vec<String> {
@@ -488,6 +551,13 @@ fn multilingual_grep_and_catalog() {
 
 #[test]
 fn graph_respects_scope_filter_and_limit() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let idx = indexed("okf-official/acme_retail");
     let all = graph(&idx, &GraphRequest::default(), &Scope::all()).unwrap();
     assert_eq!(
@@ -544,6 +614,13 @@ fn graph_respects_scope_filter_and_limit() {
 
 #[test]
 fn graph_counts_broken_links() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let idx = indexed("lint/l3");
     let g = graph(&idx, &GraphRequest::default(), &Scope::all()).unwrap();
     let n = g.nodes.iter().find(|n| n.id == "broken-link").unwrap();
@@ -553,6 +630,13 @@ fn graph_counts_broken_links() {
 
 #[test]
 fn grep_overlapping_context_preserves_every_hit() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     std::fs::write(tmp.path().join("releases.md"),
         "before\nrelease approved by Lan\nRelease approved yesterday\nafter\nrelease tomorrow\nend\n").unwrap();
