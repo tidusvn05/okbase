@@ -22,6 +22,13 @@ fn bundle(name: &str) -> Bundle {
 
 #[test]
 fn tools_list_snapshot() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let server = KbServer::new(
         bundle("business"),
         Arc::new(Scope::all()),
@@ -89,6 +96,13 @@ async fn rpc(
 
 #[tokio::test(flavor = "multi_thread")]
 async fn json_rpc_session() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let scope = Scope::all().deny("contracts/minh-phat-jsc/**").unwrap();
     let server = KbServer::new(
         bundle("business"),
@@ -193,6 +207,13 @@ async fn json_rpc_session() {
 
 #[test]
 fn edits_during_a_session_are_seen() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let kb = tmp.path().join("kb");
     std::fs::create_dir_all(&kb).unwrap();

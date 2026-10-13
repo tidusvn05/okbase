@@ -61,6 +61,13 @@ fn open(root: &Path) -> Index {
 
 #[test]
 fn indexes_fixture_with_links_tags_and_chunks() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let mut idx = Index::open_in_memory(&fixture("okf-official/acme_retail")).unwrap();
     let stats = idx.sync().unwrap();
     assert_eq!((stats.added, stats.updated, stats.removed), (17, 0, 0));
@@ -83,6 +90,13 @@ fn indexes_fixture_with_links_tags_and_chunks() {
 
 #[test]
 fn incremental_sync_reindexes_only_changed_files() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path().join("bundle");
     copy_dir(&fixture("openclaw-s"), &root);
@@ -138,6 +152,13 @@ fn incremental_sync_reindexes_only_changed_files() {
 
 #[test]
 fn explicit_state_dir_keeps_the_bundle_untouched() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path().join("bundle");
     copy_dir(&fixture("okf-official/ga4"), &root);
@@ -160,6 +181,13 @@ fn explicit_state_dir_keeps_the_bundle_untouched() {
 #[test]
 #[ignore = "timing test; run in release mode"]
 fn first_index_of_1k_docs_under_5s() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let src = fixture("openclaw-s");
     let mut n = 0;
@@ -186,6 +214,13 @@ fn first_index_of_1k_docs_under_5s() {
 
 #[test]
 fn concurrent_opens_and_syncs_share_the_index() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     for state in ["existing", "fresh", "outdated"] {
         let tmp = tempfile::tempdir().unwrap();
         for name in ["operations", "releases", "archive"] {

@@ -10,8 +10,8 @@ repository.workspace = true
 homepage.workspace = true
 keywords.workspace = true
 categories.workspace = true
-readme = "../../README.md"
-include = ["src/**", "build.rs", "web/dist/**", "Cargo.toml"]
+readme = "README.md"
+include = ["src/**", "build.rs", "web/dist/**", "Cargo.toml", "README.md", "LICENSE-MIT", "LICENSE-APACHE"]
 
 [lints]
 workspace = true

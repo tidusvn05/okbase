@@ -36,6 +36,13 @@ fn docs(bundle: &str) -> Vec<(Concept, String)> {
 
 #[test]
 fn round_trip_is_byte_identical() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     for bundle in BUNDLES {
         for (doc, text) in docs(bundle) {
             assert_eq!(doc.render(), text, "{bundle}/{}", doc.path);
@@ -76,6 +83,13 @@ fn assert_only_key_changed(before: &str, after: &str, key: &str, ctx: &str) {
 
 #[test]
 fn setting_each_key_changes_only_that_key() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let mut edited = 0;
     for bundle in BUNDLES {
         for (doc, text) in docs(bundle) {
@@ -125,6 +139,13 @@ fn setting_each_key_changes_only_that_key() {
 
 #[test]
 fn official_bundles_conform_and_openclaw_does_not() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     for bundle in &BUNDLES[..4] {
         for (doc, _) in docs(bundle) {
             let errors: Vec<_> = validate(&doc)

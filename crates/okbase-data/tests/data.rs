@@ -32,6 +32,13 @@ fn business() -> (tempfile::TempDir, Data) {
 
 #[test]
 fn tables_and_aggregates() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let (_tmp, data) = business();
     let t = data.tables(&all).unwrap();
     insta::assert_snapshot!("business_tables", t.to_text());
@@ -86,6 +93,13 @@ fn tables_and_aggregates() {
 
 #[test]
 fn only_reads_are_allowed() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let (_tmp, data) = business();
     for sql in [
         "DELETE FROM inventory",
@@ -115,6 +129,13 @@ fn only_reads_are_allowed() {
 
 #[test]
 fn scope_hides_tables() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let (_tmp, data) = business();
     let no_prices = |p: &str| !p.starts_with("data/price_list");
     let t = data.tables(&no_prices).unwrap();
@@ -144,6 +165,13 @@ fn scope_hides_tables() {
 
 #[test]
 fn xlsx_sheets_and_changes() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path().join("kb");
     std::fs::create_dir_all(root.join("data")).unwrap();
@@ -200,6 +228,13 @@ fn xlsx_sheets_and_changes() {
 #[test]
 #[ignore = "timing test; run in release mode"]
 fn perf_aggregate_10k_rows() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path().join("kb");
     std::fs::create_dir_all(&root).unwrap();
@@ -231,6 +266,13 @@ fn perf_aggregate_10k_rows() {
 
 #[test]
 fn macro_enabled_workbooks_are_tables_too() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     // .xlsm (and .xlsb, .xls, .ods) are read like .xlsx.
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path().join("kb");

@@ -40,6 +40,13 @@ fn json_of(c: &mut Command) -> Value {
 
 #[test]
 fn read_commands_text_snapshots() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let st = tempfile::tempdir().unwrap();
     let acme = |args: &[&str]| stdout(okbase("okf-official/acme_retail", st.path()).args(args));
     insta::assert_snapshot!("cli_grep", acme(&["grep", "refund", "-C", "0"]));
@@ -61,6 +68,13 @@ fn read_commands_text_snapshots() {
 
 #[test]
 fn json_equals_mcp_structured_content() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let st = tempfile::tempdir().unwrap();
     let cli = json_of(okbase("business", st.path()).args([
         "query",
@@ -100,6 +114,13 @@ fn json_equals_mcp_structured_content() {
 
 #[test]
 fn scope_flags_hide_documents() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let st = tempfile::tempdir().unwrap();
     let out = okbase("business", st.path())
         .args([
@@ -126,6 +147,13 @@ fn scope_flags_hide_documents() {
 
 #[test]
 fn lint_exit_codes_and_formats() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let st = tempfile::tempdir().unwrap();
     let out = okbase("lint", st.path())
         .args(["lint", "--level", "L3"])
@@ -155,6 +183,13 @@ fn lint_exit_codes_and_formats() {
 
 #[test]
 fn errors_have_hints() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let out = Command::cargo_bin("okbase")
         .unwrap()
         .args(["-b", "/definitely/missing", "status"])
@@ -176,6 +211,13 @@ fn errors_have_hints() {
 
 #[test]
 fn modules_and_index() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let st = tempfile::tempdir().unwrap();
     let m = json_of(Command::cargo_bin("okbase").unwrap().arg("modules"));
     assert_eq!(m[0]["name"], "core");
@@ -192,6 +234,13 @@ fn modules_and_index() {
 
 #[test]
 fn agent_install_print_and_apply() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let (home, project) = (tmp.path().join("home"), tmp.path().join("proj"));
     std::fs::create_dir_all(&home).unwrap();
@@ -236,6 +285,13 @@ fn agent_install_print_and_apply() {
 
 #[test]
 fn mcp_serve_stdio() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let st = tempfile::tempdir().unwrap();
     let bin = assert_cmd::cargo::cargo_bin("okbase");
     let mut child = StdCommand::new(bin)
@@ -279,6 +335,13 @@ fn mcp_serve_stdio() {
 
 #[test]
 fn data_commands() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let st = tempfile::tempdir().unwrap();
     let t = json_of(okbase("business", st.path()).args(["data", "tables"]));
     assert_eq!(t["tables"].as_array().unwrap().len(), 3);
@@ -309,6 +372,13 @@ fn data_commands() {
 
 #[test]
 fn adopt_plan_out_and_write_guard() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let src = tmp.path().join("docs");
     std::fs::create_dir_all(src.join("guides")).unwrap();
@@ -351,6 +421,13 @@ fn adopt_plan_out_and_write_guard() {
 
 #[test]
 fn vocab_report_and_suggest() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     std::fs::write(
         tmp.path().join("a.md"),
@@ -386,6 +463,13 @@ fn vocab_report_and_suggest() {
 
 #[test]
 fn http_off_loopback_needs_a_token() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let st = tempfile::tempdir().unwrap();
     let out = okbase("okf-official/ga4", st.path())
         .env_remove("OKBASE_MCP_TOKEN")
@@ -398,6 +482,13 @@ fn http_off_loopback_needs_a_token() {
 
 #[test]
 fn advise_recommends_by_bundle() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let st = tempfile::tempdir().unwrap();
     let tiers = |v: &Value| -> Vec<(String, String)> {
         v["steps"]
@@ -445,6 +536,13 @@ fn advise_recommends_by_bundle() {
 
 #[test]
 fn custom_models_add_list_remove() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let models = tmp.path().join("models");
     let src = tmp.path().join("acme");
@@ -502,6 +600,13 @@ fn custom_models_add_list_remove() {
 
 #[test]
 fn tune_question_workflow() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let kb = tmp.path().join("kb");
     std::fs::create_dir_all(&kb).unwrap();
@@ -566,6 +671,13 @@ fn tune_question_workflow() {
 
 #[test]
 fn agent_scenarios_many_bundles_status_uninstall_clean() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let home = tmp.path().join("home");
     let project = tmp.path().join("project");
@@ -687,6 +799,13 @@ fn agent_scenarios_many_bundles_status_uninstall_clean() {
 
 #[test]
 fn machine_contract_errors_consent_and_no_prompts() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let home = tmp.path().join("home");
     std::fs::create_dir_all(&home).unwrap();
@@ -821,6 +940,13 @@ fn machine_contract_errors_consent_and_no_prompts() {
 
 #[test]
 fn onboard_plan_converges() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let home = tmp.path().join("home");
     let project = tmp.path().join("project");
@@ -903,6 +1029,13 @@ fn onboard_plan_converges() {
 
 #[test]
 fn doctor_checks_the_setup_end_to_end() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let home = tmp.path().join("home");
     let project = tmp.path().join("project");
@@ -960,6 +1093,13 @@ fn doctor_checks_the_setup_end_to_end() {
 
 #[test]
 fn agent_instructions_agree_everywhere() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     // The same rules reach agents through README, llms.txt, help --agent, onboard and the skill.
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
     let readme = std::fs::read_to_string(root.join("README.md")).unwrap();
@@ -1000,6 +1140,13 @@ fn agent_instructions_agree_everywhere() {
 
 #[test]
 fn onboard_understands_real_folders() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let home = tmp.path().join("home");
     std::fs::create_dir_all(&home).unwrap();
@@ -1146,6 +1293,13 @@ fn onboard_understands_real_folders() {
 
 #[test]
 fn import_reads_directly_then_writes_markdown_safely() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let kb = tmp.path().join("kb");
     std::fs::create_dir_all(kb.join("wiki")).unwrap();
@@ -1249,6 +1403,13 @@ fn import_reads_directly_then_writes_markdown_safely() {
 
 #[test]
 fn onboard_and_doctor_on_a_folder_of_source_documents() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let home = tmp.path().join("home");
     let kb = tmp.path().join("kb");
@@ -1304,6 +1465,13 @@ fn onboard_and_doctor_on_a_folder_of_source_documents() {
 
 #[test]
 fn ocr_next_exports_the_scanned_page_image() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     // tests/data/scanned.pdf: one page holding only an image (made by
     // spikes/import-bench/make_samples.py; synthetic text).
     let tmp = tempfile::tempdir().unwrap();
@@ -1347,6 +1515,13 @@ fn ocr_next_exports_the_scanned_page_image() {
 
 #[test]
 fn inside_codex_the_user_connects_codex() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let (home, project) = (tmp.path().join("home"), tmp.path().join("proj"));
     std::fs::create_dir_all(home.join(".codex")).unwrap();
@@ -1417,6 +1592,13 @@ fn inside_codex_the_user_connects_codex() {
 
 #[test]
 fn graph_json_and_view_stays_on_loopback() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let st = tempfile::tempdir().unwrap();
     let g = json_of(okbase("okf-official/acme_retail", st.path()).args(["graph", "--limit", "4"]));
     assert_eq!(g["nodes"].as_array().unwrap().len(), 4);
@@ -1438,6 +1620,13 @@ fn graph_json_and_view_stays_on_loopback() {
 
 #[test]
 fn doctor_explains_invalid_config() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let bundle = tmp.path().join("bundle with spaces");
     std::fs::create_dir(&bundle).unwrap();
@@ -1480,6 +1669,13 @@ fn doctor_explains_invalid_config() {
 
 #[test]
 fn doctor_explains_invalid_state_directory() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let bundle = tmp.path().join("bundle");
     std::fs::create_dir(&bundle).unwrap();
@@ -1511,6 +1707,13 @@ fn doctor_explains_invalid_state_directory() {
 
 #[test]
 fn empty_bundle_needs_initialization() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let bundle = tmp.path().join("bundle");
     std::fs::create_dir(&bundle).unwrap();
@@ -1542,6 +1745,13 @@ fn empty_bundle_needs_initialization() {
 
 #[test]
 fn json_usage_error_exception_matches_agent_contract() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let out = Command::cargo_bin("okbase")
         .unwrap()
         .args(["doctor", "--bogus", "--json"])
@@ -1570,6 +1780,13 @@ fn json_usage_error_exception_matches_agent_contract() {
 
 #[test]
 fn removal_guidance_covers_script_installations() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let binary = assert_cmd::cargo::cargo_bin("okbase");
     // A hard link avoids writable executable handles inherited by concurrent test subprocesses.
     let tmp = tempfile::tempdir_in(binary.parent().unwrap()).unwrap();
@@ -1607,6 +1824,13 @@ fn removal_guidance_covers_script_installations() {
 
 #[test]
 fn doctor_repairs_preserve_the_selected_bundle() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let project = tmp.path().join("project");
     std::fs::create_dir_all(project.join("empty target")).unwrap();
@@ -1661,6 +1885,13 @@ fn doctor_repairs_preserve_the_selected_bundle() {
 
 #[test]
 fn concurrent_cli_reads_share_one_index() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let bundle = tmp.path().join("bundle");
     std::fs::create_dir_all(&bundle).unwrap();

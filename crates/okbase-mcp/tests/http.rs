@@ -75,6 +75,13 @@ fn post(
 
 #[tokio::test(flavor = "multi_thread")]
 async fn http_handshake_scope_and_token() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let url = start(Some("s3cret")).await;
     let auth = [("Authorization", "Bearer s3cret")];
     let init = json!({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {

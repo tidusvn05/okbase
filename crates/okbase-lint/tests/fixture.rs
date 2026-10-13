@@ -26,6 +26,13 @@ fn expected() -> Vec<Expected> {
 
 #[test]
 fn finds_exactly_the_planted_problems() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let report = lint(&fixture(), &LintConfig::level(Level::L3)).unwrap();
     let mut got: Vec<Expected> = report
         .diagnostics
@@ -49,6 +56,13 @@ fn finds_exactly_the_planted_problems() {
 
 #[test]
 fn target_level_limits_rules() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let l1 = lint(&fixture(), &LintConfig::level(Level::L1)).unwrap();
     assert!(l1.diagnostics.iter().all(|d| d.level <= Level::L1));
     assert!(l1.diagnostics.iter().any(|d| d.rule == "missing-index"));
@@ -79,6 +93,13 @@ fn target_level_limits_rules() {
 
 #[test]
 fn outputs() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let report = lint(&fixture(), &LintConfig::level(Level::L3)).unwrap();
     insta::assert_snapshot!("lint_fixture_text", report.to_text());
     let sarif = report.to_sarif();
@@ -116,6 +137,13 @@ fn copy_dir(from: &Path, to: &Path) {
 
 #[test]
 fn fix_safe_creates_indexes_and_canonicalizes_tags_only() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path();
     copy_dir(&fixture(), root);
@@ -161,6 +189,13 @@ fn fix_safe_creates_indexes_and_canonicalizes_tags_only() {
 
 #[test]
 fn unreviewed_generated_fields_are_reported_until_verified() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let doc = "---\ntype: Guide\ntitle: Setup\ndescription: Install the tool and run the setup wizard once.\ngenerated: {by: okbase-adopt/0.1, at: \"2026-10-01\", fields: [type, description]}\n---\nBody.\n";
     fs::write(

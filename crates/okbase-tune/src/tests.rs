@@ -33,6 +33,13 @@ fn settings() -> Settings {
 
 #[test]
 fn init_samples_splits_and_batches_deterministically() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let st = tempfile::tempdir().unwrap();
     let idx = index(&fixture("multilingual"), &st.path().join("idx"));
     let scope = okbase_query::Scope::all();
@@ -75,6 +82,13 @@ fn init_samples_splits_and_batches_deterministically() {
 
 #[test]
 fn claim_submit_status_finalize() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let st = tempfile::tempdir().unwrap();
     let bundle = st.path().join("kb");
     std::fs::create_dir_all(&bundle).unwrap();
@@ -136,6 +150,13 @@ fn claim_submit_status_finalize() {
 
 #[test]
 fn guide_names_every_step() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     for cmd in [
         "tune init",
         "tune next",

@@ -18,6 +18,13 @@ fn opts() -> AdoptOptions {
 
 #[test]
 fn openclaw_reaches_l1_without_manual_edits() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let src = fixture("openclaw-s");
     let p = plan(&src, &opts()).unwrap();
     assert_eq!(p.level_before, None);
@@ -65,6 +72,13 @@ fn write(root: &Path, rel: &str, text: &str) {
 
 #[test]
 fn plain_folder_in_place_with_l2() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     let tmp = tempfile::tempdir().unwrap();
     let root = tmp.path();
     write(root, ".obsidian/app.json", "{}");
@@ -131,6 +145,13 @@ fn plain_folder_in_place_with_l2() {
 
 #[test]
 fn docs_sites_and_vaults_keep_their_index_pages() {
+    // Repository fixtures are not shipped in registry packages.
+    if !Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("../../fixtures")
+        .is_dir()
+    {
+        return;
+    }
     // A software repository: mkdocs.yml at the root, docs/ as the bundle.
     let tmp = tempfile::tempdir().unwrap();
     let repo = tmp.path();
