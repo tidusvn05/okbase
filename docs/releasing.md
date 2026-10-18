@@ -150,6 +150,15 @@ After approval:
    and git-cliff notes. Only stable tags run the crates job.
 5. Verify all outputs as described below. Keep main at the version just released.
 
+### ZIP advisory assessment for v0.2.4
+
+This release proposes three bounded exceptions for unreachable filesystem-extraction operations
+in zip 8.6.0; it does **not** upgrade zip to a patched version. Read
+[the assessment](security/zip-advisories.md) and include explicit acceptance of the exceptions in
+the single release approval. CI verifies the audited readers, source hashes and dependency graph
+and refuses an expired assessment (review before 2026-11-18). Upstream reader updates supporting
+zip >=9 must replace these exceptions when available.
+
 ## Trusted Publishing and bootstrap
 
 All automatic crates.io publication uses `rust-lang/crates-io-auth-action@v1` with

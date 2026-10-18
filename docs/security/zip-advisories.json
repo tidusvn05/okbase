@@ -1,0 +1,20 @@
+{
+  "reviewed_on": "2026-10-18",
+  "review_before": "2026-11-18",
+  "zip_version": "8.6.0",
+  "advisories": [
+    "RUSTSEC-2026-0367",
+    "RUSTSEC-2026-0368",
+    "RUSTSEC-2026-0369"
+  ],
+  "readers": {
+    "anydoc": {
+      "version": "0.2.4",
+      "source_sha256": "6650d82b8385ed09f8e431cbf09bcb58893d1bcf856a46bdbbbf64cb236078bf"
+    },
+    "calamine": {
+      "version": "0.36.1",
+      "source_sha256": "6df166a47ae850135637f14f4f49f89ea0981737d365491de8ad71a7465dca7a"
+    }
+  }
+}

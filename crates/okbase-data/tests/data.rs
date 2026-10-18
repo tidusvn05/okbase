@@ -294,3 +294,37 @@ fn macro_enabled_workbooks_are_tables_too() {
         .collect();
     assert_eq!(names, ["stock__kho_ha_noi", "stock__tokyo"]);
 }
+
+/// Spreadsheet reading must never apply ZIP paths, symlinks or permission metadata to disk.
+#[test]
+fn hostile_zip_metadata_is_not_extracted() {
+    let temp = tempfile::tempdir().unwrap();
+    let root = temp.path().join("input");
+    let outside = temp.path().join("outside");
+    std::fs::create_dir(&root).unwrap();
+    std::fs::create_dir(&outside).unwrap();
+    let sentinel = outside.join("sentinel");
+    std::fs::write(&sentinel, "unchanged").unwrap();
+    let before = std::fs::metadata(&sentinel).unwrap().permissions();
+    std::fs::write(
+        root.join("hostile.xlsx"),
+        include_bytes!("data/hostile.xlsx"),
+    )
+    .unwrap();
+    let data = Data::new(&root, &temp.path().join("datasets.sqlite"));
+    let report = data.sync().unwrap();
+    assert_eq!(report.imported, ["hostile.xlsx"]);
+    assert_eq!(data.tables(&all).unwrap().tables.len(), 2);
+    let result = data
+        .query(
+            "SELECT SUM(so_luong * gia) FROM hostile__kho_ha_noi",
+            &Limits::default(),
+            &all,
+        )
+        .unwrap();
+    assert_eq!(result.rows[0][0], 21.0);
+    assert_eq!(std::fs::read_to_string(&sentinel).unwrap(), "unchanged");
+    assert_eq!(std::fs::metadata(&sentinel).unwrap().permissions(), before);
+    assert_eq!(std::fs::read_dir(&root).unwrap().count(), 1);
+    assert_eq!(std::fs::read_dir(&outside).unwrap().count(), 1);
+}
