@@ -13,6 +13,10 @@ on:
         description: "Existing tag; resumes only missing outputs, never replaces published assets"
         required: true
 
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
 permissions:
   contents: read
 
@@ -227,6 +231,7 @@ jobs:
           tag_name: ${{ needs.check.outputs.tag }}
           name: okbase ${{ needs.check.outputs.tag }}
           body_path: NOTES.md
+          overwrite_files: false
           prerelease: ${{ needs.check.outputs.prerelease }}
           files: |
             dist/*.tar.gz
