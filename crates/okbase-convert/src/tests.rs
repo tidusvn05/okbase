@@ -106,3 +106,27 @@ fn converter_names_match_the_locked_versions() {
         );
     }
 }
+
+/// The ZIP extraction advisories must remain unreachable through document conversion.
+#[test]
+fn hostile_zip_metadata_is_not_extracted() {
+    let temp = tempfile::tempdir().unwrap();
+    let input = temp.path().join("input");
+    let outside = temp.path().join("outside");
+    std::fs::create_dir(&input).unwrap();
+    std::fs::create_dir(&outside).unwrap();
+    let sentinel = outside.join("sentinel");
+    std::fs::write(&sentinel, "unchanged").unwrap();
+    let before = std::fs::metadata(&sentinel).unwrap().permissions();
+    let doc = convert(
+        &input.join("hostile.docx"),
+        include_bytes!("../tests/data/hostile.docx"),
+        &[],
+    )
+    .unwrap();
+    assert!(doc.markdown.contains("Safe document content"));
+    assert_eq!(std::fs::read_to_string(&sentinel).unwrap(), "unchanged");
+    assert_eq!(std::fs::metadata(&sentinel).unwrap().permissions(), before);
+    assert_eq!(std::fs::read_dir(&input).unwrap().count(), 0);
+    assert_eq!(std::fs::read_dir(&outside).unwrap().count(), 1);
+}

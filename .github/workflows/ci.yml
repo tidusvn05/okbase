@@ -118,6 +118,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Verify the bounded ZIP advisory assessment
+        run: python3 scripts/check-zip-advisories.py
       - uses: EmbarkStudios/cargo-deny-action@v2
 
   installer:
