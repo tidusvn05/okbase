@@ -12,6 +12,9 @@ bundles, docs sites, wikis and PDFs; it is written in Rust and is read-only by d
 
 > okbase is a community project, not affiliated with Google.
 
+[See the benchmark tables](#what-the-experiments-show): answer accuracy, retrieval quality,
+cost and agent setup, with links to the recorded results.
+
 ## Get started: paste this to your agent
 
 Open your agent in the folder that holds your knowledge and paste:
@@ -93,17 +96,66 @@ cargo add okbase
 
 ## What the experiments show
 
-Every default is backed by a measurement with real agents. Details and data: [`spikes/README.md`](spikes/README.md).
+The tables below summarize recorded runs from **2026-09-30 to 2026-10-03**. The experiments
+compare approaches; acceptance runs check the actual okbase implementation. Each report includes
+the setup, scoring, misses and scripts or commands to reproduce it.
 
-| Question | Answer | Spike |
-|---|---|---|
-| Embeddings needed for a large bundle? | **No**: lexical tools 90–100% from 60k to 4.4M tokens | S4 |
-| Accuracy on a 1M-token bundle | Claude 28/30, Codex 26/30 | v0.1, S7 |
-| Small models? | 21/30: use a strong model for answering | S7 |
-| Spreadsheets of ~10k rows | 10/10 with `data_query`, 9× cheaper (without it, agents give up) | S5 |
-| Asking in another language | R@1 0.857 with EmbeddingGemma, 0.917 after fine-tuning | S1, S11 |
-| Agent sets okbase up alone | Claude 3/3, Codex 12/12; never added a consent flag on its own | S13, S16 |
-| Scanned PDF pages | 1–3 ms to hand over the image (rendering: 0.2–0.95 s) | S14 |
+**Answer accuracy as the knowledge base grows.** S4 used OpenClaw documentation and 30 questions
+in Vietnamese, English and Japanese per configuration, with Claude Sonnet answering. A correct
+answer had to include every required fact.
+
+| Bundle size | Lexical tools, no embeddings (G2) | Embedding-assisted tools (D) | Agent + Read/Grep/Glob (E) |
+|---|---|---|---|
+| 60k tokens | **100%** | 97% | 100% |
+| 150k tokens | **100%** | 100% | 100% |
+| 1M tokens | **93%** | 100% | 97% |
+| 4.4M tokens | **90%** | 93% | 93% |
+
+This supports the lexical default on these bundles. With 30 questions, one answer changes the
+score by 3.3 percentage points. [Full comparison, costs and limitations (S4)](spikes/okf-scale/RESULTS.md#round-2--upgrading-kb_grep-and-a-verification-rule).
+
+**Answering through okbase's MCP server.** These runs exercise the shipped tools, including
+metadata queries and SQL over sheets.
+
+| Test | Scope | Recorded result | Report |
+|---|---|---|---|
+| Lexical answers, Claude Sonnet | ~1M tokens; 30 vi/en/ja questions | **28/30 (93%)**; mean $0.029/question | [v0.1 acceptance](spikes/acceptance-v0.1/RESULTS.md) |
+| Lexical answers, Codex gpt-6.1-sol | Same 30 questions | **26/30 (87%)**; adding semantic search also scored 26/30 | [S7](spikes/codex/RESULTS.md#s7--lexical-okbase-with-codex-and-a-small-model-s7py) |
+| Lexical answers, Codex gpt-6-luna | Same 30 questions | **21/30 (70%)**; adding semantic search also scored 21/30 | [S7](spikes/codex/RESULTS.md#s7--lexical-okbase-with-codex-and-a-small-model-s7py) |
+| Metadata, content and sheets, Claude Sonnet | 3,020 documents; sheets of ~10k rows; 48 questions | **46/48** overall, **10/10** sheet questions; mean $0.044/question using server instructions only | [S15](spikes/mcp-tools/RESULTS.md#results-resultstablemd) |
+
+**When query tools help.** S5 compared three approaches on the same synthetic business bundle:
+**3,020 documents**, sheets of up to ~10k rows, and 48 questions answered by Claude Sonnet.
+These runs used the experimental server, before okbase's acceptance runs above.
+
+| Approach | Correct answers | Sheet questions | Mean cost/question | Median time |
+|---|---|---|---|---|
+| Directory + Read/Grep/Glob | 92% | 9/10 | $0.056 | 10.3 s |
+| Directory + generated metadata views | 94% | 8/10 | $0.070 | 9.6 s |
+| Directory + metadata queries + SQL | **96%** | **10/10** | **$0.032** | **7.3 s** |
+
+On sheet questions alone, mean cost fell from **$0.105 to $0.012** with query tools.
+[Results by question category, including the smaller 151-document bundle (S5)](spikes/biz-meta/RESULTS.md#results).
+
+**Retrieval and agent setup.** Retrieval scores measure whether the right document was found;
+they are separate from answer accuracy.
+
+| Test | Scope | Recorded result | Report |
+|---|---|---|---|
+| Semantic retrieval | 300 vi/en/ja questions, 100 documents | EmbeddingGemma Q4 **R@1 0.857**; bge-m3 int8 **0.750** (R@1: correct document ranked first) | [v0.3 acceptance](spikes/acceptance-v0.3/RESULTS.md) |
+| Retrieval on long documentation | 30 questions, 287 documents | Correct document in top 6: Gemma Q4 **29/30**, bge-m3 int8 **30/30**; Gemma missed one question | [v0.3 acceptance](spikes/acceptance-v0.3/RESULTS.md) |
+| Fine-tuning through the CLI | 320 training pairs; 80 held-out questions | R@1 **0.875 → 0.925**; cross-language R@1 stayed at **0.810** | [S11 workflow acceptance](spikes/embed-tune/RESULTS.md#acceptance-the-whole-workflow-with-real-agents-2026-10-02) |
+| Claude setup from one sentence | Small, large and multilingual folders | **3/3** ended with `doctor` OK; **0** unapproved consent flags | [S13](spikes/onboarding/RESULTS.md#results) |
+| Codex setup from one sentence | 6 folder scenarios × 2 models | **12/12** found `onboard`; **11/12** ended with `doctor` OK; **0** unapproved consent flags; sandbox registration needed a fix | [S13 Codex, including fix and rerun](spikes/codex/RESULTS.md#s13-with-codex--setup-from-one-sentence-s13py) |
+
+These are small, recorded evaluations on the versions named in each report. Questions were
+LLM-generated; the business bundle and multilingual retrieval data are synthetic. They establish
+what was tested, rather than guaranteeing the same scores on every knowledge base.
+
+More measurements: [embedding models, RAM and latency](spikes/embed-bench/RESULTS.md),
+[PDF/Office/HTML import](spikes/import-bench/RESULTS.md),
+[scanned-page image extraction](spikes/page-image-bench/RESULTS.md).
+The [experiment index](spikes/README.md) links all reports and lists work still to be tested.
 
 ## Builds
 
