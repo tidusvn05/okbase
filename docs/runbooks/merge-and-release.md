@@ -144,11 +144,11 @@ Release when there is at least one release-worthy commit and one of:
 
 Otherwise report "release candidate: vX.Y.Z, waiting" with the reason and stop here.
 
-**Which version?** `Cargo.toml` holds `X.Y.Z-dev`.
+**Which version?** Main keeps the last released version. Bump only for a concrete release.
 - Before 1.0: a breaking change or `feat` → the next minor (`0.2.0`); only `fix`/`perf`/deps →
   the next patch (`0.1.1`).
 - From 1.0: breaking → major; `feat` → minor; otherwise patch.
-- No tag yet: the version in `Cargo.toml` without `-dev` (the first release).
+- No tag yet: the proposed first stable version in `Cargo.toml`.
 
 **Stop and ask the maintainer instead of releasing** when:
 - this is the first release (no tag yet), a 1.0, or a major release;
@@ -171,23 +171,11 @@ cargo run --release -p okbase-eval -- lexical           # no regression
 and that `README.md`, `docs/usage.md` and `llms.txt` describe the commands the release ships (look at
 every `feat` since the last tag). Then follow "Cutting a release" in `docs/releasing.md` exactly:
 
-```sh
-V=X.Y.Z
-sed -i "s/^version = \".*\"/version = \"$V\"/" Cargo.toml
-sed -i "s/\(okbase[a-z-]* = { path = \"crates\/[a-z-]*\", version = \"\)[^\"]*/\1$V/" Cargo.toml
-cargo check --workspace
-git diff Cargo.toml                         # only the version lines changed
-git cliff --tag "v$V" -o CHANGELOG.md
-git diff CHANGELOG.md                       # read it: one section for v$V, user-facing entries
-git add Cargo.toml Cargo.lock CHANGELOG.md  # never `git commit -a`: it sweeps in local changes
-git status --short                          # nothing else staged
-git commit -m "chore(release): v$V"
-git tag -a "v$V" -m "okbase v$V"
-git push origin main "v$V"
-```
-
-The release commit and the tag are the one case where this runbook pushes to `main`, as
-`docs/releasing.md` does.
+Prepare the release PR, verify it and request the single release/configuration approval as described
+in [releasing.md](../releasing.md#prepare-approve-merge-and-tag). Scan for secrets before every push.
+Merge only after that approval and green CI, then tag the approved main commit. Never push release
+commits directly to main. A narrower user instruction or explicit approval boundary takes precedence
+ over the maintenance workflow's standing authorization.
 
 Then watch the release workflow:
 
@@ -201,7 +189,7 @@ gh run watch <run-id> --exit-status
 patch; if the failed run published a release, mark it broken in its notes. Report to the
 maintainer either way.
 
-Before moving to step 7 or bumping the development version, complete
+Before moving to step 7, complete
 [Publishing to crates.io](../releasing.md#publishing-to-cratesio) from a clean worktree of `v$V`.
 Publish all 17 packages, excluding `okbase-eval`, and verify every exact version plus a registry
 CLI installation. Follow the documented partial-publish and HTTP 429 recovery rules.
@@ -229,9 +217,7 @@ If a binary needs a newer glibc than promised, fix forward: correct `docs/usage.
 `docs/releasing.md` and the check in `install.sh` in a pull request, and edit the release notes.
 
 - Windows (`install.ps1`) needs a Windows machine: if you have none, say so in the report.
-- Set the next development version (`X.Y.(Z+1)-dev`) with the same two `sed` lines and
-  `cargo check --workspace`, then `git add Cargo.toml Cargo.lock`, commit
-  `chore(release): X.Y.(Z+1)-dev`, push to `main`.
+- Keep main at the released version; do not create a development-version commit or PR.
 - On each issue closed by a pull request in this release, comment `Released in vX.Y.Z.` with the
   release link.
 

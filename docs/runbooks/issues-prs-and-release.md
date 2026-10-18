@@ -105,13 +105,12 @@ Follow steps 6 and 7 of [merge-and-release.md](merge-and-release.md) and all of
   this exception to the one-release goal rather than rewriting history.
 - Publish every publishable crate from the release tag, excluding `okbase-eval`, following
   `docs/releasing.md` (credentials, dependency order, partial publishes and HTTP 429 waits).
-  Verify all exact registry versions and install `okbase-cli` from crates.io before advancing
-  the development version. Report pending registry uploads as an incomplete release.
+  Verify all exact registry versions and install `okbase-cli` from crates.io. Report pending registry uploads as an incomplete release.
 - Verify archive checksums, installer version, `doctor` on a fixture, and Linux glibc requirements.
   Rerun the relevant bug reproductions with the released binary. Report platform checks that
   could not be performed locally, including the Windows installer when unavailable.
-- Comment on fixed issues with the release link, advance to the next development version, and
-  verify the version update. Check the resulting CI status and report any pending checks.
+- Comment on fixed issues with the release link. Keep main at the released version; do not create
+  a development-version commit or PR. Check CI and report any pending checks.
 
 ## 6. Report
 
