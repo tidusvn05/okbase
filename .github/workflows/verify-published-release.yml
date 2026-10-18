@@ -1,0 +1,75 @@
+name: Verify published v0.2.4
+
+on:
+  push:
+    branches: [verify/release-v0.2.4]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify ${{ matrix.variant }} ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {variant: okbase, target: x86_64-unknown-linux-gnu, os: ubuntu-22.04}
+          - {variant: okbase, target: aarch64-unknown-linux-gnu, os: ubuntu-22.04-arm}
+          - {variant: okbase-full, target: x86_64-unknown-linux-gnu, os: ubuntu-24.04}
+          - {variant: okbase-full, target: aarch64-unknown-linux-gnu, os: ubuntu-24.04-arm}
+          - {variant: okbase, target: x86_64-apple-darwin, os: macos-15-intel}
+          - {variant: okbase, target: aarch64-apple-darwin, os: macos-14}
+          - {variant: okbase-full, target: aarch64-apple-darwin, os: macos-14}
+          - {variant: okbase, target: x86_64-pc-windows-msvc, os: windows-latest}
+          - {variant: okbase-full, target: x86_64-pc-windows-msvc, os: windows-latest}
+    env:
+      VARIANT: ${{ matrix.variant }}
+      TARGET: ${{ matrix.target }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: v0.2.4
+      - name: Install and exercise the published Unix binary
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          set -euo pipefail
+          export OKBASE_INSTALL_DIR="$RUNNER_TEMP/installed-$VARIANT"
+          options=(--version v0.2.4)
+          if [ "$VARIANT" = okbase-full ]; then options+=(--full); fi
+          sh install.sh "${options[@]}"
+          exe="$OKBASE_INSTALL_DIR/okbase"
+          test "$("$exe" --version)" = 'okbase 0.2.4'
+          "$exe" --bundle fixtures/okf-official/acme_retail --state-dir "$RUNNER_TEMP/state" doctor --json > "$RUNNER_TEMP/doctor.json"
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          report = json.loads((Path(os.environ['RUNNER_TEMP']) / 'doctor.json').read_text())
+          assert report['ok'], report
+          assert any(item['id'] == 'mcp' and item['status'] == 'ok' for item in report['checks']), report
+          print(json.dumps(report))
+          PY
+          echo "Verified $VARIANT v0.2.4 on $TARGET: installer checksum, version, doctor and real MCP catalog round trip." >> "$GITHUB_STEP_SUMMARY"
+      - name: Install and exercise the published Windows binary
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $env:OKBASE_VERSION = 'v0.2.4'
+          $env:OKBASE_FULL = if ($env:VARIANT -eq 'okbase-full') { '1' } else { '0' }
+          $env:OKBASE_INSTALL_DIR = Join-Path $env:RUNNER_TEMP "installed-$env:VARIANT"
+          & .\install.ps1
+          $exe = Join-Path $env:OKBASE_INSTALL_DIR 'okbase.exe'
+          $version = & $exe --version
+          if ($LASTEXITCODE -ne 0 -or $version.Trim() -ne 'okbase 0.2.4') { throw "Unexpected binary version: $version" }
+          $raw = & $exe --bundle fixtures/okf-official/acme_retail --state-dir (Join-Path $env:RUNNER_TEMP 'state') doctor --json
+          if ($LASTEXITCODE -ne 0) { throw "Doctor failed: $raw" }
+          $report = $raw | ConvertFrom-Json
+          if (-not $report.ok) { throw "Doctor report failed: $raw" }
+          $mcp = @($report.checks | Where-Object { $_.id -eq 'mcp' -and $_.status -eq 'ok' })
+          if ($mcp.Count -ne 1) { throw "MCP round trip failed: $raw" }
+          Write-Output $raw
+          Add-Content $env:GITHUB_STEP_SUMMARY "Verified $env:VARIANT v0.2.4 on $env:TARGET`: installer checksum, version, doctor and real MCP catalog round trip."
