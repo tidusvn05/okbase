@@ -1,0 +1,94 @@
+{
+  "commit": "9dbc907455946980c227216a53d339a4e64edfcf",
+  "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+  "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "platform": "Linux x86_64",
+  "logical_cpus": 8,
+  "jobs": 4,
+  "runs": [
+    {
+      "name": "baseline",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--no-run",
+        "--locked",
+        "--jobs",
+        "4",
+        "--target-dir",
+        "<output>/baseline"
+      ],
+      "wall_seconds": 135.231,
+      "debug_disk_bytes": 11217719296,
+      "debug_apparent_bytes": 12584993003,
+      "executable_count": 39,
+      "largest_executables": [
+        {
+          "name": "okbase-7fb1a0f6491defe5",
+          "bytes": 434141776
+        },
+        {
+          "name": "server-26080fe124ed9032",
+          "bytes": 401923584
+        },
+        {
+          "name": "http-dd31abeed22023a1",
+          "bytes": 392296072
+        },
+        {
+          "name": "cli-68f204994273e647",
+          "bytes": 385128112
+        },
+        {
+          "name": "router-5980804c717505f7",
+          "bytes": 374847600
+        }
+      ]
+    },
+    {
+      "name": "line-tables",
+      "command": [
+        "cargo",
+        "--config",
+        "profile.dev.debug=\"line-tables-only\"",
+        "--config",
+        "profile.dev.package.\"*\".debug=false",
+        "test",
+        "--workspace",
+        "--no-run",
+        "--locked",
+        "--jobs",
+        "4",
+        "--target-dir",
+        "<output>/line-tables"
+      ],
+      "wall_seconds": 98.888,
+      "debug_disk_bytes": 3610234880,
+      "debug_apparent_bytes": 3972320191,
+      "executable_count": 39,
+      "largest_executables": [
+        {
+          "name": "okbase-5a9bb8b75f27e391",
+          "bytes": 134839568
+        },
+        {
+          "name": "http-d4d3a69b09534c58",
+          "bytes": 116642824
+        },
+        {
+          "name": "server-96d090356425b4cf",
+          "bytes": 112220136
+        },
+        {
+          "name": "cli-07e210e6593389c4",
+          "bytes": 101563784
+        },
+        {
+          "name": "lexical-0a48277c0b699f4b",
+          "bytes": 98604608
+        }
+      ]
+    }
+  ]
+}

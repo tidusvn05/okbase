@@ -12,6 +12,17 @@ Requirements: stable Rust (MSRV 1.89) and [`cargo-deny`](https://github.com/Emba
 
 The workspace lives in `crates/`. `spikes/` holds standalone experiments and is excluded from the workspace.
 
+Development and test builds retain file names and line numbers for workspace crates, while
+omitting dependency debug information to limit `target/debug` disk usage. The measurement and
+reproduction script are in [the build-profile spike](spikes/build-profile/RESULTS.md). Release
+builds use their existing profile.
+
+For a debugging session that needs local variables or dependency internals, override both settings:
+
+```sh
+cargo --config 'profile.dev.debug=2' --config 'profile.dev.package."*".debug=2' test --workspace
+```
+
 Run these before opening a pull request (CI runs the same checks, plus tests on Linux, macOS and Windows and an MSRV build):
 ```
 cargo fmt --all -- --check
