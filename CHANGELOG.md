@@ -19,6 +19,7 @@ breaking change). This file is generated from commit messages by git-cliff.
 
 - prepare workspace crates for crates.io publishing (8b065bd)
 - integrate crates.io into installation and release workflow (92d92be)
+- bound ZIP extraction advisory exceptions with audited readers and regression tests (6a14182)
 
 ### Continuous integration
 
