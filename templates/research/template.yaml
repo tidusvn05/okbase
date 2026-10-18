@@ -1,0 +1,27 @@
+format_version: 1
+version: 1.0.0
+id: research
+title: Atlas research and investigations
+description: Keep research questions, hypotheses, experiments and recommendations
+  connected to reproducible evidence.
+roles:
+- developer
+- product-manager
+- leader
+bundle: bundle
+questions:
+- question: What research question is being investigated?
+  source: research/question
+  evidence: Which retry-age definition reveals an old pending event
+- question: What is the hypothesis?
+  source: hypotheses/old-events
+  evidence: Measuring only the latest retry attempt can hide an older event
+- question: What should the oldest pending age be in the fixture?
+  source: experiments/retry-age
+  evidence: Oldest pending event age should be 120 minutes
+- question: Are these measured production results?
+  source: evidence/demo-result
+  evidence: hand-calculated expected results, not measured production data
+- question: What must happen before accepting the recommendation?
+  source: decisions/monitoring-definition
+  evidence: inspect a real query result and its limitations

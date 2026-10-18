@@ -1,0 +1,27 @@
+format_version: 1
+version: 1.0.0
+id: personal-assistant
+title: Personal assistant knowledge
+description: Keep durable preferences, daily context and project memory usable across
+  assistant sessions.
+roles:
+- individual
+- developer
+- leader
+bundle: bundle
+questions:
+- question: How does the user prefer technical answers?
+  source: profile/preferences
+  evidence: The user prefers a short written summary before a detailed technical explanation.
+- question: What is the weekly learning goal?
+  source: goals/current-quarter
+  evidence: complete one database reliability exercise each week
+- question: What is the current Atlas focus?
+  source: projects/atlas
+  evidence: notification reliability, especially duplicate delivery handling
+- question: What remains unverified from the last session?
+  source: journal/2026-10-14
+  evidence: The dashboard's retry-age percentile is unverified
+- question: What should the next session do first?
+  source: handoffs/next-session
+  evidence: obtain the retry dashboard query before validating its percentile calculation

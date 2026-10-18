@@ -1,0 +1,8 @@
+format_version: 1
+id: my-template
+version: 1.0.0
+title: My knowledge base
+description: Verified guides for my team.
+roles:
+  - developer
+bundle: bundle

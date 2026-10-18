@@ -1,0 +1,26 @@
+format_version: 1
+version: 1.0.0
+id: engineering-lead
+title: Atlas engineering leadership
+description: Manage technical decisions, ownership, debt, delivery risks and engineering
+  reports with traceable evidence.
+roles:
+- tech-lead
+- engineering-manager
+bundle: bundle
+questions:
+- question: Who owns worker correctness?
+  source: team/ownership
+  evidence: The api-team owns issue writes, worker correctness and API contracts.
+- question: What must a behavior-changing PR include?
+  source: standards/change-review
+  evidence: link its requirement or decision, include test evidence
+- question: Which monitoring definition does the RFC propose?
+  source: rfcs/retry-dashboard
+  evidence: oldest pending event age
+- question: Why is the dashboard debt task blocked?
+  source: debt/dashboard-query
+  evidence: blocked on a platform export
+- question: What is the highest reported delivery risk?
+  source: reports/week-42
+  evidence: the missing monitoring query

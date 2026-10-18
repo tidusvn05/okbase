@@ -16,6 +16,10 @@ readme = "README.md"
 workspace = true
 
 [dependencies]
+okbase-templates.workspace = true
+okbase-lint.workspace = true
+tempfile.workspace = true
+toml_edit.workspace = true
 okbase-core.workspace = true
 okbase-standard.workspace = true
 okbase-analyze.workspace = true
@@ -26,7 +30,4 @@ serde-saphyr.workspace = true
 regex.workspace = true
 
 [dev-dependencies]
-toml_edit.workspace = true
-tempfile.workspace = true
 insta.workspace = true
-okbase-lint.workspace = true

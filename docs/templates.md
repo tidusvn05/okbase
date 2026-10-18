@@ -2,8 +2,10 @@
 
 Choose a starter bundle when you want to try okbase before writing your first documents. Each
 template contains a coherent fictional example, five trial questions with cited evidence, three
-workflow guides, type schemas and a tag vocabulary. All templates are embedded in both builds;
-creating one requires no network, model or account.
+workflow guides, type schemas and a tag vocabulary. The ten built-in templates are embedded in both builds;
+creating one requires no network, model or account. Browse their actual Markdown in
+[`templates/`](../templates/README.md) before choosing. Local and Git templates use the same
+[public v1 format](template-format.md).
 
 ```sh
 okbase templates
@@ -148,11 +150,48 @@ authorization. Logs, issue-tracker synchronization, deployment execution, remind
 external message sending use separately configured host tools. The workflow guides explain what to
 read, record and verify; creating a template does not start background work or connect accounts.
 
-## Contributing a built-in template
+## Use a local or Git template
 
-Internal YAML manifests live in `crates/okbase-adopt/templates/` and are embedded by the registry in
-`okbase-adopt`. They are repository assets, not a supported custom-template installation interface.
-Include coherent source records, type schemas, five grounded trial questions and three workflows.
-Use English, fictional information, and links resolvable inside the generated bundle. Schema fields
-must fit existing OKF metadata and custom field types. The acceptance suite creates every bundle,
-lints it, checks source evidence through the index, verifies queries and validates its link graph.
+A source can be a single template directory or a collection with `catalog.yaml`:
+
+```sh
+okbase templates --source ./my-templates --json
+okbase -b ./kb init --template-path ./my-template --print
+okbase -b ./kb init --template-path ./my-templates --template my-template
+```
+
+For a repository, select its source directory and an optional branch, tag or commit:
+
+```sh
+okbase templates --repo https://github.com/acme/knowledge-templates --json
+okbase -b ./kb init \
+  --template-repo https://github.com/acme/knowledge-templates \
+  --template-path templates/infra-ops --ref v1.0.0 --print
+```
+
+`--template-path` is relative to the repository when `--template-repo` is supplied. Omit it for a
+root template/catalog. Use `--template ID` to select an entry from a collection; a single-entry
+collection can be selected automatically. For repository listing, `--source` selects a subdirectory.
+Git HTTPS, SSH (`ssh://...` or `git@host:owner/repo.git`) and local Git directories are supported.
+Git must be on PATH; SSH uses the host's keys/agent and defaults to batch mode. Set authentication
+in the host environment, never in template files or HTTPS URLs. Global Git config is not imported;
+host-supplied `GIT_ASKPASS` or SSH authentication can be used for private repositories.
+
+Repository listing returns the resolved `commit`. Init preview/creation returns `source`, and
+`log.md` records the template content version and exact commit/path. Pin a commit for reproducible
+initialization. Preview may fetch an explicitly chosen repository, but never creates the destination.
+No template scripts, filters, checkout hooks or submodules are executed. The source bundle must
+meet L2 and declare schemas for its document types before files are written.
+
+## Create and contribute templates
+
+Copy [`templates/_starter/`](../templates/_starter/README.md), edit its manifest and Markdown,
+and follow the [v1 format specification](template-format.md). A single template or catalog can be
+published in any compatible Git repository; users can initialize from it without a CLI release.
+
+Built-in templates live in root `templates/`. Add a directory and an entry to `catalog.yaml`;
+the asset crate embeds it automatically during build, with no CLI registry edit. Updating the
+built-in offline catalog requires a new binary. Do not maintain a second copy inside a CLI crate.
+For built-in contributions, include coherent English fictional records, five grounded trial questions,
+three workflows, type schemas and links resolvable inside the source bundle. Acceptance tests discover
+the catalog, initialize every bundle, lint it, retrieve evidence, query workflows and check its graph.

@@ -1,0 +1,27 @@
+format_version: 1
+version: 1.0.0
+id: product-management
+title: Atlas product management
+description: Connect user problems, product requirements, scope decisions and post-release
+  evidence.
+roles:
+- product-manager
+- project-manager
+- founder
+bundle: bundle
+questions:
+- question: Who is Atlas for?
+  source: product/vision
+  evidence: small engineering teams that lose track of issue ownership during handoffs
+- question: How much interview evidence is available?
+  source: research/handoff-interviews
+  evidence: Three fictional team leads
+- question: What must happen when an assignment event is replayed?
+  source: requirements/notification-reliability
+  evidence: Replaying an assignment event must not send a second notification.
+- question: Why were digest emails deferred?
+  source: decisions/defer-digest
+  evidence: protect the M1 notification reliability scope
+- question: What acceptance evidence is missing?
+  source: reports/m1-review
+  evidence: retry-age monitoring evidence is still missing

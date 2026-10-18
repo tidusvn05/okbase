@@ -1,0 +1,27 @@
+format_version: 1
+version: 1.0.0
+id: infra-ops
+title: Atlas infrastructure operations
+description: Map services to servers and environments, then connect deployments, policies,
+  runbooks and incident evidence.
+roles:
+- devops
+- sre
+- tech-lead
+bundle: bundle
+questions:
+- question: Where does atlas-api run and what does it depend on?
+  source: services/api
+  evidence: atlas-api runs on app-01 in production and depends on atlas-db on db-01.
+- question: Which services share app-01?
+  source: servers/app-01
+  evidence: app-01 hosts atlas-api and atlas-worker in production.
+- question: What is the previous working application version?
+  source: runbooks/rollback-api
+  evidence: the previous working application artifact is 1.4.1
+- question: Is the cause of INC-07 confirmed?
+  source: incidents/inc-07
+  evidence: the causal mechanism remains unconfirmed
+- question: What should the postmortem investigate next?
+  source: postmortems/inc-07
+  evidence: compare connection-pool settings between 1.4.1 and 1.4.2

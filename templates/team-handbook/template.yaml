@@ -1,0 +1,27 @@
+format_version: 1
+version: 1.0.0
+id: team-handbook
+title: Atlas team handbook
+description: Help a team find ownership, onboard members and follow documented working
+  practices.
+roles:
+- leader
+- team-member
+- new-joiner
+bundle: bundle
+questions:
+- question: What is the team mission?
+  source: team/charter
+  evidence: reliable issue handoffs for small engineering teams
+- question: Who owns monitoring exports?
+  source: team/ownership
+  evidence: deployment and monitoring exports go to the platform-team
+- question: What should a new member read first?
+  source: onboarding/first-week
+  evidence: Start by reading the team charter
+- question: When does a discussion become an accepted decision?
+  source: policies/communication
+  evidence: when its owner records the outcome and rationale
+- question: What must an access request contain?
+  source: policies/access
+  evidence: the project, required role, business reason and approving owner

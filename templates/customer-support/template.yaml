@@ -1,0 +1,27 @@
+format_version: 1
+version: 1.0.0
+id: customer-support
+title: Atlas customer support
+description: Answer product questions and handle customer cases with linked policies,
+  evidence and escalation paths.
+roles:
+- support
+- customer-success
+- product-manager
+bundle: bundle
+questions:
+- question: Are digest emails available?
+  source: faq/notifications
+  evidence: Digest emails are not available in the current release.
+- question: What does the product do after temporary delivery failure?
+  source: products/atlas
+  evidence: retries temporary delivery failures
+- question: Who receives a reproducible missing-notification escalation?
+  source: policies/escalation
+  evidence: to the api-team
+- question: What symptom distinctions should triage make?
+  source: guides/missing-notification
+  evidence: delayed, missing or duplicated
+- question: What is known about the cause of CS-17?
+  source: cases/cs-17
+  evidence: the root cause is unknown

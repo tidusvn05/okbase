@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/*"]
+members = ["crates/*", "templates"]
 exclude = ["spikes"]
 
 [workspace.package]
@@ -22,6 +22,7 @@ missing_docs = "warn"
 all = { level = "warn", priority = -1 }
 
 [workspace.dependencies]
+okbase-templates = { path = "templates", version = "0.2.5" }
 okbase-core = { path = "crates/okbase-core", version = "0.2.5" }
 okbase-standard = { path = "crates/okbase-standard", version = "0.2.5" }
 okbase-analyze = { path = "crates/okbase-analyze", version = "0.2.5" }

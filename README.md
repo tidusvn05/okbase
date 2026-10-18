@@ -63,7 +63,8 @@ Ten offline templates cover software projects, personal and project assistants, 
 operations, product management, engineering leadership, executive work, team handbooks, customer
 support and research. Each has five trial questions, three workflow guides and linked example
 records. `init --print` previews all files; after creation, replace examples and extend ordinary
-Markdown, type schemas and tags. [Choose and customize a template](docs/templates.md).
+Markdown, type schemas and tags. [Choose and customize a template](docs/templates.md). Browse [the source bundles](templates/README.md);
+[the public template format](docs/template-format.md) also supports local and Git templates.
 
 ## Install it yourself
 

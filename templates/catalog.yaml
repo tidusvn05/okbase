@@ -1,0 +1,12 @@
+format_version: 1
+templates:
+- path: software-project
+- path: personal-assistant
+- path: project-assistant
+- path: infra-ops
+- path: product-management
+- path: engineering-lead
+- path: executive
+- path: team-handbook
+- path: customer-support
+- path: research

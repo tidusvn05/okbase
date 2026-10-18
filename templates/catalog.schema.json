@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "okbase template catalog v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format_version",
+    "templates"
+  ],
+  "properties": {
+    "format_version": {
+      "const": 1
+    },
+    "templates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

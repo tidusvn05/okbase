@@ -1,0 +1,26 @@
+format_version: 1
+version: 1.0.0
+id: software-project
+title: Atlas software project
+description: Develop, maintain and explain a software project using linked architecture,
+  API and delivery knowledge.
+roles:
+- developer
+- tech-lead
+bundle: bundle
+questions:
+- question: Why was PostgreSQL chosen?
+  source: decisions/postgresql
+  evidence: PostgreSQL keeps the issue write and outbox insert in one transaction.
+- question: What happens when an idempotency key is reused with a different payload?
+  source: api/issues
+  evidence: repeating a key with a different payload returns HTTP 409
+- question: Which data can Redis lose without losing issues?
+  source: architecture/system
+  evidence: Redis holds disposable rate-limit counters only.
+- question: What must the compatibility test cover?
+  source: development/testing
+  evidence: HTTP 409 for an idempotency key reused with a different payload
+- question: What schema changes survive an application rollback?
+  source: delivery/release
+  evidence: keeps additive schema changes

@@ -1,0 +1,27 @@
+format_version: 1
+version: 1.0.0
+id: project-assistant
+title: Atlas project assistant
+description: Maintain linked tasks, decisions, investigations and evidence-based project
+  reports.
+roles:
+- developer
+- project-manager
+- leader
+bundle: bundle
+questions:
+- question: What does M1 deliver?
+  source: project/context
+  evidence: Atlas M1 delivers reliable issue notifications.
+- question: Which task is complete?
+  source: tasks/at-42
+  evidence: AT-42 is done
+- question: Why is AT-43 blocked?
+  source: tasks/at-43
+  evidence: pending the instrumentation export from the platform-team
+- question: Are digest emails an M1 blocker?
+  source: decisions/m1-scope
+  evidence: Digest emails are deferred until after M1
+- question: How many tasks are done and blocked in the report?
+  source: reports/week-42
+  evidence: One task is done and one task is blocked

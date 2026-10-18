@@ -2310,6 +2310,7 @@ dependencies = [
  "okbase-core",
  "okbase-lint",
  "okbase-standard",
+ "okbase-templates",
  "regex",
  "serde",
  "serde-saphyr",
@@ -2530,6 +2531,14 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror",
+]
+
+[[package]]
+name = "okbase-templates"
+version = "0.2.5"
+dependencies = [
+ "serde",
+ "serde-saphyr",
 ]
 
 [[package]]

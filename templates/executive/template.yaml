@@ -1,0 +1,27 @@
+format_version: 1
+version: 1.0.0
+id: executive
+title: Atlas executive knowledge
+description: Connect strategy, objectives, metric definitions, initiatives and executive
+  decisions to dated evidence.
+roles:
+- ceo
+- founder
+- executive
+bundle: bundle
+questions:
+- question: What is the strategic focus?
+  source: strategy/direction
+  evidence: reliable issue handoffs for small engineering teams
+- question: Has a numerical production target been approved?
+  source: objectives/q4
+  evidence: no numerical production target has been approved
+- question: How is reliable notification rate defined?
+  source: metrics/reliable-notifications
+  evidence: delivered exactly once divided by distinct accepted assignment events
+- question: What is the accepted M1 scope decision?
+  source: decisions/m1-scope
+  evidence: Keep digest emails outside M1 until notification reliability is measurable.
+- question: What KPI value can the weekly briefing substantiate?
+  source: reports/week-42
+  evidence: The reliability KPI value is unknown

@@ -22,3 +22,7 @@ Users paste a prompt to their agent; the agent sets okbase up and the user only 
 ## Optional
 
 - [Design](docs/design.md): architecture and the evidence behind every default
+
+Template authoring: docs/template-format.md; reviewable bundles and catalog: templates/README.md.
+Use `templates --source DIR` or `templates --repo URL` to inspect custom catalogs;
+`init --template-path DIR` or `init --template-repo URL --ref COMMIT` reuses the same v1 format.

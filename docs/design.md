@@ -595,7 +595,10 @@ fields:
 
 Starter knowledge templates: see [the implementation plan](plans/templates.md) and
 [user guide](templates.md). Ten templates create ordinary, independently managed L2 bundles;
-creation is explicit, previews write nothing, and the host retains read scopes and execution rights.
+creation is explicit, previews write nothing, and the host retains read scopes and execution rights. Templates now use the
+[public v1 manifest/catalog format](template-format.md): reviewable Markdown in root `templates/`,
+automatic build-time embedding, and the same validated init pipeline for built-in, local and Git
+sources. Git templates record the resolved commit and execute no repository code.
 
 | Date | Decision | Why |
 |---|---|---|

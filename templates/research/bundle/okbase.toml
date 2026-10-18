@@ -1,0 +1,5 @@
+# okbase settings for this bundle (https://github.com/tidusvn05/okbase)
+[bundle]
+profile = "okf"
+# Languages people write and ask in; used by fine-tuning and advice.
+langs = ["en"]

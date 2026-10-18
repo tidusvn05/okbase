@@ -214,15 +214,70 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 }
             }
         }
-        Command::Templates => {
-            let templates = okbase_adopt::templates::catalog()?;
-            emit(json, &serde_json::json!({"templates": templates}), || {
-                templates.iter().map(|t| format!("{} — {}\n  for: {}; types: {}\n  {}\n  create: okbase -b ./kb init --template {}\n", t.id, t.title, t.roles.join(", "), t.types.join(", "), t.description, t.id)).collect::<Vec<_>>().join("\n")
+        Command::Templates {
+            source,
+            repo,
+            reference,
+        } => {
+            let snapshot = repo
+                .as_deref()
+                .map(|url| {
+                    okbase_adopt::templates::repository::Repository::fetch(
+                        url,
+                        reference.as_deref(),
+                    )
+                })
+                .transpose()?;
+            let directory = match &snapshot {
+                Some(repo) => Some(
+                    repo.directory(
+                        source
+                            .as_deref()
+                            .map(|p| {
+                                p.to_str().ok_or_else(|| {
+                                    anyhow::anyhow!("template source path must be UTF-8")
+                                })
+                            })
+                            .transpose()?,
+                    )?,
+                ),
+                None => source,
+            };
+            let templates = match directory {
+                Some(path) => okbase_adopt::templates::catalog_from(&path)?,
+                None => okbase_adopt::templates::catalog()?,
+            };
+            let mut result = serde_json::json!({"templates": templates});
+            if let Some(snapshot) = &snapshot {
+                result["commit"] = serde_json::json!(snapshot.commit);
+            }
+            emit(json, &result, || {
+                let mut text = templates
+                    .iter()
+                    .map(|t| {
+                        format!(
+                            "{} — {}\n  for: {}; types: {}\n  {}\n",
+                            t.id,
+                            t.title,
+                            t.roles.join(", "),
+                            t.types.join(", "),
+                            t.description
+                        )
+                    })
+                    .collect::<Vec<_>>()
+                    .join("\n");
+                if let Some(snapshot) = &snapshot {
+                    text.push_str(&format!("\nResolved commit: {}\n", snapshot.commit));
+                }
+                text
             })?;
         }
         Command::Init {
             title,
             template,
+            template_path,
+            template_repo,
+            reference,
             print,
             description,
             langs,
@@ -235,14 +290,52 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 types,
                 today: today(),
             };
-            let files = match template.as_deref() {
-                Some(id) => okbase_adopt::templates::load(id)?.files(&bundle_dir, &options)?,
+            let snapshot = template_repo
+                .as_deref()
+                .map(|url| {
+                    okbase_adopt::templates::repository::Repository::fetch(
+                        url,
+                        reference.as_deref(),
+                    )
+                })
+                .transpose()?;
+            let source_path = match &snapshot {
+                Some(repo) => Some(
+                    repo.directory(
+                        template_path
+                            .as_deref()
+                            .map(|p| {
+                                p.to_str()
+                                    .ok_or_else(|| anyhow::anyhow!("template path must be UTF-8"))
+                            })
+                            .transpose()?,
+                    )?,
+                ),
+                None => template_path.clone(),
+            };
+            let mut selected = match source_path {
+                Some(path) => Some(okbase_adopt::templates::select_from(
+                    &path,
+                    template.as_deref(),
+                )?),
+                None => template
+                    .as_deref()
+                    .map(okbase_adopt::templates::load)
+                    .transpose()?,
+            };
+            if let (Some(repo), Some(selected)) = (&snapshot, &mut selected) {
+                repo.identify(selected, template_path.as_deref().and_then(|p| p.to_str()));
+            }
+            let template = selected.as_ref().map(|t| t.summary().id);
+            let provenance = selected.as_ref().map(|t| t.source.clone());
+            let files = match &selected {
+                Some(t) => t.files(&bundle_dir, &options)?,
                 None => okbase_adopt::scaffold::init_files(&bundle_dir, &options)?,
             };
             okbase_adopt::scaffold::check_new(&bundle_dir, &files, &[])?;
             let mut next = if template.is_some() {
                 vec![
-                    "okbase get guides/getting-started".to_owned(),
+                    "okbase lint --level L2".to_owned(),
                     "okbase onboard".to_owned(),
                 ]
             } else {
@@ -260,7 +353,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     .collect();
                 emit(
                     json,
-                    &serde_json::json!({"template": template, "files": planned, "next": []}),
+                    &serde_json::json!({"template": template, "source": provenance, "files": planned, "next": []}),
                     || {
                         files
                             .iter()
@@ -273,8 +366,9 @@ fn run(cli: Cli) -> Result<ExitCode> {
             let written = okbase_adopt::scaffold::write_new(&bundle_dir, &files, &[])?;
             let text = match template.as_deref() {
                 Some(id) => format!(
-                    "created {} files from template {id} (fictional English examples; read guides/getting-started)",
-                    written.len()
+                    "created {} files from template {id}; source: {}",
+                    written.len(),
+                    provenance.as_deref().unwrap_or("unknown")
                 ),
                 None => format!(
                     "created {}",
@@ -288,6 +382,7 @@ fn run(cli: Cli) -> Result<ExitCode> {
             let mut result = serde_json::json!({"created": written});
             if let Some(id) = template {
                 result["template"] = serde_json::json!(id);
+                result["source"] = serde_json::json!(provenance);
             }
             let next: Vec<&str> = next.iter().map(String::as_str).collect();
             done(json, result, text, &next)?;

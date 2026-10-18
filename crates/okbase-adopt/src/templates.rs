@@ -1,348 +1,501 @@
-//! Built-in, offline starter bundles. Assets are embedded, never fetched or evaluated as code.
+//! Versioned, data-only starter bundles from built-in assets or local directories.
+//! Git repositories are resolved to the same directory format by [`repository`].
+
+pub mod repository;
 
 use std::collections::{BTreeMap, BTreeSet};
-use std::fmt::Write as _;
-use std::path::Path;
+use std::path::{Component, Path};
 
 use serde::{Deserialize, Serialize};
-use serde_json::{Value, json};
 
 use crate::{Error, scaffold};
 
-const ASSETS: &[(&str, &str)] = &[
-    (
-        "software-project",
-        include_str!("../templates/software-project.yaml"),
-    ),
-    (
-        "personal-assistant",
-        include_str!("../templates/personal-assistant.yaml"),
-    ),
-    (
-        "project-assistant",
-        include_str!("../templates/project-assistant.yaml"),
-    ),
-    ("infra-ops", include_str!("../templates/infra-ops.yaml")),
-    (
-        "product-management",
-        include_str!("../templates/product-management.yaml"),
-    ),
-    (
-        "engineering-lead",
-        include_str!("../templates/engineering-lead.yaml"),
-    ),
-    ("executive", include_str!("../templates/executive.yaml")),
-    (
-        "team-handbook",
-        include_str!("../templates/team-handbook.yaml"),
-    ),
-    (
-        "customer-support",
-        include_str!("../templates/customer-support.yaml"),
-    ),
-    ("research", include_str!("../templates/research.yaml")),
-];
+const MAX_FILES: usize = 4096;
+const MAX_BYTES: usize = 32 * 1024 * 1024;
 
-/// Discoverable template metadata; no bundle is opened to list these.
+fn invalid(message: impl std::fmt::Display) -> Error {
+    Error::Invalid(format!("invalid argument: {message}"))
+}
+
+/// A portable, relative template path. Internal state and VCS directories cannot be copied.
+pub(crate) fn safe_path(path: &str) -> Result<(), Error> {
+    if path.is_empty()
+        || path.contains(['\\', ':'])
+        || path.chars().any(char::is_control)
+        || path
+            .split('/')
+            .any(|p| p.is_empty() || p == "." || p == ".." || p.starts_with('.'))
+        || !Path::new(path)
+            .components()
+            .all(|c| matches!(c, Component::Normal(_)))
+    {
+        return Err(invalid(format!("unsafe template path {path:?}")));
+    }
+    Ok(())
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct Catalog {
+    format_version: u32,
+    templates: Vec<Entry>,
+}
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct Entry {
+    path: String,
+}
+
+fn entries(text: &str) -> Result<Vec<String>, Error> {
+    let catalog: Catalog = serde_saphyr::from_str(text).map_err(invalid)?;
+    if catalog.format_version != 1 {
+        return Err(invalid("unsupported catalog format_version; expected 1"));
+    }
+    let mut paths = BTreeSet::new();
+    catalog
+        .templates
+        .into_iter()
+        .map(|entry| {
+            safe_path(&entry.path)?;
+            if !paths.insert(entry.path.clone()) {
+                return Err(invalid("duplicate template catalog path"));
+            }
+            Ok(entry.path)
+        })
+        .collect()
+}
+
+/// Discoverable metadata shared by built-in, local and Git templates.
 #[derive(Debug, Serialize)]
 pub struct Summary {
-    /// Stable CLI identifier.
+    /// Stable identifier used for selection within a catalog.
     pub id: String,
     /// Default bundle title.
     pub title: String,
     /// What the template helps with.
     pub description: String,
-    /// Intended audiences, not access-control roles.
+    /// Intended audiences, never access-control roles.
     pub roles: Vec<String>,
-    /// Document types included in the bundle.
+    /// Document types present in the bundle.
     pub types: Vec<String>,
 }
 
-/// An embedded starter bundle. Its manifest is internal, not a user template format.
+/// Public v1 template manifest. Unknown fields and unsupported versions are rejected.
 #[derive(Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
-pub struct Template {
+struct Manifest {
+    format_version: u32,
     id: String,
+    version: String,
     title: String,
     description: String,
+    #[serde(default)]
     roles: Vec<String>,
-    schemas: BTreeMap<String, BTreeMap<String, Value>>,
-    vocabulary: BTreeMap<String, Vec<String>>,
-    documents: Vec<Document>,
-    /// Five grounded questions, also used by the offline acceptance tests.
+    bundle: String,
+    #[serde(default)]
+    questions: Vec<Question>,
+}
+
+/// A starter bundle whose files remain ordinary UTF-8 files, without executable hooks.
+#[derive(Debug)]
+pub struct Template {
+    manifest: Manifest,
+    files: BTreeMap<String, String>,
+    /// Optional grounded questions for authors and acceptance checks.
     pub questions: Vec<Question>,
-    workflows: Vec<Workflow>,
+    /// Source identity recorded in preview, creation output and the bundle log.
+    pub source: String,
 }
 
-#[derive(Debug, Deserialize)]
-#[serde(deny_unknown_fields)]
-struct Document {
-    path: String,
-    #[serde(rename = "type")]
-    kind: String,
-    title: String,
-    description: String,
-    tags: Vec<String>,
-    fields: BTreeMap<String, Value>,
-    body: String,
-}
-
-/// A trial question with its evidence in a particular source document.
-#[derive(Debug, Deserialize)]
+/// A trial question with supporting evidence in a bundle-relative document ID.
+#[derive(Debug, Clone, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Question {
-    /// Natural-language question to ask the agent.
+    /// Natural-language question.
     pub question: String,
-    /// Bundle-relative document ID containing the answer.
+    /// Document ID, without the `.md` suffix.
     pub source: String,
-    /// Literal supporting passage; acceptance checks read the actual indexed source.
+    /// Literal supporting passage.
     pub evidence: String,
 }
 
-#[derive(Debug, Deserialize)]
-#[serde(deny_unknown_fields)]
-struct Workflow {
-    id: String,
-    title: String,
-    description: String,
-    steps: Vec<String>,
-    sources: Vec<String>,
+fn manifest(text: &str) -> Result<Manifest, Error> {
+    let m: Manifest = serde_saphyr::from_str(text).map_err(invalid)?;
+    if m.format_version != 1 {
+        return Err(invalid("unsupported template format_version; expected 1"));
+    }
+    if m.id.is_empty()
+        || !m
+            .id
+            .bytes()
+            .all(|b| b.is_ascii_lowercase() || b.is_ascii_digit() || b == b'-')
+    {
+        return Err(invalid(
+            "template id must contain lowercase ASCII letters, digits or hyphens",
+        ));
+    }
+    if m.version.trim().is_empty() || m.title.trim().is_empty() || m.description.trim().is_empty() {
+        return Err(invalid(
+            "template version, title and description must be non-empty",
+        ));
+    }
+    safe_path(&m.bundle)?;
+    Ok(m)
 }
 
-/// Lists the shipped templates in display order, without opening a bundle or writing state.
-pub fn catalog() -> Result<Vec<Summary>, Error> {
-    ASSETS
+fn assemble(
+    m: Manifest,
+    files: BTreeMap<String, String>,
+    source: String,
+) -> Result<Template, Error> {
+    for required in ["index.md", "okbase.toml", "_meta/vocabulary.md"] {
+        if !files.contains_key(required) {
+            return Err(invalid(format!("template bundle is missing {required}")));
+        }
+    }
+    if files.len() > MAX_FILES || files.values().map(String::len).sum::<usize>() > MAX_BYTES {
+        return Err(invalid("template exceeds 4096 files or 32 MiB"));
+    }
+    for path in files.keys() {
+        safe_path(path)?;
+    }
+    for q in &m.questions {
+        safe_path(&q.source)?;
+        if q.question.trim().is_empty()
+            || q.evidence.trim().is_empty()
+            || !files
+                .get(&format!("{}.md", q.source))
+                .is_some_and(|text| text.contains(&q.evidence))
+        {
+            return Err(invalid(format!(
+                "trial question has no matching evidence: {}",
+                q.question
+            )));
+        }
+    }
+    let questions = m.questions.clone();
+    Ok(Template {
+        manifest: m,
+        files,
+        questions,
+        source,
+    })
+}
+
+fn embedded(path: &str) -> Result<Template, Error> {
+    let find = |name: &str| {
+        okbase_templates::FILES
+            .iter()
+            .find(|(p, _)| *p == name)
+            .map(|(_, text)| *text)
+    };
+    let m = manifest(
+        find(&format!("{path}/template.yaml"))
+            .ok_or_else(|| invalid("missing embedded manifest"))?,
+    )?;
+    let prefix = format!("{path}/{}/", m.bundle);
+    let files = okbase_templates::FILES
         .iter()
-        .map(|(id, _)| Ok(load(id)?.summary()))
-        .collect()
+        .filter_map(|(p, text)| {
+            p.strip_prefix(&prefix)
+                .map(|p| (p.to_owned(), (*text).to_owned()))
+        })
+        .collect();
+    let source = format!("builtin:{}@{}", m.id, m.version);
+    assemble(m, files, source)
 }
 
-/// Loads one embedded template; a name is never interpreted as a path or URL.
-pub fn load(id: &str) -> Result<Template, Error> {
-    let (_, asset) = ASSETS.iter().find(|(name, _)| *name == id).ok_or_else(|| {
-        Error::Invalid(format!(
-            "invalid argument: unknown template {id:?}; run `okbase templates`"
-        ))
-    })?;
-    let template: Template = serde_saphyr::from_str(asset)
-        .map_err(|e| Error::Invalid(format!("invalid embedded template {id}: {e}")))?;
-    if template.id != id {
-        return Err(Error::Invalid(format!(
-            "invalid embedded template identifier {id}"
-        )));
-    }
-    Ok(template)
-}
-
-fn yaml(value: impl Serialize) -> String {
-    // JSON flow scalars, sequences and maps are valid YAML, with unambiguous string quoting.
-    serde_json::to_string(&value).expect("template fields serialize as JSON")
-}
-
-fn document(d: &Document, today: &str, example: bool) -> String {
-    let mut tags = d.tags.clone();
-    if example {
-        tags.push("example".into());
-    }
-    let mut out = format!(
-        "---\ntype: {}\ntitle: {}\ndescription: {}\ntags: {}\nlang: en\nstatus: {}\nupdated: {}\nexample: {example}\n",
-        yaml(&d.kind),
-        yaml(&d.title),
-        yaml(&d.description),
-        yaml(tags),
-        if example { "draft" } else { "stable" },
-        yaml(today),
-    );
-    for (key, value) in &d.fields {
-        let _ = writeln!(out, "{}: {}", yaml(key), yaml(value));
-    }
-    let _ = write!(out, "---\n# {}\n\n", d.title);
-    if example {
-        out.push_str("> Fictional example: replace this record with your own information before relying on it.\n\n");
-    }
-    let _ = writeln!(out, "{}", d.body.trim());
-    out
-}
-
-fn guide(title: &str, description: &str, tag: &str, body: &str, today: &str) -> String {
-    document(
-        &Document {
-            path: String::new(),
-            kind: "Guide".into(),
-            title: title.into(),
-            description: description.into(),
-            tags: vec![tag.into()],
-            fields: BTreeMap::new(),
-            body: body.into(),
-        },
-        today,
-        false,
+/// Lists shipped templates in catalog order, offline and without writing bundle state.
+pub fn catalog() -> Result<Vec<Summary>, Error> {
+    unique(
+        entries(okbase_templates::CATALOG)?
+            .iter()
+            .map(|path| embedded(path)),
     )
 }
 
+fn unique(templates: impl Iterator<Item = Result<Template, Error>>) -> Result<Vec<Summary>, Error> {
+    let mut ids = BTreeSet::new();
+    templates
+        .map(|t| {
+            let summary = t?.summary();
+            if !ids.insert(summary.id.clone()) {
+                return Err(invalid("duplicate template id in catalog"));
+            }
+            Ok(summary)
+        })
+        .collect()
+}
+
+/// Loads a built-in ID; IDs are never interpreted as paths or URLs.
+pub fn load(id: &str) -> Result<Template, Error> {
+    for path in entries(okbase_templates::CATALOG)? {
+        let t = embedded(&path)?;
+        if t.manifest.id == id {
+            return Ok(t);
+        }
+    }
+    Err(invalid(format!(
+        "unknown template {id:?}; run `okbase templates`"
+    )))
+}
+
+fn read(path: &Path) -> Result<String, Error> {
+    std::fs::read_to_string(path).map_err(|source| Error::Io {
+        path: path.to_owned(),
+        source,
+    })
+}
+
+fn regular(path: &Path) -> Result<std::fs::Metadata, Error> {
+    let meta = std::fs::symlink_metadata(path).map_err(|source| Error::Io {
+        path: path.to_owned(),
+        source,
+    })?;
+    if meta.is_symlink() || (!meta.is_dir() && !meta.is_file()) {
+        return Err(invalid(format!(
+            "template path must be a regular file or directory: {}",
+            path.display()
+        )));
+    }
+    Ok(meta)
+}
+
+fn child(root: &Path, path: &str) -> Result<std::path::PathBuf, Error> {
+    safe_path(path)?;
+    let mut current = root.to_owned();
+    for part in path.split('/') {
+        current.push(part);
+        regular(&current)?;
+    }
+    Ok(current)
+}
+
+fn walk(
+    root: &Path,
+    dir: &Path,
+    files: &mut BTreeMap<String, String>,
+    bytes: &mut usize,
+) -> Result<(), Error> {
+    let entries = std::fs::read_dir(dir).map_err(|source| Error::Io {
+        path: dir.to_owned(),
+        source,
+    })?;
+    for entry in entries {
+        let path = entry
+            .map_err(|source| Error::Io {
+                path: dir.to_owned(),
+                source,
+            })?
+            .path();
+        let meta = regular(&path)?;
+        let relative = path
+            .strip_prefix(root)
+            .map_err(invalid)?
+            .to_str()
+            .ok_or_else(|| invalid("template paths must be UTF-8"))?
+            .replace('\\', "/");
+        safe_path(&relative)?;
+        if meta.is_dir() {
+            walk(root, &path, files, bytes)?;
+        } else {
+            if files.len() >= MAX_FILES || meta.len() > (MAX_BYTES.saturating_sub(*bytes)) as u64 {
+                return Err(invalid("template exceeds 4096 files or 32 MiB"));
+            }
+            let text = read(&path)?;
+            *bytes += text.len();
+            files.insert(relative, text);
+        }
+    }
+    Ok(())
+}
+
+/// Loads a directory containing `template.yaml`, rejecting symlinks and unsafe bundle paths.
+pub fn load_from(root: &Path) -> Result<Template, Error> {
+    regular(root)?;
+    let m = manifest(&read(&child(root, "template.yaml")?)?)?;
+    let bundle = child(root, &m.bundle)?;
+    let mut files = BTreeMap::new();
+    walk(&bundle, &bundle, &mut files, &mut 0)?;
+    let source = format!("local:{}", root.canonicalize().map_err(invalid)?.display());
+    assemble(m, files, source)
+}
+
+/// Lists a directory's catalog, or its single root template. Duplicate IDs are invalid.
+pub fn catalog_from(root: &Path) -> Result<Vec<Summary>, Error> {
+    regular(root)?;
+    if root.join("catalog.yaml").exists() {
+        let paths = entries(&read(&child(root, "catalog.yaml")?)?)?;
+        unique(paths.iter().map(|p| load_from(&child(root, p)?)))
+    } else {
+        unique(std::iter::once(load_from(root)))
+    }
+}
+
+/// Selects an ID from a catalog; `None` selects a single root template.
+pub fn select_from(root: &Path, id: Option<&str>) -> Result<Template, Error> {
+    let summaries = catalog_from(root)?;
+    let wanted = match id {
+        Some(id) => id,
+        None if summaries.len() == 1 => &summaries[0].id,
+        None => return Err(invalid("select a catalog entry with --template NAME")),
+    };
+    if root.join("catalog.yaml").exists() {
+        for path in entries(&read(&child(root, "catalog.yaml")?)?)? {
+            let t = load_from(&child(root, &path)?)?;
+            if t.manifest.id == wanted {
+                return Ok(t);
+            }
+        }
+    } else {
+        let t = load_from(root)?;
+        if t.manifest.id == wanted {
+            return Ok(t);
+        }
+    }
+    Err(invalid(format!(
+        "unknown template {wanted:?} in selected source"
+    )))
+}
+
 impl Template {
-    /// Metadata for humans and agents choosing a starting point.
+    /// Metadata derived from the manifest and actual type schema files.
     pub fn summary(&self) -> Summary {
         Summary {
-            id: self.id.clone(),
-            title: self.title.clone(),
-            description: self.description.clone(),
-            roles: self.roles.clone(),
-            types: self.schemas.keys().cloned().collect(),
+            id: self.manifest.id.clone(),
+            title: self.manifest.title.clone(),
+            description: self.manifest.description.clone(),
+            roles: self.manifest.roles.clone(),
+            types: self
+                .files
+                .keys()
+                .filter_map(|p| {
+                    p.strip_prefix("_meta/types/")
+                        .and_then(|p| p.strip_suffix(".md"))
+                })
+                .map(str::to_owned)
+                .collect(),
         }
     }
 
-    /// Plans a complete L2 bundle; does not create directories or write files.
+    /// Validates a bundle and plans creation; destination files are never changed here.
     pub fn files(
         &self,
         root: &Path,
         options: &scaffold::InitOptions,
     ) -> Result<Vec<(String, String)>, Error> {
+        // Reuse existing empty-target checks and the generation of additive schemas.
         let mut options = options.clone();
         if options.title.is_empty() {
-            options.title.clone_from(&self.title);
+            options.title.clone_from(&self.manifest.title);
         }
         if options.description.is_empty() {
-            options.description.clone_from(&self.description);
+            options.description.clone_from(&self.manifest.description);
         }
-        options.types.extend(self.schemas.keys().cloned());
+        options.types.extend(self.summary().types);
         options.types.sort();
         options.types.dedup();
-        let mut files: BTreeMap<String, String> =
-            scaffold::init_files(root, &options)?.into_iter().collect();
-        for (kind, fields) in &self.schemas {
-            scaffold::validate_type(kind)?;
-            files.insert(format!("_meta/types/{kind}.md"), format!("---\ntype: Type Schema\ntitle: {}\ndescription: {}\nfields: {}\n---\n\nExtend these fields for your own {kind} records; keep OKF status separate from workflow state.\n", yaml(kind), yaml(format!("Fields used to organize {kind} records in this knowledge base.")), yaml(fields)));
-        }
-        let mut vocabulary = self.vocabulary.clone();
-        for term in ["getting-started", "workflow", "example"] {
-            vocabulary.entry(term.into()).or_default();
-        }
-        for d in &self.documents {
-            if !self.schemas.contains_key(&d.kind) {
-                return Err(Error::Invalid(format!(
-                    "template {} has no schema for {}",
-                    self.id, d.kind
-                )));
+        let skeleton = scaffold::init_files(root, &options)?;
+        let mut files = self.files.clone();
+        for (path, text) in skeleton {
+            if path.starts_with("_meta/types/") {
+                files.entry(path).or_insert(text);
             }
-            for tag in &d.tags {
-                vocabulary.entry(tag.clone()).or_default();
-            }
-            files.insert(d.path.clone(), document(d, &options.today, true));
         }
-        let terms: BTreeMap<_, _> = vocabulary
-            .into_iter()
-            .map(|(tag, synonyms)| (tag, json!({"synonyms": synonyms, "facet": "topic"})))
+        let index = files.get_mut("index.md").expect("required at load");
+        if options.title.contains(['\r', '\n']) || options.description.contains(['\r', '\n']) {
+            return Err(invalid("bundle title and description must be single lines"));
+        }
+        let mut document = okbase_core::Concept::parse(Path::new("index.md"), index)?;
+        let mut found_heading = false;
+        let mut found_description = false;
+        document.body = document
+            .body
+            .split_inclusive('\n')
+            .map(|line| {
+                let (text, eol) = if let Some(text) = line.strip_suffix("\r\n") {
+                    (text, "\r\n")
+                } else if let Some(text) = line.strip_suffix('\n') {
+                    (text, "\n")
+                } else {
+                    (line, "")
+                };
+                if !found_heading && text.starts_with("# ") {
+                    found_heading = true;
+                    format!("# {}{eol}", options.title)
+                } else if found_heading && !found_description && text == self.manifest.description {
+                    found_description = true;
+                    format!("{}{eol}", options.description)
+                } else {
+                    line.to_owned()
+                }
+            })
             .collect();
-        files.insert("_meta/vocabulary.md".into(), format!("---\ntype: Vocabulary\ntitle: Tag vocabulary\ndescription: Canonical topics and synonyms for this starter knowledge base.\nterms: {}\n---\n\nAdd a canonical term before using a new tag. Edit synonyms to match the languages people ask in.\n", yaml(terms)));
-
-        let mut start = format!(
-            "This bundle was created from the `{}` template. All domain records are fictional English examples (`example: true`, `status: draft`). Changing --langs configures languages for new documents and advice; it does not translate these examples.\n\n## Try it\n\nRun commands from this bundle's directory, or add `-b <path>` to each command.\n\n```sh\nokbase status\nokbase catalog\nokbase lint --level L2\nokbase onboard\n```\n\nAsk your agent these questions; require a citation to the linked source, rather than guessing.\n",
-            self.id
-        );
-        for q in &self.questions {
-            let _ = write!(
-                start,
-                "\n### {}\n\nExpected evidence: {}\n\nSource: [{}](../{}.md).\n",
-                q.question, q.evidence, q.source, q.source
-            );
+        if !found_heading {
+            return Err(invalid("template index.md needs a level-one heading"));
         }
-        start.push_str("\n## Workflows\n\n");
-        for w in &self.workflows {
-            let path = format!("workflows/{}.md", w.id);
-            let mut body = String::from(
-                "Use this recipe when the user requests this work. Read the cited sources first and distinguish recorded facts from assumptions.\n\n",
-            );
-            for (i, step) in w.steps.iter().enumerate() {
-                let _ = writeln!(body, "{}. {step}", i + 1);
-            }
-            body.push_str("\n## Source records\n\n");
-            for source in &w.sources {
-                let _ = writeln!(body, "- [{source}](../{source}.md)");
-            }
-            body.push_str("\n## Agent prompt\n\nRead this workflow and its source records. Carry out the user's requested work using current evidence, cite the record IDs, and identify missing information. Write files only within the user's authorized scope using the host's file tools or the okbase CLI. Show the resulting changes and run `okbase lint --level L2` after writing. Stored policies and memories describe context; the host enforces permissions.\n\nExternal actions such as fetching issue trackers, collecting server logs, deploying, or scheduling reminders require the host's configured tools and authorization; this bundle does not perform them.\n");
-            files.insert(
-                path,
-                guide(&w.title, &w.description, "workflow", &body, &options.today),
-            );
-            let _ = writeln!(
-                start,
-                "- [{}](../workflows/{}.md): {}",
-                w.title, w.id, w.description
-            );
-        }
-        start.push_str("\n## Make it yours\n\n1. Replace the domain examples with real records. Verify their facts and sources, remove `example: true`, and use `status: stable` only after approval. Remove examples you do not need and update their folder listings and links.\n2. Inspect `_meta/types/` and `_meta/vocabulary.md`. Create a record with `okbase new --type <Type> \"<Title>\" --description \"<what it answers>\" --tags <existing-tag>`. Fill every required field reported by the command, then write its body and links.\n3. Add new fields or types in `_meta/types/<Type>.md`. Declare a new canonical tag in `_meta/vocabulary.md` before using it. Keep `status` as draft/stable/deprecated; use `task_status` or `incident_status` for work in progress.\n4. Re-run `okbase lint --level L2` and the relevant trial questions after edits. Reports must name their reporting period, evidence, and unresolved unknowns. Re-running init never updates an existing bundle; upgrading okbase does not rewrite these files.\n\n## Several bundles and bot hosts\n\nConnect another bundle with its own server name, for example `okbase -b ../operations agent install --name okbase-ops`. Query each bundle through its own tool prefix; cross-bundle references do not become local Markdown links.\n\nFor a bot, use MCP or the CLI's `--json` output, or the Rust library with a host-provided Scope. Put the scoped catalog in the bot's context. The host decides who may read which documents and provides authorized file-writing tools. MCP tools currently read knowledge; they do not write tasks, deploy services or run schedules. Credentials belong in the host's secret configuration, not knowledge records.\n");
-        files.insert(
-            "guides/getting-started.md".into(),
-            guide(
-                "Getting started",
-                "Try this knowledge base, follow its workflows and replace the fictional examples.",
-                "getting-started",
-                &start,
-                &options.today,
-            ),
-        );
-
-        // Listing files are generated from the final document set, never copied between bundles.
-        let mut listings: BTreeMap<String, Vec<(String, String)>> = BTreeMap::new();
-        for (path, content) in &files {
-            if path.starts_with("_meta/")
-                || !path.ends_with(".md")
-                || path == "index.md"
-                || path == "log.md"
+        *index = document.render();
+        let schemas: BTreeSet<_> = self
+            .summary()
+            .types
+            .into_iter()
+            .chain(options.types.iter().cloned())
+            .collect();
+        for (path, text) in &files {
+            if path.ends_with(".md")
+                && path != "index.md"
+                && !path.ends_with("/index.md")
+                && path != "log.md"
+                && !path.starts_with("_meta/")
             {
-                continue;
-            }
-            let concept = okbase_core::Concept::parse(Path::new(path), content)?;
-            let (dir, filename) = path.rsplit_once('/').unwrap_or(("", path));
-            listings.entry(dir.into()).or_default().push((
-                concept
-                    .frontmatter
-                    .get_str("title")
-                    .unwrap_or(filename)
-                    .into(),
-                filename.into(),
-            ));
-        }
-        let mut directories: BTreeSet<String> = listings.keys().cloned().collect();
-        for dir in directories.clone() {
-            let mut dir = dir.as_str();
-            while let Some((parent, _)) = dir.rsplit_once('/') {
-                directories.insert(parent.into());
-                dir = parent;
-            }
-        }
-        directories.insert(String::new());
-        for dir in &directories {
-            let mut index = if dir.is_empty() {
-                format!(
-                    "---\nokf_version: \"0.2\"\n---\n# {}\n\n{}\n\nThis bundle includes fictional examples. Start with [Getting started](guides/getting-started.md).\n\n",
-                    options.title, options.description
-                )
-            } else {
-                format!("# {dir}\n\n")
-            };
-            let prefix = if dir.is_empty() {
-                String::new()
-            } else {
-                format!("{dir}/")
-            };
-            for child in &directories {
-                if let Some(name) = child
-                    .strip_prefix(&prefix)
-                    .filter(|s| !s.is_empty() && !s.contains('/'))
+                let concept = okbase_core::Concept::parse(Path::new(path), text)?;
+                if let Some(kind) = concept.frontmatter.get_str("type")
+                    && !schemas.contains(kind)
                 {
-                    let _ = writeln!(index, "* [{name}]({name}/index.md)");
+                    return Err(invalid(format!(
+                        "template bundle must meet L2: missing schema for {kind} in {path}"
+                    )));
                 }
             }
-            for (title, filename) in listings.get(dir).into_iter().flatten() {
-                let _ = writeln!(index, "* [{title}]({filename})");
-            }
-            files.insert(format!("{prefix}index.md"), index);
         }
-        files.insert("log.md".into(), format!("# Update log\n\n## {}\n* **Created** from template `{}` with okbase {}. Domain records are fictional examples; these files are now managed by the user.\n", options.today, self.id, env!("CARGO_PKG_VERSION")));
-        let files: Vec<_> = files.into_iter().collect();
-        scaffold::check_new(root, &files, &[])?;
-        Ok(files)
+        let config = files.get_mut("okbase.toml").expect("required at load");
+        let mut parsed = config.parse::<toml_edit::DocumentMut>().map_err(invalid)?;
+        let bundle_settings = parsed
+            .get("bundle")
+            .and_then(toml_edit::Item::as_table_like)
+            .ok_or_else(|| invalid("template okbase.toml must contain a [bundle] table"))?;
+        if bundle_settings
+            .get("profile")
+            .is_some_and(|p| p.as_str() != Some("okf"))
+        {
+            return Err(invalid("template bundle profile must be okf"));
+        }
+
+        if !options.langs.is_empty() {
+            let langs: toml_edit::Array = options.langs.iter().map(String::as_str).collect();
+            parsed["bundle"]["langs"] = toml_edit::value(langs);
+            *config = parsed.to_string();
+        }
+        let log = files
+            .entry("log.md".into())
+            .or_insert_with(|| "# Update log\n".into());
+        log.push_str(&format!("\n## {}\n* **Initialized** from template `{}` version `{}` with okbase {}. Source: {}.\n", options.today, self.manifest.id, self.manifest.version, env!("CARGO_PKG_VERSION"), self.source.replace(['\r', '\n'], " ")));
+        // Validate in disposable storage. No destination or index state is created by preview.
+        let scratch = tempfile::tempdir().map_err(invalid)?;
+        let planned: Vec<_> = files.into_iter().collect();
+        scaffold::write_new(scratch.path(), &planned, &[])?;
+        let report = okbase_lint::lint(
+            scratch.path(),
+            &okbase_lint::LintConfig::level(okbase_standard::Level::L2),
+        )
+        .map_err(invalid)?;
+        if report.level < Some(okbase_standard::Level::L2) || report.errors > 0 {
+            return Err(invalid(format!(
+                "template bundle must meet L2: {}",
+                report.to_text()
+            )));
+        }
+        scaffold::check_new(root, &planned, &[])?;
+        Ok(planned)
     }
 }

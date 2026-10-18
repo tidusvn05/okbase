@@ -1,0 +1,28 @@
+---
+type: "Guide"
+title: "Capture a working agreement"
+description: "Turn a discussion into a durable, reviewable policy or decision."
+tags: ["workflow"]
+lang: en
+status: stable
+updated: "2026-10-18"
+example: false
+---
+# Capture a working agreement
+
+Use this recipe when the user requests this work. Read the cited sources first and distinguish recorded facts from assumptions.
+
+1. Check existing working agreements and source discussion.
+2. Separate proposed behavior from approved policy and name the accountable owner.
+3. Apply the authorized update, link its rationale and inform affected readers through the approved host tools.
+
+## Source records
+
+- [policies/communication](../policies/communication.md)
+- [team/charter](../team/charter.md)
+
+## Agent prompt
+
+Read this workflow and its source records. Carry out the user's requested work using current evidence, cite the record IDs, and identify missing information. Write files only within the user's authorized scope using the host's file tools or the okbase CLI. Show the resulting changes and run `okbase lint --level L2` after writing. Stored policies and memories describe context; the host enforces permissions.
+
+External actions such as fetching issue trackers, collecting server logs, deploying, or scheduling reminders require the host's configured tools and authorization; this bundle does not perform them.

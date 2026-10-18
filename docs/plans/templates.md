@@ -16,7 +16,7 @@ keeps its existing lifecycle semantics. Template audience metadata never grants 
 
 ## Implementation phases and acceptance
 
-1. **Creation mechanism:** embed manifests in okbase-adopt; add `templates --json`, `init --template`
+1. **Creation mechanism:** embed catalog-declared bundles; add `templates --json`, `init --template`
    and `init --print`. Preserve the empty initialization flow, allow title/description/language
    overrides and additive schemas. Preview and invalid requests create nothing; preflight rejects
    destination conflicts and symlinked generated paths. The shared writer uses create-new semantics
@@ -46,10 +46,30 @@ feature. The initialization log records template and okbase version; the user ow
 No task engine, bot runtime, scheduler, deployment executor, account connector or MCP write tool is
 added. The host retains all read scopes and execution permissions.
 
-## Implementation notes
+## Public template architecture (2026-10-19)
 
-The manifests use the existing serde-saphyr workspace dependency; no external template engine or
-download path is introduced. Each manifest contains Markdown bodies and schema/metadata definitions;
-the renderer writes normal OKF Markdown and generates listings from the final file set. This avoids
-duplicating boilerplate indexes and schemas across dozens of source files while keeping all ten
-templates directly reviewable. Results and limitations are recorded in `spikes/templates/RESULTS.md`.
+The public [v1 format](../template-format.md) replaces the internal body-in-YAML assets.
+`templates/` is the only editable source: each template has a manifest, README and actual Markdown
+bundle. Root `catalog.yaml` declares paths and display order. Metadata comes from manifests; document
+types come from bundle schemas. The `okbase-templates` workspace crate lives at `templates/` and
+its build script generates embedded assets from the catalog. This keeps crates.io archives
+self-contained without hand-maintained mirrors or a Rust registry. Adding a built-in template needs
+only content and a catalog entry, then a rebuild/release; it never needs CLI dispatch changes.
+
+`okbase-adopt::templates` reads manifests, catalogs and UTF-8 bundle assets, selects IDs, applies
+supported overrides, validates L2/schema conformance and plans files. Built-in, local and Git
+sources share this pipeline. Local catalogs use `templates --source`; init uses `--template-path`
+and optionally `--template ID`. Git sources use `--repo` for listing and `--template-repo` for init,
+with `--source`/`--template-path` selecting a repository subdirectory and `--ref` selecting a revision.
+The Git adapter requires Git on PATH, fetches into disposable storage and reads regular Git blobs;
+it never checks out files or executes repository hooks, filters or submodules. HTTPS, SSH and local
+Git directories are supported; remote fetches respect OKBASE_OFFLINE. Host authentication remains
+outside template content. New external templates need no binary update while format v1 is supported.
+
+Init preview and creation expose `source`; the log records the content version and exact Git
+commit/path when applicable. Repository listing also returns `commit`. No source cache, installed
+registry, custom executable renderer, automatic bundle upgrade or persistent source configuration is
+introduced. Path containment, UTF-8, limits, evidence and conformance are checked before destination
+writes. Source document frontmatter remains byte-identical; TOML edits target explicit language
+settings. The authoring starter, JSON Schemas, documentation and local Git acceptance fixtures cover
+the complete contribution path. Results remain in `spikes/templates/RESULTS.md`.

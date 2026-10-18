@@ -93,19 +93,38 @@ pub enum Command {
         #[arg(long, requires = "write")]
         force: bool,
     },
-    /// List built-in knowledge templates, their audiences and document types (read-only, offline).
-    Templates,
+    /// List built-in templates offline, or inspect an explicitly selected local/Git catalog.
+    Templates {
+        /// Local catalog/template directory, or a subdirectory inside --repo.
+        #[arg(long, value_name = "DIR")]
+        source: Option<PathBuf>,
+        /// Fetch a catalog from an HTTPS/SSH Git repository or local Git directory (requires Git).
+        #[arg(long, value_name = "URL")]
+        repo: Option<String>,
+        /// Repository branch, tag or commit [default: HEAD]; resolved commit is reported.
+        #[arg(long = "ref", requires = "repo")]
+        reference: Option<String>,
+    },
     /// Start a knowledge base in an empty folder, optionally with a ready-to-try template.
     #[command(
         after_help = "Examples:\n  okbase templates\n  okbase -b ./kb init --template software-project\n  okbase -b ./kb init --template infra-ops --print\n  okbase init --title \"Support knowledge\" --langs vi,en\n  okbase -b ./kb init --title \"HR policies\" --types Policy,FAQ\n\nTemplates contain fictional English examples. --langs configures the languages people use; it does not translate the examples."
     )]
     Init {
         /// What the knowledge base is about.
-        #[arg(long, required_unless_present = "template")]
+        #[arg(long, required_unless_present_any = ["template", "template_path", "template_repo"])]
         title: Option<String>,
-        /// Built-in template (see `okbase templates`); one template per bundle.
+        /// Built-in ID, or an ID in the selected local/Git catalog.
         #[arg(long, value_name = "NAME")]
         template: Option<String>,
+        /// Local template/catalog directory, or subdirectory inside --template-repo.
+        #[arg(long, value_name = "DIR")]
+        template_path: Option<PathBuf>,
+        /// Fetch a template from an HTTPS/SSH Git repository or local Git directory (requires Git).
+        #[arg(long, value_name = "URL")]
+        template_repo: Option<String>,
+        /// Repository branch, tag or commit [default: HEAD]; pin a commit for reproducibility.
+        #[arg(long = "ref", requires = "template_repo")]
+        reference: Option<String>,
         /// Preview every file and its content without creating directories or writing files.
         #[arg(long)]
         print: bool,

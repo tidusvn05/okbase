@@ -37,6 +37,8 @@ Starter knowledge templates (2026-10-19): [templates/RESULTS.md](templates/RESUL
 reached L2 with no broken links; 50/50 source-evidence retrieval checks passed and all 30 workflow
 guides were queryable. Initial lexical baselines stayed 44/48 and 27/30. Publication revalidation
 on updated main passes the dependency audit; real-agent behavior remains unmeasured.
+The public v1 format now uses root Markdown bundles, catalog-driven embedding and local/Git
+sources: 220 workspace tests passed, including six custom-source acceptance tests.
 
 ## 2. Quick-reference numbers
 

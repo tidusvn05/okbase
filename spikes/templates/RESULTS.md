@@ -102,3 +102,39 @@ outside the copied input and restore them afterward). The Codex environment work
 above applies to the old development baseline; current main isolates that test explicitly. The
 initial dependency-audit failures are retained as historical evidence; the publication base passes
 the audit, as recorded above.
+
+## Public template format and reusable sources (2026-10-19)
+
+Moved the ten starters to root `templates/` as reviewable OKF Markdown bundles. The declarative
+catalog drives build-time embedding through the self-contained `okbase-templates` asset crate;
+there is no template ID list in CLI/Rust dispatch. Local directories, collections and Git sources
+use the same v1 manifest and validated init planner. An authoring starter and JSON Schemas document
+the public contract. Existing initialized bundles are not changed.
+
+Validation on the feature branch:
+
+- Workspace: **220 passed, 4 ignored**; fmt and all-feature clippy passed; cargo deny passed.
+- Existing built-in acceptance: **10/10** L2 bundles without L3 errors/warnings, **50/50** indexed
+  source-evidence checks and all **30** workflow guides retained.
+- Six custom-source acceptance tests cover local catalogs, ID selection, manifest versions/unknown
+  fields, missing evidence/schemas, invalid TOML, an oversized sparse asset, path containment,
+  symlinks, offline transport behavior, Git root templates/collections, historical commit pinning,
+  exact commit/subdirectory provenance and no checkout hook execution. Markdown/frontmatter and
+  CRLF root-index bytes survive copying; TOML comments/custom settings survive language overrides.
+- `cargo package -p okbase-templates --allow-dirty` packaged and independently verified the asset
+  crate (**341 files**, about **239 KiB** uncompressed), including its Markdown assets. Workspace
+  publication order discovers the new crate automatically; **23** release-helper tests passed.
+
+Git acceptance uses temporary local repositories and needs no service credentials. Templates are
+UTF-8 data; external repo scripts, filters, hooks and submodules are not executed. HTTPS/SSH transport
+requires the host's Git and authentication. No paid/live-agent evaluation was performed; source
+retrieval checks do not measure how a bot follows third-party instructions.
+
+```sh
+cargo test -p okbase-cli --test templates --test custom_templates
+cargo package -p okbase-templates --allow-dirty
+python3 -m unittest discover -s scripts -p 'test_*.py'
+```
+
+Release-mode lexical replay after the public-format change: **business 44/48**, **multilingual
+27/30**, identical to the recorded baselines (no regression).
