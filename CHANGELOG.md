@@ -5,6 +5,25 @@ All notable changes to okbase are listed here. The format follows
 [Semantic Versioning](https://semver.org/) (see docs/releasing.md for what counts as a
 breaking change). This file is generated from commit messages by git-cliff.
 
+## [0.2.4] - 2026-10-18
+
+### Bug fixes
+
+- **deps:** update rustls to address session and handshake advisories (237fb48)
+
+### Documentation
+
+- add a dedicated Cargo installation section (dfc680d)
+
+### Build and packaging
+
+- prepare workspace crates for crates.io publishing (8b065bd)
+- integrate crates.io into installation and release workflow (92d92be)
+
+### Continuous integration
+
+- validate and publish releases with crates.io Trusted Publishing (3713265)
+
 ## [0.2.3] - 2026-10-12
 
 ### Bug fixes
