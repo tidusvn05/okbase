@@ -5,11 +5,26 @@ All notable changes to okbase are listed here. The format follows
 [Semantic Versioning](https://semver.org/) (see docs/releasing.md for what counts as a
 breaking change). This file is generated from commit messages by git-cliff.
 
+## [0.2.5] - 2026-10-18
+
+### Bug fixes
+
+- **cli:** recommend the runnable default adopt preview (b8a096b)
+
+### Build and packaging
+
+- reduce dev and test debug information (6a48185)
+
+### Dependencies
+
+- **deps:** bump the minor-and-patch group across 1 directory with 6 updates (9dbc907)
+- **deps:** bump serde-saphyr from 1.3.0 to 2.0.0 (d9fe546)
+
 ## [0.2.4] - 2026-10-18
 
 ### Bug fixes
 
-- **deps:** update rustls to address session and handshake advisories (237fb48)
+- **deps:** update rustls to address session and handshake advisories (dda734f)
 
 ### Documentation
 
@@ -19,12 +34,12 @@ breaking change). This file is generated from commit messages by git-cliff.
 
 - prepare workspace crates for crates.io publishing (8b065bd)
 - integrate crates.io into installation and release workflow (92d92be)
-- bound ZIP extraction advisory exceptions with audited readers and regression tests (6a14182)
+- bound ZIP extraction advisory exceptions with audited readers and regression tests (0e56ff2)
 
 ### Continuous integration
 
-- validate and publish releases with crates.io Trusted Publishing (3713265)
-- serialize release retries and prohibit asset overwrites (60af529)
+- validate and publish releases with crates.io Trusted Publishing (2a01305)
+- serialize release retries and prohibit asset overwrites (b937ee0)
 
 ## [0.2.3] - 2026-10-12
 
