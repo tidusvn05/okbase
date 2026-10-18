@@ -258,7 +258,7 @@ fn plan(profile: Profile, o: &AdviseOptions) -> Advice {
             title: "Adopt the folder into the okbase standard".into(),
             why: "the files are not OKF-conformant yet; a well-organized bundle is what makes agents accurate (spikes S3-S5, spikes/README.md)".into(),
             commands: vec![
-                "okbase adopt --plan".into(),
+                "okbase adopt".into(),
                 "okbase adopt --out <dir>   # or --write after review".into(),
             ],
         }),

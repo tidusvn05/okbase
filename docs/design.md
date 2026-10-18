@@ -107,7 +107,7 @@ okbase agent install --claude  # register MCP + install skills for Claude Code (
 ### 3.2 Plain markdown → okbase standard (`okbase adopt`)
 
 ```
-okbase adopt ./docs --plan            # report: what will be added, and where (no writes)
+okbase adopt ./docs                   # report: what will be added, and where (no writes)
 okbase adopt ./docs --out ./docs-okf  # write to a new folder (safe)
 okbase adopt ./docs --write           # edit in place (requires a clean git tree or --force), with log.md
 okbase adopt ./docs --level L2 --with-agent claude   # ask an agent to write missing descriptions/tags
@@ -325,7 +325,7 @@ Skills (AgentSkills standard, `SKILL.md`) are **the cheapest way to make agents 
 |---|---|---|
 | **`okbase-answer`** | Answering questions from the bundle | Read the catalog or `index.md` first. **List, count, filter questions: use `kb_query`** (S5). **Numbers: use `data_query`**, do not add up by hand (S5). Codes or exact strings: `kb_grep` with alternation, English terms and synonyms (S4). Meaning-based questions: `kb_search` if available, otherwise `kb_grep` + `kb_list`. Long documents: `kb_get` by `section`. Prefer `status: stable`, check `supersedes`. Multi-part questions: cover every part. **Always cite ids** |
 | **`okbase-curate`** | Maintaining and upgrading the bundle | Run `okbase lint --level L2`, fix in order of impact: missing or weak descriptions → index.md → vocabulary tags → status/supersedes → merge duplicate content into a canonical page. Write specific 1-sentence descriptions. Record `generated`. Do not delete content |
-| **`okbase-adopt`** | Converting a markdown folder to the standard | Run `okbase adopt --plan`, review, then `--out` or `--write`; write descriptions and tags for files the heuristic marked as weak; re-run lint |
+| **`okbase-adopt`** | Converting a markdown folder to the standard | Run `okbase adopt`, review, then `--out` or `--write`; write descriptions and tags for files the heuristic marked as weak; re-run lint |
 | **`okbase-import`** | Bringing in PDFs/Sheets | `okbase import`, check `sources/` and datasets, use `distill --plan` to create concepts with `sources[]` |
 | **`okbase-author`** | Writing new documents | Use `okbase new --type …` (per schema), frontmatter complete to L2, link to related pages, update the vocabulary if a tag is new |
 
@@ -354,7 +354,7 @@ okbase search "refund policy" | okbase retrieve "…" --budget 3000  # embed mod
 
 # Organize
 okbase lint [--level L2] [--fix-safe] [--format text|json|sarif]
-okbase adopt <dir> --plan | --out <dir> | --write [--level L2 --with-agent claude]
+okbase adopt <dir> [--out <dir> | --write] [--level L2 --with-agent claude]
 okbase index [--full] [--write-index-md] [--watch]
 okbase vocab [--suggest] | okbase new --type <Type> <id> | okbase validate --okf
 
@@ -420,7 +420,7 @@ Output text/JSON/SARIF; `--fix-safe` fixes only what is safe (generate index.md,
 ## 12. Testing and evaluation
 
 - Golden round-trip: the official OKF bundles (acme_retail, ga4, stackoverflow, crypto_bitcoin) must have diff = 0; tests for preserving comments and unknown keys.
-- **Adopt fixtures:** OpenClaw docs (Mintlify), a sample Obsidian vault, a Docusaurus docs folder, and a "dirty" markdown folder. Check that `adopt --plan` is stable (snapshot) and that lint after adopt reaches L1.
+- **Adopt fixtures:** OpenClaw docs (Mintlify), a sample Obsidian vault, a Docusaurus docs folder, and a "dirty" markdown folder. Check that the default `adopt` preview is stable (snapshot) and that lint after adopt reaches L1.
 - Snapshots of tool output and of skills generated per capability.
 - `okbase-eval lexical` (done, 2026-10-03): replays the agents' real tool calls from spikes S3/S5 on `fixtures/business` and `fixtures/multilingual` and compares them with the answers; takes a few seconds, needs no model; runs in `cargo test` and fails when a previously passing case regresses.
 - `okbase-eval` (remaining, from spikes): retrieval mode (R@k, currently `examples/retrieval_eval.rs`) and agent mode (claude/codex, scored by key facts or precomputed answers, cost, latency). Fixtures: multilingual v2 (S1), OpenClaw S/M/L (S4), business ×1/×20 (S5).
@@ -455,7 +455,7 @@ Estimates for 1 full-time developer.
   - `okbase status` runs on a read-only bundle (external state_dir).
 
 ### v0.2 — Adopt + data (2 weeks)
-- `adopt` (site detection, heuristics, `--plan/--out/--write`), index.md/log.md generation, vocab, `okbase-adopt`/`okbase-curate` skills.
+- `adopt` (site detection, heuristics, preview by default, `--out/--write`), index.md/log.md generation, vocab, `okbase-adopt`/`okbase-curate` skills.
 - `data` module (CSV/XLSX → SQLite, `data.query`, schema doc).
 - **Spike S8:** plain markdown docs → adopt → compare agent accuracy before and after.
 - **Spike S9:** with skills vs. without skills.

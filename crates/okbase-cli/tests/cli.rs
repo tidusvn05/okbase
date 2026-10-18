@@ -1943,3 +1943,44 @@ fn concurrent_cli_reads_share_one_index() {
         }
     }
 }
+
+#[test]
+fn advised_adopt_preview_runs_without_changing_the_bundle() {
+    let bundle = tempfile::tempdir().unwrap();
+    let state = tempfile::tempdir().unwrap();
+    let document = "# Support notes\n\nReturns are accepted within thirty days.\n";
+    let path = bundle.path().join("notes.md");
+    std::fs::write(&path, document).unwrap();
+    let mut command = Command::cargo_bin("okbase").unwrap();
+    let advice = json_of(
+        command
+            .current_dir(bundle.path())
+            .env_remove("OKBASE_BUNDLE")
+            .arg("--state-dir")
+            .arg(state.path())
+            .args(["advise", "--for", "codex", "--user-langs", "vi"]),
+    );
+    let curate = advice["steps"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|step| step["tier"] == "curate")
+        .expect("plain Markdown needs adoption");
+    let preview = curate["commands"][0].as_str().unwrap();
+    let mut command = Command::cargo_bin("okbase").unwrap();
+    let plan = json_of(
+        command
+            .current_dir(bundle.path())
+            .env_remove("OKBASE_BUNDLE")
+            .arg("--state-dir")
+            .arg(state.path())
+            .args(preview.strip_prefix("okbase ").unwrap().split_whitespace()),
+    );
+    assert!(plan.is_object(), "{plan}");
+    assert_eq!(std::fs::read_to_string(path).unwrap(), document);
+    let names: Vec<_> = std::fs::read_dir(bundle.path())
+        .unwrap()
+        .map(|entry| entry.unwrap().file_name())
+        .collect();
+    assert_eq!(names, ["notes.md"]);
+}

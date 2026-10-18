@@ -38,7 +38,7 @@ Evidence: `spikes/embed-tune/RESULTS.md`.
 |---|---|---|---|
 | **0. Full context** | ≤ ~30k tokens (S4) | Put the whole bundle or the catalog into the system prompt; no index needed | `okbase catalog` |
 | **1. Lexical (default)** | Every bundle larger than level 0 | MCP stdio + skill; `kb_grep` / `kb_query` / `kb_get` | `okbase agent install`, `okbase mcp serve` |
-| **1+. Reorganize** | Conformance level < L2, missing descriptions, duplicated content | Adopt, lint, vocab before adding machinery (the central lesson of design §1) | `okbase adopt --plan`, `okbase lint --level L2` |
+| **1+. Reorganize** | Conformance level < L2, missing descriptions, duplicated content | Adopt, lint, vocab before adding machinery (the central lesson of design §1) | `okbase adopt`, `okbase lint --level L2` |
 | **2. Data** | CSV/XLSX present, especially large sheets | Enable `data_query` (S5: without SQL the agent gives up) | enabled automatically; `okbase data tables` |
 | **3. Embed** | Users ask in a different language than the documents, large bundle, or the host needs pre-retrieval | Choose a model by license, language, hardware (Gemma Q4 / bge-m3 / API) | `okbase embed enable`, `okbase embed index` |
 | **4. Fine-tune** | Meets level 3, **and** `embed eval` shows weakness (especially cross-language), ≥ ~100 documents, documents may be sent to the agent's LLM | The workflow in §2 | `okbase embed tune …` |
