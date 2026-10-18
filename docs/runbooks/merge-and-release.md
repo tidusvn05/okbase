@@ -175,7 +175,7 @@ Prepare the release PR, verify it and request the single release/configuration a
 in [releasing.md](../releasing.md#prepare-approve-merge-and-tag). Scan for secrets before every push.
 Merge only after that approval and green CI, then tag the approved main commit. Never push release
 commits directly to main. A narrower user instruction or explicit approval boundary takes precedence
- over the maintenance workflow's standing authorization.
+over the maintenance workflow's standing authorization.
 
 Then watch the release workflow:
 

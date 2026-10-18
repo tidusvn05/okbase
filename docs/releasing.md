@@ -94,8 +94,8 @@ non-pre-release unless `--version` is given.
 - [ ] `docs/usage.md`, `README.md` and `llms.txt` match the release: commands, sizes, privacy table.
 - [ ] Breaking changes are marked in commits and explained in `docs/usage.md` when users must act.
 - [ ] Package CI passes: all publishable crates build from their packaged sources.
-- [ ] The publishing account has a verified crates.io email and permission to publish every crate.
-      Credentials are supplied by `cargo login` or `CARGO_REGISTRY_TOKEN`, never committed.
+- [ ] Every crate trusts this repository, `release.yml` and environment `crates-io`; the workflow
+      obtains its short-lived credential through OIDC. Configuration/bootstrap credentials stay local.
 
 ## Prepare, approve, merge and tag
 
