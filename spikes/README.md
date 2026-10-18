@@ -33,6 +33,11 @@ IDs follow `docs/design.md` §1. The date is the run date.
 | S16 | 2026-10-03 | `agent-first` | The README prompt pasted as is: does the agent install, onboard, stop at the user's decisions and report? | Claude and Codex followed it: install or hand over the install command (no network), ask the user at every decision, report what is set up; 0 consent flags. Fixed: declined questions treated as done; `init` no longer triggers the Japanese dictionary for an en/vi bundle | `README.md` |
 | Build profiles | 2026-10-18 | [`build-profile`](build-profile/RESULTS.md) | Can dev/test builds use less disk while retaining workspace source locations? | Clean workspace test build: 10.45 → 3.36 GiB (−67.8%); workspace line tables retained | `Cargo.toml`, `CONTRIBUTING.md` |
 
+Starter knowledge templates (2026-10-19): [templates/RESULTS.md](templates/RESULTS.md), 10/10 bundles
+reached L2 with no broken links; 50/50 source-evidence retrieval checks passed and all 30 workflow
+guides were queryable. Initial lexical baselines stayed 44/48 and 27/30. Publication revalidation
+on updated main passes the dependency audit; real-agent behavior remains unmeasured.
+
 ## 2. Quick-reference numbers
 
 Machine: AMD EPYC 8 vCPU, 23 GB RAM, no GPU; release build. For details and measurement conditions

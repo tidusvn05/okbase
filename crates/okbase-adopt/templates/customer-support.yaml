@@ -1,0 +1,120 @@
+id: "customer-support"
+title: "Atlas customer support"
+description: "Answer product questions and handle customer cases with linked policies, evidence and escalation paths."
+roles: ["support", "customer-success", "product-manager"]
+schemas:
+  Case: {"owner": "string", "project_id": "string"}
+  FAQ: {"owner": "string", "project_id": "string"}
+  Guide: {"owner": "string", "project_id": "string", "audience": "string"}
+  Policy: {"owner": {"type": "string", "required": true}, "project_id": "string", "effective_from": "date"}
+  Procedure: {"owner": "string", "project_id": "string"}
+  Product: {"owner": "string", "project_id": "string"}
+vocabulary: {"product": [], "notifications": [], "faq": [], "policy": [], "escalation": [], "troubleshooting": [], "evidence": [], "procedure": [], "triage": [], "case": [], "investigation": []}
+documents:
+  - path: "products/atlas.md"
+    type: "Product"
+    title: "Atlas product support reference"
+    description: "Describe supported notification behavior and the boundary of the current product release."
+    tags: ["product", "notifications"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Supported behavior
+      Atlas sends issue assignment notifications and retries temporary delivery failures.
+      Digest emails are not part of the current fictional release. Support must not promise an unapproved roadmap date.
+      Read [the delivery FAQ](../faq/notifications.md), [troubleshooting guide](../guides/missing-notification.md), and [escalation policy](../policies/escalation.md) before answering a case.
+  - path: "faq/notifications.md"
+    type: "FAQ"
+    title: "Notification questions"
+    description: "Answer common delivery questions while preserving uncertainty about a particular customer event."
+    tags: ["faq", "notifications"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Do retries create duplicates?
+      Retries are designed to reuse the event identity so that one assignment event produces one notification. A specific customer report still needs evidence.
+      ## Are digest emails available?
+      Digest emails are not available in the current release.
+      ## How do I report a missing notification?
+      Provide the issue ID, approximate event time with timezone and the affected delivery channel. Never request a password or raw authentication token.
+      See [the troubleshooting guide](../guides/missing-notification.md).
+  - path: "policies/escalation.md"
+    type: "Policy"
+    title: "Customer issue escalation policy"
+    description: "Route reliability cases with enough redacted evidence for engineering review."
+    tags: ["policy", "escalation"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Escalation rule
+      Escalate a reproducible missing-notification case to the api-team with the issue ID, event time and redacted delivery evidence.
+      The support owner retains the customer communication record. Engineering owns technical diagnosis; do not claim a root cause before it is verified.
+      ## Promise boundary
+      State the next update owner and agreed update time. Do not invent a fix date or promise a release outside [the product reference](../products/atlas.md).
+      Follow [the triage procedure](../procedures/triage-case.md).
+  - path: "guides/missing-notification.md"
+    type: "Guide"
+    title: "Investigate a missing notification"
+    description: "Gather the event context and separate a customer symptom from a confirmed delivery failure."
+    tags: ["troubleshooting", "evidence"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Initial checks
+      Confirm the issue ID, assignment event time and delivery channel. Ask whether the notification is delayed, missing or duplicated; these are different symptoms.
+      Check whether the event was accepted and whether delivery evidence is available through an authorized support tool. This starter bundle does not connect to a live customer system.
+      ## Escalate
+      A symptom alone does not prove data loss. Read [the escalation policy](../policies/escalation.md) and [sample case](../cases/cs-17.md). Record what is known and what engineering must investigate.
+  - path: "procedures/triage-case.md"
+    type: "Procedure"
+    title: "Triage a support case"
+    description: "Create a traceable support record with evidence, owner and a realistic next update."
+    tags: ["procedure", "triage"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Intake
+      Record the customer-provided symptom, affected product behavior, event time and source reference. Redact secrets and unrelated personal data.
+      ## Ownership and response
+      Assign a support owner, link the relevant [product reference](../products/atlas.md) and [FAQ](../faq/notifications.md), and identify missing evidence.
+      Use the [escalation policy](../policies/escalation.md) if engineering investigation is needed. Draft the customer reply with verified facts and the agreed next update; external sending requires an authorized communication tool.
+  - path: "cases/cs-17.md"
+    type: "Case"
+    title: "CS-17: delayed assignment notification"
+    description: "Keep a customer symptom, missing evidence and engineering escalation distinct."
+    tags: ["case", "investigation"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Fictional report
+      A customer reported a missing assignment notification for issue DEMO-17 at approximately 09:05 UTC on 2026-10-14.
+      The case is awaiting redacted delivery evidence; the root cause is unknown.
+      ## Next action
+      The support owner collects the event identity and escalates to the api-team under [the policy](../policies/escalation.md). No fix date has been promised.
+      Use [the troubleshooting guide](../guides/missing-notification.md) before updating the customer-facing conclusion.
+questions:
+  - question: "Are digest emails available?"
+    source: "faq/notifications"
+    evidence: "Digest emails are not available in the current release."
+  - question: "What does the product do after temporary delivery failure?"
+    source: "products/atlas"
+    evidence: "retries temporary delivery failures"
+  - question: "Who receives a reproducible missing-notification escalation?"
+    source: "policies/escalation"
+    evidence: "to the api-team"
+  - question: "What symptom distinctions should triage make?"
+    source: "guides/missing-notification"
+    evidence: "delayed, missing or duplicated"
+  - question: "What is known about the cause of CS-17?"
+    source: "cases/cs-17"
+    evidence: "the root cause is unknown"
+workflows:
+  - id: "answer-customer"
+    title: "Answer a customer question"
+    description: "Ground the answer in the current product reference and policy."
+    steps: ["Read the product record and relevant FAQ.", "Distinguish supported behavior from a claim about a specific customer event.", "Draft a concise response with source references and evidence gaps; do not promise roadmap dates or send externally without authorization."]
+    sources: ["products/atlas", "faq/notifications", "policies/escalation"]
+  - id: "triage-case"
+    title: "Triage and escalate a case"
+    description: "Collect the smallest useful evidence set and route the issue to its owner."
+    steps: ["Read the intake procedure and sample case.", "Gather the event identity, timezone and redacted evidence using configured tools.", "Update the authorized case record, name the escalation owner and next update, and preserve unverified hypotheses as such."]
+    sources: ["procedures/triage-case", "cases/cs-17", "guides/missing-notification"]
+  - id: "improve-support-docs"
+    title: "Improve support documentation"
+    description: "Turn a verified case outcome into reusable knowledge without duplicating policy."
+    steps: ["Read the closed case evidence and existing FAQ or troubleshooting record.", "Identify the reusable fact and confirm its product version and owner.", "Update the existing document when appropriate, link the case and keep customer-specific details out of general guidance."]
+    sources: ["faq/notifications", "guides/missing-notification", "policies/escalation"]

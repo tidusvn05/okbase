@@ -1,0 +1,136 @@
+id: "personal-assistant"
+title: "Personal assistant knowledge"
+description: "Keep durable preferences, daily context and project memory usable across assistant sessions."
+roles: ["individual", "developer", "leader"]
+schemas:
+  Goal: {"owner": "string", "project_id": "string"}
+  Guide: {"owner": "string", "project_id": "string", "audience": "string"}
+  Handoff: {"owner": "string", "project_id": "string"}
+  Journal: {"owner": "string", "project_id": "string", "session_date": {"type": "date", "required": true}}
+  Memory: {"owner": "string", "project_id": "string", "memory_kind": {"type": "string", "required": true, "enum": ["preference", "fact", "decision"]}, "observed_at": {"type": "date", "required": true}, "review_after": "date"}
+  Policy: {"owner": {"type": "string", "required": true}, "project_id": "string", "effective_from": "date"}
+  Report: {"owner": {"type": "string", "required": true}, "project_id": "string", "period_start": {"type": "date", "required": true}, "period_end": {"type": "date", "required": true}, "as_of": {"type": "date", "required": true}}
+vocabulary: {"preferences": [], "memory": [], "goals": [], "planning": [], "project": [], "journal": [], "evidence": [], "policy": [], "handoff": [], "report": []}
+documents:
+  - path: "profile/preferences.md"
+    type: "Memory"
+    title: "Working and communication preferences"
+    description: "Recall approved communication preferences without confusing them with temporary observations."
+    tags: ["preferences", "memory"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "memory_kind": "preference", "observed_at": "2026-10-12"}
+    body: |
+      ## Approved preference
+      The user prefers a short written summary before a detailed technical explanation.
+      Offer two or three concrete options when a decision is needed. Do not infer approval to send messages or change external systems from a communication preference.
+      ## Source and correction
+      Source: fictional user statement during onboarding on 2026-10-12. Confirm changes with the user, update this record and retain a superseded reference when necessary.
+      The [daily journal](../journal/2026-10-14.md) contains temporary context; the [memory policy](../policies/memory.md) describes what belongs here.
+  - path: "goals/current-quarter.md"
+    type: "Goal"
+    title: "Current quarter goals"
+    description: "Keep the personal priorities and their review dates separate from session tasks."
+    tags: ["goals", "planning"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Priorities
+      The current learning goal is to complete one database reliability exercise each week.
+      The other priority is shipping the Atlas notification milestone without increasing operational toil. Review progress on Fridays; a missed exercise is a review input, not a reason to rewrite history.
+      ## Evidence
+      Use the [Atlas project context](../projects/atlas.md) and [weekly review](../reports/weekly-review.md). Dates and outcomes here are fictional; replace them with approved goals and actual evidence.
+  - path: "projects/atlas.md"
+    type: "Memory"
+    title: "Atlas personal project context"
+    description: "Resume the Atlas workstream with its current focus and unresolved question."
+    tags: ["project", "memory"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "memory_kind": "fact", "observed_at": "2026-10-14"}
+    body: |
+      ## Durable context
+      The current Atlas focus is notification reliability, especially duplicate delivery handling.
+      The user's next decision is whether the outbox retry dashboard is sufficient for the release review. No decision has been recorded yet.
+      ## Resume
+      Read the [latest journal](../journal/2026-10-14.md) for what happened in the last session. Use the [handoff](../handoffs/next-session.md) for the next action; do not promote every observation into a long-term preference.
+  - path: "journal/2026-10-14.md"
+    type: "Journal"
+    title: "Journal for 2026-10-14"
+    description: "Preserve the source and uncertainty of one work session before resuming later."
+    tags: ["journal", "evidence"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "session_date": "2026-10-14"}
+    body: |
+      ## Observed
+      The fictional session reviewed duplicate notification retries. A dashboard screenshot was discussed but is not attached to this demo bundle.
+      ## Unresolved
+      The dashboard's retry-age percentile is unverified because its query was not available.
+      ## Next
+      Ask for the query or a redacted export before claiming the dashboard is correct. Link accepted findings into [project memory](../projects/atlas.md); leave raw observations here.
+      See the [next-session handoff](../handoffs/next-session.md).
+  - path: "policies/memory.md"
+    type: "Policy"
+    title: "Memory capture and correction policy"
+    description: "Decide what to retain, how to cite it and how to correct outdated assistant memory."
+    tags: ["memory", "policy"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Capture
+      Store durable preferences as Memory records with memory_kind: preference and observed_at. Store project facts separately, with their source and observation date. Keep temporary working context in Journal records.
+      Only retain information within the user's requested scope. Use links to authoritative records instead of copying entire conversations.
+      ## Correction and privacy
+      A changed preference replaces the previous active preference; mark the old record deprecated and link supersedes in the new record. Review personal context before sharing it with a team or another bot. The host must enforce the audience's read scope.
+      ## Action boundary
+      A saved memory is context, not permission to send messages, spend money or run a deployment. Read the [preferences](../profile/preferences.md) and [handoff](../handoffs/next-session.md) within the current user's authorization.
+  - path: "handoffs/next-session.md"
+    type: "Handoff"
+    title: "Resume the next assistant session"
+    description: "Transfer the next action and its evidence gap without claiming the work is already complete."
+    tags: ["handoff", "project"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Resume point
+      Next action: obtain the retry dashboard query before validating its percentile calculation.
+      The missing input is the actual query or a redacted data export. Do not mark the dashboard review complete based on the [journal observation](../journal/2026-10-14.md).
+      ## Context to load
+      Read [project memory](../projects/atlas.md), [user preferences](../profile/preferences.md), and the [memory policy](../policies/memory.md). Summarize the evidence gap in the first response instead of re-reading every old session.
+  - path: "reports/weekly-review.md"
+    type: "Report"
+    title: "Weekly personal review"
+    description: "Review goals using explicit observations and preserve incomplete work as an open item."
+    tags: ["report", "goals"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "period_start": "2026-10-12", "period_end": "2026-10-16", "as_of": "2026-10-14"}
+    body: |
+      ## Period and evidence
+      This fictional review covers 2026-10-12 through 2026-10-16, with evidence available as of 2026-10-14.
+      One notification retry review was started. The dashboard query remains unavailable, so reliability validation is incomplete.
+      ## Next review
+      Keep the dashboard evidence gap open and check the [goals](../goals/current-quarter.md) on Friday. Do not claim a completed learning exercise without a journal entry or other source.
+      Use the [handoff](../handoffs/next-session.md) to resume.
+questions:
+  - question: "How does the user prefer technical answers?"
+    source: "profile/preferences"
+    evidence: "The user prefers a short written summary before a detailed technical explanation."
+  - question: "What is the weekly learning goal?"
+    source: "goals/current-quarter"
+    evidence: "complete one database reliability exercise each week"
+  - question: "What is the current Atlas focus?"
+    source: "projects/atlas"
+    evidence: "notification reliability, especially duplicate delivery handling"
+  - question: "What remains unverified from the last session?"
+    source: "journal/2026-10-14"
+    evidence: "The dashboard's retry-age percentile is unverified"
+  - question: "What should the next session do first?"
+    source: "handoffs/next-session"
+    evidence: "obtain the retry dashboard query before validating its percentile calculation"
+workflows:
+  - id: "remember-fact"
+    title: "Remember a sourced fact"
+    description: "Capture durable knowledge with the source and date the user actually provided."
+    steps: ["Identify whether the input is a preference, project fact or temporary observation.", "Check existing memory for contradictions and verify permission to retain the information.", "Create or minimally update the right record, recording the source and observation date; link the journal instead of copying it."]
+    sources: ["policies/memory", "profile/preferences", "projects/atlas"]
+  - id: "resume-session"
+    title: "Resume a session"
+    description: "Recover the next useful action from the handoff and cited context."
+    steps: ["Read the handoff and its linked project memory.", "State the current goal, completed work, evidence gap and next action.", "Continue only actions covered by the current authorization; obtain missing evidence before closing the item."]
+    sources: ["handoffs/next-session", "journal/2026-10-14", "projects/atlas"]
+  - id: "review-memory"
+    title: "Review and correct memory"
+    description: "Keep lasting facts accurate without turning every journal entry into memory."
+    steps: ["Review the goal and journal records against their original sources.", "Propose corrections and distinguish confirmed facts from unverified observations.", "Apply authorized corrections using deprecated/supersedes links where records are replaced, then refresh the handoff."]
+    sources: ["reports/weekly-review", "policies/memory", "goals/current-quarter"]

@@ -1,0 +1,193 @@
+---
+source: crates/okbase-cli/tests/templates.rs
+expression: "serde_json::to_string_pretty(&catalog).unwrap()"
+---
+{
+  "templates": [
+    {
+      "id": "software-project",
+      "title": "Atlas software project",
+      "description": "Develop, maintain and explain a software project using linked architecture, API and delivery knowledge.",
+      "roles": [
+        "developer",
+        "tech-lead"
+      ],
+      "types": [
+        "API",
+        "Decision",
+        "Guide",
+        "Reference",
+        "Runbook"
+      ]
+    },
+    {
+      "id": "personal-assistant",
+      "title": "Personal assistant knowledge",
+      "description": "Keep durable preferences, daily context and project memory usable across assistant sessions.",
+      "roles": [
+        "individual",
+        "developer",
+        "leader"
+      ],
+      "types": [
+        "Goal",
+        "Guide",
+        "Handoff",
+        "Journal",
+        "Memory",
+        "Policy",
+        "Report"
+      ]
+    },
+    {
+      "id": "project-assistant",
+      "title": "Atlas project assistant",
+      "description": "Maintain linked tasks, decisions, investigations and evidence-based project reports.",
+      "roles": [
+        "developer",
+        "project-manager",
+        "leader"
+      ],
+      "types": [
+        "Decision",
+        "Guide",
+        "Investigation",
+        "Meeting",
+        "Reference",
+        "Report",
+        "Task"
+      ]
+    },
+    {
+      "id": "infra-ops",
+      "title": "Atlas infrastructure operations",
+      "description": "Map services to servers and environments, then connect deployments, policies, runbooks and incident evidence.",
+      "roles": [
+        "devops",
+        "sre",
+        "tech-lead"
+      ],
+      "types": [
+        "Deployment",
+        "Environment",
+        "Guide",
+        "Incident",
+        "Policy",
+        "Postmortem",
+        "Runbook",
+        "Server",
+        "Service"
+      ]
+    },
+    {
+      "id": "product-management",
+      "title": "Atlas product management",
+      "description": "Connect user problems, product requirements, scope decisions and post-release evidence.",
+      "roles": [
+        "product-manager",
+        "project-manager",
+        "founder"
+      ],
+      "types": [
+        "Decision",
+        "Guide",
+        "Report",
+        "Requirement",
+        "Research",
+        "Roadmap",
+        "Strategy"
+      ]
+    },
+    {
+      "id": "engineering-lead",
+      "title": "Atlas engineering leadership",
+      "description": "Manage technical decisions, ownership, debt, delivery risks and engineering reports with traceable evidence.",
+      "roles": [
+        "tech-lead",
+        "engineering-manager"
+      ],
+      "types": [
+        "Guide",
+        "Policy",
+        "RFC",
+        "Reference",
+        "Report",
+        "Risk",
+        "Task"
+      ]
+    },
+    {
+      "id": "executive",
+      "title": "Atlas executive knowledge",
+      "description": "Connect strategy, objectives, metric definitions, initiatives and executive decisions to dated evidence.",
+      "roles": [
+        "ceo",
+        "founder",
+        "executive"
+      ],
+      "types": [
+        "Decision",
+        "Guide",
+        "Initiative",
+        "Metric",
+        "Objective",
+        "Report",
+        "Risk",
+        "Strategy"
+      ]
+    },
+    {
+      "id": "team-handbook",
+      "title": "Atlas team handbook",
+      "description": "Help a team find ownership, onboard members and follow documented working practices.",
+      "roles": [
+        "leader",
+        "team-member",
+        "new-joiner"
+      ],
+      "types": [
+        "Guide",
+        "Policy",
+        "Procedure",
+        "Reference"
+      ]
+    },
+    {
+      "id": "customer-support",
+      "title": "Atlas customer support",
+      "description": "Answer product questions and handle customer cases with linked policies, evidence and escalation paths.",
+      "roles": [
+        "support",
+        "customer-success",
+        "product-manager"
+      ],
+      "types": [
+        "Case",
+        "FAQ",
+        "Guide",
+        "Policy",
+        "Procedure",
+        "Product"
+      ]
+    },
+    {
+      "id": "research",
+      "title": "Atlas research and investigations",
+      "description": "Keep research questions, hypotheses, experiments and recommendations connected to reproducible evidence.",
+      "roles": [
+        "developer",
+        "product-manager",
+        "leader"
+      ],
+      "types": [
+        "Decision",
+        "Evidence",
+        "Experiment",
+        "Guide",
+        "Hypothesis",
+        "Reference",
+        "Research"
+      ]
+    }
+  ]
+}

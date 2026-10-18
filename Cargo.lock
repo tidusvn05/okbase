@@ -2312,6 +2312,7 @@ dependencies = [
  "okbase-standard",
  "regex",
  "serde",
+ "serde-saphyr",
  "serde_json",
  "tempfile",
  "thiserror",

@@ -93,21 +93,29 @@ pub enum Command {
         #[arg(long, requires = "write")]
         force: bool,
     },
-    /// Start a knowledge base in an empty folder: index.md, tag vocabulary, type schemas, log, okbase.toml.
+    /// List built-in knowledge templates, their audiences and document types (read-only, offline).
+    Templates,
+    /// Start a knowledge base in an empty folder, optionally with a ready-to-try template.
     #[command(
-        after_help = "Examples:\n  okbase init --title \"Support knowledge\" --langs vi,en\n  okbase -b ./kb init --title \"HR policies\" --types Policy,FAQ"
+        after_help = "Examples:\n  okbase templates\n  okbase -b ./kb init --template software-project\n  okbase -b ./kb init --template infra-ops --print\n  okbase init --title \"Support knowledge\" --langs vi,en\n  okbase -b ./kb init --title \"HR policies\" --types Policy,FAQ\n\nTemplates contain fictional English examples. --langs configures the languages people use; it does not translate the examples."
     )]
     Init {
         /// What the knowledge base is about.
+        #[arg(long, required_unless_present = "template")]
+        title: Option<String>,
+        /// Built-in template (see `okbase templates`); one template per bundle.
+        #[arg(long, value_name = "NAME")]
+        template: Option<String>,
+        /// Preview every file and its content without creating directories or writing files.
         #[arg(long)]
-        title: String,
+        print: bool,
         /// One sentence about it.
         #[arg(long, default_value = "")]
         description: String,
         /// Languages people write and ask in (comma-separated).
         #[arg(long, value_delimiter = ',', value_name = "LANGS")]
         langs: Vec<String>,
-        /// Document types to declare [default: Guide, Policy, FAQ].
+        /// Document types [default: Guide, Policy, FAQ]; with a template, add extra type schemas.
         #[arg(long, value_delimiter = ',', value_name = "TYPES")]
         types: Vec<String>,
     },

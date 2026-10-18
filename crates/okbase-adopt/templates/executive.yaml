@@ -1,0 +1,135 @@
+id: "executive"
+title: "Atlas executive knowledge"
+description: "Connect strategy, objectives, metric definitions, initiatives and executive decisions to dated evidence."
+roles: ["ceo", "founder", "executive"]
+schemas:
+  Decision: {"owner": {"type": "string", "required": true}, "project_id": "string", "decision_status": {"type": "string", "required": true, "enum": ["proposed", "accepted", "superseded"]}}
+  Guide: {"owner": "string", "project_id": "string", "audience": "string"}
+  Initiative: {"owner": "string", "project_id": "string"}
+  Metric: {"owner": {"type": "string", "required": true}, "project_id": "string", "unit": {"type": "string", "required": true}, "measurement_window": {"type": "string", "required": true}}
+  Objective: {"owner": "string", "project_id": "string"}
+  Report: {"owner": {"type": "string", "required": true}, "project_id": "string", "period_start": {"type": "date", "required": true}, "period_end": {"type": "date", "required": true}, "as_of": {"type": "date", "required": true}}
+  Risk: {"owner": {"type": "string", "required": true}, "project_id": "string", "risk_status": {"type": "string", "required": true, "enum": ["open", "mitigating", "accepted", "closed"]}}
+  Strategy: {"owner": "string", "project_id": "string"}
+vocabulary: {"strategy": [], "focus": [], "objectives": [], "outcome": [], "metrics": [], "definition": [], "initiative": [], "ownership": [], "decision": [], "risk": [], "evidence": [], "report": [], "executive": []}
+documents:
+  - path: "strategy/direction.md"
+    type: "Strategy"
+    title: "Atlas strategic direction"
+    description: "Keep the target customer and strategic choice visible when reviewing initiatives."
+    tags: ["strategy", "focus"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Strategic choice
+      Atlas focuses on reliable issue handoffs for small engineering teams before expanding into general workflow automation.
+      The strategic tradeoff is depth of reliability evidence over breadth of features. This fictional strategy is a demonstration of documentation structure, not business advice or market validation.
+      Read [quarterly objectives](../objectives/q4.md), [metric definition](../metrics/reliable-notifications.md), and [initiative](../initiatives/m1.md).
+  - path: "objectives/q4.md"
+    type: "Objective"
+    title: "Q4 notification reliability objective"
+    description: "Connect a leadership objective to an explicit measurement definition and evidence gap."
+    tags: ["objectives", "outcome"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Objective
+      Make notification reliability measurable before declaring the M1 milestone accepted.
+      The key result is a reviewed reliability definition and a validated reporting query; no numerical production target has been approved in this example.
+      ## Review inputs
+      Use [the metric definition](../metrics/reliable-notifications.md), [M1 initiative](../initiatives/m1.md), and [weekly report](../reports/week-42.md). A completed engineering task is not automatically an achieved customer outcome.
+  - path: "metrics/reliable-notifications.md"
+    type: "Metric"
+    title: "Reliable notification rate definition"
+    description: "Define the denominator, measurement window and limits of the notification KPI."
+    tags: ["metrics", "definition"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "unit": "ratio", "measurement_window": "UTC calendar week"}
+    body: |
+      ## Definition
+      Reliable notification rate is distinct accepted assignment events delivered exactly once divided by distinct accepted assignment events in the same reporting window.
+      Use a UTC calendar week and count each event once. Events still within the agreed delivery window must be reported separately rather than silently classified as success.
+      ## Source and uncertainty
+      The intended source is the outbox delivery export joined to accepted assignment events. No export is included in this demo, so the metric value is unknown.
+      The api-team owns semantic correctness; the platform-team owns the export. See [the reporting risk](../risks/metric-evidence.md).
+  - path: "initiatives/m1.md"
+    type: "Initiative"
+    title: "M1 reliability initiative"
+    description: "Track the strategic purpose, milestone gate and accountable teams of one initiative."
+    tags: ["initiative", "ownership"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Purpose and gate
+      M1 connects the reliability strategy to retry correctness and reviewed monitoring evidence.
+      The api-team owns behavior; the platform-team owns the monitoring export. Retry behavior has an example review result, but the reporting query remains unvalidated.
+      ## Decisions
+      See [the scope decision](../decisions/m1-scope.md), [reporting risk](../risks/metric-evidence.md), and [weekly briefing](../reports/week-42.md).
+      Do not treat this initiative summary as a live task tracker or financial forecast.
+  - path: "decisions/m1-scope.md"
+    type: "Decision"
+    title: "Preserve the M1 reliability scope"
+    description: "Record the leadership tradeoff, rationale and condition for revisiting scope."
+    tags: ["decision", "strategy"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "decision_status": "accepted"}
+    body: |
+      ## Accepted decision
+      Keep digest emails outside M1 until notification reliability is measurable.
+      The rationale is to finish one defensible customer outcome before expanding delivery modes. Revisit after the operating team supplies the reporting evidence and the product owner reviews customer demand.
+      This decision constrains scope; it does not authorize spending, external communication or deployment.
+      Sources: [strategy](../strategy/direction.md), [objective](../objectives/q4.md), [initiative](../initiatives/m1.md).
+  - path: "risks/metric-evidence.md"
+    type: "Risk"
+    title: "Reliability reporting evidence gap"
+    description: "Identify who can resolve the metric evidence gap and what remains unknown."
+    tags: ["risk", "evidence"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "risk_status": "open"}
+    body: |
+      ## Risk and owner
+      The reliability KPI cannot be reported because the source export and reporting query have not been validated.
+      The platform-team owns providing the export; the api-team owns reviewing the event semantics. The CEO's decision is whether to preserve the acceptance gate while this evidence is missing.
+      ## Mitigation
+      Request the actual source and review date through authorized tools. Do not replace an unknown KPI value with a synthetic demonstration value.
+      Read [the definition](../metrics/reliable-notifications.md) and [weekly briefing](../reports/week-42.md).
+  - path: "reports/week-42.md"
+    type: "Report"
+    title: "Executive weekly briefing"
+    description: "Present the strategic outcome, unresolved risk and decision needed using dated source evidence."
+    tags: ["report", "executive"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "period_start": "2026-10-12", "period_end": "2026-10-16", "as_of": "2026-10-14"}
+    body: |
+      ## Snapshot
+      Reporting period: 2026-10-12 through 2026-10-16. Evidence cutoff: 2026-10-14.
+      The reliability KPI value is unknown; no validated source export is attached.
+      ## What changed and what is needed
+      The [initiative](../initiatives/m1.md) has an example behavior review result, while the [evidence gap](../risks/metric-evidence.md) remains open.
+      Decision requested: retain the monitoring acceptance gate and obtain an owner-confirmed review date. The [scope decision](../decisions/m1-scope.md) remains in force.
+      There is no revenue, budget or retention evidence in this demo; do not infer those outcomes from delivery progress.
+questions:
+  - question: "What is the strategic focus?"
+    source: "strategy/direction"
+    evidence: "reliable issue handoffs for small engineering teams"
+  - question: "Has a numerical production target been approved?"
+    source: "objectives/q4"
+    evidence: "no numerical production target has been approved"
+  - question: "How is reliable notification rate defined?"
+    source: "metrics/reliable-notifications"
+    evidence: "delivered exactly once divided by distinct accepted assignment events"
+  - question: "What is the accepted M1 scope decision?"
+    source: "decisions/m1-scope"
+    evidence: "Keep digest emails outside M1 until notification reliability is measurable."
+  - question: "What KPI value can the weekly briefing substantiate?"
+    source: "reports/week-42"
+    evidence: "The reliability KPI value is unknown"
+workflows:
+  - id: "prepare-briefing"
+    title: "Prepare an executive briefing"
+    description: "Connect strategic outcomes to dated evidence and a concrete decision request."
+    steps: ["Read strategy, objectives, initiatives and the previous report.", "Check KPI definitions and actual evidence; list unknown values explicitly.", "Draft the briefing with reporting dates, source links, risks and the decision required; do not invent financial or customer outcomes."]
+    sources: ["strategy/direction", "metrics/reliable-notifications", "reports/week-42"]
+  - id: "record-decision"
+    title: "Record an executive decision"
+    description: "Preserve the alternatives, rationale, owner and revisit condition for a leadership choice."
+    steps: ["Locate the objective, initiative and existing decision.", "Prepare alternatives and evidence limits, including the consequences of deferring the choice.", "Record the approved outcome and affected source links within write authorization; keep operational permissions with the execution host."]
+    sources: ["objectives/q4", "decisions/m1-scope", "initiatives/m1"]
+  - id: "review-objective"
+    title: "Review an objective and its KPI"
+    description: "Evaluate progress against a defined outcome rather than task counts alone."
+    steps: ["Read the objective and metric definition, including denominator and measurement window.", "Check the dated source export or state clearly that it is unavailable.", "Write an evidence-based review and owner-assigned follow-up; preserve the distinction between delivery progress and business outcome."]
+    sources: ["objectives/q4", "metrics/reliable-notifications", "risks/metric-evidence"]

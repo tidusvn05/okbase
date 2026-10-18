@@ -254,6 +254,12 @@ To expose the same tools over MCP inside your web server, mount
 
 ## Real folders: where your knowledge actually is
 
+Starting from nothing? [Built-in templates](templates.md) provide linked examples for developers,
+leaders, CEOs, product/project managers and bot hosts. List them with `okbase templates`, preview
+with `okbase -b ./kb init --template project-assistant --print`, then create the same command without
+`--print` and read `okbase -b ./kb get guides/getting-started`. They work offline and reach L2 at
+creation; the included records are fictional English examples to replace with your own content.
+
 `okbase scan` (and `okbase onboard`, which starts with it) looks at the folder before advising:
 
 ```sh
@@ -263,7 +269,7 @@ okbase scan          # empty? software repository? docs site? OKF, partly OKF? P
 | Your folder | What okbase does | You run (or your agent does) |
 |---|---|---|
 | **A software repository with `docs/`** (MkDocs, Docusaurus, Hugo, Mintlify or plain) | Uses `docs/` as the bundle, not the repository; keeps your layout; under a docs site, `index.md` stays your page (profile `docs-site`) | from the repository root: `okbase -b docs agent install`; optionally `okbase -b docs adopt --write` to add `title`/`description` in place (review the PR) |
-| **An empty folder** | Starts a knowledge base | `okbase init --title "…" --langs vi,en`, then `okbase new --type Policy "…" --description "…"` (or the `okbase-author` skill) |
+| **An empty folder** | Starts a knowledge base from a template or an empty skeleton | `okbase init --template software-project` (see `okbase templates`), or `okbase init --title "…" --langs vi,en` then `okbase new --type Policy "…" --description "…"` |
 | **OKF with a few broken files** | Lists the files to fix; nothing else changes | `okbase adopt --only a.md --only b.md --write`, then `okbase lint --level L1` for what needs a hand fix (invalid YAML is reported with its line) |
 | **A repository whose `knowledge/` feeds a bot** | Uses `knowledge/`; the rest of the repository is ignored | developers: `okbase -b knowledge agent install`; the bot: see below; CI: see below |
 | **An Obsidian vault** | Profile `vault`: notes stay as they are, no `index.md` files are created | `okbase agent install`; `adopt --write` only adds frontmatter |
@@ -556,7 +562,7 @@ okbase is read-only by default. These commands write, and only where stated:
 | `embed enable/disable`, `tune activate/rollback --write` | `okbase.toml` (only the `[embed]` keys) |
 | `agent install` / `agent uninstall` | agent configuration, skills, AGENTS.md block (`--print` to preview); a record in `~/.config/okbase/installs.json` |
 | `clean --yes` | deletes okbase's own index or user cache (never documents) |
-| `init`, `new` | a new bundle skeleton; one new document plus its folder listing (never overwrites) |
+| `init`, `new` | a new skeleton or template bundle (`init --print` previews without writing); one new document plus its folder listing (never overwrites existing content) |
 | `import --write` | markdown copies of source documents in `sources/` (never overwrites edited ones without `--force`) |
 | `import ocr-submit` | a page transcription in okbase's state directory (not in the bundle) |
 | `embed index`, `embed models add`, `tune …` | the user cache (models, vectors, runs, Python environment) |

@@ -1,0 +1,37 @@
+---
+source: crates/okbase-cli/tests/templates.rs
+expression: "serde_json::to_string_pretty(&paths).unwrap()"
+---
+[
+  "_meta/types/Custom.md",
+  "_meta/types/Decision.md",
+  "_meta/types/Guide.md",
+  "_meta/types/Investigation.md",
+  "_meta/types/Meeting.md",
+  "_meta/types/Reference.md",
+  "_meta/types/Report.md",
+  "_meta/types/Task.md",
+  "_meta/vocabulary.md",
+  "decisions/index.md",
+  "decisions/m1-scope.md",
+  "guides/getting-started.md",
+  "guides/index.md",
+  "index.md",
+  "investigations/index.md",
+  "investigations/retry-age.md",
+  "log.md",
+  "meetings/index.md",
+  "meetings/m1-planning.md",
+  "okbase.toml",
+  "project/context.md",
+  "project/index.md",
+  "reports/index.md",
+  "reports/week-42.md",
+  "tasks/at-42.md",
+  "tasks/at-43.md",
+  "tasks/index.md",
+  "workflows/index.md",
+  "workflows/investigate-blocker.md",
+  "workflows/meeting-to-tasks.md",
+  "workflows/weekly-report.md"
+]

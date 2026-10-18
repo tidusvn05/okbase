@@ -1,0 +1,110 @@
+---
+source: crates/okbase-cli/tests/templates.rs
+expression: normalized
+---
+{
+  "id": "init",
+  "kind": "ask",
+  "title": "Start a knowledge base here",
+  "why": "the folder is empty: okbase needs markdown documents to work with",
+  "question": "This folder is empty. Shall I start a knowledge base here? Tell me what it is about, who will use it, and which languages people ask in. Choose an empty skeleton or one of the templates below (`okbase templates --json` lists them). Templates include fictional English examples, five trial questions and three workflow guides; they do not start a bot or run external actions. If your documents are elsewhere (markdown, PDF, Word), tell me where.",
+  "options": [
+    {
+      "answer": "start with an empty skeleton",
+      "commands": [
+        "okbase -b empty init --title \"<what it is about>\" --langs <vi,en,…>",
+        "okbase -b empty new --type <Type> \"<title>\"   (or follow the okbase-author skill)",
+        "okbase -b empty onboard"
+      ]
+    },
+    {
+      "answer": "software-project: Develop, maintain and explain a software project using linked architecture, API and delivery knowledge. (for developer, tech-lead)",
+      "commands": [
+        "okbase -b empty init --template software-project --langs <languages people use>",
+        "okbase -b empty get guides/getting-started",
+        "okbase -b empty onboard"
+      ]
+    },
+    {
+      "answer": "personal-assistant: Keep durable preferences, daily context and project memory usable across assistant sessions. (for individual, developer, leader)",
+      "commands": [
+        "okbase -b empty init --template personal-assistant --langs <languages people use>",
+        "okbase -b empty get guides/getting-started",
+        "okbase -b empty onboard"
+      ]
+    },
+    {
+      "answer": "project-assistant: Maintain linked tasks, decisions, investigations and evidence-based project reports. (for developer, project-manager, leader)",
+      "commands": [
+        "okbase -b empty init --template project-assistant --langs <languages people use>",
+        "okbase -b empty get guides/getting-started",
+        "okbase -b empty onboard"
+      ]
+    },
+    {
+      "answer": "infra-ops: Map services to servers and environments, then connect deployments, policies, runbooks and incident evidence. (for devops, sre, tech-lead)",
+      "commands": [
+        "okbase -b empty init --template infra-ops --langs <languages people use>",
+        "okbase -b empty get guides/getting-started",
+        "okbase -b empty onboard"
+      ]
+    },
+    {
+      "answer": "product-management: Connect user problems, product requirements, scope decisions and post-release evidence. (for product-manager, project-manager, founder)",
+      "commands": [
+        "okbase -b empty init --template product-management --langs <languages people use>",
+        "okbase -b empty get guides/getting-started",
+        "okbase -b empty onboard"
+      ]
+    },
+    {
+      "answer": "engineering-lead: Manage technical decisions, ownership, debt, delivery risks and engineering reports with traceable evidence. (for tech-lead, engineering-manager)",
+      "commands": [
+        "okbase -b empty init --template engineering-lead --langs <languages people use>",
+        "okbase -b empty get guides/getting-started",
+        "okbase -b empty onboard"
+      ]
+    },
+    {
+      "answer": "executive: Connect strategy, objectives, metric definitions, initiatives and executive decisions to dated evidence. (for ceo, founder, executive)",
+      "commands": [
+        "okbase -b empty init --template executive --langs <languages people use>",
+        "okbase -b empty get guides/getting-started",
+        "okbase -b empty onboard"
+      ]
+    },
+    {
+      "answer": "team-handbook: Help a team find ownership, onboard members and follow documented working practices. (for leader, team-member, new-joiner)",
+      "commands": [
+        "okbase -b empty init --template team-handbook --langs <languages people use>",
+        "okbase -b empty get guides/getting-started",
+        "okbase -b empty onboard"
+      ]
+    },
+    {
+      "answer": "customer-support: Answer product questions and handle customer cases with linked policies, evidence and escalation paths. (for support, customer-success, product-manager)",
+      "commands": [
+        "okbase -b empty init --template customer-support --langs <languages people use>",
+        "okbase -b empty get guides/getting-started",
+        "okbase -b empty onboard"
+      ]
+    },
+    {
+      "answer": "research: Keep research questions, hypotheses, experiments and recommendations connected to reproducible evidence. (for developer, product-manager, leader)",
+      "commands": [
+        "okbase -b empty init --template research --langs <languages people use>",
+        "okbase -b empty get guides/getting-started",
+        "okbase -b empty onboard"
+      ]
+    },
+    {
+      "answer": "my documents are elsewhere",
+      "commands": [
+        "okbase -b <that folder> onboard"
+      ]
+    }
+  ],
+  "writes": [
+    "index.md, _meta/, log.md and okbase.toml; a template also creates example documents and workflow guides"
+  ]
+}

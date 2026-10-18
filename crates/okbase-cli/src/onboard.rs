@@ -243,16 +243,45 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
         use okbase::scan::FolderKind;
         if sc.kind == FolderKind::Empty {
             {
+                let mut options = vec![choice(
+                    "start with an empty skeleton",
+                    &[
+                        "okbase init --title \"<what it is about>\" --langs <vi,en,…>",
+                        "okbase new --type <Type> \"<title>\"   (or follow the okbase-author skill)",
+                        "okbase onboard",
+                    ],
+                )];
+                for template in okbase_adopt::templates::catalog()
+                    .expect("embedded templates are validated by acceptance tests")
+                {
+                    options.push(choice(
+                        &format!(
+                            "{}: {} (for {})",
+                            template.id,
+                            template.description,
+                            template.roles.join(", ")
+                        ),
+                        &[
+                            &format!(
+                                "okbase init --template {} --langs <languages people use>",
+                                template.id
+                            ),
+                            "okbase get guides/getting-started",
+                            "okbase onboard",
+                        ],
+                    ));
+                }
+                options.push(choice(
+                    "my documents are elsewhere",
+                    &["okbase -b <that folder> onboard"],
+                ));
                 steps.push(ask(
                     "init",
                     "Start a knowledge base here",
                     "the folder is empty: okbase needs markdown documents to work with",
-                    "This folder is empty. Shall I start a knowledge base here? Tell me what it is about, who will use it, and which languages people ask in; if you already have documents elsewhere (markdown, PDF, Word), tell me where.".into(),
-                    vec![
-                        choice("yes", &["okbase init --title \"<what it is about>\" --langs <vi,en,…>", "okbase new --type <Type> \"<title>\"   (or follow the okbase-author skill)", "okbase onboard"]),
-                        choice("my documents are elsewhere", &["okbase -b <that folder> onboard"]),
-                    ],
-                    &["index.md, _meta/ and okbase.toml in this folder"],
+                    "This folder is empty. Shall I start a knowledge base here? Tell me what it is about, who will use it, and which languages people ask in. Choose an empty skeleton or one of the templates below (`okbase templates --json` lists them). Templates include fictional English examples, five trial questions and three workflow guides; they do not start a bot or run external actions. If your documents are elsewhere (markdown, PDF, Word), tell me where.".into(),
+                    options,
+                    &["index.md, _meta/, log.md and okbase.toml; a template also creates example documents and workflow guides"],
                 ));
                 return Plan {
                     bundle: st.bundle.clone(),

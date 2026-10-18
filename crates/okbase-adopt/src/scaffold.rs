@@ -72,7 +72,11 @@ fn schema_fields(ty: &str) -> &'static str {
 /// The files `init` would create, as (relative path, content). Fails if the folder already holds
 /// markdown documents (use `adopt` for those).
 pub fn init_files(root: &Path, o: &InitOptions) -> Result<Vec<(String, String)>, Error> {
-    let existing = okbase_core::discover(root)?;
+    let existing = if root.exists() {
+        okbase_core::discover(root)?
+    } else {
+        Vec::new()
+    };
     if !existing.is_empty() {
         return Err(Error::Invalid(format!(
             "{} already has {} markdown documents; use `okbase adopt` to convert them, or `okbase onboard`",
@@ -132,6 +136,7 @@ pub fn init_files(root: &Path, o: &InitOptions) -> Result<Vec<(String, String)>,
         ),
     ];
     for t in &types {
+        validate_type(t)?;
         let fields = schema_fields(t);
         files.push((
             format!("{}/{t}.md", okbase_standard::TYPES_DIR),
@@ -357,22 +362,77 @@ pub fn write_new(
     files: &[(String, String)],
     overwrite: &[String],
 ) -> Result<Vec<PathBuf>, Error> {
-    for (rel, _) in files {
-        let p = root.join(rel);
-        if p.exists() && !overwrite.contains(rel) {
-            return Err(Error::Invalid(format!("{} already exists", p.display())));
-        }
-    }
+    check_new(root, files, overwrite)?;
     let mut out = Vec::new();
     for (rel, text) in files {
         let p = root.join(rel);
         if let Some(parent) = p.parent() {
             std::fs::create_dir_all(parent).map_err(io(parent))?;
         }
-        std::fs::write(&p, text).map_err(io(&p))?;
+        let mut file = std::fs::OpenOptions::new()
+            .write(true)
+            .create(overwrite.contains(rel))
+            .truncate(overwrite.contains(rel))
+            .create_new(!overwrite.contains(rel))
+            .open(&p)
+            .map_err(io(&p))?;
+        std::io::Write::write_all(&mut file, text.as_bytes()).map_err(io(&p))?;
         out.push(p);
     }
     Ok(out)
+}
+
+/// Checks all planned destinations without creating the bundle or changing any files.
+pub fn check_new(
+    root: &Path,
+    files: &[(String, String)],
+    overwrite: &[String],
+) -> Result<(), Error> {
+    let mut seen = std::collections::BTreeSet::new();
+    for (rel, _) in files {
+        if !seen.insert(rel)
+            || Path::new(rel)
+                .components()
+                .any(|c| !matches!(c, std::path::Component::Normal(_)))
+            || rel.is_empty()
+        {
+            return Err(Error::Invalid(format!(
+                "invalid argument: unsafe or duplicate destination {rel:?}"
+            )));
+        }
+        let p = root.join(rel);
+        let mut part = root.to_owned();
+        for component in Path::new(rel).components() {
+            part.push(component);
+            if let Ok(meta) = std::fs::symlink_metadata(&part)
+                && (meta.file_type().is_symlink() || (part != p && !meta.is_dir()))
+            {
+                return Err(Error::Invalid(format!(
+                    "invalid argument: {} is a symlink or is not a directory",
+                    part.display()
+                )));
+            }
+        }
+        if p.exists() && (!overwrite.contains(rel) || !p.is_file()) {
+            return Err(Error::Invalid(format!("{} already exists", p.display())));
+        }
+    }
+    Ok(())
+}
+
+/// Type names become file names; do not allow paths or platform-dependent separators.
+pub(crate) fn validate_type(name: &str) -> Result<(), Error> {
+    if name.is_empty()
+        || name.trim() != name
+        || !name
+            .chars()
+            .all(|c| c.is_alphanumeric() || matches!(c, ' ' | '-' | '_'))
+    {
+        return Err(Error::Invalid(format!(
+            "invalid argument: document type {name:?} must contain only letters, digits, internal spaces, hyphens or underscores"
+        )));
+    }
+    Ok(())
 }
 
 /// Synonyms of "refund" in the bundle's languages, for the vocabulary example. Only those

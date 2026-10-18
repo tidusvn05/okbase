@@ -1,0 +1,216 @@
+id: "infra-ops"
+title: "Atlas infrastructure operations"
+description: "Map services to servers and environments, then connect deployments, policies, runbooks and incident evidence."
+roles: ["devops", "sre", "tech-lead"]
+schemas:
+  Deployment: {"owner": "string", "project_id": "string", "service_id": {"type": "string", "required": true}, "environment": {"type": "string", "required": true}, "version": {"type": "string", "required": true}, "deployment_status": {"type": "string", "required": true, "enum": ["planned", "deployed", "rolled_back"]}}
+  Environment: {"owner": "string", "project_id": "string"}
+  Guide: {"owner": "string", "project_id": "string", "audience": "string"}
+  Incident: {"owner": {"type": "string", "required": true}, "project_id": "string", "service_id": {"type": "string", "required": true}, "incident_status": {"type": "string", "required": true, "enum": ["investigating", "mitigating", "resolved", "closed"]}}
+  Policy: {"owner": {"type": "string", "required": true}, "project_id": "string", "effective_from": "date"}
+  Postmortem: {"owner": "string", "project_id": "string"}
+  Runbook: {"owner": "string", "project_id": "string"}
+  Server: {"owner": {"type": "string", "required": true}, "project_id": "string", "server_id": {"type": "string", "required": true}, "environment": {"type": "string", "required": true}}
+  Service: {"owner": {"type": "string", "required": true}, "project_id": "string", "service_id": {"type": "string", "required": true}, "environment": {"type": "string", "required": true}, "server_id": {"type": "string", "required": true}}
+vocabulary: {"environment": [], "mapping": [], "validation": [], "server": [], "database": [], "service": [], "dependencies": [], "policy": [], "deployment": [], "release": [], "runbook": [], "rollback": [], "incident": [], "investigation": [], "postmortem": []}
+documents:
+  - path: "environments/production.md"
+    type: "Environment"
+    title: "Production environment"
+    description: "Identify the Atlas production boundary and authoritative service and host records."
+    tags: ["environment", "mapping"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "environment": "production"}
+    body: |
+      ## Boundary
+      Production runs the Atlas API and worker on app-01 and PostgreSQL on db-01.
+      The ingress endpoint in this fictional topology is api.atlas.example.invalid. Staging is a separate environment; production evidence must not be inferred from staging health.
+      ## Ownership and records
+      The platform-team owns infrastructure. Read [app-01](../servers/app-01.md), [db-01](../servers/db-01.md), [API](../services/api.md), [worker](../services/worker.md), and [database](../services/database.md).
+      Use the [change policy](../policies/production-changes.md) before any external action.
+  - path: "environments/staging.md"
+    type: "Environment"
+    title: "Staging environment"
+    description: "Keep staging validation separate from production service health."
+    tags: ["environment", "validation"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "environment": "staging"}
+    body: |
+      ## Boundary
+      Staging is isolated from production and uses disposable test data. Its actual host inventory is intentionally unspecified in this demo.
+      A passing staging smoke test is required before the [production deployment](../deployments/api-1-4-2.md), but it cannot establish production capacity or database connectivity.
+      ## Missing information
+      Obtain the real staging inventory and test commands from the platform owner before execution. Never reuse production credentials or production customer data for a staging exercise.
+  - path: "servers/app-01.md"
+    type: "Server"
+    title: "Application server app-01"
+    description: "Locate the API and worker processes and the team responsible for the application host."
+    tags: ["server", "mapping"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "server_id": "app-01", "environment": "production"}
+    body: |
+      ## Hosted services
+      app-01 hosts atlas-api and atlas-worker in production.
+      The platform-team owns the host; the api-team owns application behavior. Host address and login details are omitted deliberately; use the real inventory and secret manager when adapting this record.
+      ## Dependency and impact
+      Both services depend on [db-01](db-01.md). A restart affects API traffic and notification processing.
+      Read [the API service](../services/api.md), [worker service](../services/worker.md), and [change policy](../policies/production-changes.md).
+  - path: "servers/db-01.md"
+    type: "Server"
+    title: "Database server db-01"
+    description: "Identify the durable data host and its production impact."
+    tags: ["server", "database"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "server_id": "db-01", "environment": "production"}
+    body: |
+      ## Hosted service
+      The atlas-db PostgreSQL service runs on db-01 in production.
+      The platform-team owns database availability and recovery. This demo does not contain connection strings, passwords, actual backup files or a validated restore command.
+      ## Impact
+      The [API](../services/api.md) requires the database for reads and writes; the [worker](../services/worker.md) reads outbox events from it. Consult the [database service record](../services/database.md) before planning changes.
+  - path: "services/api.md"
+    type: "Service"
+    title: "Atlas API service"
+    description: "Map the API to its production host, data dependency and deployment record."
+    tags: ["service", "mapping"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "service_id": "atlas-api", "server_id": "app-01", "environment": "production"}
+    body: |
+      ## Mapping
+      atlas-api runs on app-01 in production and depends on atlas-db on db-01.
+      The api-team owns API correctness; the platform-team owns rollout execution. The worker is asynchronous and must not block successful create responses.
+      ## Operational evidence
+      The current example rollout is [API 1.4.2](../deployments/api-1-4-2.md). Read [INC-07](../incidents/inc-07.md) before drawing conclusions about its health.
+      Follow the [deployment runbook](../runbooks/deploy-api.md) and [rollback runbook](../runbooks/rollback-api.md).
+  - path: "services/worker.md"
+    type: "Service"
+    title: "Atlas notification worker"
+    description: "Locate the asynchronous worker and its dependency on the outbox database."
+    tags: ["service", "dependencies"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "service_id": "atlas-worker", "server_id": "app-01", "environment": "production"}
+    body: |
+      ## Mapping
+      atlas-worker runs on app-01 and reads the PostgreSQL outbox on db-01.
+      The api-team owns retry correctness. Pending retry age and delivery failures are the health signals; process uptime alone is insufficient.
+      ## Investigation
+      A slow worker does not prove the [API](api.md) is failing. Inspect [database health](database.md), outbox age and the current deployment separately. Use timestamped, redacted evidence and follow the [change policy](../policies/production-changes.md).
+  - path: "services/database.md"
+    type: "Service"
+    title: "Atlas PostgreSQL service"
+    description: "Describe the durable dependency shared by the API and notification worker."
+    tags: ["service", "database"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "service_id": "atlas-db", "server_id": "db-01", "environment": "production"}
+    body: |
+      ## Mapping
+      atlas-db runs on db-01 and stores issues plus the outbox.
+      The platform-team owns recovery. API and worker availability depend on database connectivity, but only captured evidence can establish whether a particular incident was caused by it.
+      ## Changes
+      Application rollback keeps additive schema changes. Any destructive migration needs its own approved recovery procedure and verified backups.
+      See [db-01](../servers/db-01.md) and the [production change policy](../policies/production-changes.md).
+  - path: "policies/production-changes.md"
+    type: "Policy"
+    title: "Production change policy"
+    description: "State ownership, review and execution boundaries for infrastructure changes."
+    tags: ["policy", "deployment"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Before a change
+      A production change requires a named change owner, a reviewed deployment plan, a known previous artifact and a rollback decision owner.
+      The fictional rollout requires approval from the platform on-call before execution. This record describes the team's process; the execution host must enforce actual permissions.
+      ## Evidence and secrets
+      Record environment, service, version, timestamp, result and evidence location. Store only secret references in knowledge; keep credentials in the host's secret manager.
+      Follow the [deployment](../runbooks/deploy-api.md) and [rollback](../runbooks/rollback-api.md) procedures. Adapt this example policy to the real team's approved policy before use.
+  - path: "deployments/api-1-4-2.md"
+    type: "Deployment"
+    title: "API 1.4.2 production rollout"
+    description: "Record the example version transition and link it to the resulting incident."
+    tags: ["deployment", "release"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "service_id": "atlas-api", "environment": "production", "version": "1.4.2", "deployment_status": "rolled_back"}
+    body: |
+      ## Deployment snapshot
+      The example API rollout changed version 1.4.1 to 1.4.2 on app-01.
+      The rollout began at 09:00 UTC on 2026-10-14. Error-rate investigation began at 09:05 UTC. The previous application artifact is version 1.4.1.
+      ## Outcome
+      The application was rolled back; additive database changes were retained. This is a fictional incident snapshot, not live deployment state.
+      See [INC-07](../incidents/inc-07.md), the [postmortem](../postmortems/inc-07.md) and [rollback boundary](../runbooks/rollback-api.md).
+  - path: "runbooks/deploy-api.md"
+    type: "Runbook"
+    title: "Deploy the Atlas API"
+    description: "Prepare a versioned rollout with environment checks and recorded authorization."
+    tags: ["runbook", "deployment"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Preconditions
+      Read the [change policy](../policies/production-changes.md), select a reviewed artifact and confirm the actual target from the [API record](../services/api.md). A template does not establish that an arbitrary server is safe to change.
+      ## Procedure
+      Verify staging test evidence, identify the previous version, obtain the required approval and execute through the configured deployment tool. Exact commands must come from the real repository or platform documentation.
+      ## Verification
+      Observe error rate, latency and database connections. Record deployment time, version and results. Follow the [rollback runbook](rollback-api.md) when the agreed gate fails; the example [1.4.2 rollout](../deployments/api-1-4-2.md) shows how evidence is recorded.
+  - path: "runbooks/rollback-api.md"
+    type: "Runbook"
+    title: "Roll back the Atlas API"
+    description: "Explain the application rollback boundary and evidence required to call recovery complete."
+    tags: ["runbook", "rollback"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Boundary
+      For the example 1.4.2 incident, the previous working application artifact is 1.4.1.
+      An application rollback preserves additive database migrations. Do not reverse a destructive migration by guessing a down command.
+      ## Verification
+      The decision owner authorizes rollback through the deployment tooling. Capture the actual artifact, environment and timestamp, then verify error rate and dependency health before declaring recovery.
+      Use [INC-07](../incidents/inc-07.md) and the [postmortem](../postmortems/inc-07.md) as examples of recorded observations, not permission for a new action.
+  - path: "incidents/inc-07.md"
+    type: "Incident"
+    title: "INC-07: API errors after rollout"
+    description: "Preserve a timestamped incident timeline while keeping the causal claim separate."
+    tags: ["incident", "investigation"]
+    fields: {"owner": "atlas-team", "project_id": "atlas", "service_id": "atlas-api", "incident_status": "resolved"}
+    body: |
+      ## Timeline
+      09:00 UTC: example API 1.4.2 rollout began. 09:05 UTC: an error-rate alert was observed. 09:12 UTC: rollback to 1.4.1 completed. 09:20 UTC: the incident owner recorded recovery.
+      ## Evidence boundary
+      Error rate recovered after rollback; the causal mechanism remains unconfirmed.
+      The next investigation is connection-pool configuration. Do not claim that PostgreSQL failed merely because the API depends on it.
+      Read [the rollout record](../deployments/api-1-4-2.md), [API mapping](../services/api.md), and [postmortem](../postmortems/inc-07.md).
+  - path: "postmortems/inc-07.md"
+    type: "Postmortem"
+    title: "INC-07 review and follow-up"
+    description: "Document impact, confirmed observations, uncertainty and the next verification step."
+    tags: ["postmortem", "investigation"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Review snapshot
+      The fictional incident lasted from the 09:05 alert until recovery was recorded at 09:20 UTC on 2026-10-14. Customer impact beyond the API alert is unknown because no real traffic export is attached.
+      ## Findings
+      The root cause is not confirmed; compare connection-pool settings between 1.4.1 and 1.4.2.
+      Observed recovery after rollback is evidence of correlation, not proof of mechanism.
+      ## Follow-up
+      The api-team owns the configuration comparison. The platform-team owns adding deployment annotations to the error-rate dashboard. Record evidence before closing either action.
+      Sources: [incident timeline](../incidents/inc-07.md), [deployment](../deployments/api-1-4-2.md).
+questions:
+  - question: "Where does atlas-api run and what does it depend on?"
+    source: "services/api"
+    evidence: "atlas-api runs on app-01 in production and depends on atlas-db on db-01."
+  - question: "Which services share app-01?"
+    source: "servers/app-01"
+    evidence: "app-01 hosts atlas-api and atlas-worker in production."
+  - question: "What is the previous working application version?"
+    source: "runbooks/rollback-api"
+    evidence: "the previous working application artifact is 1.4.1"
+  - question: "Is the cause of INC-07 confirmed?"
+    source: "incidents/inc-07"
+    evidence: "the causal mechanism remains unconfirmed"
+  - question: "What should the postmortem investigate next?"
+    source: "postmortems/inc-07"
+    evidence: "compare connection-pool settings between 1.4.1 and 1.4.2"
+workflows:
+  - id: "map-impact"
+    title: "Trace infrastructure impact"
+    description: "Identify the affected environment, services, servers and owners before taking action."
+    steps: ["Query Service records by environment and server_id, then read their dependency links.", "Cross-check the selected service against its Server and Environment records.", "Report affected components, owners and evidence gaps; do not infer current live health from inventory."]
+    sources: ["environments/production", "servers/app-01", "services/api", "services/worker"]
+  - id: "review-deployment"
+    title: "Review a deployment and rollback plan"
+    description: "Collect the target, artifact, policy and recovery boundary for an authorized operator."
+    steps: ["Read the change policy, service mapping and proposed deployment record.", "Verify the previous artifact, staging evidence and rollback boundary with the real platform tooling.", "Prepare or update the deployment record within write authorization; execution and approval remain with the configured host tools."]
+    sources: ["policies/production-changes", "runbooks/deploy-api", "runbooks/rollback-api", "deployments/api-1-4-2"]
+  - id: "investigate-incident"
+    title: "Investigate and record an incident"
+    description: "Connect a service incident to timestamped evidence, hypotheses and follow-up work."
+    steps: ["Read service dependencies, the latest deployment and the incident timeline.", "Collect authorized redacted logs and metrics; separate observations from causal hypotheses.", "Update the incident and postmortem with source timestamps, verified outcomes and owner-assigned follow-up actions."]
+    sources: ["incidents/inc-07", "postmortems/inc-07", "services/database", "deployments/api-1-4-2"]

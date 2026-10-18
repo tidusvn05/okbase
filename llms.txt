@@ -12,6 +12,8 @@ Users paste a prompt to their agent; the agent sets okbase up and the user only 
 
 ## Docs
 
+- [Starter templates](docs/templates.md): `okbase templates --json`; initialize one with `okbase -b <new folder> init --template <name>` (preview with `--print`), then read `guides/getting-started`. Ten offline bundles contain fictional English examples, five trial questions and three workflow guides; host tools perform authorized writes and external actions.
+
 - [README](README.md): what okbase does, builds, fine-tuning
 - [Usage](docs/usage.md): small, medium and large projects; every scenario (several bundles, several projects, shared servers, removing okbase)
 - `okbase help --agent`: the agent contract (JSON, exit codes, error codes, consent rules, commands)

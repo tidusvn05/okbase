@@ -214,29 +214,69 @@ fn run(cli: Cli) -> Result<ExitCode> {
                 }
             }
         }
+        Command::Templates => {
+            let templates = okbase_adopt::templates::catalog()?;
+            emit(json, &serde_json::json!({"templates": templates}), || {
+                templates.iter().map(|t| format!("{} — {}\n  for: {}; types: {}\n  {}\n  create: okbase -b ./kb init --template {}\n", t.id, t.title, t.roles.join(", "), t.types.join(", "), t.description, t.id)).collect::<Vec<_>>().join("\n")
+            })?;
+        }
         Command::Init {
             title,
+            template,
+            print,
             description,
             langs,
             types,
         } => {
-            std::fs::create_dir_all(&bundle_dir)
-                .with_context(|| format!("creating {}", bundle_dir.display()))?;
-            let files = okbase_adopt::scaffold::init_files(
-                &bundle_dir,
-                &okbase_adopt::scaffold::InitOptions {
-                    title,
-                    description,
-                    langs,
-                    types,
-                    today: today(),
-                },
-            )?;
+            let options = okbase_adopt::scaffold::InitOptions {
+                title: title.unwrap_or_default(),
+                description,
+                langs,
+                types,
+                today: today(),
+            };
+            let files = match template.as_deref() {
+                Some(id) => okbase_adopt::templates::load(id)?.files(&bundle_dir, &options)?,
+                None => okbase_adopt::scaffold::init_files(&bundle_dir, &options)?,
+            };
+            okbase_adopt::scaffold::check_new(&bundle_dir, &files, &[])?;
+            let mut next = if template.is_some() {
+                vec![
+                    "okbase get guides/getting-started".to_owned(),
+                    "okbase onboard".to_owned(),
+                ]
+            } else {
+                vec![
+                    "okbase new --type <Type> \"<title>\" --description \"<one sentence>\""
+                        .to_owned(),
+                    "okbase onboard".to_owned(),
+                ]
+            };
+            with_bundle_flag(&mut next, &bundle_dir);
+            if print {
+                let planned: Vec<_> = files
+                    .iter()
+                    .map(|(path, content)| serde_json::json!({"path": path, "content": content}))
+                    .collect();
+                emit(
+                    json,
+                    &serde_json::json!({"template": template, "files": planned, "next": []}),
+                    || {
+                        files
+                            .iter()
+                            .map(|(p, t)| format!("--- {p} ---\n{t}\n"))
+                            .collect::<String>()
+                    },
+                )?;
+                return Ok(ExitCode::SUCCESS);
+            }
             let written = okbase_adopt::scaffold::write_new(&bundle_dir, &files, &[])?;
-            done(
-                json,
-                serde_json::json!({"created": written}),
-                format!(
+            let text = match template.as_deref() {
+                Some(id) => format!(
+                    "created {} files from template {id} (fictional English examples; read guides/getting-started)",
+                    written.len()
+                ),
+                None => format!(
                     "created {}",
                     files
                         .iter()
@@ -244,11 +284,13 @@ fn run(cli: Cli) -> Result<ExitCode> {
                         .collect::<Vec<_>>()
                         .join(", ")
                 ),
-                &[
-                    "okbase new --type <Type> \"<title>\" --description \"<one sentence>\"",
-                    "okbase onboard",
-                ],
-            )?;
+            };
+            let mut result = serde_json::json!({"created": written});
+            if let Some(id) = template {
+                result["template"] = serde_json::json!(id);
+            }
+            let next: Vec<&str> = next.iter().map(String::as_str).collect();
+            done(json, result, text, &next)?;
         }
         Command::New {
             concept_type,

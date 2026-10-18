@@ -593,6 +593,10 @@ fields:
 
 ## Appendix B. Decisions made after v2.1
 
+Starter knowledge templates: see [the implementation plan](plans/templates.md) and
+[user guide](templates.md). Ten templates create ordinary, independently managed L2 bundles;
+creation is explicit, previews write nothing, and the host retains read scopes and execution rights.
+
 | Date | Decision | Why |
 |---|---|---|
 | 2026-10-01 | The IPADIC dictionary (~58 MB) is no longer embedded in the default build. It is downloaded on first use (md5-verified, rustls), built into the user cache, and loaded from there; `OKBASE_OFFLINE=1` disables downloads (Japanese then falls back to character bigrams); `okbase dict install` prepares offline machines; feature `ja-embedded` restores embedding. The index records the tokenization mode and rebuilds when it changes. | Binary target ≤ 25 MB (§11): 64 MB → ~21 MB. |

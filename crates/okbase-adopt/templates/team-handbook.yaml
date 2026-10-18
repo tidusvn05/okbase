@@ -1,0 +1,115 @@
+id: "team-handbook"
+title: "Atlas team handbook"
+description: "Help a team find ownership, onboard members and follow documented working practices."
+roles: ["leader", "team-member", "new-joiner"]
+schemas:
+  Guide: {"owner": "string", "project_id": "string", "audience": "string"}
+  Policy: {"owner": {"type": "string", "required": true}, "project_id": "string", "effective_from": "date"}
+  Procedure: {"owner": "string", "project_id": "string"}
+  Reference: {"owner": "string", "project_id": "string"}
+vocabulary: {"team": [], "ownership": [], "escalation": [], "onboarding": [], "development": [], "policy": [], "communication": [], "access": [], "procedure": []}
+documents:
+  - path: "team/charter.md"
+    type: "Reference"
+    title: "Atlas team charter"
+    description: "Explain the team mission, boundaries and ownership expectations for new members."
+    tags: ["team", "ownership"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Mission
+      The Atlas team owns reliable issue handoffs for small engineering teams.
+      The api-team owns product behavior; the platform-team owns deployment infrastructure. Shared incidents have one incident owner and separate contributing owners.
+      Read the [ownership directory](ownership.md), [new-member guide](../onboarding/first-week.md), and [communication policy](../policies/communication.md).
+  - path: "team/ownership.md"
+    type: "Reference"
+    title: "Team ownership directory"
+    description: "Find the accountable owner and escalation route for common project questions."
+    tags: ["ownership", "escalation"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Directory
+      API contracts and worker correctness go to the api-team; deployment and monitoring exports go to the platform-team.
+      Cross-team ownership disputes go to the engineering lead. Use the current organization's directory for real contacts; this demo contains no real addresses.
+      Before escalating, read the [request procedure](../procedures/request-help.md) and cite the [relevant team boundary](charter.md).
+  - path: "onboarding/first-week.md"
+    type: "Guide"
+    title: "First week onboarding"
+    description: "Give a new member a short sequence of useful reading and observable setup checks."
+    tags: ["onboarding", "development"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## First week
+      Start by reading the team charter, then locate the owner of one API and one operational dependency.
+      Request project access through the approved process. Confirm a local development smoke test using the real repository instructions; this bundle does not contain the application.
+      ## Checkpoint
+      Explain one request path and identify where to ask for missing information. Review the [ownership map](../team/ownership.md), [access policy](../policies/access.md), and [working agreement](../policies/communication.md).
+  - path: "policies/communication.md"
+    type: "Policy"
+    title: "Communication and decision policy"
+    description: "Distinguish discussion, accepted decisions and the records needed for a durable handoff."
+    tags: ["policy", "communication"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Working agreement
+      A chat discussion becomes an accepted decision only when its owner records the outcome and rationale in the knowledge base.
+      Use a meeting record for context, a Task for work and a Decision for an approved choice. Link records instead of copying conflicting versions.
+      ## Requests and urgency
+      For a blocked request, state the owner, missing input and impact. A message marked urgent does not itself grant production access.
+      See [the request procedure](../procedures/request-help.md) and [ownership](../team/ownership.md).
+  - path: "policies/access.md"
+    type: "Policy"
+    title: "Project access policy"
+    description: "Explain the access request evidence and the boundary between documentation and enforcement."
+    tags: ["policy", "access"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Request evidence
+      An access request must name the project, required role, business reason and approving owner.
+      The actual identity provider and execution host enforce access; a knowledge record does not grant it. Store request references and approval evidence here, never tokens or passwords.
+      ## Changes
+      Review access when responsibilities change and follow the real organization's offboarding procedure. Use [the request procedure](../procedures/request-help.md) and [ownership directory](../team/ownership.md) to find the accountable owner.
+  - path: "procedures/request-help.md"
+    type: "Procedure"
+    title: "Request help or unblock work"
+    description: "Prepare a focused request with enough context for the responsible team to act."
+    tags: ["procedure", "escalation"]
+    fields: {"owner": "atlas-team", "project_id": "atlas"}
+    body: |
+      ## Request format
+      Include the goal, attempted steps, observed result, missing input, requested owner and impact.
+      Link the relevant document or task and describe what would unblock the work. Use redacted evidence; do not attach secrets or unrelated personal context.
+      ## Routing
+      Check the [ownership directory](../team/ownership.md). Prepare the request in the user's chosen channel; send it only through an authorized host tool.
+      For access-related work, use the [access policy](../policies/access.md).
+questions:
+  - question: "What is the team mission?"
+    source: "team/charter"
+    evidence: "reliable issue handoffs for small engineering teams"
+  - question: "Who owns monitoring exports?"
+    source: "team/ownership"
+    evidence: "deployment and monitoring exports go to the platform-team"
+  - question: "What should a new member read first?"
+    source: "onboarding/first-week"
+    evidence: "Start by reading the team charter"
+  - question: "When does a discussion become an accepted decision?"
+    source: "policies/communication"
+    evidence: "when its owner records the outcome and rationale"
+  - question: "What must an access request contain?"
+    source: "policies/access"
+    evidence: "the project, required role, business reason and approving owner"
+workflows:
+  - id: "onboard-member"
+    title: "Onboard a team member"
+    description: "Build context and route setup requests to the right owner."
+    steps: ["Read the charter, ownership map and first-week guide.", "Identify the required access and missing setup inputs.", "Prepare owner-routed requests with the member; verify actual setup evidence before marking onboarding complete."]
+    sources: ["onboarding/first-week", "team/ownership", "policies/access"]
+  - id: "capture-working-agreement"
+    title: "Capture a working agreement"
+    description: "Turn a discussion into a durable, reviewable policy or decision."
+    steps: ["Check existing working agreements and source discussion.", "Separate proposed behavior from approved policy and name the accountable owner.", "Apply the authorized update, link its rationale and inform affected readers through the approved host tools."]
+    sources: ["policies/communication", "team/charter"]
+  - id: "route-request"
+    title: "Route a blocked request"
+    description: "Find the owner and provide enough evidence to unblock a teammate."
+    steps: ["Read the ownership directory and request format.", "Identify the exact missing input and the affected goal.", "Prepare the request with source links and redacted evidence; sending and permission changes require the appropriate external tooling."]
+    sources: ["procedures/request-help", "team/ownership", "policies/access"]

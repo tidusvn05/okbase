@@ -11,6 +11,7 @@
 
 pub mod heuristics;
 pub mod scaffold;
+pub mod templates;
 pub mod vocab;
 
 use std::collections::{BTreeMap, BTreeSet};

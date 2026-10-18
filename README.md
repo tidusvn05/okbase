@@ -48,6 +48,23 @@ The agent asks you before anything that is yours to decide (`--accept-license`, 
 
 Agents: [`llms.txt`](llms.txt) and `okbase help --agent` have the full contract.
 
+## Start with a template
+
+Try a complete fictional knowledge base before writing your first documents:
+
+```sh
+okbase templates
+okbase -b ./project-kb init --template software-project
+okbase -b ./project-kb get guides/getting-started
+okbase -b ./project-kb onboard
+```
+
+Ten offline templates cover software projects, personal and project assistants, infrastructure
+operations, product management, engineering leadership, executive work, team handbooks, customer
+support and research. Each has five trial questions, three workflow guides and linked example
+records. `init --print` previews all files; after creation, replace examples and extend ordinary
+Markdown, type schemas and tags. [Choose and customize a template](docs/templates.md).
+
 ## Install it yourself
 
 | Platform | Command |
