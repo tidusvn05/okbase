@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Existing tag to (re)build, e.g. v0.1.0 (the release is created as a draft)"
+        description: "Existing tag; resumes only missing outputs, never replaces published assets"
         required: true
 
 permissions:
@@ -29,37 +29,30 @@ jobs:
       tag: ${{ steps.tag.outputs.tag }}
       version: ${{ steps.tag.outputs.version }}
       prerelease: ${{ steps.tag.outputs.prerelease }}
+      binaries: ${{ steps.tag.outputs.binaries }}
+      image: ${{ steps.tag.outputs.image }}
     steps:
-      - id: tag
-        shell: bash
-        run: |
-          tag="${{ github.event.inputs.tag || github.ref_name }}"
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
-          echo "version=${tag#v}" >> "$GITHUB_OUTPUT"
-          if [[ "$tag" == *-* ]]; then echo "prerelease=true" >> "$GITHUB_OUTPUT"; else echo "prerelease=false" >> "$GITHUB_OUTPUT"; fi
       - uses: actions/checkout@v7
         with:
-          ref: ${{ steps.tag.outputs.tag }}
+          ref: ${{ inputs.tag || github.ref_name }}
           fetch-depth: 0
-      - name: The tag matches the workspace version
-        shell: bash
-        run: |
-          want="${{ steps.tag.outputs.version }}"
-          have="$(sed -n '/^\[workspace.package\]/,/^\[/s/^version = "\(.*\)"/\1/p' Cargo.toml)"
-          if [ "$want" != "$have" ]; then
-            echo "::error::tag ${{ steps.tag.outputs.tag }} but Cargo.toml says version $have (see docs/releasing.md)"
-            exit 1
-          fi
-      - name: CHANGELOG.md has this version
-        shell: bash
-        run: grep -q "^## \[${{ steps.tag.outputs.version }}\]" CHANGELOG.md || { echo "::error::CHANGELOG.md has no section for ${{ steps.tag.outputs.version }}"; exit 1; }
       - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v2
-      - run: cargo test --workspace --locked
+      - name: Validate tag, main ancestry, versions and changelog
+        id: tag
+        env:
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+        run: python3 scripts/check-release.py "$RELEASE_TAG"
+      - run: cargo install --locked cargo-deny
+      - run: scripts/verify.sh
+      - run: scripts/release.py publish --dry-run
 
   build:
     name: Build ${{ matrix.variant }} ${{ matrix.target }}
     needs: check
+    if: needs.check.outputs.binaries == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -143,6 +136,7 @@ jobs:
   release:
     name: Publish the GitHub release
     needs: [check, build]
+    if: always() && needs.check.result == 'success' && (needs.build.result == 'success' || needs.build.result == 'skipped')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -152,13 +146,53 @@ jobs:
           ref: ${{ needs.check.outputs.tag }}
           fetch-depth: 0
       - uses: actions/download-artifact@v8
+        if: needs.check.outputs.binaries == 'true'
         with:
           path: dist
           merge-multiple: true
+      - name: Source archive
+        env:
+          TAG: ${{ needs.check.outputs.tag }}
+        run: |
+          mkdir -p dist
+          git archive --format=tar.gz --prefix="okbase-$TAG/" "$TAG" -o "dist/okbase-$TAG-source.tar.gz"
+      - name: Check existing release
+        id: existing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.check.outputs.tag }}
+        run: |
+          # Authentication/network failures must not be mistaken for an absent release.
+          gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/releases?per_page=100" > releases.json
+          python3 - <<'PYTHON'
+          import json, os
+          existing = [r for page in json.load(open("releases.json")) for r in page if r["tag_name"] == os.environ["TAG"]]
+          if existing and existing[0]["draft"]:
+              raise SystemExit("existing draft requires operator review; assets will not be overwritten")
+          if existing:
+              if existing[0]["prerelease"] != ("-" in os.environ["TAG"]):
+                  raise SystemExit("existing release has wrong prerelease state")
+              if not existing[0]["body"]:
+                  raise SystemExit("existing release has no notes")
+              expected = {p.name for p in __import__("pathlib").Path("dist").iterdir()} | {"SHA256SUMS"}
+              actual = {a["name"] for a in existing[0]["assets"]}
+              if expected != actual:
+                  raise SystemExit("existing release has different assets; fix forward, never overwrite")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+              out.write(f"exists={str(bool(existing)).lower()}\n")
+          PYTHON
+      - name: Verify immutable existing assets
+        if: steps.existing.outputs.exists == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.check.outputs.tag }}
+        run: |
+          gh release download "$TAG" --dir existing-assets
+          (cd existing-assets && sha256sum --check SHA256SUMS)
       - name: Checksums
         run: |
           cd dist
-          sha256sum *.tar.gz *.zip > SHA256SUMS
+          find . -maxdepth 1 -type f \( -name '*.tar.gz' -o -name '*.zip' \) -printf '%f\n' | sort | xargs sha256sum > SHA256SUMS
           cat SHA256SUMS
       - name: Release notes (git-cliff)
         uses: orhun/git-cliff-action@v4
@@ -188,13 +222,49 @@ jobs:
           Rust library: [okbase](https://crates.io/crates/okbase/${{ needs.check.outputs.version }}).
           EOF
       - uses: softprops/action-gh-release@v3
+        if: steps.existing.outputs.exists != 'true'
         with:
           tag_name: ${{ needs.check.outputs.tag }}
           name: okbase ${{ needs.check.outputs.tag }}
           body_path: NOTES.md
           prerelease: ${{ needs.check.outputs.prerelease }}
-          draft: ${{ github.event_name == 'workflow_dispatch' }}
           files: |
             dist/*.tar.gz
             dist/*.zip
             dist/SHA256SUMS
+
+  crates:
+    name: Publish to crates.io
+    needs: [check, release]
+    # Pre-releases (vX.Y.Z-rc.N) are not published to crates.io.
+    if: needs.check.outputs.prerelease == 'false'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    # crates.io Trusted Publishing: each crate trusts this repository, this workflow file and this
+    # environment (docs/releasing.md), so no API token is stored anywhere.
+    environment: crates-io
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.check.outputs.tag }}
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Crates to publish
+        id: pending
+        run: |
+          scripts/release.py pending
+          new="$(sed -n 's/^new=//p' "$GITHUB_OUTPUT" | tail -1)"
+          if [ -n "$new" ]; then
+            echo "::error::not on crates.io yet: $new. Trusted Publishing cannot create a crate: publish it once by hand (docs/releasing.md, 'A new crate'), then re-run this job."
+            exit 1
+          fi
+      - uses: rust-lang/crates-io-auth-action@v1
+        id: auth
+        if: steps.pending.outputs.count != '0'
+      - uses: Swatinem/rust-cache@v2
+      - run: scripts/release.py publish
+        if: steps.pending.outputs.count != '0'
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}

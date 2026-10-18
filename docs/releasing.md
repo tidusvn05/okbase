@@ -29,8 +29,10 @@ breaks it.
 Changing a default (search mode, ranking, chunk size, tool descriptions, skill text) needs eval
 data (AGENTS.md) and is called out in the release notes even when it is not breaking.
 
-The version lives once, in `[workspace.package]` of the root `Cargo.toml`. Between releases it
-carries a `-dev` suffix (`0.1.0-dev`).
+The version lives once, in `[workspace.package]` of the root `Cargo.toml`; every member and
+internal dependency uses that version. Bump it only while preparing a concrete release. After a
+release, main keeps the released version until the next release is prepared. Never open an
+automatic development-version PR or append a `-dev` suffix.
 
 ## Commits and the changelog
 
@@ -69,7 +71,17 @@ Neither build embeds models or language dictionaries.
 | `aarch64-apple-darwin` | macos-14 | Apple silicon |
 | `x86_64-pc-windows-msvc` | windows-latest | installed with `install.ps1` |
 
-Tags with a suffix (`v0.2.0-rc.1`) become pre-releases. `install.sh` installs the latest
+Only tags `vX.Y.Z` and `vX.Y.Z-rc.N` are accepted. RC tags become GitHub pre-releases and never
+publish crates or images. Stable tags publish all 17 crates after the GitHub release. There is no
+Dockerfile, so this repository publishes no container image. A future Dockerfile requires a stable-only
+image job after the GitHub release, publishing to `ghcr.io/tidusvn05/okbase`.
+
+Every release also includes `okbase-vX.Y.Z-source.tar.gz`, containing the tagged source and its
+Cargo.toml version, covered by SHA256SUMS. If the workspace becomes library-only, publish that
+source archive instead of binary builds. Cargo metadata binary targets drive the build gate;
+examples are never treated as release binaries.
+
+ `install.sh` installs the latest
 non-pre-release unless `--version` is given.
 
 ## Before a release
@@ -85,50 +97,101 @@ non-pre-release unless `--version` is given.
 - [ ] The publishing account has a verified crates.io email and permission to publish every crate.
       Credentials are supplied by `cargo login` or `CARGO_REGISTRY_TOKEN`, never committed.
 
-## Cutting a release
+## Prepare, approve, merge and tag
+
+Read the real repository state first, including remote main, existing releases, Cargo metadata,
+Dockerfile presence and tool versions. Work in an isolated worktree if local changes exist. Reuse
+installed Cargo (workspace packaging requires a Cargo with `publish --workspace`, tested with 1.99;
+the library MSRV remains 1.89). Never include unrelated changes or PRs.
+
+Prepare a branch `release/vX.Y.Z`:
 
 ```sh
-git switch main && git pull --ff-only
-V=0.1.0                                    # the new version, without "v"
-
-# 1. Set the version (workspace package and the internal crates' version requirements).
-sed -i "s/^version = \".*\"/version = \"$V\"/" Cargo.toml          # [workspace.package]
-sed -i "s/\(okbase[a-z-]* = { path = \"crates\/[a-z-]*\", version = \"\)[^\"]*/\1$V/" Cargo.toml
-cargo check --workspace                     # updates Cargo.lock
-
-# 2. The changelog, reviewed by hand.
-git cliff --tag "v$V" -o CHANGELOG.md
-
-# 3. Commit only the release files, tag, push.
-git add Cargo.toml Cargo.lock CHANGELOG.md
-git status --short                          # nothing else staged
-git commit -m "chore(release): v$V"
-git tag -a "v$V" -m "okbase v$V"
-git push origin main "v$V"
+scripts/release.py version X.Y.Z
+git cliff --tag vX.Y.Z -o CHANGELOG.md
+scripts/verify.sh
+scripts/release.py publish --dry-run --allow-dirty
+scripts/release.py pending
+git add Cargo.toml Cargo.lock CHANGELOG.md # plus explicitly reviewed release tooling changes
+git commit -m "chore(release): vX.Y.Z"
 ```
 
-Check that `sed` changed only the intended lines (`git diff Cargo.toml`) before committing. Never
-use `git commit -a` here: it would also commit unrelated local changes.
+The version helper updates workspace/member versions, internal normal/build/dev dependencies and
+Cargo.lock. Dry-run packages and builds the whole workspace using Cargo's local packaging registry,
+so internal versions need not exist on crates.io yet. `--allow-dirty` is allowed only with dry-run;
+real publishing requires a clean tree. Fix advisories and yanked dependencies before tagging.
 
-The workflow then:
-1. checks that the tag equals the version and that `CHANGELOG.md` has its section;
-2. runs the tests;
-3. builds the nine archives (five okbase, four okbase-full);
-4. publishes the release with the notes and `SHA256SUMS`.
+Scan the complete diff for secrets before **every push**, then push the branch and open a PR titled
+`chore(release): vX.Y.Z`. Separate setup PRs are optional; one release PR may contain both tooling
+and release preparation. Wait for all current-base CI checks, review the final diff and changelog.
 
-`workflow_dispatch` with an existing tag rebuilds it as a draft release (for a failed run).
-The workflow publishes GitHub assets; the release operator must also complete
-[Publishing to crates.io](#publishing-to-cratesio) from the same release tag.
+Ask the maintainer **once**, only after the changes and checks are reviewable, specifying the version,
+PRs to merge, any new permanent crate names, tag, outputs and necessary trust/bootstrap configuration.
+Before approval, do not merge, push tags, change publishing configuration or publish. Approval covers
+the complete sequence below and routine fixes within its scope; do not ask again at each step.
+A version change or expansion of scope still needs a new decision.
 
-After the workflow and crates.io publication:
-- [ ] Every publishable package is available on crates.io at the release version.
-- [ ] A registry installation of `okbase-cli` reports the release version.
-- [ ] Install with the README command on Linux or macOS, and with `install.ps1` on Windows.
-- [ ] `okbase --version` shows the new version.
-- [ ] `okbase doctor` is ok on a fixture bundle.
-- [ ] The Linux binaries need no newer glibc than the table above says (2.35, okbase-full 2.39):
-      `objdump -T okbase | grep -o 'GLIBC_[0-9.]*' | sort -uV | tail -n 1` on each Linux archive.
-- [ ] Set the version back to the next `-dev` (`0.1.1-dev`) in a `chore(release)` commit.
+After approval:
+
+1. Ensure the GitHub environment `crates-io` and each crate's trust match this repository,
+   `release.yml` and `crates-io`. Add only missing settings, using the existing Cargo credential
+   for configuration when authorized. Follow bootstrap below only for genuinely new crates.
+2. Merge the approved PRs when current-base CI is green. If setup and release PRs are separate,
+   update the release branch after setup merges and wait for CI again.
+3. Tag the approved commit on main and scan before pushing:
+   ```sh
+   git fetch origin main
+   git tag -a vX.Y.Z origin/main -m "okbase vX.Y.Z"
+   git push origin vX.Y.Z
+   ```
+4. Watch Release through `check → build → release → crates`. Check validates the exact tag format,
+   main ancestry, workspace/member versions, changelog, repository verification and publish dry-run.
+   Build preserves the nine existing platform/variant archives; release adds source, SHA256SUMS
+   and git-cliff notes. Only stable tags run the crates job.
+5. Verify all outputs as described below. Keep main at the version just released.
+
+## Trusted Publishing and bootstrap
+
+All automatic crates.io publication uses `rust-lang/crates-io-auth-action@v1` with
+`permissions: id-token: write` in the GitHub environment `crates-io`. No crates.io API token belongs
+in repository files or GitHub secrets. Every existing crate keeps its name, including the binary
+package `okbase-cli` (which installs the `okbase` executable). `okbase-eval` stays unpublished.
+
+Check existing owners and trust read-only before approval. After approval, configure existing crates
+without republishing their versions:
+
+```sh
+scripts/release.py trustpub tidusvn05/okbase --only
+```
+
+This reads the credential saved by `cargo login`, creates only missing trust configurations, and
+sets Trusted Publishing only. The credential must have `trusted-publishing` scope and ownership.
+Never print the credential, put it in chat, or revoke an existing credential that might serve other work.
+If scope is missing, the owner can configure each crate at crates.io → Settings → Trusted Publishing
+for repository `tidusvn05/okbase`, workflow `release.yml`, environment `crates-io`, or log in locally
+with an appropriately scoped credential and resume. Do not request release approval again.
+
+### First publish or a new crate later
+
+Trusted Publishing cannot create a crate. `pending` names new crates and automatic publishing
+stops **before any upload** if one exists. Before requesting the single release approval:
+
+1. Check the name on crates.io, including all equivalent hyphen/underscore spellings, and verify
+   existing ownership. Preserve existing names. Any proposed new binary package name is permanent
+   and must be part of that approval; library-only repositories need no binary-name decision.
+2. List the exact new crate names and dependency order. Ask the owner to create a short-lived token
+   with `publish-new`, `publish-update` and `trusted-publishing` scopes limited to those exact names.
+   The owner enters it directly with `cargo login`, never through chat. Preserve any existing Cargo
+   credential separately and restore it afterwards; do not overwrite or revoke another credential.
+3. After release/bootstrap approval, publish the new crates manually from clean merged main with
+   `cargo publish --locked --registry crates-io -p <crate>`, in `scripts/release.py order` order
+   (including dev-dependencies), waiting for registry availability between dependents.
+4. Run `scripts/release.py trustpub tidusvn05/okbase --crates <comma-separated-new-crates> --only`.
+5. Log out only the temporary credential, restore any previous credential, and revoke the temporary
+   token on crates.io. Never revoke unrelated credentials. Then push the approved tag.
+
+Dependency cycles, including cycles through dev-dependencies, are fatal and reported before upload.
+Do not work around cycles by publishing in an arbitrary order.
 
 ## Fixes to a release
 
@@ -143,85 +206,58 @@ After the workflow and crates.io publication:
 
 ## Publishing to crates.io
 
-The publishable workspace contains 17 crates, including the `okbase` library and the
-`okbase-cli` package that installs the `okbase` binary. `okbase-eval` is repository-only
-and must not be published.
+`scripts/release.py order` prints every publishable crate in dependency order, including dev and
+build dependencies. `pending` reports missing versions and new crates. `publish` rejects prereleases,
+dirty trees, new crates and yanked versions before uploading anything. Already-published unyanked
+versions are skipped, so retrying after a partial publish is safe. It uses Cargo's configured
+credential locally and the short-lived OIDC credential in CI.
 
-Each publishable crate carries its own README, LICENSE-MIT and LICENSE-APACHE. Tests
-that need repository fixtures skip when those fixtures are absent from registry packages.
-`okbase-web` includes its committed `web/dist/` assets; publishing does not require Node.
+HTTP 429 responses wait and retry. Registry HTTP requests honor `Retry-After` as seconds or an HTTP
+date; Cargo publish errors use the registry's retry timestamp when present. If a job times out,
+rerun it later; uploaded versions remain immutable. Never reuse a yanked version.
 
-Publish from a clean checkout of the intended release tag, with matching workspace and
-internal dependency versions. Do this before advancing `main` to the next `-dev` version.
-Run the checks under "Before a release" first, then, with `V` set to the release version:
+### Partial or failed releases
 
-```sh
-cargo login                      # only needed once; paste the token into Cargo
-registry_tree=$(mktemp -d)
-git worktree add --detach "$registry_tree" "v$V"
-(cd "$registry_tree" && cargo publish --workspace --exclude okbase-eval --registry crates-io --dry-run)
-(cd "$registry_tree" && cargo publish --workspace --exclude okbase-eval --registry crates-io)
-```
+- Before the tag: fix the PR, rerun checks, merge only when green.
+- Build failure: read the job logs and retry a transient failure. Never move a pushed tag. If the
+  tagged source needs a code fix, prepare a new patch version and obtain the version decision.
+- GitHub publication: dispatch `release.yml` for the existing tag. A complete public release is
+  checksum-verified and skipped; existing assets are never overwritten. A draft or mismatched
+  asset set stops for review. A published partial asset set requires a fix-forward version.
+- Crates failure after GitHub publication: rerun the failed crates job. It skips published versions
+  and uploads only missing ones. Check trust repository/workflow/environment when OIDC is refused.
+- Treat the release as incomplete until registry, archives and installation checks finish.
+- Yank only with explicit authorization: `cargo yank --version X.Y.Z <crate>`. Yanking does not
+  remove an immutable version or make its version reusable. Publish the fix under a new version.
 
-These workspace commands were verified with Cargo 1.99; the release tooling can use a newer
-Cargo than the library's MSRV. Cargo builds the packaged sources and publishes in dependency
-order. Keep build verification enabled. Do not publish a development version or use
-`--allow-dirty` to bypass a release checkout problem.
+### Verify completion
 
-### Partial publishes and rate limits
+Check GitHub release tag, stable/prerelease state and git-cliff notes. Download every archive plus
+SHA256SUMS, run `sha256sum --check SHA256SUMS`, and inspect Cargo.toml in the source archive.
+On a compatible host, run each applicable binary's `--version`, install with `install.sh` and test
+`doctor` on a fixture with a temporary state directory. Verify Linux glibc requirements from the
+platform table using `objdump -T`. Cross-platform execution needs matching hosts or CI; record limits.
 
-An uploaded version is immutable. If publishing stops partway through, check which versions
-are already on crates.io. Resume only the missing packages with `cargo publish -p <name>
---registry crates-io` from the release worktree, in dependency order. Alternatively, use the
-workspace command with an additional `--exclude <name>` for each package already published.
-Never blindly rerun the original workspace command, yank successful packages as a retry, or
-move the release tag. A genuine defect needs a fix-forward release.
-
-The [crates.io rate limits](https://crates.io/docs/rate-limits) apply per account:
-
-| Publish | Initial burst | Further allowance |
-|---|---|---|
-| Brand new crates | 5 crates | 1 crate every 10 minutes |
-| New versions of existing crates | 30 versions | 1 version per minute |
-
-A normal update of all 17 existing packages fits within the 30-version burst when the account
-has enough allowance. Adding new crates can take longer. On HTTP 429, wait until the timestamp
-in the registry error before retrying the missing package; do not repeatedly retry before it.
-Record partial progress and the next allowed time if publishing continues in the background.
-A background publish is still pending until registry and installation verification finish.
-
-### Verify before completing the release
-
-Verify every publishable package at the exact release version, then install the CLI from the
-registry into a temporary directory:
+For stable releases, check all 17 exact versions on crates.io (not yanked), and in a fresh project
+add `okbase = "=X.Y.Z"` and run `cargo check`. Install with:
 
 ```sh
-cargo metadata --no-deps --format-version 1 --manifest-path "$registry_tree/Cargo.toml" \
-  | python3 -c 'import json,sys; print("\n".join(p["name"] for p in json.load(sys.stdin)["packages"] if p["publish"] != []))' \
-  > "$registry_tree/crate-names.txt"
-while IFS= read -r crate; do
-  cargo info "$crate@$V" --registry crates-io || exit 1
-done < "$registry_tree/crate-names.txt"
-registry_install=$(mktemp -d)
-cargo install --locked --registry crates-io --version "$V" --root "$registry_install" okbase-cli
-"$registry_install/bin/okbase" --version
+cargo install --locked --version X.Y.Z --root /tmp/okbase-registry-install okbase-cli
+/tmp/okbase-registry-install/bin/okbase --version
 ```
 
-Check that the installed version equals `V` and run a read command on a fixture with a temporary
-state directory. Record both the GitHub release URL and the crates.io `okbase` / `okbase-cli`
-version URLs in the release report. Only then advance the development version.
+For RC releases, verify no crates or images were published. If a Dockerfile and image job are added,
+check the stable image tags and run the image's version command. Finish with release, crate and PR
+links, verification results and only actions that still require the maintainer. Do not bump a
+post-release development version.
 
-Users add the library with `cargo add okbase` or install the CLI with
-`cargo install --locked okbase-cli`. GitHub binary releases remain available for users
-who do not have a Rust toolchain.
+The initial crates.io version 0.2.3 was published after its GitHub binary release. Its packaging
+source is preserved by `crates-v0.2.3`; subsequent release tags cover both channels.
 
-The initial crates.io version, 0.2.3, was published after its GitHub binary release.
-Its packaging source is preserved by the `crates-v0.2.3` tag; subsequent release tags include
-the packaging files and are the source for both distribution channels.
+## Tooling provenance
 
-## Not automated yet
-
-- **Publishing the crates on crates.io in CI.** Local publishing uses Cargo credentials;
-  unattended releases need trusted publishing or a scoped token configured for the workflow.
-- **Signed artifacts.** Releases use checksums only; Sigstore or minisign signatures are possible
-  later.
+The release helper and Trusted Publishing job are adapted from
+[okbot's release helper](https://github.com/tidusvn05/okbot/blob/main/scripts/release.py),
+[workflow](https://github.com/tidusvn05/okbot/blob/main/.github/workflows/release.yml) and
+[release guide](https://github.com/tidusvn05/okbot/blob/main/docs/releasing.md). okbase keeps its own
+platform variants, forbids RC crate/image publication, and leaves main at the released version.
