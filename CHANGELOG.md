@@ -23,6 +23,7 @@ breaking change). This file is generated from commit messages by git-cliff.
 ### Continuous integration
 
 - validate and publish releases with crates.io Trusted Publishing (3713265)
+- serialize release retries and prohibit asset overwrites (60af529)
 
 ## [0.2.3] - 2026-10-12
 
