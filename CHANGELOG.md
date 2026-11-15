@@ -5,6 +5,20 @@ All notable changes to okbase are listed here. The format follows
 [Semantic Versioning](https://semver.org/) (see docs/releasing.md for what counts as a
 breaking change). This file is generated from commit messages by git-cliff.
 
+## [0.2.6] - 2026-11-15
+
+### Bug fixes
+
+- **deps:** update rmcp, rusqlite and calamine for security advisories (d77b35a)
+
+### Documentation
+
+- show recorded benchmark results in README (2047e0a)
+
+### Continuous integration
+
+- move macOS jobs off the retired macos-14 image (6cf5adc)
+
 ## [0.2.5] - 2026-10-18
 
 ### Bug fixes
