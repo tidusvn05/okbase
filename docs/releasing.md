@@ -67,8 +67,8 @@ Neither build embeds models or language dictionaries.
 |---|---|---|
 | `x86_64-unknown-linux-gnu` | ubuntu-22.04; okbase-full on ubuntu-24.04 | glibc 2.35 or newer; okbase-full 2.39 or newer |
 | `aarch64-unknown-linux-gnu` | ubuntu-22.04-arm; okbase-full on ubuntu-24.04-arm | glibc 2.35 or newer; okbase-full 2.39 or newer |
-| `x86_64-apple-darwin` | macos-14 (cross-compiled) | Intel Macs; okbase only (ONNX Runtime has no prebuilt library) |
-| `aarch64-apple-darwin` | macos-14 | Apple silicon |
+| `x86_64-apple-darwin` | macos-15 (cross-compiled) | Intel Macs; okbase only (ONNX Runtime has no prebuilt library) |
+| `aarch64-apple-darwin` | macos-15 | Apple silicon |
 | `x86_64-pc-windows-msvc` | windows-latest | installed with `install.ps1` |
 
 Only tags `vX.Y.Z` and `vX.Y.Z-rc.N` are accepted. RC tags become GitHub pre-releases and never
