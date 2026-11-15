@@ -55,6 +55,17 @@ class ZipAssessmentTests(unittest.TestCase):
 
     def test_patched_zip_requires_exception_removal(self):
         self.data['packages'][0]['version'] = '9.0.5'
+        with self.assertRaisesRegex(ValueError, 'remove the obsolete'):
+            self.check()
+
+    def test_patched_zip_alongside_is_not_a_reviewed_parent(self):
+        self.data['packages'] += [{'id': 'zip9', 'name': 'zip', 'version': '9.5.1'},
+                                  {'id': 'other', 'name': 'other', 'version': '2.0.0'}]
+        self.data['resolve']['nodes'].append({'id': 'other', 'deps': [{'pkg': 'zip9'}]})
+        self.check()
+
+    def test_other_unpatched_zip_requires_review(self):
+        self.data['packages'].append({'id': 'zip87', 'name': 'zip', 'version': '8.7.0'})
         with self.assertRaisesRegex(ValueError, 'ZIP versions changed'):
             self.check()
 

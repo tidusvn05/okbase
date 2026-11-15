@@ -10,6 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 POLICY = ROOT / 'docs/security/zip-advisories.json'
+PATCHED_ZIP_MAJOR = 9
 
 
 def source_digest(root):
@@ -24,9 +25,11 @@ def check(data, policy, today):
     if today >= date.fromisoformat(policy['review_before']):
         raise ValueError('ZIP advisory assessment expired; review upstream fixes and applicability')
     packages = {p['id']: p for p in data['packages']}
-    zip_ids = {p['id'] for p in data['packages'] if p['name'] == 'zip'}
+    # zip >= 9 carries the upstream fixes; only older versions need the reviewed exception.
+    zip_ids = {p['id'] for p in data['packages']
+               if p['name'] == 'zip' and int(p['version'].split('.')[0]) < PATCHED_ZIP_MAJOR}
     if not zip_ids:
-        raise ValueError('zip was removed; remove the obsolete advisory exceptions')
+        raise ValueError('no unpatched zip is left; remove the obsolete advisory exceptions')
     actual = {packages[i]['version'] for i in zip_ids}
     if actual != {policy['zip_version']}:
         raise ValueError(f'ZIP versions changed: {sorted(actual)}; reassess/remove exceptions')

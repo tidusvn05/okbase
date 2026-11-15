@@ -242,7 +242,7 @@ impl Data {
         if sql.is_empty() {
             return Err(Error::Sql("empty query".into()));
         }
-        let conn = self.read_only()?;
+        let mut conn = self.read_only()?;
         let tables = load_tables(&conn)?;
         let hidden: Vec<String> = tables
             .iter()
@@ -289,7 +289,7 @@ impl Data {
         if !stmt.readonly() {
             return Err(Error::Sql("only SELECT queries are allowed".into()));
         }
-        let columns: Vec<String> = stmt.column_names().into_iter().map(str::to_owned).collect();
+        let columns: Vec<String> = stmt.column_names().map(str::to_owned).collect();
         let mut rows = Vec::new();
         let mut truncated = false;
         let mut cursor = stmt.query([]).map_err(|e| timeout_or(e, start, timeout))?;

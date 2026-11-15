@@ -1,7 +1,7 @@
 # ZIP extraction advisory applicability
 
-Reviewed on 2026-10-18; reassess **before 2026-11-18**. This is a bounded non-applicability
-assessment for three advisories, not a patch to zip 8.6.0 or a claim that the dependency is free
+Reviewed on 2026-10-18 and again on 2026-11-15; reassess **before 2026-12-15**. This is a bounded
+non-applicability assessment for four advisories, not a patch to zip 8.6.0 or a claim that the dependency is free
 of vulnerabilities. The release approval must explicitly include these exceptions.
 
 ## Affected operations
@@ -11,34 +11,31 @@ of vulnerabilities. The release approval must explicitly include these exception
 | RUSTSEC-2026-0367 | filesystem extraction preserves SUID/SGID permission bits | [GHSA-vv5m-jxxh-4627](https://github.com/zip-rs/zip2/security/advisories/GHSA-vv5m-jxxh-4627) |
 | RUSTSEC-2026-0368 | filesystem extraction creates symlinks pointing outside its destination | [GHSA-4v9h-p7m9-rh26](https://github.com/zip-rs/zip2/security/advisories/GHSA-4v9h-p7m9-rh26) |
 | RUSTSEC-2026-0369 | filesystem extraction changes permissions through symlinks | [GHSA-4684-h2q9-2vcp](https://github.com/zip-rs/zip2/security/advisories/GHSA-4684-h2q9-2vcp) |
+| RUSTSEC-2026-0429 | filesystem extraction aborts the process on a symlink entry with a large declared size | [RUSTSEC-2026-0429](https://rustsec.org/advisories/RUSTSEC-2026-0429) |
 
-All three involve `ZipArchive::extract`, its unwrapped-directory variant, or
+All four involve `ZipArchive::extract`, its unwrapped-directory variant, or
 `ZipStreamReader::extract`. Reading an individual entry into memory does not create filesystem
-objects or apply its Unix permissions. Upstream marks zip >=9.0.0 as fixed. At review time,
-the latest published anydoc 0.2.4 and calamine 0.36.1 both require zip ^8.6. A lockfile update alone
-cannot resolve that constraint, and a workspace-only patch would not protect crates.io consumers.
+objects or apply its Unix permissions. Upstream marks zip >=9.0.0 as fixed. Since 2026-11-15 calamine 0.38.0 uses zip 9, which is
+patched and outside this assessment. The latest published anydoc, 0.2.4, still requires zip ^8.6.
+A lockfile update alone cannot resolve that constraint, and a workspace-only patch would not protect
+crates.io consumers.
 
 ## Reviewed call paths
 
-The all-features Cargo graph has exactly two direct parents of zip 8.6.0: anydoc 0.2.4 and
-calamine 0.36.1. Both packages are from crates.io. Their versions are pinned while this
-assessment applies; source tree hashes are recorded in `zip-advisories.json`.
+The all-features Cargo graph has exactly one direct parent of zip 8.6.0: anydoc 0.2.4, from
+crates.io. Its version is pinned while this assessment applies; its source tree hash is recorded in
+`zip-advisories.json` and was unchanged at the 2026-11-15 review. zip 9 parents (calamine 0.38.0)
+are patched and are not checked.
 
 - `okbase-convert::convert` calls `anydoc::to_markdown_bytes`.
   [anydoc's archive reader](https://docs.rs/crate/anydoc/0.2.4/source/src/package/archive.rs)
   opens a `ZipArchive<Cursor<&[u8]>>`, selects named parts with `by_name`, and reads their bytes
   into bounded buffers. Its archive code never invokes ZIP filesystem extraction.
   The converter returns markdown and metadata. It does not save embedded archive assets.
-- `okbase-data::import::read_sheets` calls `calamine::open_workbook_auto`, then `worksheet_range`.
-  [The XLSX reader](https://docs.rs/crate/calamine/0.36.1/source/src/xlsx/mod.rs),
-  [XLSB reader](https://docs.rs/crate/calamine/0.36.1/source/src/xlsb/mod.rs), and
-  [ODS reader](https://docs.rs/crate/calamine/0.36.1/source/src/ods.rs) read named ZIP entries
-  through `ZipFile`/XML readers. They never invoke ZIP filesystem extraction. Legacy XLS uses
-  the compound-file reader. okbase writes parsed table data to its own SQLite database.
-- Searching the entire Rust source trees of both dependencies found no calls or references to
+- Searching the entire Rust source tree of anydoc found no calls or references to
   `extract`, `extract_unwrapped_root_dir`, or `ZipStreamReader`. Test-only ZIP writers do not use
   extraction either. zip's entry-reading methods do not internally call the extraction methods.
-- The workspace itself has no direct dependency on zip and does not expose either reader's ZIP
+- The workspace itself has no direct dependency on zip and does not expose anydoc's ZIP
   objects through its public API. Dictionary installation uses tar, not zip.
 
 The finding is that these three vulnerable operations are not reached by the reviewed okbase
@@ -48,9 +45,10 @@ use zip extraction, other ZIP defects, or future dependency source changes.
 ## Enforcement and regression tests
 
 `scripts/check-zip-advisories.py` runs before cargo-deny in both repository verification and CI.
-It fails when the assessment expires, zip changes version, a new direct caller appears, a
-reader changes version/source, or either reader's Rust source differs from the audited hash.
-Its tests cover expiry, new callers, dependency/source changes, and patched-version removal.
+It fails when the assessment expires, the unpatched zip changes version, a new direct caller of
+it appears, the reader changes version/source, or its Rust source differs from the audited hash.
+zip >=9 is treated as patched. Its tests cover expiry, new callers, dependency/source changes,
+patched-version removal, and a patched zip next to the reviewed one.
 
 The document and spreadsheet regression tests call the real public conversion/import APIs on
 archives with SUID/SGID file modes, a parent-path entry, a symlink to an outside directory, and a
@@ -65,8 +63,8 @@ content and adding malicious metadata/entries. The fixtures are never extracted 
 
 ## Removal and follow-up
 
-Check for upstream anydoc/calamine releases supporting zip >=9.0.0 before the review deadline.
-Once available, update both readers and Cargo.lock, remove these three cargo-deny exceptions and
+Check for an upstream anydoc release supporting zip >=9.0.0 before the review deadline.
+Once available, update anydoc and Cargo.lock, remove these four cargo-deny exceptions and
 the applicability guard/policy, and retain the hostile-archive regression tests. Do not extend the
 review deadline automatically. Any source or dependency-graph change requires a new applicability
 review; a reachable extraction path requires remediation before release.
