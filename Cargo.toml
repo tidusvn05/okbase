@@ -52,7 +52,7 @@ rust-stemmers = "1.2"
 rusqlite = { version = "0.41", features = ["bundled"] }
 blake3 = { version = "1.8", default-features = false, features = ["std"] }
 ignore = "0.4"
-anydoc = "=0.2.4" # ZIP applicability review: docs/security/zip-advisories.md
+anydoc = "0.2.5"
 pdf-inspector = "1.25"
 htmd = "0.5"
 markup5ever_rcdom = "0.38"

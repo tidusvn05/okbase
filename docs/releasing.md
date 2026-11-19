@@ -150,15 +150,6 @@ After approval:
    and git-cliff notes. Only stable tags run the crates job.
 5. Verify all outputs as described below. Keep main at the version just released.
 
-### ZIP advisory assessment
-
-Releases since v0.2.4 carry bounded exceptions for unreachable filesystem-extraction operations in
-zip 8.6.0, which anydoc still requires (four advisories since v0.2.6; calamine moved to the patched
-zip 9). Read [the assessment](security/zip-advisories.md) and include explicit acceptance of the
-exceptions in the single release approval. CI verifies the audited reader, source hash and
-dependency graph and refuses an expired assessment (review before 2026-12-15). An anydoc update
-supporting zip >=9 must replace these exceptions when available.
-
 ## Trusted Publishing and bootstrap
 
 All automatic crates.io publication uses `rust-lang/crates-io-auth-action@v1` with

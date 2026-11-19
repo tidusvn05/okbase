@@ -6,13 +6,9 @@ all-features = true
 version = 2
 yanked = "deny"
 ignore = [
-    # Reviewed non-applicability: only in-memory ZIP readers are used. These are NOT dependency
-    # patches. CI verifies the exact readers/source/graph and expires the assessment on 2026-12-15.
-    # Evidence and removal criteria: docs/security/zip-advisories.md.
-    { id = "RUSTSEC-2026-0367", reason = "filesystem extraction is not used by reviewed anydoc reader; guarded assessment in docs/security/zip-advisories.md" },
-    { id = "RUSTSEC-2026-0368", reason = "filesystem extraction is not used by reviewed anydoc reader; guarded assessment in docs/security/zip-advisories.md" },
-    { id = "RUSTSEC-2026-0369", reason = "filesystem extraction is not used by reviewed anydoc reader; guarded assessment in docs/security/zip-advisories.md" },
-    { id = "RUSTSEC-2026-0429", reason = "filesystem extraction is not used by reviewed anydoc reader; guarded assessment in docs/security/zip-advisories.md" },
+    # `chrono` is unmaintained (no known vulnerability, no maintained drop-in). It comes only
+    # through lopdf, rmcp and schemars; no workspace crate depends on it. Drop this when they move.
+    { id = "RUSTSEC-2026-0543", reason = "unmaintained, transitive only (lopdf, rmcp, schemars)" },
     # `paste` is a compile-time proc macro (no runtime code), unmaintained but with no known
     # vulnerability; it comes from `tokenizers` via fastembed, only in the opt-in embed-local module.
     { id = "RUSTSEC-2024-0436", reason = "unmaintained proc macro via tokenizers (embed-local only)" },
