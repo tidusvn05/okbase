@@ -22,7 +22,8 @@ permissions:
 
 env:
   CARGO_TERM_COLOR: always
-  # ONNX Runtime version linked by the `ort` crate (okbase-full); its notices ship in the archive.
+  # ONNX Runtime version linked by the `ort` crate (okbase-full); its notices ship in the archive
+  # from licenses/ONNXRUNTIME-ThirdPartyNotices.txt, which must match this version.
   ORT_VERSION: "1.28.0"
 
 jobs:
@@ -119,9 +120,8 @@ jobs:
           cp README.md LICENSE-MIT LICENSE-APACHE THIRD_PARTY.md THIRD_PARTY_LICENSES.md CHANGELOG.md "dist/$name/"
           if [ "${{ matrix.variant }}" = "okbase-full" ]; then
             mkdir -p "dist/$name/licenses"
-            cp licenses/ONNXRUNTIME.txt "dist/$name/licenses/"
-            curl -fsSL "https://raw.githubusercontent.com/microsoft/onnxruntime/v$ORT_VERSION/ThirdPartyNotices.txt" \
-              -o "dist/$name/licenses/ONNXRUNTIME-ThirdPartyNotices.txt"
+            # Kept in the repository (see ORT_VERSION): a release must not depend on upstream being up.
+            cp licenses/ONNXRUNTIME.txt licenses/ONNXRUNTIME-ThirdPartyNotices.txt "dist/$name/licenses/"
           fi
           cd dist
           if [[ "${{ matrix.target }}" == *windows* ]]; then
