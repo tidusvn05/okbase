@@ -5,6 +5,12 @@ All notable changes to okbase are listed here. The format follows
 [Semantic Versioning](https://semver.org/) (see docs/releasing.md for what counts as a
 breaking change). This file is generated from commit messages by git-cliff.
 
+## [0.2.7] - 2026-11-19
+
+### Dependencies
+
+- **deps:** anydoc 0.2.5 (zip 9) and drop the zip 8 advisory assessment (#62) (b03635a)
+
 ## [0.2.6] - 2026-11-15
 
 ### Bug fixes
