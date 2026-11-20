@@ -528,9 +528,9 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "4.6.7"
+version = "4.6.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aa8876b300ab35ba921adea3dfd70157a46249b33f95c9084ae5709785478946"
+checksum = "844c5c0b65be192cb68d570cca1b21a6444431d24e39c084dc0336177015337c"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -551,9 +551,9 @@ dependencies = [
 
 [[package]]
 name = "clap_derive"
-version = "4.6.7"
+version = "4.6.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f9c751b79415d4e559e3d1fcf128e09e720eb673a06d26cf6f392d37d75b66e0"
+checksum = "b4c174f11f949b9ca8c60580925e282b9cbd5454750e506f08648b2038080cd7"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -1051,9 +1051,9 @@ checksum = "c6e8948ce679d00a02a94739ea185595dca7118ed04feb991127e443bd3d761f"
 
 [[package]]
 name = "fastembed"
-version = "7.1.1"
+version = "7.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ca64ada7d0ad74737f45609542930cd5813fcb453b3f72ecb4255d8bd6fe4604"
+checksum = "3d3eee4d7232dea86406e2bda49bb035b0596846b295cf94afcd46f5ad96a5b0"
 dependencies = [
  "hf-hub",
  "ndarray",
@@ -2588,9 +2588,9 @@ checksum = "04744f49eae99ab78e0d5c0b603ab218f515ea8cfe5a456d7629ad883a3b6e7d"
 
 [[package]]
 name = "ort"
-version = "2.0.0-rc.13"
+version = "2.0.0-rc.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4336a1e2b38848325241c72889086886004e589b7c74f335e60a8e8db5138a0b"
+checksum = "37c87aa7a90b7ff3e0fe36cccd475df8d67f15f07f4d6c370c4b38464232813c"
 dependencies = [
  "ndarray",
  "ort-sys",
@@ -2601,9 +2601,9 @@ dependencies = [
 
 [[package]]
 name = "ort-sys"
-version = "2.0.0-rc.13"
+version = "2.0.0-rc.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cf211e3776eea6aec988552fa118dd746d70e1b1e5e244058d1c98015f3e5872"
+checksum = "8d22b0417f1838db5a3ac0b3f98dfe39f6fb73624aa0a27c6bbb5040b9c7db2b"
 dependencies = [
  "hmac-sha256",
  "lzma-rust2",
@@ -2647,9 +2647,9 @@ checksum = "2ee67f1008b1ba2321834326597b8e186293b049a023cdef258527550b9935b4"
 
 [[package]]
 name = "pdf-inspector"
-version = "1.25.2"
+version = "1.26.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ef5970f05a55de82c8d6d6fd5f8ff162b50fc7828cc1fd0abd965abad6fcbc5b"
+checksum = "47989859882bb0d67606c4f35daa5de3298ca84a6cd7b00eb842f29d6bb8d2ac"
 dependencies = [
  "env_logger",
  "include_dir",
