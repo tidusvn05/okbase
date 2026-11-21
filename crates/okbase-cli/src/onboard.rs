@@ -73,6 +73,10 @@ pub struct State {
     pub installed_for: Vec<&'static str>,
     /// Problems with installs serving this bundle.
     pub install_problems: Vec<String>,
+    /// Any recorded agent installs on this machine, including other bundles or broken installs.
+    pub has_agent_installs: bool,
+    /// `clean --all` has index or cache directories to remove.
+    pub has_cleanup_targets: bool,
     /// EmbeddingGemma's license is accepted.
     pub gemma_accepted: bool,
     /// The bundle has a tune run.
@@ -200,7 +204,8 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
     let summary;
     if goal == Goal::Remove {
         summary = "remove okbase from this machine".to_owned();
-        steps.push(ask(
+        if st.has_agent_installs {
+            steps.push(ask(
             "remove-agents",
             "Unregister okbase from the agents",
             "removes only okbase's MCP entries, skills and AGENTS.md blocks, everywhere it was installed",
@@ -208,7 +213,11 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
             vec![choice("yes", &["okbase agent uninstall --all"]), choice("no", &[])],
             &["agent configurations"],
         ));
-        steps.push(ask(
+        } else {
+            done.push("no recorded agent installs remain".into());
+        }
+        if st.has_cleanup_targets {
+            steps.push(ask(
             "remove-data",
             "Delete okbase's index and cache",
             "models, vectors, dictionary and training environment; documents are never touched",
@@ -216,6 +225,9 @@ pub fn plan(st: &State, goal: Goal) -> Plan {
             vec![choice("yes", &["okbase clean --all --yes"]), choice("no", &[])],
             &["user cache"],
         ));
+        } else {
+            done.push("no index or cache directories remain to clean".into());
+        }
         steps.push(tell(
             "remove-binary",
             "Remove the program",
@@ -853,9 +865,42 @@ mod tests {
         let p = plan(&st, Goal::Answer);
         assert_eq!(p.steps[0].id, "agents-repair");
         assert_eq!(p.steps[0].kind, Kind::Ask, "--replace needs consent");
+        st.has_agent_installs = true;
+        st.has_cleanup_targets = true;
         let r = plan(&st, Goal::Remove);
         assert_eq!(ids(&r), ["remove-agents", "remove-data", "remove-binary"]);
         assert!(r.to_text().contains("[ASK]"));
+    }
+
+    #[test]
+    fn removal_steps_follow_remaining_state() {
+        let mut snapshots = Vec::new();
+        for (agents, data, expected) in [
+            (
+                true,
+                true,
+                vec!["remove-agents", "remove-data", "remove-binary"],
+            ),
+            (false, true, vec!["remove-data", "remove-binary"]),
+            (true, false, vec!["remove-agents", "remove-binary"]),
+            (false, false, vec!["remove-binary"]),
+        ] {
+            let st = State {
+                version: "test".into(),
+                bundle: "/kb".into(),
+                has_agent_installs: agents,
+                has_cleanup_targets: data,
+                ..Default::default()
+            };
+            let mut p = plan(&st, Goal::Remove);
+            assert_eq!(ids(&p), expected);
+            assert_eq!(p.done.len(), 1 + usize::from(!agents) + usize::from(!data));
+            assert!(p.steps.iter().all(|s| s.kind != Kind::Run));
+            // The executable path varies between builds and platforms.
+            p.steps.last_mut().unwrap().question = Some("<binary removal guidance>".into());
+            snapshots.push(p);
+        }
+        insta::assert_json_snapshot!(snapshots);
     }
 
     #[test]

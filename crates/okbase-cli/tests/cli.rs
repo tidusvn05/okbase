@@ -1028,6 +1028,98 @@ fn onboard_plan_converges() {
 }
 
 #[test]
+fn removal_plan_converges_without_recreating_state() {
+    let tmp = tempfile::tempdir().unwrap();
+    let home = tmp.path().join("home");
+    let project = home.join("project");
+    let bundle = home.join("kb");
+    let other = home.join("other");
+    for dir in [&project, &bundle, &other] {
+        std::fs::create_dir_all(dir).unwrap();
+    }
+    std::fs::write(other.join("doc.md"), "# Keep this document\n").unwrap();
+    let cache = home.join("cache");
+    let run = |args: &[&str]| {
+        let mut c = Command::cargo_bin("okbase").unwrap();
+        c.env("HOME", &home)
+            .env("OKBASE_CONFIG_DIR", home.join("config"))
+            .env("XDG_CACHE_HOME", &cache)
+            .current_dir(&project)
+            .arg("-b")
+            .arg(&bundle)
+            .args(args);
+        c
+    };
+    let ids = |v: &Value| -> Vec<String> {
+        v["steps"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|s| s["id"].as_str().unwrap().to_owned())
+            .collect()
+    };
+    let plan = || json_of(&mut run(&["onboard", "--goal", "remove"]));
+    assert_eq!(ids(&plan()), ["remove-binary"]);
+    assert!(
+        !bundle.join(".okbase").exists(),
+        "planning must not create an index"
+    );
+    assert!(!cache.exists(), "planning must not create a cache");
+
+    // Removal is machine-wide: an install for another bundle still needs removal.
+    let mut install = Command::cargo_bin("okbase").unwrap();
+    install
+        .env("HOME", &home)
+        .env("OKBASE_CONFIG_DIR", home.join("config"))
+        .env("XDG_CACHE_HOME", &cache)
+        .current_dir(&project)
+        .arg("-b")
+        .arg(&other)
+        .args(["agent", "install", "--claude"]);
+    stdout(&mut install);
+    // A stale install must not be mistaken for completed unregistration.
+    std::fs::rename(&other, home.join("moved")).unwrap();
+    assert_eq!(ids(&plan()), ["remove-agents", "remove-binary"]);
+    let state = bundle.join(".okbase");
+    std::fs::create_dir_all(&state).unwrap();
+    std::fs::write(state.join("index.sqlite"), "synthetic index").unwrap();
+    // All cleanup candidates count, including an empty cache directory.
+    std::fs::create_dir_all(cache.join("okbase")).unwrap();
+    assert_eq!(
+        ids(&plan()),
+        ["remove-agents", "remove-data", "remove-binary"]
+    );
+    assert!(state.join("index.sqlite").exists(), "planning is read-only");
+    stdout(&mut run(&["agent", "uninstall", "--all"]));
+    assert_eq!(json_of(&mut run(&["agent", "status"])), json!([]));
+    assert_eq!(ids(&plan()), ["remove-data", "remove-binary"]);
+    stdout(&mut run(&["clean", "--all", "--yes"]));
+    assert_eq!(json_of(&mut run(&["clean", "--all"])), json!([]));
+    let p = plan();
+    assert_eq!(ids(&p), ["remove-binary"], "{p}");
+    assert!(
+        p["done"]
+            .to_string()
+            .contains("no recorded agent installs remain")
+    );
+    assert!(
+        p["done"]
+            .to_string()
+            .contains("no index or cache directories remain")
+    );
+    assert_eq!(p, plan(), "rerunning the removal plan must be stable");
+    assert!(
+        !state.exists(),
+        "planning must not recreate the cleaned index"
+    );
+    assert!(!cache.join("okbase").exists());
+    assert_eq!(
+        std::fs::read_to_string(home.join("moved/doc.md")).unwrap(),
+        "# Keep this document\n"
+    );
+}
+
+#[test]
 fn doctor_checks_the_setup_end_to_end() {
     // Repository fixtures are not shipped in registry packages.
     if !Path::new(env!("CARGO_MANIFEST_DIR"))

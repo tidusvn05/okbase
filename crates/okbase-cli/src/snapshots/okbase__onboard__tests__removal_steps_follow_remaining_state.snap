@@ -1,0 +1,206 @@
+---
+source: crates/okbase-cli/src/onboard.rs
+expression: snapshots
+---
+[
+  {
+    "bundle": "/kb",
+    "summary": "remove okbase from this machine",
+    "done": [
+      "okbase test (default build: lexical tools)"
+    ],
+    "steps": [
+      {
+        "id": "remove-agents",
+        "kind": "ask",
+        "title": "Unregister okbase from the agents",
+        "why": "removes only okbase's MCP entries, skills and AGENTS.md blocks, everywhere it was installed",
+        "question": "Remove okbase from every agent configuration where it was installed (other settings stay)?",
+        "options": [
+          {
+            "answer": "yes",
+            "commands": [
+              "okbase agent uninstall --all"
+            ]
+          },
+          {
+            "answer": "no",
+            "commands": []
+          }
+        ],
+        "writes": [
+          "agent configurations"
+        ]
+      },
+      {
+        "id": "remove-data",
+        "kind": "ask",
+        "title": "Delete okbase's index and cache",
+        "why": "models, vectors, dictionary and training environment; documents are never touched",
+        "question": "Delete okbase's downloaded models, caches and indexes (`okbase clean` shows the sizes)?",
+        "options": [
+          {
+            "answer": "yes",
+            "commands": [
+              "okbase clean --all --yes"
+            ]
+          },
+          {
+            "answer": "no",
+            "commands": []
+          }
+        ],
+        "writes": [
+          "user cache"
+        ]
+      },
+      {
+        "id": "remove-binary",
+        "kind": "tell",
+        "title": "Remove the program",
+        "why": "the agent should not uninstall software on its own",
+        "question": "<binary removal guidance>"
+      }
+    ],
+    "rules": [
+      "Do the steps in order. Run `okbase onboard` again after each step: finished steps move to `done`.",
+      "At an `ask` step, ask the user the question and wait. Run only the commands of the option they chose. A step they declined stays listed: treat it as done.",
+      "Never add --accept-license, --yes, --write, --force, --replace or --send-documents unless the user agreed to that step.",
+      "Never edit documents without asking. A command that exits 3 needs the user's consent: relay its `question`.",
+      "When no steps are left, or the user stops: tell them in a few lines what is set up (`done`), how to use it now (`report.use_now`) and the optional upgrades (`report.optional`). Do optional steps only if they ask."
+    ],
+    "report": {
+      "use_now": [],
+      "optional": []
+    }
+  },
+  {
+    "bundle": "/kb",
+    "summary": "remove okbase from this machine",
+    "done": [
+      "okbase test (default build: lexical tools)",
+      "no recorded agent installs remain"
+    ],
+    "steps": [
+      {
+        "id": "remove-data",
+        "kind": "ask",
+        "title": "Delete okbase's index and cache",
+        "why": "models, vectors, dictionary and training environment; documents are never touched",
+        "question": "Delete okbase's downloaded models, caches and indexes (`okbase clean` shows the sizes)?",
+        "options": [
+          {
+            "answer": "yes",
+            "commands": [
+              "okbase clean --all --yes"
+            ]
+          },
+          {
+            "answer": "no",
+            "commands": []
+          }
+        ],
+        "writes": [
+          "user cache"
+        ]
+      },
+      {
+        "id": "remove-binary",
+        "kind": "tell",
+        "title": "Remove the program",
+        "why": "the agent should not uninstall software on its own",
+        "question": "<binary removal guidance>"
+      }
+    ],
+    "rules": [
+      "Do the steps in order. Run `okbase onboard` again after each step: finished steps move to `done`.",
+      "At an `ask` step, ask the user the question and wait. Run only the commands of the option they chose. A step they declined stays listed: treat it as done.",
+      "Never add --accept-license, --yes, --write, --force, --replace or --send-documents unless the user agreed to that step.",
+      "Never edit documents without asking. A command that exits 3 needs the user's consent: relay its `question`.",
+      "When no steps are left, or the user stops: tell them in a few lines what is set up (`done`), how to use it now (`report.use_now`) and the optional upgrades (`report.optional`). Do optional steps only if they ask."
+    ],
+    "report": {
+      "use_now": [],
+      "optional": []
+    }
+  },
+  {
+    "bundle": "/kb",
+    "summary": "remove okbase from this machine",
+    "done": [
+      "okbase test (default build: lexical tools)",
+      "no index or cache directories remain to clean"
+    ],
+    "steps": [
+      {
+        "id": "remove-agents",
+        "kind": "ask",
+        "title": "Unregister okbase from the agents",
+        "why": "removes only okbase's MCP entries, skills and AGENTS.md blocks, everywhere it was installed",
+        "question": "Remove okbase from every agent configuration where it was installed (other settings stay)?",
+        "options": [
+          {
+            "answer": "yes",
+            "commands": [
+              "okbase agent uninstall --all"
+            ]
+          },
+          {
+            "answer": "no",
+            "commands": []
+          }
+        ],
+        "writes": [
+          "agent configurations"
+        ]
+      },
+      {
+        "id": "remove-binary",
+        "kind": "tell",
+        "title": "Remove the program",
+        "why": "the agent should not uninstall software on its own",
+        "question": "<binary removal guidance>"
+      }
+    ],
+    "rules": [
+      "Do the steps in order. Run `okbase onboard` again after each step: finished steps move to `done`.",
+      "At an `ask` step, ask the user the question and wait. Run only the commands of the option they chose. A step they declined stays listed: treat it as done.",
+      "Never add --accept-license, --yes, --write, --force, --replace or --send-documents unless the user agreed to that step.",
+      "Never edit documents without asking. A command that exits 3 needs the user's consent: relay its `question`.",
+      "When no steps are left, or the user stops: tell them in a few lines what is set up (`done`), how to use it now (`report.use_now`) and the optional upgrades (`report.optional`). Do optional steps only if they ask."
+    ],
+    "report": {
+      "use_now": [],
+      "optional": []
+    }
+  },
+  {
+    "bundle": "/kb",
+    "summary": "remove okbase from this machine",
+    "done": [
+      "okbase test (default build: lexical tools)",
+      "no recorded agent installs remain",
+      "no index or cache directories remain to clean"
+    ],
+    "steps": [
+      {
+        "id": "remove-binary",
+        "kind": "tell",
+        "title": "Remove the program",
+        "why": "the agent should not uninstall software on its own",
+        "question": "<binary removal guidance>"
+      }
+    ],
+    "rules": [
+      "Do the steps in order. Run `okbase onboard` again after each step: finished steps move to `done`.",
+      "At an `ask` step, ask the user the question and wait. Run only the commands of the option they chose. A step they declined stays listed: treat it as done.",
+      "Never add --accept-license, --yes, --write, --force, --replace or --send-documents unless the user agreed to that step.",
+      "Never edit documents without asking. A command that exits 3 needs the user's consent: relay its `question`.",
+      "When no steps are left, or the user stops: tell them in a few lines what is set up (`done`), how to use it now (`report.use_now`) and the optional upgrades (`report.optional`). Do optional steps only if they ask."
+    ],
+    "report": {
+      "use_now": [],
+      "optional": []
+    }
+  }
+]
