@@ -694,6 +694,13 @@ fn run(cli: Cli) -> Result<ExitCode> {
                     .is_some_and(okbase::license_accepted),
                 ..Default::default()
             };
+            if goal == onboard::Goal::Remove {
+                st.has_agent_installs = match okbase_skills::registry_path() {
+                    Some(reg) => !okbase_skills::load_registry(&reg)?.is_empty(),
+                    None => false,
+                };
+                st.has_cleanup_targets = !clean_targets(&bundle_dir, &state_dir).is_empty();
+            }
             // Index only a folder that is the bundle: a repository root pointing at docs/, an
             // empty folder or a folder of PDFs gets no index of its own.
             let here_is_bundle = if st.bundle_exists && goal != onboard::Goal::Remove {
@@ -1771,33 +1778,7 @@ location: {}
             yes,
         } => {
             let (index, cache) = (index || all, cache || all);
-            let mut targets: Vec<(String, PathBuf)> = Vec::new();
-            // Where this bundle's index may be, without creating anything.
-            if bundle_dir.is_dir() {
-                let mut dirs = Vec::new();
-                match &state_dir {
-                    StateDir::Path(p) => {
-                        if p.join("index.sqlite").is_file() {
-                            dirs.push(p.clone());
-                        }
-                    }
-                    StateDir::Cache => dirs.extend(okbase::bundle_cache_dir(&bundle_dir).ok()),
-                    _ => {
-                        dirs.push(bundle_dir.join(okbase::BUNDLE_STATE_DIR));
-                        dirs.extend(okbase::bundle_cache_dir(&bundle_dir).ok());
-                    }
-                }
-                for d in dirs.into_iter().filter(|d| d.is_dir()) {
-                    targets.push((format!("index of {}", abs(&bundle_dir).display()), d));
-                }
-            }
-            let cache_root = okbase::analyze::dict::user_cache_dir().map(|c| c.join("okbase"));
-            if let Some(c) = cache_root.as_ref().filter(|c| c.is_dir()) {
-                targets.push((
-                    "user cache (models, vectors, dictionary, training environment, indexes of bundles kept there)".into(),
-                    c.clone(),
-                ));
-            }
+            let targets = clean_targets(&bundle_dir, &state_dir);
             #[derive(Serialize)]
             struct Item {
                 what: String,
@@ -2606,6 +2587,38 @@ fn on_path(program: &str) -> bool {
             f.is_file() || f.with_extension("exe").is_file()
         })
     })
+}
+
+/// Cleanup candidates shared by the removal plan and `clean`; never creates state.
+fn clean_targets(bundle_dir: &Path, state_dir: &StateDir) -> Vec<(String, PathBuf)> {
+    let mut targets: Vec<(String, PathBuf)> = Vec::new();
+    // Where this bundle's index may be, without creating anything.
+    if bundle_dir.is_dir() {
+        let mut dirs = Vec::new();
+        match state_dir {
+            StateDir::Path(p) => {
+                if p.join("index.sqlite").is_file() {
+                    dirs.push(p.clone());
+                }
+            }
+            StateDir::Cache => dirs.extend(okbase::bundle_cache_dir(bundle_dir).ok()),
+            _ => {
+                dirs.push(bundle_dir.join(okbase::BUNDLE_STATE_DIR));
+                dirs.extend(okbase::bundle_cache_dir(bundle_dir).ok());
+            }
+        }
+        for d in dirs.into_iter().filter(|d| d.is_dir()) {
+            targets.push((format!("index of {}", abs(bundle_dir).display()), d));
+        }
+    }
+    let cache_root = okbase::analyze::dict::user_cache_dir().map(|c| c.join("okbase"));
+    if let Some(c) = cache_root.as_ref().filter(|c| c.is_dir()) {
+        targets.push((
+            "user cache (models, vectors, dictionary, training environment, indexes of bundles kept there)".into(),
+            c.clone(),
+        ));
+    }
+    targets
 }
 
 fn dir_size(path: &Path) -> u64 {
